@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:untitled3/Screens/Note.dart';
 import 'Setting.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
-import 'Notes.dart';
 import 'Menu.dart';
-import 'Home.dart';
 
 class BottomBar extends StatelessWidget {
   int _currentIndex;
@@ -29,7 +28,7 @@ class BottomBar extends StatelessWidget {
           } else if (val == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Notes()),
+              MaterialPageRoute(builder: (context) => ViewNotes()),
             );
           } else if (val == 2) {
             Navigator.push(

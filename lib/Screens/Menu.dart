@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'Setting.dart';
-import 'custom_animated_bottom_bar.dart';
+import 'Bottom_bar.dart';
 
 class Menu extends StatefulWidget {
+
   @override
   MenuState createState() => MenuState();
 }
 
 class MenuState extends State<Menu> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +36,7 @@ class MenuState extends State<Menu> {
               IconButton(
                   onPressed: () {
 
+
                   },
                   icon: Icon(
                     Icons.event_note_sharp,
@@ -44,6 +47,7 @@ class MenuState extends State<Menu> {
           )
         ],
       ),
+
       bottomNavigationBar: BottomBar(0),
     );
   }

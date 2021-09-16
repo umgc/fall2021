@@ -3,8 +3,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'HomeScreen.dart';
 import 'Setting.dart';
-import 'Notes.dart';
-import 'custom_animated_bottom_bar.dart';
+import 'Bottom_bar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -119,12 +118,9 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(30.0)),
                       minimumSize: Size(10, 10)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Notes()),
-                    );
+                    Navigator.pushNamed(context, '/save-note');
                   },
-                  child: Column(children: [
+                    child: Column(children: [
                     Padding(
                       padding: new EdgeInsets.all(20.0),
                     ),
