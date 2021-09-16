@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/Services/Speech.dart';
-import 'custom_animated_bottom_bar.dart';
+import 'Bottom_bar.dart';
 import 'Setting.dart';
+import 'package:untitled3/Model/recordnote.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
 
-        body: Speech(),
+        body: SpeechScreen(),
       bottomNavigationBar: BottomBar(3),
 
         );

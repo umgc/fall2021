@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'custom_animated_bottom_bar.dart';
+import 'Bottom_bar.dart';
+import 'Note.dart';
+
 class Setting extends StatefulWidget {
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Setting.dart';
-import 'custom_animated_bottom_bar.dart';
+import 'Bottom_bar.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
