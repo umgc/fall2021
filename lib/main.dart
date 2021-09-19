@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/Screens/Home.dart';
 import 'package:untitled3/Screens/Setting.dart';
-import 'package:untitled3/Services/saveNote.dart';
+import 'package:untitled3/Components/saveNote.dart';
 import 'package:untitled3/Screens/Note.dart';
-import 'package:untitled3/Services/notedetails.dart';
+import 'package:untitled3/Components/notedetails.dart';
 
 
 void main(){

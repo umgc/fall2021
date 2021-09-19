@@ -177,13 +177,6 @@
             </list>
           </value>
         </entry>
-        <entry key="flutter_localizations">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.flutter/packages/flutter_localizations/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="flutter_search_bar">
           <value>
             <list>
@@ -553,7 +546,6 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/.flutter/packages/flutter/lib" />
-      <root url="file://$USER_HOME$/.flutter/packages/flutter_localizations/lib" />
       <root url="file://$USER_HOME$/.flutter/packages/flutter_test/lib" />
       <root url="file://$USER_HOME$/.flutter/packages/flutter_web_plugins/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/archive-3.1.2/lib" />

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Services/notedetails.dart';
+import '../Components/notedetails.dart';
 import '../Services/textnoteservice.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:untitled3/Screens/Bottom_bar.dart';
