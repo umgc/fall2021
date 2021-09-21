@@ -31,7 +31,7 @@ class _BottomBarState extends  State<StatefulButtomBar> {
   ];
 
   void _onItemTapped(int index) {
-    _setScreenName("");
+    _setScreenNameByIndex(index);
     setState(() {
       _currentIndex = index;
     });
@@ -41,6 +41,22 @@ class _BottomBarState extends  State<StatefulButtomBar> {
     setState(() {
       _screenName = name;
     });
+  }
+
+  void _setScreenNameByIndex(int index) {
+    //TODO: make sure index is less than length of array
+
+    List <String> screenNames = [
+      SCREEN_NAMES.MENU,
+      SCREEN_NAMES.NOTE,
+      SCREEN_NAMES.NOTIFICATION,
+      SCREEN_NAMES.HOME,
+
+    ];
+
+    print("PRESMAN: SELECTED NAME: "+screenNames[index]);
+
+    _setScreenName(screenNames[index]);
   }
 
   Widget _pickScreen(String name, index){
@@ -74,7 +90,7 @@ class _BottomBarState extends  State<StatefulButtomBar> {
                 size: 35,
               )),
           toolbarHeight: 90,
-          title: Text('Home',
+          title: Text(_screenName,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.black)),
           backgroundColor: Color(0xFF33ACE3),
           centerTitle: true,
