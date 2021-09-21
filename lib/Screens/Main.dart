@@ -9,14 +9,14 @@ import 'Menu.dart';
 import '../Utility/Constant.dart';
 
 /// This is the stateful widget that the main application instantiates.
-class StatefulButtomBar extends StatefulWidget {
-  const StatefulButtomBar({Key? key}) : super(key: key);
+class MainNavigator extends StatefulWidget {
+  const MainNavigator({Key? key}) : super(key: key);
 
   @override
-  State<StatefulButtomBar> createState() => _BottomBarState();
+  State<MainNavigator> createState() => _MainNavigatorState();
 }
 
-class _BottomBarState extends  State<StatefulButtomBar> {
+class _MainNavigatorState extends  State<MainNavigator> {
   int _currentIndex =0;
   String _screenName = "";
 
@@ -53,8 +53,6 @@ class _BottomBarState extends  State<StatefulButtomBar> {
       SCREEN_NAMES.HOME,
 
     ];
-
-    print("PRESMAN: SELECTED NAME: "+screenNames[index]);
 
     _setScreenName(screenNames[index]);
   }
