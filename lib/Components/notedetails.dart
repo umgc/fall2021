@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'textnoteservice.dart';
 import 'package:untitled3/Screens/Menu.dart';
+import 'package:untitled3/Services/textnoteservice.dart';
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'textnoteservice.dart';
+import 'package:untitled3/Services/textnoteservice.dart';
+import 'package:untitled3/Screens/Bottom_bar.dart';
 import 'package:untitled3/Screens/Setting.dart';
 
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
