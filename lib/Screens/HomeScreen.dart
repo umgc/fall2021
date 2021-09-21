@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/Component/Speech.dart';
 import 'Setting.dart';
 import 'package:untitled3/Model/recordnote.dart';
 

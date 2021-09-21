@@ -7,6 +7,7 @@ import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'Menu.dart';
 import '../Utility/Constant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class MainNavigator extends StatefulWidget {
@@ -47,11 +48,10 @@ class _MainNavigatorState extends  State<MainNavigator> {
     //TODO: make sure index is less than length of array
 
     List <String> screenNames = [
-      SCREEN_NAMES.MENU,
-      SCREEN_NAMES.NOTE,
-      SCREEN_NAMES.NOTIFICATION,
-      SCREEN_NAMES.HOME,
-
+      AppLocalizations.of(context)!.menuScreenName,
+      AppLocalizations.of(context)!.notesScreenName,
+      AppLocalizations.of(context)!.notificationsScreenName,
+      AppLocalizations.of(context)!.homeScreenName,
     ];
 
     _setScreenName(screenNames[index]);
