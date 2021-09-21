@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'textnoteservice.dart';
 import 'package:untitled3/Screens/Menu.dart';
-import 'package:untitled3/Screens/Bottom_bar.dart';
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({
@@ -181,7 +180,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                   ),
                 ],
               ),
-              bottomNavigationBar: BottomBar(0),
+              //bottomNavigationBar: BottomBar(0),
             );
           } else {
             return CircularProgressIndicator();
