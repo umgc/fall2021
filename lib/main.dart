@@ -5,6 +5,8 @@ import 'package:untitled3/Components/saveNote.dart';
 import 'package:untitled3/Screens/Note.dart';
 import 'package:untitled3/Components/notedetails.dart';
 
+import 'Screens/Main.dart';
+
 
 void main(){
   runApp(MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: MainNavigator(),
 
       routes: {
         '/save-note': (context) => SaveNote(),

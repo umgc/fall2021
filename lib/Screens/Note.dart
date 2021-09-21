@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../Components/notedetails.dart';
 import '../Services/textnoteservice.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-import 'package:untitled3/Screens/Bottom_bar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'Setting.dart';
@@ -145,7 +144,7 @@ class _ViewNotesState extends State<ViewNotes> {
           if (textNotes.hasData) {
             readFilterResults();
             return Scaffold(
-              appBar: buildAppBar(context),
+              //appBar: buildAppBar(context),
               key: viewNotesScaffoldKey,
               body: Column(children: [
 
@@ -277,8 +276,6 @@ class _ViewNotesState extends State<ViewNotes> {
                 tooltip: 'Save Note',
                 child: Icon(Icons.add),
               ),
-              bottomNavigationBar: BottomBar(
-                  1), // This trailing comma makes auto-formatting nicer for build methods.
             );
           } else {
             return CircularProgressIndicator();
