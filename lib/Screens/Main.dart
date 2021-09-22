@@ -6,8 +6,10 @@ import 'Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'Menu.dart';
-import '../Utility/Constant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import '../Utility/Constant.dart';
+import '../Observables/ScreenNavigator.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class MainNavigator extends StatefulWidget {
@@ -20,6 +22,7 @@ class MainNavigator extends StatefulWidget {
 class _MainNavigatorState extends  State<MainNavigator> {
   int _currentIndex =0;
   String _screenName = "";
+  ScreenNav screenNav = ScreenNav();
 
   static List<Widget> _widgetOptions = <Widget>[
     Menu(),
@@ -38,12 +41,9 @@ class _MainNavigatorState extends  State<MainNavigator> {
     });
   }
 
-  void _setScreenName(String name) {
-    setState(() {
-      _screenName = name;
-    });
+  void _setScreenName(String screenName){
+    screenNav.changeScreen(screenName);
   }
-
   void _setScreenNameByIndex(int index) {
     //TODO: make sure index is less than length of array
 
@@ -57,9 +57,11 @@ class _MainNavigatorState extends  State<MainNavigator> {
     _setScreenName(screenNames[index]);
   }
 
-  Widget _pickScreen(String name, index){
+  Widget _changeScreen(String name, index){
+    print("Return "+name);
 
     if(name == SCREEN_NAMES.SETTING){
+      print("Return "+name);
       return Setting();
     }
     /**
@@ -88,8 +90,12 @@ class _MainNavigatorState extends  State<MainNavigator> {
                 size: 35,
               )),
           toolbarHeight: 90,
-          title: Text(_screenName,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.black)),
+          title: Observer(
+              builder: (_) => Text(
+                '${screenNav.currentScreen}',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.black),
+              )
+          ),
           backgroundColor: Color(0xFF33ACE3),
           centerTitle: true,
           actions: <Widget>[
@@ -110,7 +116,9 @@ class _MainNavigatorState extends  State<MainNavigator> {
         ),
 
       body:Center(
-        child: _pickScreen(_screenName, _currentIndex),
+        child: Observer(
+            builder: (_) => _changeScreen(screenNav.currentScreen, _currentIndex)
+        )
       ),
 
       bottomNavigationBar: BottomNavigationBar(
