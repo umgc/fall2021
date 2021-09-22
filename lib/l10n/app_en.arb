@@ -3,16 +3,7 @@
   "menuScreenName": "Menu",
   "notesScreenName": "Notes",
   "notificationsScreenName": "Notifications",
-  "@MenuScreenName": {
-    "description": "Screen Name for Menu"
-  },
-  "@HomeScreenName": {
-    "description": "Screen Name for Home"
-  },
-  "@NotesScreenName": {
-    "description": "Screen Name for Notes"
-  },
-  "@NotificationsScreenName": {
-    "description": "Screen Name for Notifications"
-  }
+  "settingScreenName": "Setting",
+  "calendarScreenName": "Calendar",
+  "micButton": "Mic"
 }
