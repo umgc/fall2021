@@ -13,10 +13,10 @@ typedef LocaleChangeCallback = void Function(Locale locale);
 
 class I18n implements WidgetsLocalizations {
   const I18n();
-  static Locale _locale;
+  static Locale? _locale;
   static bool _shouldReload = false;
-
-  static set locale(Locale newLocale) {
+  static Locale? get locale => _locale;
+  static set locale(Locale? newLocale) {
     _shouldReload = true;
     I18n._locale = newLocale;
   }
@@ -24,182 +24,163 @@ class I18n implements WidgetsLocalizations {
   static const GeneratedLocalizationsDelegate delegate = GeneratedLocalizationsDelegate();
 
   /// function to be invoked when changing the language
-  static LocaleChangeCallback onLocaleChanged;
+  static LocaleChangeCallback? onLocaleChanged;
 
-  static I18n of(BuildContext context) =>
+  static I18n? of(BuildContext context) =>
     Localizations.of<I18n>(context, WidgetsLocalizations);
-
   @override
   TextDirection get textDirection => TextDirection.ltr;
-
-  /// "Home"
-  String get homeScreenName => "Home";
-  /// "Menu"
-  String get menuScreenName => "Menu";
-  /// "Notes"
-  String get notesScreenName => "Notes";
-  /// "Notifications"
-  String get notificationsScreenName => "Notifications";
-  /// "Setting"
-  String get settingScreenName => "Setting";
-  /// "Calendar"
-  String get calendarScreenName => "Calendar";
-  /// "Mic"
-  String get micButton => "Mic";
-  /// "Press to Record"
-  String get pressToRecord => "Press to Record";
+	/// "Home"
+	String get homeScreenName => "Home";
+	/// "Menu"
+	String get menuScreenName => "Menu";
+	/// "Notes"
+	String get notesScreenName => "Notes";
+	/// "Notifications"
+	String get notificationsScreenName => "Notifications";
+	/// "Setting"
+	String get settingScreenName => "Setting";
+	/// "Calendar"
+	String get calendarScreenName => "Calendar";
+	/// "Mic"
+	String get micButton => "Mic";
+	/// "Press to Record"
+	String get pressToRecord => "Press to Record";
 }
-
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
-
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
 }
-
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
-
-  /// "الصفحة الرئيسية"
-  @override
-  String get homeScreenName => "الصفحة الرئيسية";
-  /// "الصفحة القائمة"
-  @override
-  String get menuScreenName => "الصفحة القائمة";
-  /// "صفحة المسودات"
-  @override
-  String get notesScreenName => "صفحة المسودات";
-  /// "صفحة الإشعارات"
-  @override
-  String get notificationsScreenName => "صفحة الإشعارات";
-  /// "صفحة الإعدادات"
-  @override
-  String get settingScreenName => "صفحة الإعدادات";
-  /// "صفحة التقويم"
-  @override
-  String get calendarScreenName => "صفحة التقويم";
-  /// "ميكروفون"
-  @override
-  String get micButton => "ميكروفون";
-  /// "اضغط للتسجيل"
-  @override
-  String get pressToRecord => "اضغط للتسجيل";
-
   @override
   TextDirection get textDirection => TextDirection.rtl;
+	/// "الصفحة الرئيسية"
+	@override
+	String get homeScreenName => "الصفحة الرئيسية";
+	/// "الصفحة القائمة"
+	@override
+	String get menuScreenName => "الصفحة القائمة";
+	/// "صفحة المسودات"
+	@override
+	String get notesScreenName => "صفحة المسودات";
+	/// "صفحة الإشعارات"
+	@override
+	String get notificationsScreenName => "صفحة الإشعارات";
+	/// "صفحة الإعدادات"
+	@override
+	String get settingScreenName => "صفحة الإعدادات";
+	/// "صفحة التقويم"
+	@override
+	String get calendarScreenName => "صفحة التقويم";
+	/// "ميكروفون"
+	@override
+	String get micButton => "ميكروفون";
+	/// "اضغط للتسجيل"
+	@override
+	String get pressToRecord => "اضغط للتسجيل";
 }
-
-class _I18n_es_US extends I18n {
-  const _I18n_es_US();
-
-  /// "Inicio"
-  @override
-  String get homeScreenName => "Inicio";
-  /// "Menú"
-  @override
-  String get menuScreenName => "Menú";
-  /// "Notas"
-  @override
-  String get notesScreenName => "Notas";
-  /// "Notificaciones"
-  @override
-  String get notificationsScreenName => "Notificaciones";
-  /// "Configuración"
-  @override
-  String get settingScreenName => "Configuración";
-  /// "Calendario"
-  @override
-  String get calendarScreenName => "Calendario";
-  /// "Micrófono"
-  @override
-  String get micButton => "Micrófono";
-  /// "Presione para grabar"
-  @override
-  String get pressToRecord => "Presione para grabar";
-
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
-}
-
-class _I18n_pt_BR extends I18n {
-  const _I18n_pt_BR();
-
-  /// "Casa"
-  @override
-  String get homeScreenName => "Casa";
-  /// "Cardápio"
-  @override
-  String get menuScreenName => "Cardápio";
-  /// "Notas"
-  @override
-  String get notesScreenName => "Notas";
-  /// "Notificações"
-  @override
-  String get notificationsScreenName => "Notificações";
-  /// "Configuração"
-  @override
-  String get settingScreenName => "Configuração";
-  /// "Calendário"
-  @override
-  String get calendarScreenName => "Calendário";
-  /// "Microfone"
-  @override
-  String get micButton => "Microfone";
-  /// "Pressione para gravar"
-  @override
-  String get pressToRecord => "Pressione para gravar";
-
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
-}
-
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
-
-  /// "家"
-  @override
-  String get homeScreenName => "家";
-  /// "菜单"
-  @override
-  String get menuScreenName => "菜单";
-  /// "笔记"
-  @override
-  String get notesScreenName => "笔记";
-  /// "通知"
-  @override
-  String get notificationsScreenName => "通知";
-  /// "环境"
-  @override
-  String get settingScreenName => "环境";
-  /// "日历"
-  @override
-  String get calendarScreenName => "日历";
-  /// "麦克风"
-  @override
-  String get micButton => "麦克风";
-  /// "按录制"
-  @override
-  String get pressToRecord => "按录制";
-
   @override
   TextDirection get textDirection => TextDirection.ltr;
+	/// "家"
+	@override
+	String get homeScreenName => "家";
+	/// "菜单"
+	@override
+	String get menuScreenName => "菜单";
+	/// "笔记"
+	@override
+	String get notesScreenName => "笔记";
+	/// "通知"
+	@override
+	String get notificationsScreenName => "通知";
+	/// "环境"
+	@override
+	String get settingScreenName => "环境";
+	/// "日历"
+	@override
+	String get calendarScreenName => "日历";
+	/// "麦克风"
+	@override
+	String get micButton => "麦克风";
+	/// "按录制"
+	@override
+	String get pressToRecord => "按录制";
 }
-
+class _I18n_pt_BR extends I18n {
+  const _I18n_pt_BR();
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+	/// "Casa"
+	@override
+	String get homeScreenName => "Casa";
+	/// "Cardápio"
+	@override
+	String get menuScreenName => "Cardápio";
+	/// "Notas"
+	@override
+	String get notesScreenName => "Notas";
+	/// "Notificações"
+	@override
+	String get notificationsScreenName => "Notificações";
+	/// "Configuração"
+	@override
+	String get settingScreenName => "Configuração";
+	/// "Calendário"
+	@override
+	String get calendarScreenName => "Calendário";
+	/// "Microfone"
+	@override
+	String get micButton => "Microfone";
+	/// "Pressione para gravar"
+	@override
+	String get pressToRecord => "Pressione para gravar";
+}
+class _I18n_es_US extends I18n {
+  const _I18n_es_US();
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+	/// "Inicio"
+	@override
+	String get homeScreenName => "Inicio";
+	/// "Menú"
+	@override
+	String get menuScreenName => "Menú";
+	/// "Notas"
+	@override
+	String get notesScreenName => "Notas";
+	/// "Notificaciones"
+	@override
+	String get notificationsScreenName => "Notificaciones";
+	/// "Configuración"
+	@override
+	String get settingScreenName => "Configuración";
+	/// "Calendario"
+	@override
+	String get calendarScreenName => "Calendario";
+	/// "Micrófono"
+	@override
+	String get micButton => "Micrófono";
+	/// "Presione para grabar"
+	@override
+	String get pressToRecord => "Presione para grabar";
+}
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale("en", "US"),
-      Locale("ar", "SY"),
-      Locale("es", "US"),
-      Locale("pt", "BR"),
-      Locale("zh", "CN")
+			Locale("ar", "SY"),
+			Locale("es", "US"),
+			Locale("pt", "BR"),
+			Locale("zh", "CN")
     ];
   }
 
-  LocaleResolutionCallback resolution({Locale fallback}) {
-    return (Locale locale, Iterable<Locale> supported) {
-      if (isSupported(locale)) {
+  LocaleResolutionCallback resolution({Locale? fallback}) {
+    return (Locale? locale, Iterable<Locale> supported) {
+      if (locale != null && isSupported(locale)) {
         return locale;
       }
       final Locale fallbackLocale = fallback ?? supported.first;
@@ -212,44 +193,44 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
     I18n._locale ??= locale;
     I18n._shouldReload = false;
     final String lang = I18n._locale != null ? I18n._locale.toString() : "";
-    final String languageCode = I18n._locale != null ? I18n._locale.languageCode : "";
+    final String languageCode = I18n._locale != null ? I18n._locale!.languageCode : "";
     if ("en_US" == lang) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_en_US());
-    }
-    else if ("ar_SY" == lang) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
-    }
-    else if ("es_US" == lang) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_es_US());
-    }
-    else if ("pt_BR" == lang) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_pt_BR());
-    }
-    else if ("zh_CN" == lang) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_zh_CN());
-    }
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_en_US());
+		}
+		else if ("ar_SY" == lang) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
+		}
+		else if ("es_US" == lang) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_es_US());
+		}
+		else if ("pt_BR" == lang) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_pt_BR());
+		}
+		else if ("zh_CN" == lang) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_zh_CN());
+		}
     else if ("en" == languageCode) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_en_US());
-    }
-    else if ("ar" == languageCode) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
-    }
-    else if ("es" == languageCode) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_es_US());
-    }
-    else if ("pt" == languageCode) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_pt_BR());
-    }
-    else if ("zh" == languageCode) {
-      return SynchronousFuture<WidgetsLocalizations>(const _I18n_zh_CN());
-    }
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_en_US());
+		}
+		else if ("ar" == languageCode) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
+		}
+		else if ("es" == languageCode) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_es_US());
+		}
+		else if ("pt" == languageCode) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_pt_BR());
+		}
+		else if ("zh" == languageCode) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_zh_CN());
+		}
 
     return SynchronousFuture<WidgetsLocalizations>(const I18n());
   }
 
   @override
   bool isSupported(Locale locale) {
-    for (var i = 0; i < supportedLocales.length && locale != null; i++) {
+    for (var i = 0; i < supportedLocales.length ; i++) {
       final l = supportedLocales[i];
       if (l.languageCode == locale.languageCode) {
         return true;
