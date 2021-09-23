@@ -2,5 +2,8 @@
     "homeScreenName": "Casa",
     "menuScreenName": "Menu",
     "notesScreenName": "Notas",
-    "notificationsScreenName": "Notificaciones"
+    "notificationsScreenName": "Notificaciones",
+    "settingScreenName": "Setting",
+    "calendarScreenName": "Calendar",
+    "micButton": "Mic"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:untitled3/Screens/Note/Note.dart';
+import 'package:untitled3/generated/i18n.dart';
 import 'Setting.dart';
 import 'Note/Note.dart';
 import 'HomeScreen.dart';
@@ -53,29 +54,28 @@ class _MainNavigatorState extends  State<MainNavigator> {
     //TODO: make sure index is less than length of array
 
     List <String> screenNames = [
-      AppLocalizations.of(context)!.menuScreenName,
-      AppLocalizations.of(context)!.notesScreenName,
-      AppLocalizations.of(context)!.notificationsScreenName,
-      AppLocalizations.of(context)!.homeScreenName,
+      I18n.of(context)!.menuScreenName,
+      I18n.of(context)!.notesScreenName,
+      I18n.of(context)!.notificationsScreenName,
+      I18n.of(context)!.homeScreenName,
     ];
 
     _setScreenName(screenNames[index]);
   }
 
   Widget _changeScreen(String name, index){
-    print("Return "+name);
-    if(name == SCREEN_NAMES.SETTING){
-      print("Return "+name);
+
+    if(name == I18n.of(context)!.settingScreenName){
       return Setting();
     }
-    if(name == SCREEN_NAMES.NOTE){
+    if(name == name == I18n.of(context)!.notesScreenName){
       print("Return "+name);
       return ViewNotes();
     }
   
     /**
      * TODO: Uncomment for calendar
-     * if(name == SCREEN_NAMES.CALENDAR){
+     * if(name == AppLocalizations.of(context)!.calendarScreenName){
       return Calendar();
     }*/
     return _widgetOptions.elementAt(index);
@@ -128,7 +128,7 @@ AppBar buildAppBar(BuildContext context) {
           leading: IconButton(
 
               onPressed: () {
-                _setScreenName(SCREEN_NAMES.SETTING);
+                _setScreenName(I18n.of(context)!.settingScreenName);
               },
               icon: Icon(
                 Icons.settings,
@@ -189,21 +189,21 @@ AppBar buildAppBar(BuildContext context) {
               Icons.home,
               size: 40,
             ),
-            title: Text('Menu'),
+            label: I18n.of(context)!.menuScreenName,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.event_note_sharp,
               size: 40,
             ),
-            title: Text('Notes'),
+            label: I18n.of(context)!.notesScreenName,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications,
               size: 40,
             ),
-            title: Text('Notification'),
+            label: I18n.of(context)!.notificationsScreenName,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -211,7 +211,7 @@ AppBar buildAppBar(BuildContext context) {
               width: 51.84,
               height: 46,
             ),
-            title: Text('Mic'),
+            label: I18n.of(context)!.micButton,
             activeIcon: Image.asset(
               "assets/images/mic.png",
               width: 51.84,

@@ -4,6 +4,7 @@ import 'package:untitled3/Screens/Setting.dart';
 import '../../Observables/NoteObservable.dart';
 import '../../Utility/Constant.dart';
 
+
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
 /// Save Note page

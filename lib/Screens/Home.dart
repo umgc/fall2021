@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import '../Utility/Constant.dart';
 import 'HomeScreen.dart';
 import 'Setting.dart';
 import 'package:untitled3/Screens/Note/Note.dart';
