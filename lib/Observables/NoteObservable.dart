@@ -4,14 +4,14 @@ import '../Services/NoteService.dart';
 
 part 'NoteObservable.g.dart';
 
-class NoteScreenNav = _AbstractNoteScreen with _$NoteScreenNav;
+class NoteObserver = _AbstractNoteObserver with _$NoteObserver;
 
-abstract class _AbstractNoteScreen with Store {
+abstract class _AbstractNoteObserver with Store {
 
   TextNoteService noteService = TextNoteService();
 
-  _AbstractNoteScreen(){
-    loadNotes();
+  _AbstractNoteObserver(){
+    noteService.loadNotes().then((value) => setNotes(value));
   }
 
   @observable
@@ -24,7 +24,7 @@ abstract class _AbstractNoteScreen with Store {
   void addNote(TextNote note){
     print("Adding note to: ${note.noteId}");
     usersNotes.add(note);
-    saveNote(usersNotes);
+    noteService.persistNotes(usersNotes);
   }
 
   @action
@@ -38,15 +38,5 @@ abstract class _AbstractNoteScreen with Store {
     print("Screen changed to: "+ name);
     currentScreen = name;
   }
-
-  void loadNotes(){
-    noteService.loadNotes().then((value) => setNotes(value));
-  }
-
-  void saveNote(List<TextNote> usersNotes){
-    print("Saving notes to");
-    noteService.persistNotes(usersNotes);
-  }
-  
 }
 

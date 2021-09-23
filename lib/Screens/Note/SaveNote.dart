@@ -27,7 +27,7 @@ class _SaveNoteState extends State<SaveNote> {
   final textController = TextEditingController();
   var navScreenObs; 
 
-  _SaveNoteState( NoteScreenNav navScreenObs ){
+  _SaveNoteState( NoteObserver navScreenObs ){
     this.navScreenObs = navScreenObs;
   }
 

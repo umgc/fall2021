@@ -8,8 +8,8 @@ part of 'NoteObservable.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$NoteScreenNav on _AbstractNoteScreen, Store {
-  final _$currentScreenAtom = Atom(name: '_AbstractNoteScreen.currentScreen');
+mixin _$NoteObserver on _AbstractNoteObserver, Store {
+  final _$currentScreenAtom = Atom(name: '_AbstractNoteObserver.currentScreen');
 
   @override
   String get currentScreen {
@@ -24,7 +24,7 @@ mixin _$NoteScreenNav on _AbstractNoteScreen, Store {
     });
   }
 
-  final _$usersNotesAtom = Atom(name: '_AbstractNoteScreen.usersNotes');
+  final _$usersNotesAtom = Atom(name: '_AbstractNoteObserver.usersNotes');
 
   @override
   List<TextNote> get usersNotes {
@@ -40,12 +40,12 @@ mixin _$NoteScreenNav on _AbstractNoteScreen, Store {
   }
 
   final _$_AbstractNoteScreenActionController =
-      ActionController(name: '_AbstractNoteScreen');
+      ActionController(name: '_AbstractNoteObserver');
 
   @override
   void addNote(TextNote note) {
     final _$actionInfo = _$_AbstractNoteScreenActionController.startAction(
-        name: '_AbstractNoteScreen.addNote');
+        name: '_AbstractNoteObserver.addNote');
     try {
       return super.addNote(note);
     } finally {
@@ -56,7 +56,7 @@ mixin _$NoteScreenNav on _AbstractNoteScreen, Store {
   @override
   void setNotes(dynamic notes) {
     final _$actionInfo = _$_AbstractNoteScreenActionController.startAction(
-        name: '_AbstractNoteScreen.setNotes');
+        name: '_AbstractNoteObserver.setNotes');
     try {
       return super.setNotes(notes);
     } finally {
@@ -67,7 +67,7 @@ mixin _$NoteScreenNav on _AbstractNoteScreen, Store {
   @override
   void changeScreen(String name) {
     final _$actionInfo = _$_AbstractNoteScreenActionController.startAction(
-        name: '_AbstractNoteScreen.changeScreen');
+        name: '_AbstractNoteObserver.changeScreen');
     try {
       return super.changeScreen(name);
     } finally {

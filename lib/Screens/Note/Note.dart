@@ -23,7 +23,7 @@ class ViewNotes extends StatefulWidget {
 
 class _ViewNotesState extends State<ViewNotes> {
 
-  NoteScreenNav screenNav = NoteScreenNav();
+  NoteObserver screenNav = NoteObserver();
 
   _ViewNotesState(){
     screenNav.changeScreen(SCREEN_NAMES.NOTE);
