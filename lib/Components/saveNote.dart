@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import '../Services/textnoteservice.dart';
-import 'package:untitled3/Services/textnoteservice.dart';
 
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
 /// Save Note page
 class SaveNote extends StatefulWidget {
-
   @override
   SaveNoteState createState() => SaveNoteState();
 }

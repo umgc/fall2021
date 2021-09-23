@@ -7,6 +7,7 @@ import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'Menu.dart';
 import '../Utility/Constant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class MainNavigator extends StatefulWidget {
@@ -47,11 +48,10 @@ class _MainNavigatorState extends  State<MainNavigator> {
     //TODO: make sure index is less than length of array
 
     List <String> screenNames = [
-      SCREEN_NAMES.MENU,
-      SCREEN_NAMES.NOTE,
-      SCREEN_NAMES.NOTIFICATION,
-      SCREEN_NAMES.HOME,
-
+      AppLocalizations.of(context)!.menuScreenName,
+      AppLocalizations.of(context)!.notesScreenName,
+      AppLocalizations.of(context)!.notificationsScreenName,
+      AppLocalizations.of(context)!.homeScreenName,
     ];
 
     _setScreenName(screenNames[index]);
@@ -59,12 +59,12 @@ class _MainNavigatorState extends  State<MainNavigator> {
 
   Widget _pickScreen(String name, index){
 
-    if(name == SCREEN_NAMES.SETTING){
+    if(name == AppLocalizations.of(context)!.settingScreenName){
       return Setting();
     }
     /**
      * TODO: Uncomment for calendar
-     * if(name == SCREEN_NAMES.CALENDAR){
+     * if(name == AppLocalizations.of(context)!.calendarScreenName){
       return Calendar();
     }*/
 
@@ -80,7 +80,7 @@ class _MainNavigatorState extends  State<MainNavigator> {
           leading: IconButton(
 
               onPressed: () {
-                _setScreenName(SCREEN_NAMES.SETTING);
+                _setScreenName(AppLocalizations.of(context)!.settingScreenName);
               },
               icon: Icon(
                 Icons.settings,
@@ -128,21 +128,21 @@ class _MainNavigatorState extends  State<MainNavigator> {
               Icons.home,
               size: 40,
             ),
-            title: Text('Menu'),
+            title: Text(AppLocalizations.of(context)!.menuScreenName),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.event_note_sharp,
               size: 40,
             ),
-            title: Text('Notes'),
+            title: Text(AppLocalizations.of(context)!.notesScreenName),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications,
               size: 40,
             ),
-            title: Text('Notification'),
+            title: Text(AppLocalizations.of(context)!.notificationsScreenName),
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
