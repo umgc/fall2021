@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:untitled3/Screens/Note.dart';
+import 'package:untitled3/Screens/Note/Note.dart';
 import 'Setting.dart';
-import 'Note.dart';
+import 'Note/Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'Menu.dart';
+import './Note/SaveNote.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../Utility/Constant.dart';
 import '../Observables/ScreenNavigator.dart';
+
+final mainScaffoldKey = GlobalKey<ScaffoldState>();
 
 /// This is the stateful widget that the main application instantiates.
 class MainNavigator extends StatefulWidget {
@@ -21,7 +27,6 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends  State<MainNavigator> {
   int _currentIndex =0;
-  String _screenName = "";
   ScreenNav screenNav = ScreenNav();
 
   static List<Widget> _widgetOptions = <Widget>[
@@ -59,26 +64,67 @@ class _MainNavigatorState extends  State<MainNavigator> {
 
   Widget _changeScreen(String name, index){
     print("Return "+name);
-
     if(name == SCREEN_NAMES.SETTING){
       print("Return "+name);
       return Setting();
     }
+    if(name == SCREEN_NAMES.NOTE){
+      print("Return "+name);
+      return ViewNotes();
+    }
+  
     /**
      * TODO: Uncomment for calendar
      * if(name == SCREEN_NAMES.CALENDAR){
       return Calendar();
     }*/
-
     return _widgetOptions.elementAt(index);
-
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
 
-        appBar: AppBar(
+ // flag to control whether or not results are read
+  bool readResults = false;
+
+  // flag to indicate a voice search
+  bool voiceSearch = false;
+
+  // Search bar to insert in the app bar header
+  late SearchBar searchBar;
+
+  // voice helper service
+
+  /// Value of search filter to be used in filtering search results
+  String searchFilter = "";
+
+  /// Search is submitted from search bar
+  onSubmitted(value) {
+    if (voiceSearch) {
+      voiceSearch = false;
+      readResults = true;
+    }
+    searchFilter = value;
+    setState(() => mainScaffoldKey.currentState);
+  }
+
+  // Search has been cleared from search bar
+  onCleared() {
+    searchFilter = "";
+  }
+
+  _getSearchBar() {
+    searchFilter = "";
+    return new SearchBar(
+        inBar: false,
+        setState: setState,
+        onSubmitted: onSubmitted,
+        onCleared: onCleared,
+        buildDefaultAppBar: buildAppBar);
+  }
+
+
+AppBar buildAppBar(BuildContext context) {
+
+    return AppBar(
           leading: IconButton(
 
               onPressed: () {
@@ -113,7 +159,14 @@ class _MainNavigatorState extends  State<MainNavigator> {
               ],
             )
           ],
-        ),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      appBar: buildAppBar(context), 
 
       body:Center(
         child: Observer(

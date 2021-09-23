@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../Components/notedetails.dart';
-import '../Services/textnoteservice.dart';
+import 'NoteDetail.dart';
+import '../../Services/NoteService.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'Setting.dart';
-import 'NoteID.dart' as ID;
+import '../Setting.dart';
+import '../../Model/Note.dart';
+import '../NoteID.dart' as ID;
 
 final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 /// View Notes page
@@ -19,11 +20,11 @@ class _ViewNotesState extends State<ViewNotes> {
   // flag to control whether or not results are read
   bool readResults = false;
 
-  // flag to indicate a voice search
-  bool voiceSearch = false;
+  // voice helper service
 
-  // Search bar to insert in the app bar header
-  late SearchBar searchBar;
+  /// Value of search filter to be used in filtering search results
+  String searchFilter = "";
+
 
   // text to speech
   FlutterTts flutterTts = FlutterTts();
@@ -31,17 +32,8 @@ class _ViewNotesState extends State<ViewNotes> {
   /// Text note service to use for I/O operations against local system
   TextNoteService textNoteService = new TextNoteService();
 
-  // voice helper service
-
-  /// Value of search filter to be used in filtering search results
-  String searchFilter = "";
-
   /// Search is submitted from search bar
   onSubmitted(value) {
-    if (voiceSearch) {
-      voiceSearch = false;
-      readResults = true;
-    }
     searchFilter = value;
     setState(() => viewNotesScaffoldKey.currentState);
   }
@@ -52,41 +44,12 @@ class _ViewNotesState extends State<ViewNotes> {
   }
 
   _ViewNotesState() {
-    searchBar = new SearchBar(
-        inBar: false,
-        setState: setState,
-        onSubmitted: onSubmitted,
-        onCleared: onCleared,
-        buildDefaultAppBar: buildAppBar);
     searchFilter = "";
   }
 
-  void voiceHandler(Map<String, dynamic> inference) {
-    if (inference['isUnderstood']) {
-      if (inference['intent'] == 'searchNotes') {
-        print('Searching for: ' + inference['slots']['date']);
-        voiceSearch = true;
-        onSubmitted(inference['slots']['date'].toString());
-      }
-      if (inference['intent'] == 'startTranscription') {
-        print('start recording');
-        Navigator.pushNamed(context, '/record-notes');
-      }
-      if (inference['intent'] == 'searchDetails') {
-        print('Searching for personal detail');
-        Navigator.pushNamed(context, '/view-details');
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Sorry, I did not understand'),
-          backgroundColor: Colors.deepOrange,
-          duration: const Duration(seconds: 1)));
-    }
-  }
-
   Future readFilterResults() async {
-    List<dynamic> textNotes =
-        await textNoteService.getTextFileList(searchFilter);
+    List<dynamic> textNotes =[];
+    //await textNoteService.getTextFileList(searchFilter);
     if (textNotes.isNotEmpty) {
       if (readResults) {
         for (TextNote note in textNotes) {
@@ -100,46 +63,11 @@ class _ViewNotesState extends State<ViewNotes> {
     }
   }
 
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-          onPressed: () {
-
-
-          },
-          icon: Icon(
-            Icons.settings,
-            color: Colors.white,
-            size: 35,
-          )),
-      toolbarHeight: 90,
-      title: Text('Notes',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.black)),
-      backgroundColor: Color(0xFF33ACE3),
-      centerTitle: true,
-      actions: <Widget>[
-        searchBar.getSearchAction(context),
-        Row(
-          children: <Widget>[
-            IconButton(
-                onPressed: () {
-
-                },
-                icon: Icon(
-                  Icons.event_note_sharp,
-                  color: Colors.white,
-                  size: 35,
-                ))
-          ],
-        )
-      ],);
-  }
-
   @override
   Widget build(BuildContext context) {
 
     return FutureBuilder<List<dynamic>>(
-        future: textNoteService.getTextFileList(searchFilter),
+        //future: textNoteService.getTextFileList(searchFilter),
         builder: (context, AsyncSnapshot<List<dynamic>> textNotes) {
           if (textNotes.hasData) {
             readFilterResults();
@@ -153,13 +81,13 @@ class _ViewNotesState extends State<ViewNotes> {
                   padding: EdgeInsets.all(10),
                   child: SingleChildScrollView(
                     child: textNotes.data == null || textNotes.data?.length == 0
-                        // No text notes found, tell user
+                    // No text notes found, tell user
                         ? Text(
-                            "Uh-oh! It looks like you don't have any text notes saved. Try saving some notes first and come back here.",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ))
-                    :Table(
+                        "Uh-oh! It looks like you don't have any text notes saved. Try saving some notes first and come back here.",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ))
+                        :Table(
                         border: TableBorder.all(),
                         columnWidths: const <int, TableColumnWidth>{
                           0: FlexColumnWidth(.45),
@@ -264,7 +192,7 @@ class _ViewNotesState extends State<ViewNotes> {
                                   )),
                             ]),
                         ]),
-                        // Add table rows for each text note
+                    // Add table rows for each text note
                   ),
                 ))
               ]),

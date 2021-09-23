@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../Utility/Constant.dart';
 import 'HomeScreen.dart';
 import 'Setting.dart';
-import 'package:untitled3/Screens/Note.dart';
+import 'package:untitled3/Screens/Note/Note.dart';
 import 'Setting.dart';
 import 'NotificationScreen.dart';
 import 'Menu.dart';

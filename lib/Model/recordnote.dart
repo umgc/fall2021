@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled3/Services/textnoteservice.dart';
+import 'package:untitled3/Services/NoteService.dart';
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -19,8 +19,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
-
-
+   
   Future<bool> isFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = prefs.getBool('first_time') ?? true;
@@ -64,7 +63,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
         if (_textSpeech != '' &&
             _textSpeech != 'Press the mic button to start') {
           // if it was, then save it as a note
-          textNoteService.saveTextFile(_textSpeech, false);
           showConfirmDialog(context);
         }
       });

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Note.dart';
+import 'Note/Note.dart';
 
 class Setting extends StatefulWidget {
 

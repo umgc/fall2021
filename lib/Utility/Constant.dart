@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SCREEN_NAMES {
    static final String MENU = "MENU";
+   static final String SAVE_NOTE = "SAVE_NOTE";
    static final String NOTE = "NOTE";
    static final String HOME = "HOME";
    static final String NOTIFICATION = "NOTIFICATION";

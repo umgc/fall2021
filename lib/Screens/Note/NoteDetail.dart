@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled3/Screens/Menu.dart';
-import 'package:untitled3/Services/textnoteservice.dart';
+import 'package:untitled3/Services/NoteService.dart';
+import '../../Model/Note.dart';
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({
@@ -46,7 +47,7 @@ class _NoteDetailssState extends State<NoteDetails> {
     final args = ModalRoute.of(context)!.settings.arguments as String?;
 
     return FutureBuilder<dynamic>(
-        future: textNoteService.getTextFile(args ?? ""),
+        //future: textNoteService.getTextFile(args ?? ""),
         builder: (context, AsyncSnapshot<dynamic> selectedNote) {
           //passed Note text is set here - Alec
           if (selectedNote.hasData) {
@@ -126,11 +127,15 @@ class _NoteDetailssState extends State<NoteDetails> {
                             children: <Widget>[
                               ElevatedButton(
                                 onPressed: () async {
+                                  
+                                  /*
+                                  TODO: Update function 
                                   textNoteService.updateTextFile(new TextNote(
                                       selectedNote.data.fileName,
                                       selectedNote.data.dateTime,
                                       edits,
-                                      false));
+                                      false));*/
+
                                   Navigator.pushNamed(context, '/view-notes');
                                 },
                                 child: Icon(
@@ -207,8 +212,9 @@ class _NoteDetailssState extends State<NoteDetails> {
         style: TextStyle(fontSize: 20),
       ),
       onPressed: () {
-        textNoteService.deleteTextFile(new TextNote(selectedNote.data.fileName,
-            selectedNote.data.dateTime, edits, false));
+        //TODO: implement a new detete process
+        //textNoteService.deleteTextFile(new TextNote(selectedNote.data.fileName,
+          //  selectedNote.data.dateTime, edits, false));
         //closing the popup here may not be neccessary
         Navigator.of(context).pop();
         Navigator.pushNamed(context, '/view-notes');
