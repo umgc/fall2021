@@ -4,7 +4,6 @@ import '../Services/textnoteservice.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'Setting.dart';
 import 'NoteID.dart' as ID;
 
 final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();

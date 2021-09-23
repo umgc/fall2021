@@ -1,0 +1,9 @@
+{
+    "homeScreenName": "Casa",
+    "menuScreenName": "Cardápio",
+    "notesScreenName": "Notas",
+    "notificationsScreenName": "Notificações",
+    "settingScreenName": "Configuração",
+    "calendarScreenName": "Calendário",
+    "micButton": "Microfone"
+}

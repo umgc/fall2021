@@ -1,0 +1,9 @@
+{
+    "homeScreenName": "家",
+    "menuScreenName": "菜单",
+    "notesScreenName": "笔记",
+    "notificationsScreenName": "通知",
+    "settingScreenName": "环境",
+    "calendarScreenName": "日历",
+    "micButton": "麦克风"
+}
