@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:untitled3/Screens/Note.dart';
+import 'package:untitled3/generated/i18n.dart';
 import 'Setting.dart';
 import 'Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'Menu.dart';
-import '../Utility/Constant.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class MainNavigator extends StatefulWidget {
@@ -48,10 +46,10 @@ class _MainNavigatorState extends  State<MainNavigator> {
     //TODO: make sure index is less than length of array
 
     List <String> screenNames = [
-      AppLocalizations.of(context)!.menuScreenName,
-      AppLocalizations.of(context)!.notesScreenName,
-      AppLocalizations.of(context)!.notificationsScreenName,
-      AppLocalizations.of(context)!.homeScreenName,
+      I18n.of(context)!.menuScreenName,
+      I18n.of(context)!.notesScreenName,
+      I18n.of(context)!.notificationsScreenName,
+      I18n.of(context)!.homeScreenName,
     ];
 
     _setScreenName(screenNames[index]);
@@ -59,7 +57,7 @@ class _MainNavigatorState extends  State<MainNavigator> {
 
   Widget _pickScreen(String name, index){
 
-    if(name == AppLocalizations.of(context)!.settingScreenName){
+    if(name == I18n.of(context)!.settingScreenName){
       return Setting();
     }
     /**
@@ -80,7 +78,7 @@ class _MainNavigatorState extends  State<MainNavigator> {
           leading: IconButton(
 
               onPressed: () {
-                _setScreenName(AppLocalizations.of(context)!.settingScreenName);
+                _setScreenName(I18n.of(context)!.settingScreenName);
               },
               icon: Icon(
                 Icons.settings,
@@ -128,21 +126,21 @@ class _MainNavigatorState extends  State<MainNavigator> {
               Icons.home,
               size: 40,
             ),
-            title: Text(AppLocalizations.of(context)!.menuScreenName),
+            label: I18n.of(context)!.menuScreenName,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.event_note_sharp,
               size: 40,
             ),
-            title: Text(AppLocalizations.of(context)!.notesScreenName),
+            label: I18n.of(context)!.notesScreenName,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications,
               size: 40,
             ),
-            title: Text(AppLocalizations.of(context)!.notificationsScreenName),
+            label: I18n.of(context)!.notificationsScreenName,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -150,7 +148,7 @@ class _MainNavigatorState extends  State<MainNavigator> {
               width: 51.84,
               height: 46,
             ),
-            title: Text('Mic'),
+            label: I18n.of(context)!.micButton,
             activeIcon: Image.asset(
               "assets/images/mic.png",
               width: 51.84,

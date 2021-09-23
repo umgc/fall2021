@@ -3,6 +3,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled3/Services/textnoteservice.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -19,7 +20,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
-
 
   Future<bool> isFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -53,8 +53,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
         });
         _speech.listen(
             onResult: (val) => setState(() {
-              _textSpeech = val.recognizedWords;
-            }));
+                  _textSpeech = val.recognizedWords;
+                }));
       }
     } else {
       setState(() {
@@ -103,24 +103,20 @@ class _SpeechScreenState extends State<SpeechScreen> {
   @override
   Widget build(BuildContext context) {
     if (!_isListening) {
-    } else {
-    }
+    } else {}
 
     isFirstTime();
 
     return Scaffold(
       key: recordNoteScaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
-
-
       floatingActionButton: AvatarGlow(
-        animate: _isListening,
-        glowColor: Theme.of(context).primaryColor,
-        endRadius: 80,
-        duration: Duration(milliseconds: 2000),
-        repeatPauseDuration: const Duration(milliseconds: 100),
-        repeat: true,
+          animate: _isListening,
+          glowColor: Theme.of(context).primaryColor,
+          endRadius: 80,
+          duration: Duration(milliseconds: 2000),
+          repeatPauseDuration: const Duration(milliseconds: 100),
+          repeat: true,
           child: Container(
             width: 200.0,
             height: 200.0,
@@ -133,9 +129,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
                   color: Color(0xFF33ACE3),
                   height: 100,
                   width: 100.82,
-
                 ),
-                Text('Press to Record',
+                Text(I18n.of(context)!.notesScreenName,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
