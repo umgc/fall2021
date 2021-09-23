@@ -27,16 +27,6 @@ abstract class _AbstractNoteScreen with Store {
     saveNote(usersNotes);
   }
 
-  void loadNotes(){
-    noteService.loadNotes().then((value) => setNotes(value));
-  }
-
-  void saveNote(List<TextNote> usersNotes){
-    print("Saving notes to");
-    noteService.persistNotes(usersNotes);
-  }
-  
-  
   @action
   void setNotes(notes){
     print("set note to: ${notes}");
@@ -49,5 +39,14 @@ abstract class _AbstractNoteScreen with Store {
     currentScreen = name;
   }
 
+  void loadNotes(){
+    noteService.loadNotes().then((value) => setNotes(value));
+  }
+
+  void saveNote(List<TextNote> usersNotes){
+    print("Saving notes to");
+    noteService.persistNotes(usersNotes);
+  }
+  
 }
 
