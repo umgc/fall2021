@@ -4,10 +4,9 @@ import 'package:highlight_text/highlight_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'dart:collection';
 
-
+import 'package:untitled3/generated/i18n.dart';
 
 class Speech extends StatefulWidget {
-
   @override
   _SpeechState createState() => _SpeechState();
 }
@@ -85,9 +84,8 @@ class _SpeechState extends State<Speech> {
                   color: Color(0xFF33ACE3),
                   height: 100,
                   width: 100.82,
-
                 ),
-                Text('Press to Record',
+                Text(I18n.of(context)!.notesScreenName,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -99,7 +97,6 @@ class _SpeechState extends State<Speech> {
       body: SingleChildScrollView(
         reverse: true,
         child: Container(
-
           padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 150.0),
           child: TextHighlight(
             text: _text,

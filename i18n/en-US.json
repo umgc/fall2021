@@ -5,5 +5,6 @@
     "notificationsScreenName": "Notifications",
     "settingScreenName": "Setting",
     "calendarScreenName": "Calendar",
-    "micButton": "Mic"
+    "micButton": "Mic",
+    "pressToRecord": "Press to Record"
 }
