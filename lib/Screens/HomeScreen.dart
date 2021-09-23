@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'Setting.dart';
 import 'package:untitled3/Model/recordnote.dart';
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,7 +9,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-
 
   void _onItemTapped(int index) {
     setState(() {
@@ -24,10 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-        body: SpeechScreen(),
-
+      body: SpeechScreen(),
     );
-
   }
 }
