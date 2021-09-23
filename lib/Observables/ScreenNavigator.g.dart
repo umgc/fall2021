@@ -8,8 +8,9 @@ part of 'ScreenNavigator.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ScreenNav on AbstractScreenNav, Store {
-  final _$currentScreenAtom = Atom(name: 'AbstractScreenNav.currentScreen');
+mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
+  final _$currentScreenAtom =
+      Atom(name: '_AbstractMainNavObserver.currentScreen');
 
   @override
   String get currentScreen {
@@ -24,17 +25,17 @@ mixin _$ScreenNav on AbstractScreenNav, Store {
     });
   }
 
-  final _$AbstractScreenNavActionController =
-      ActionController(name: 'AbstractScreenNav');
+  final _$_AbstractMainNavObserverActionController =
+      ActionController(name: '_AbstractMainNavObserver');
 
   @override
   void changeScreen(String name) {
-    final _$actionInfo = _$AbstractScreenNavActionController.startAction(
-        name: 'AbstractScreenNav.changeScreen');
+    final _$actionInfo = _$_AbstractMainNavObserverActionController.startAction(
+        name: '_AbstractMainNavObserver.changeScreen');
     try {
       return super.changeScreen(name);
     } finally {
-      _$AbstractScreenNavActionController.endAction(_$actionInfo);
+      _$_AbstractMainNavObserverActionController.endAction(_$actionInfo);
     }
   }
 

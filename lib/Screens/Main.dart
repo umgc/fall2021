@@ -28,7 +28,7 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends  State<MainNavigator> {
   int _currentIndex =0;
-  ScreenNav screenNav = ScreenNav();
+  MainNavObserver screenNav = MainNavObserver();
 
   static List<Widget> _widgetOptions = <Widget>[
     Menu(),
@@ -68,7 +68,7 @@ class _MainNavigatorState extends  State<MainNavigator> {
     if(name == I18n.of(context)!.settingScreenName){
       return Setting();
     }
-    if(name == name == I18n.of(context)!.notesScreenName){
+    if(name == I18n.of(context)!.notesScreenName){
       print("Return "+name);
       return ViewNotes();
     }

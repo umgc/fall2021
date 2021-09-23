@@ -39,39 +39,39 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
-  final _$_AbstractNoteScreenActionController =
+  final _$_AbstractNoteObserverActionController =
       ActionController(name: '_AbstractNoteObserver');
 
   @override
   void addNote(TextNote note) {
-    final _$actionInfo = _$_AbstractNoteScreenActionController.startAction(
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.addNote');
     try {
       return super.addNote(note);
     } finally {
-      _$_AbstractNoteScreenActionController.endAction(_$actionInfo);
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setNotes(dynamic notes) {
-    final _$actionInfo = _$_AbstractNoteScreenActionController.startAction(
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.setNotes');
     try {
       return super.setNotes(notes);
     } finally {
-      _$_AbstractNoteScreenActionController.endAction(_$actionInfo);
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void changeScreen(String name) {
-    final _$actionInfo = _$_AbstractNoteScreenActionController.startAction(
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.changeScreen');
     try {
       return super.changeScreen(name);
     } finally {
-      _$_AbstractNoteScreenActionController.endAction(_$actionInfo);
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
     }
   }
 
