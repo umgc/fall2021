@@ -148,7 +148,7 @@ class _MainNavigatorState extends  State<MainNavigator> {
               width: 51.84,
               height: 46,
             ),
-            label: 'Mic',
+            label: I18n.of(context)!.micButton,
             activeIcon: Image.asset(
               "assets/images/mic.png",
               width: 51.84,
