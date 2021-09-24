@@ -1,8 +1,5 @@
 // Official
 import 'package:flutter/material.dart';
-import 'package:untitled3/Model/Note.dart';
-import 'dart:developer';
-
 // Internal
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
@@ -15,7 +12,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
+  
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.delegate;

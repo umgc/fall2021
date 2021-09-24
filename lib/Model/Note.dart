@@ -1,8 +1,10 @@
 
+import '../Services/NoteService.dart';
+
 class TextNote {
   TextNote();
   /// Name of the text note file
-  String noteId = "noteId";
+  String noteId = TextNoteService.generateUUID();
 
   /// Date and time when the text note was recorded
   DateTime recordedTime = DateTime.now();
@@ -20,7 +22,7 @@ class TextNote {
   bool isEvent = false;
 
   /// Actual text of the text note
-  String text = "text";
+  String text = "";
 
   /// Whether or not this text file is flagged as a favorite
   bool isFavorite = false;

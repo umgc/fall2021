@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Services/NoteService.dart';
-import 'package:untitled3/Screens/Setting.dart';
 import '../../Observables/NoteObservable.dart';
 import '../../Utility/Constant.dart';
 
@@ -10,14 +12,12 @@ final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 /// Save Note page
 class SaveNote extends StatefulWidget {
   
-  var navScreenObs;
 
-  SaveNote(navScreenObs){
-    this.navScreenObs = navScreenObs;
+  SaveNote(){
   }
 
   @override
-  State<SaveNote> createState() => _SaveNoteState(navScreenObs);
+  State<SaveNote> createState() => _SaveNoteState();
 }
 
 class _SaveNoteState extends State<SaveNote> {
@@ -25,10 +25,9 @@ class _SaveNoteState extends State<SaveNote> {
   final TextNoteService textNoteService = new TextNoteService();
 
   final textController = TextEditingController();
-  var navScreenObs; 
-
-  _SaveNoteState( NoteObserver navScreenObs ){
-    this.navScreenObs = navScreenObs;
+   
+  _SaveNoteState(){
+    //this.navScreenObs = navScreenObs;
   }
 
   @override
@@ -37,8 +36,24 @@ class _SaveNoteState extends State<SaveNote> {
     super.dispose();
   }
 
+
+  void showToast() {  
+    Fluttertoast.showToast(  
+        msg: 'NOTE SAVED',  
+        toastLength: Toast.LENGTH_LONG,  
+        gravity: ToastGravity.BOTTOM,  
+        backgroundColor: Colors.green,  
+        textColor: Colors.white,
+        timeInSecForIosWeb: 4
+    );  
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final noteObserver = Provider.of<NoteObserver>(context);
+
+
     return Scaffold(
       key: saveNoteScaffoldKey,
       body: Container(
@@ -62,10 +77,14 @@ class _SaveNoteState extends State<SaveNote> {
                       Colors.deepPurple.shade300),
                 ),
                 onPressed: () {
+
                   if (textController.text.length > 0) {
-                    //textNoteService.saveTextFile(textController.text, false);
-                    //showConfirmDialog(context); there should be a "Note Save" toast instead
-                    navScreenObs.changeScreen(SCREEN_NAMES.NOTE);
+
+                    TextNote note = TextNote();
+                    note.text = textController.text;
+                    noteObserver.addNote(note);
+                    showToast();
+                    noteObserver.changeScreen(SCREEN_NAMES.NOTE);
                   }
                 },
                 child: Text('Save'),
@@ -82,7 +101,7 @@ class _SaveNoteState extends State<SaveNote> {
     Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
-        navScreenObs.changeScreen(SCREEN_NAMES.NOTE);
+        //navScreenObs.changeScreen(SCREEN_NAMES.NOTE);
       },
     );
 

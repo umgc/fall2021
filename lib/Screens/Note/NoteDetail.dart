@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Screens/Menu.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import '../../Model/Note.dart';
@@ -43,52 +46,17 @@ class _NoteDetailssState extends State<NoteDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final noteObserver = Provider.of<NoteObserver>(context);
+
     //This method returns the current route with the arguments - Alec
-    final args = ModalRoute.of(context)!.settings.arguments as String?;
 
-    return FutureBuilder<dynamic>(
-        //future: textNoteService.getTextFile(args ?? ""),
-        builder: (context, AsyncSnapshot<dynamic> selectedNote) {
-          //passed Note text is set here - Alec
-          if (selectedNote.hasData) {
-            editController.text = selectedNote.data?.text ?? "";
-
-            return Scaffold(
-              //drawer: BaseMenuDrawer(),
-              appBar: AppBar(
-                leading: IconButton(
-
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Menu()),);
-                    },
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                      size: 35,
-                    )),
-                toolbarHeight: 90,
-                title: Text('Menu',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.black)),
-                backgroundColor: Color(0xFF33ACE3),
-                centerTitle: true,
-                actions: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      IconButton(
-                          onPressed: () {
-
-                          },
-                          icon: Icon(
-                            Icons.event_note_sharp,
-                            color: Colors.white,
-                            size: 35,
-                          ))
-                    ],
-                  )
-                ],
-              ),
-              body: ListView(
+    return Observer(
+             builder: (_) => Scaffold(
+              
+            body: 
+              (noteObserver.CurrNoteForDetails == null)?
+                  Text("Loading...")
+              : ListView(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(8.0),
@@ -109,8 +77,8 @@ class _NoteDetailssState extends State<NoteDetails> {
                                 child: Center(
                                   child: Text(
                                     //passed date String should display here - Alec
-                                    dateFormat
-                                        .format(selectedNote.data.dateTime),
+                                    dateFormat.format(noteObserver.CurrNoteForDetails!.recordedTime),
+
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -136,7 +104,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                                       edits,
                                       false));*/
 
-                                  Navigator.pushNamed(context, '/view-notes');
+                                  //Navigator.pushNamed(context, '/view-notes');
                                 },
                                 child: Icon(
                                   Icons.save,
@@ -153,7 +121,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                             children: <Widget>[
                               ElevatedButton(
                                 onPressed: () async {
-                                  showAlertDialog(context, selectedNote);
+                                  showAlertDialog(context, noteObserver.CurrNoteForDetails);
                                 },
                                 child: Icon(
                                   Icons.delete,
@@ -185,12 +153,8 @@ class _NoteDetailssState extends State<NoteDetails> {
                   ),
                 ],
               ),
-              //bottomNavigationBar: BottomBar(0),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+            )
+      );
   }
 
 //This alert dialog runs when Delete buttion is selected

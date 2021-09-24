@@ -8,14 +8,15 @@ class NoteObserver = _AbstractNoteObserver with _$NoteObserver;
 
 abstract class _AbstractNoteObserver with Store {
 
-  TextNoteService noteService = TextNoteService();
-
   _AbstractNoteObserver(){
-    noteService.loadNotes().then((value) => setNotes(value));
+    TextNoteService.loadNotes().then((value) => setNotes(value));
   }
 
   @observable
   String currentScreen = "";
+
+  @observable
+  TextNote? CurrNoteForDetails;
 
   @observable 
   List<TextNote> usersNotes = []; 
@@ -24,7 +25,19 @@ abstract class _AbstractNoteObserver with Store {
   void addNote(TextNote note){
     print("Adding note to: ${note.noteId}");
     usersNotes.add(note);
-    noteService.persistNotes(usersNotes);
+    TextNoteService.persistNotes(usersNotes);
+  }
+
+
+  @action
+  void setCurrNoteIdForDetails(noteId){
+    print("Find Noteid: $noteId");
+    
+    for( TextNote note in usersNotes ){
+        if(note.noteId == noteId){
+          CurrNoteForDetails = note;
+        }
+    }
   }
 
   @action
@@ -35,7 +48,7 @@ abstract class _AbstractNoteObserver with Store {
 
   @action
   void changeScreen(String name){
-    print("Screen changed to: "+ name);
+    print("Note Screen changed to: "+ name);
     currentScreen = name;
   }
 }
