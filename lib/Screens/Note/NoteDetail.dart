@@ -20,18 +20,14 @@ class NoteDetails extends StatefulWidget {
 }
 
 class _NoteDetailssState extends State<NoteDetails> {
+
   final editController = TextEditingController();
-  String edits = "";
+
   static final dateFormat = new DateFormat('EEE, MMM d, yyyy\nh:mm a');
 
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
 
-  @override
-  void initState() {
-    super.initState();
-    editController.addListener(_storeLatestValue);
-  }
 
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
@@ -40,15 +36,12 @@ class _NoteDetailssState extends State<NoteDetails> {
     super.dispose();
   }
 
-  void _storeLatestValue() {
-    edits = ('${editController.text}');
-  }
-
   @override
   Widget build(BuildContext context) {
+    
     final noteObserver = Provider.of<NoteObserver>(context);
-
-    //This method returns the current route with the arguments - Alec
+    editController.text = noteObserver.CurrNoteForDetails!.text;
+    editController.addListener( ()=> noteObserver.CurrNoteForDetails!.text = ('${editController.text}'));
 
     return Observer(
              builder: (_) => Scaffold(
