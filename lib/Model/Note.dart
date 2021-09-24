@@ -62,34 +62,5 @@ class TextNote {
 
 }
 
-/// Defines a specific personal detail
-class PersonalDetail {
-  /// Name of the personal detail file
-  String fileName;
-
-  /// key of the personal detail
-  String key;
-
-  /// value of the personal detail
-  String value;
-
-  /// Constructor takes all properties as params
-  PersonalDetail(this.fileName, this.key, this.value);
-}
 
 
-
-/// Defines the settings object
-class Setting {
-  /// days to keep files before clearing them
-  String daysToKeepFiles;
-
-  /// seconds to listen before stopping a recording
-  String secondsSilence;
-
-  /// path to the wake word file
-  String pathToWakeWord;
-
-  /// Constructor takes all properties as params
-  Setting(this.daysToKeepFiles, this.secondsSilence, this.pathToWakeWord);
-}
