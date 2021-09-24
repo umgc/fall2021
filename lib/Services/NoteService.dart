@@ -14,11 +14,9 @@ class TextNoteService {
   /// Save a text note file to local storage
   static Future<List<TextNote>> loadNotes() async {
     List<TextNote> userTextNotes = [];
-    TextNote textNote; 
     dynamic listExtract = await FileUtil.readJson(FILE_NAME).then((value) => value);
     for( var note in listExtract){
-      textNote = TextNote.fromJson(note);
-      userTextNotes.add(textNote);        
+      userTextNotes.add(TextNote.fromJson(note));        
     }
     return  userTextNotes;
   }
