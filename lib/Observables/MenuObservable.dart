@@ -10,7 +10,7 @@ abstract class _AbstractMenuObserver with Store {
 
   @action
   void changeScreen(String name){
-    print("Note Screen changed to: "+ name);
+    print("Screen changed to: "+ name);
     currentScreen = name;
   }
 
