@@ -3,6 +3,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 import '../../Observables/NoteObservable.dart';
 import '../../Utility/Constant.dart';
@@ -15,11 +16,13 @@ final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 class ViewNotes extends StatefulWidget {
   @override
   _ViewNotesState createState() => _ViewNotesState();
+
+
 }
 
 class _ViewNotesState extends State<ViewNotes> {
+   
   _ViewNotesState();
-
   // text to speech
   // FlutterTts flutterTts = FlutterTts();
 
@@ -43,6 +46,9 @@ class _ViewNotesState extends State<ViewNotes> {
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
     noteObserver.changeScreen(SCREEN_NAMES.NOTE);
+    String NOTE_DETAIL_SCREEN =I18n.of(context)!.notesDetailScreenName;
+    String NOTE_SCREEN =I18n.of(context)!.notesScreenName;
+    String ADD_NOTE =I18n.of(context)!.addNotesScreenName;
 
     return Observer(
         builder: (_) =>
@@ -131,7 +137,7 @@ class _ViewNotesState extends State<ViewNotes> {
 
                                     child: GestureDetector(
                                         onTap: () {
-                                          //noteObserver.changeScreen(SCREEN_NAMES.SAVE_NOTE);
+                                          //noteObserver.changeScreen(ADD_NOTE);
                                       },
                                           
                                   child: TextButton(
@@ -142,7 +148,7 @@ class _ViewNotesState extends State<ViewNotes> {
                                       // parameter.
                                       //open not details
                                       noteObserver.setCurrNoteIdForDetails(textNote.noteId);
-                                      noteObserver.changeScreen(SCREEN_NAMES.NOTE_DETAIL);
+                                      noteObserver.changeScreen(NOTE_DETAIL_SCREEN);
                                     },
                                     child: Container(
                                         padding: EdgeInsets.all(10),
@@ -160,16 +166,16 @@ class _ViewNotesState extends State<ViewNotes> {
                 floatingActionButton: FloatingActionButton(
 
                     onPressed: () {
-                      noteObserver.changeScreen(SCREEN_NAMES.SAVE_NOTE);
+                      noteObserver.changeScreen(ADD_NOTE);
                     },
                     tooltip: 'Save Note',
                     child: Icon(Icons.add),
                 )
             )
             
-            : (noteObserver.currentScreen == SCREEN_NAMES.SAVE_NOTE)
+            : (noteObserver.currentScreen == ADD_NOTE)
                 ? SaveNote()
-                : (noteObserver.currentScreen == SCREEN_NAMES.NOTE_DETAIL)?
+                : (noteObserver.currentScreen == NOTE_DETAIL_SCREEN)?
                     NoteDetails()
                 : Text("Oopps")
     );
