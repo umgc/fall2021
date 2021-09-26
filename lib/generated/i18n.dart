@@ -38,6 +38,10 @@ class I18n implements WidgetsLocalizations {
 	String get menuScreenName => "Menu";
 	/// "Notes"
 	String get notesScreenName => "Notes";
+  //Note Detail
+  String get notesDetailScreenName => "Notes Details";
+  //Save notes screen
+  String get addNotesScreenName => "Add Notes";
 	/// "Notifications"
 	String get notificationsScreenName => "Notifications";
 	/// "Setting"
