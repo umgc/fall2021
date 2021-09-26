@@ -6,6 +6,8 @@ import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Screens/Menu.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import '../../Model/Note.dart';
+import 'package:untitled3/generated/i18n.dart';
+
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({
@@ -40,14 +42,14 @@ class _NoteDetailssState extends State<NoteDetails> {
   Widget build(BuildContext context) {
     
     final noteObserver = Provider.of<NoteObserver>(context);
-    editController.text = noteObserver.CurrNoteForDetails!.text;
-    editController.addListener( ()=> noteObserver.CurrNoteForDetails!.text = ('${editController.text}'));
+    editController.text = noteObserver.currNoteForDetails!.text;
+    editController.addListener( ()=> noteObserver.currNoteForDetails!.text = ('${editController.text}'));
 
     return Observer(
              builder: (_) => Scaffold(
               
             body: 
-              (noteObserver.CurrNoteForDetails == null)?
+              (noteObserver.currNoteForDetails == null)?
                   Text("Loading...")
               : ListView(
                 children: <Widget>[
@@ -70,7 +72,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                                 child: Center(
                                   child: Text(
                                     //passed date String should display here - Alec
-                                    dateFormat.format(noteObserver.CurrNoteForDetails!.recordedTime),
+                                    dateFormat.format(noteObserver.currNoteForDetails!.recordedTime),
 
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -114,7 +116,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                             children: <Widget>[
                               ElevatedButton(
                                 onPressed: () async {
-                                  showAlertDialog(context, noteObserver.CurrNoteForDetails);
+                                  showAlertDialog(context, noteObserver);
                                 },
                                 child: Icon(
                                   Icons.delete,
@@ -151,7 +153,7 @@ class _NoteDetailssState extends State<NoteDetails> {
   }
 
 //This alert dialog runs when Delete buttion is selected
-  showAlertDialog(BuildContext context, selectedNote) {
+  showAlertDialog(BuildContext context, NoteObserver noteObserver) {
     // set up the buttons
     Widget cancelButton = TextButton(
       child: Text(
@@ -169,12 +171,9 @@ class _NoteDetailssState extends State<NoteDetails> {
         style: TextStyle(fontSize: 20),
       ),
       onPressed: () {
-        //TODO: implement a new detete process
-        //textNoteService.deleteTextFile(new TextNote(selectedNote.data.fileName,
-          //  selectedNote.data.dateTime, edits, false));
-        //closing the popup here may not be neccessary
+        noteObserver.deleteNote(noteObserver.currNoteForDetails);
+        noteObserver.changeScreen(I18n.of(context)!.notesScreenName);
         Navigator.of(context).pop();
-        Navigator.pushNamed(context, '/view-notes');
       },
     );
     // set up the AlertDialog
