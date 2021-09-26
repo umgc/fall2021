@@ -24,6 +24,22 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
+  final _$CurrNoteForDetailsAtom =
+      Atom(name: '_AbstractNoteObserver.CurrNoteForDetails');
+
+  @override
+  TextNote? get CurrNoteForDetails {
+    _$CurrNoteForDetailsAtom.reportRead();
+    return super.CurrNoteForDetails;
+  }
+
+  @override
+  set CurrNoteForDetails(TextNote? value) {
+    _$CurrNoteForDetailsAtom.reportWrite(value, super.CurrNoteForDetails, () {
+      super.CurrNoteForDetails = value;
+    });
+  }
+
   final _$usersNotesAtom = Atom(name: '_AbstractNoteObserver.usersNotes');
 
   @override
@@ -48,6 +64,17 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
         name: '_AbstractNoteObserver.addNote');
     try {
       return super.addNote(note);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCurrNoteIdForDetails(dynamic noteId) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setCurrNoteIdForDetails');
+    try {
+      return super.setCurrNoteIdForDetails(noteId);
     } finally {
       _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
     }
@@ -79,6 +106,7 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   String toString() {
     return '''
 currentScreen: ${currentScreen},
+CurrNoteForDetails: ${CurrNoteForDetails},
 usersNotes: ${usersNotes}
     ''';
   }

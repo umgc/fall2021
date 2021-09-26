@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:untitled3/Observables/MenuObservable.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/generated/i18n.dart';
@@ -9,8 +10,12 @@ import 'Setting.dart';
 import 'Note/Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
-import 'Menu.dart';
+import 'package:untitled3/Screens/Menu/Menu.dart';
 import './Note/SaveNote.dart';
+import 'package:untitled3/Screens/Menu/Trigger.dart';
+import 'package:untitled3/Screens/Menu/Help.dart';
+import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
+import 'package:untitled3/Screens/Menu/GeneralSettings.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -71,6 +76,26 @@ class _MainNavigatorState extends State<MainNavigator> {
     if (name == I18n.of(context)!.notesScreenName) {
       print("Return " + name);
       return ViewNotes();
+    }
+    if (name == I18n.of(context)!.menuScreenName) {
+      print("Return " + name);
+      return Menu();
+    }
+    if (name == I18n.of(context)!.HelpScreen) {
+      print("Return " + name);
+      return Help();
+    }
+    if (name == I18n.of(context)!.SyncToCloudScreen) {
+      print("Return " + name);
+      return SyncToCloud();
+    }
+    if (name == I18n.of(context)!.GeneralSettingsScreen) {
+      print("Return " + name);
+      return GeneralSetting();
+    }
+    if (name == I18n.of(context)!.TriggerScreen) {
+      print("Return " + name);
+      return Trigger();
     }
 
     /**
@@ -164,6 +189,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          Provider<MenuObserver>(create: (_) => MenuObserver()),
           Provider<NoteObserver>(create: (_) => NoteObserver()),
           Provider<MainNavObserver>(create: (_) => MainNavObserver()),
         ],
