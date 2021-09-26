@@ -1,6 +1,3 @@
-import 'dart:ui';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 class SCREEN_NAMES {
   static final String MENU = "MENU";
   static final String SAVE_NOTE = "SAVE_NOTE";
