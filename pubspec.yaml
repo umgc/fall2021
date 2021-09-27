@@ -42,6 +42,7 @@ dependencies:
   mobx: ^2.0.0
   flutter_mobx: ^2.0.0
   provider: ^6.0.0
+  quiver: ^3.0.1
 
 
 
@@ -84,6 +85,7 @@ flutter:
   assets:
     - assets/images/mic.png
     - assets/images/Note.png
+    - assets/NLU/lite-model_mobilebert_1_metadata_1.tflite
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -4,6 +4,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/generated/i18n.dart';
+import '../Services/NLU/BertQA/BertQaService.dart';
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -14,9 +15,12 @@ class SpeechScreen extends StatefulWidget {
 
 class _SpeechScreenState extends State<SpeechScreen> {
   SpeechToText _speech = SpeechToText();
+  late final BertQAService bertQAService;
 
   bool _isListening = false;
   String _textSpeech = '';
+
+  String? answer;
 
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
@@ -38,7 +42,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
   void onListen() async {
     if (!_isListening) {
       _textSpeech = "";
-
+      getAnswer();
       bool available = await _speech.initialize(
         onStatus: (val) => {
           if (val == 'notListening') {print('onStatus: $val')}
@@ -96,6 +100,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
     super.initState();
     _isListening = false;
     _speech = SpeechToText();
+    bertQAService = BertQAService();
   }
 
   @override
@@ -177,5 +182,15 @@ class _SpeechScreenState extends State<SpeechScreen> {
         return alert;
       },
     );
+  }
+
+  void getAnswer() {
+    setState(() {
+      answer =
+          bertQAService.answer("I have a toothache. I had an appointment with "
+              "dentist on monday oct 5th at 9 am. My wife blood pressure is 138."
+              " My blood pressure is 140 above.",
+              "What is my blood presure?").first.text;
+    });
   }
 }
