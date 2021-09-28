@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled3/Screens/Menu/GeneralSettings.dart';
+import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: camel_case_types
 // ignore_for_file: prefer_single_quotes
@@ -36,6 +38,10 @@ class I18n implements WidgetsLocalizations {
 	String get menuScreenName => "Menu";
 	/// "Notes"
 	String get notesScreenName => "Notes";
+  //Note Detail
+  String get notesDetailScreenName => "Notes Details";
+  //Save notes screen
+  String get addNotesScreenName => "Add Notes";
 	/// "Notifications"
 	String get notificationsScreenName => "Notifications";
 	/// "Setting"
@@ -46,6 +52,17 @@ class I18n implements WidgetsLocalizations {
 	String get micButton => "Mic";
 	/// "Press to Record"
 	String get pressToRecord => "Press to Record";
+	// "HelpScreen"
+	String get HelpScreen => "Help";
+	/// "Trigger"
+	String get TriggerScreen => "Trigger";
+	/// "Sync to Cloud"
+	String get SyncToCloudScreen => "Sync to Cloud";
+	/// "General Settings"
+	String get GeneralSettingsScreen => "General Settings";
+
+
+
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -78,6 +95,18 @@ class _I18n_ar_SY extends I18n {
 	/// "اضغط للتسجيل"
 	@override
 	String get pressToRecord => "اضغط للتسجيل";
+	/// "مساعدة"
+	@override
+	String get HelpScreen => "مساعدة";
+	/// "مشغل"
+	@override
+	String get TriggerScreen => "مشغل";
+	/// "مزامنة مع السحابة"
+	@override
+	String get SyncToCloudScreen => "مزامنة مع السحابة";
+	/// "الاعدادات العامة"
+	@override
+	String get GeneralSettingsScreen => "الاعدادات العامة";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -107,6 +136,18 @@ class _I18n_zh_CN extends I18n {
 	/// "按录制"
 	@override
 	String get pressToRecord => "按录制";
+	/// "幫助"
+	@override
+	String get HelpScreen => "幫助";
+	/// "扳機"
+	@override
+	String get TriggerScreen => "扳機";
+	/// "同步到雲端"
+	@override
+	String get SyncToCloudScreen => "同步到雲端";
+	/// "通用設置"
+	@override
+	String get GeneralSettingsScreen => "通用設置";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -136,6 +177,18 @@ class _I18n_pt_BR extends I18n {
 	/// "Pressione para gravar"
 	@override
 	String get pressToRecord => "Pressione para gravar";
+	/// "Ajuda"
+	@override
+	String get HelpScreen => "Ajuda";
+	/// "Desencadear"
+	@override
+	String get TriggerScreen => "Desencadear";
+	/// "Sincronizar com a nuvem"
+	@override
+	String get SyncToCloudScreen => "Sincronizar com a nuvem";
+	/// "Configurações Gerais"
+	@override
+	String get GeneralSettingsScreen => "Configurações Gerais";
 }
 class _I18n_es_US extends I18n {
   const _I18n_es_US();
@@ -165,6 +218,18 @@ class _I18n_es_US extends I18n {
 	/// "Presione para grabar"
 	@override
 	String get pressToRecord => "Presione para grabar";
+	/// "Ayudar"
+	@override
+	String get HelpScreen => "Ayudar";
+	/// "Desencadenar"
+	@override
+	String get TriggerScreen => "Desencadenar";
+	///"Sincronizar con la nube"
+	@override
+	String get SyncToCloudScreen => "Sincronizar con la nube";
+	///"Configuración general"
+	@override
+	String get GeneralSettingsScreen => "Configuración general";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

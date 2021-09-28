@@ -16,7 +16,7 @@ abstract class _AbstractNoteObserver with Store {
   String currentScreen = "";
 
   @observable
-  TextNote? CurrNoteForDetails;
+  TextNote? currNoteForDetails;
 
   @observable 
   List<TextNote> usersNotes = []; 
@@ -28,6 +28,17 @@ abstract class _AbstractNoteObserver with Store {
     TextNoteService.persistNotes(usersNotes);
   }
 
+  @action
+  void deleteNote(TextNote? note){
+    if(note == null){
+      print("deleteNote: param is null");
+      return;
+    }
+     //remove from state
+     usersNotes.remove(note);
+     //remove from storage by over-writing content 
+     TextNoteService.persistNotes(usersNotes);
+  }
 
   @action
   void setCurrNoteIdForDetails(noteId){
@@ -35,7 +46,7 @@ abstract class _AbstractNoteObserver with Store {
     
     for( TextNote note in usersNotes ){
         if(note.noteId == noteId){
-          CurrNoteForDetails = note;
+          currNoteForDetails = note;
         }
     }
   }
