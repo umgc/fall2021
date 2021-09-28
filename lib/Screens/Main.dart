@@ -17,7 +17,6 @@ import 'package:untitled3/Screens/Menu/Help.dart';
 import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
 import 'package:untitled3/Screens/Menu/GeneralSettings.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
