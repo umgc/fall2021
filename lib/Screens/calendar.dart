@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'dart:collection';
+import 'package:untitled3/Model/Note.dart';
+import '../../Observables/NoteObservable.dart';
+import '../Services/NoteService.dart';
+import 'package:provider/provider.dart';
+import '../../Utility/Constant.dart';
+import 'Checklist.dart';
+import  '../../Observables/ScreenNavigator.dart';
+import '../generated/i18n.dart';
 
 class Calendar extends StatefulWidget {
 
@@ -63,7 +71,8 @@ class CalendarState extends State<Calendar> {
   DateTime? _selectedDay;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+      return Scaffold(
       body: Column(
         children: [
           TableCalendar<Event>(
@@ -111,15 +120,17 @@ class CalendarState extends State<Calendar> {
                         onTap: () => print('${value[index]}'),
                         title: Text('${value[index]}'),
                       ),
+
                     );
                   },
                 );
               },
             ),
           ),
-        ],
-      ),
+        ]
+     ),
     );
+
   }
 }
 

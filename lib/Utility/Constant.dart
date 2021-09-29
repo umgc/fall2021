@@ -11,6 +11,7 @@ class SCREEN_NAMES {
    static final String SETTING = "SETTING";
    static final String CALENDAR = "CALENDAR";
    static final String NOTE_DETAIL = "NOTE_DETAIL";
+   static final String CHECKLIST = "CHECKLIST";
  }
 
  const SUPPORTED_LOCALES = [Locale('en', 'US'), Locale('es', 'US')];

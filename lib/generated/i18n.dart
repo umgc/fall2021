@@ -46,6 +46,8 @@ class I18n implements WidgetsLocalizations {
 	String get micButton => "Mic";
 	/// "Press to Record"
 	String get pressToRecord => "Press to Record";
+	/// "Calendar"
+	String get checklistScreenName => "Checklist";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
