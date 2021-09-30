@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 
@@ -9,16 +11,23 @@ import 'LexService.dart';
 
     late final BertQAService bertQAService;
     late final LexService lexService;
-    // late
+
     NLULibService() {
-      bertQAService = BertQAService();
       lexService = LexService();
+      bertQAService = BertQAService();
     }
 
-    Future<NLUResponse> process(String message) async {
-      //Future<dynamic?>? lexResponse = await lexService.postResponse(
-      //    text: message);
-      String response = searchNotes(message);
+
+    Future<String> getNLUResponseUITest(String text) async {
+      NLUResponse responseText = (await getNLUResponse(text));
+      String response = responseText.toJson().toString();
+      return response;
+    }
+
+    Future<NLUResponse> getNLUResponse(String message) async {
+      Map<String, dynamic> lexResponse = await lexService.getLexResponse(
+          text: message);
+      String response = await searchNotes(message);
       return new NLUResponse(NLUAction.Answer, message, response);
     }
 
@@ -34,5 +43,7 @@ import 'LexService.dart';
           .first
           .text;
       return answer;
+      //return "";
     }
+
   }
