@@ -1,7 +1,3 @@
-import 'dart:ui';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 class SCREEN_NAMES {
    static final String MENU = "MENU";
    static final String SAVE_NOTE = "SAVE_NOTE";
@@ -11,13 +7,8 @@ class SCREEN_NAMES {
    static final String SETTING = "SETTING";
    static final String CALENDAR = "CALENDAR";
    static final String NOTE_DETAIL = "NOTE_DETAIL";
- }
-
- const SUPPORTED_LOCALES = [Locale('en', 'US'), Locale('es', 'US')];
-
-const LOCALIZATION_DELEGATES = [
-      AppLocalizations.delegate,
-      GlobalMaterialLocalizations.delegate,
-       GlobalWidgetsLocalizations.delegate,
-       GlobalCupertinoLocalizations.delegate,
-];
+   static final String HELP = "HELP";
+   static final String TRIGGER = "TRIGGER";
+   static final String GENERAL_SETTING = "GENERAL_SETTING";
+   static final String SYNC_TO_CLOUD = "SYNC_TO_CLOUD";
+}

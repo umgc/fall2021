@@ -3,8 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Services/NoteService.dart';
+
+import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
-import '../../Utility/Constant.dart';
 
 
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
@@ -72,9 +73,9 @@ class _SaveNoteState extends State<SaveNote> {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.deepPurple),
+                      MaterialStateProperty.all<Color>(Color(0xFF33ACE3)),
                   overlayColor: MaterialStateProperty.all<Color>(
-                      Colors.deepPurple.shade300),
+                      Color(0xFF33ACE3)),
                 ),
                 onPressed: () {
 
@@ -84,7 +85,7 @@ class _SaveNoteState extends State<SaveNote> {
                     note.text = textController.text;
                     noteObserver.addNote(note);
                     showToast();
-                    noteObserver.changeScreen(SCREEN_NAMES.NOTE);
+                    noteObserver.changeScreen(I18n.of(context)!.notesScreenName);
                   }
                 },
                 child: Text('Save'),

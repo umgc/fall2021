@@ -3,9 +3,9 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 import '../../Observables/NoteObservable.dart';
-import '../../Utility/Constant.dart';
 import 'SaveNote.dart';
 import '../../Model/Note.dart';
 
@@ -15,11 +15,13 @@ final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 class ViewNotes extends StatefulWidget {
   @override
   _ViewNotesState createState() => _ViewNotesState();
+
+
 }
 
 class _ViewNotesState extends State<ViewNotes> {
-  _ViewNotesState();
 
+  _ViewNotesState();
   // text to speech
   // FlutterTts flutterTts = FlutterTts();
 
@@ -38,15 +40,34 @@ class _ViewNotesState extends State<ViewNotes> {
   //   }
   // }
 
+//Funtion retuns Floating button
+  Widget buildFloatingBtn(){
+    final noteObserver = Provider.of<NoteObserver>(context);
+    String addNoteScreen =I18n.of(context)!.addNotesScreenName;
+
+    return FloatingActionButton(
+
+                    onPressed: () {
+                      noteObserver.changeScreen(addNoteScreen);
+                    },
+                    tooltip: 'Save Note',
+                    child: Icon(Icons.add),
+                );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final noteObserver = Provider.of<NoteObserver>(context);
-    noteObserver.changeScreen(SCREEN_NAMES.NOTE);
+    String noteDetailScreen =I18n.of(context)!.notesDetailScreenName;
+    String addNoteScreen =I18n.of(context)!.addNotesScreenName;
+    String noteScreen =I18n.of(context)!.notesScreenName;
 
+    final noteObserver = Provider.of<NoteObserver>(context);
+    noteObserver.changeScreen(noteScreen);
+    
     return Observer(
         builder: (_) =>
-         (noteObserver.currentScreen.toUpperCase() == SCREEN_NAMES.NOTE) ?
+         (noteObserver.currentScreen == noteScreen 
+           && noteObserver.usersNotes.length > 0) ?
 
             Scaffold(
                 //appBar: buildAppBar(context),
@@ -131,18 +152,15 @@ class _ViewNotesState extends State<ViewNotes> {
 
                                     child: GestureDetector(
                                         onTap: () {
-                                          //noteObserver.changeScreen(SCREEN_NAMES.SAVE_NOTE);
+                                          //noteObserver.changeScreen(addNoteScreen);
                                       },
                                           
                                   child: TextButton(
                                     onPressed: () {
-                                      // When the user taps the button,
-                                      // navigate to a named route and
-                                      // provide the arguments as an optional
-                                      // parameter.
-                                      //open not details
+                                      //set the target note for which we want to display details
                                       noteObserver.setCurrNoteIdForDetails(textNote.noteId);
-                                      noteObserver.changeScreen(SCREEN_NAMES.NOTE_DETAIL);
+                                      //navigate to the note details screen
+                                      noteObserver.changeScreen(noteDetailScreen);
                                     },
                                     child: Container(
                                         padding: EdgeInsets.all(10),
@@ -157,21 +175,20 @@ class _ViewNotesState extends State<ViewNotes> {
                 ),
                         // Add table rows for each text note
 
-                floatingActionButton: FloatingActionButton(
-
-                    onPressed: () {
-                      noteObserver.changeScreen(SCREEN_NAMES.SAVE_NOTE);
-                    },
-                    tooltip: 'Save Note',
-                    child: Icon(Icons.add),
-                )
+                floatingActionButton: buildFloatingBtn()
             )
             
-            : (noteObserver.currentScreen == SCREEN_NAMES.SAVE_NOTE)
+            : (noteObserver.currentScreen == addNoteScreen)
                 ? SaveNote()
-                : (noteObserver.currentScreen == SCREEN_NAMES.NOTE_DETAIL)?
+                : (noteObserver.currentScreen == noteDetailScreen)?
                     NoteDetails()
-                : Text("Oopps")
+                : Scaffold( 
+                    body: Text("Oops you have not notes."),
+                    floatingActionButton: buildFloatingBtn()
+                )
     );
   }
+
+  
+
 }

@@ -89,6 +89,11 @@ flutter:
   assets:
     - assets/images/mic.png
     - assets/images/Note.png
+    - assets/images/Cloud.png
+    - assets/images/Trigger.png
+    - assets/images/Setting.png
+    - assets/images/Help.png
+    - assets/images/dropdownarrow.png
     - assets/NLU/lite-model_mobilebert_1_metadata_1.tflite
 
 
