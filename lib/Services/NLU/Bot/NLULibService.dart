@@ -19,8 +19,8 @@ import 'LexService.dart';
 
 
     Future<String> getNLUResponseUITest(String text) async {
-      NLUResponse responseText = (await getNLUResponse(text));
-      String response = responseText.toJson().toString();
+      NLUResponse nluResponse = (await getNLUResponse(text));
+      String response = nluResponse.toJson().toString();
       return response;
     }
 
