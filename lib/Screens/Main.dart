@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:untitled3/Observables/MenuObservable.dart';
-import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
+import 'package:untitled3/Screens/Home.dart';
+
 import 'package:untitled3/Screens/Note/Note.dart';
+import 'package:untitled3/Screens/Onboarding/Boarding.dart';
+import 'package:untitled3/Screens/Settings.dart';
 import 'package:untitled3/generated/i18n.dart';
 import 'package:provider/provider.dart';
 
-import 'Setting.dart';
 import 'Note/Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
@@ -70,7 +71,7 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   Widget _changeScreen(String name, index) {
     if (name == I18n.of(context)!.settingScreenName) {
-      return Setting();
+      return Settings();
     }
     if (name == I18n.of(context)!.notesScreenName) {
       print("Return " + name);
@@ -145,6 +146,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   }
 
   AppBar buildAppBar(BuildContext context) {
+
     return AppBar(
       leading: IconButton(
           onPressed: () {
@@ -186,18 +188,28 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          Provider<MenuObserver>(create: (_) => MenuObserver()),
-          Provider<NoteObserver>(create: (_) => NoteObserver()),
-          Provider<MainNavObserver>(create: (_) => MainNavObserver()),
-        ],
-        child: (Scaffold(
+    final settingObserver = Provider.of<SettingObserver>(context);
+
+    if (settingObserver.userSettings.isFirstRun == true){
+      return Scaffold(
           appBar: buildAppBar(context),
+          body: Center(
+              child: OnBoardingScreen();
+          ));
+        
+    }
+    
+    return Scaffold(
+          appBar: buildAppBar(context),
+
+          
           body: Center(
               child: Observer(
                   builder: (_) =>
-                      _changeScreen(screenNav.currentScreen, _currentIndex))),
+                      _changeScreen(screenNav.currentScreen, _currentIndex)
+          )
+          ),
+          
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             onTap: _onItemTapped,
@@ -245,6 +257,6 @@ class _MainNavigatorState extends State<MainNavigator> {
               ),
             ],
           ),
-        )));
-  }
+        );
+    }
 }

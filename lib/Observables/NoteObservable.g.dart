@@ -24,19 +24,19 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
-  final _$CurrNoteForDetailsAtom =
-      Atom(name: '_AbstractNoteObserver.CurrNoteForDetails');
+  final _$currNoteForDetailsAtom =
+      Atom(name: '_AbstractNoteObserver.currNoteForDetails');
 
   @override
-  TextNote? get CurrNoteForDetails {
-    _$CurrNoteForDetailsAtom.reportRead();
-    return super.CurrNoteForDetails;
+  TextNote? get currNoteForDetails {
+    _$currNoteForDetailsAtom.reportRead();
+    return super.currNoteForDetails;
   }
 
   @override
-  set CurrNoteForDetails(TextNote? value) {
-    _$CurrNoteForDetailsAtom.reportWrite(value, super.CurrNoteForDetails, () {
-      super.CurrNoteForDetails = value;
+  set currNoteForDetails(TextNote? value) {
+    _$currNoteForDetailsAtom.reportWrite(value, super.currNoteForDetails, () {
+      super.currNoteForDetails = value;
     });
   }
 
@@ -64,6 +64,17 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
         name: '_AbstractNoteObserver.addNote');
     try {
       return super.addNote(note);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void deleteNote(TextNote? note) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.deleteNote');
+    try {
+      return super.deleteNote(note);
     } finally {
       _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
     }
@@ -106,7 +117,7 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   String toString() {
     return '''
 currentScreen: ${currentScreen},
-CurrNoteForDetails: ${CurrNoteForDetails},
+currNoteForDetails: ${currNoteForDetails},
 usersNotes: ${usersNotes}
     ''';
   }

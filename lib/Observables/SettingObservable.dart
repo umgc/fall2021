@@ -6,7 +6,7 @@ import '../Services/NoteService.dart';
 
 part 'SettingObservable.g.dart';
 
-class NoteObserver = _AbstractSettingObserver with _$NoteObserver;
+class SettingObserver = _AbstractSettingObserver with _$SettingObserver;
 
 abstract class _AbstractSettingObserver with Store {
 
@@ -18,7 +18,7 @@ abstract class _AbstractSettingObserver with Store {
   String currentScreen = "";
 
   @observable 
-  Setting? userSettings; 
+  Setting userSettings = Setting(); 
 
 
   @action
