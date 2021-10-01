@@ -12,6 +12,6 @@ void main() async {
       expect(value.length > 0, true);
     }
   } catch(error){
-    print('Error occured during division: $error');
+    print('Error occured during lex service call: $error');
   }
 }
