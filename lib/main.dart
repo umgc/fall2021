@@ -23,9 +23,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   
+  MyApp(){
+    SettingService.save(Setting());
+  }
+
   @override
   Widget build(BuildContext context) { 
-    SettingService.save(Setting());
     
     final i18n = I18n.delegate;
     return MultiProvider(

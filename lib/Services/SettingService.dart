@@ -15,9 +15,9 @@ class SettingService {
   /// Save a text note file to local storage
   static Future<Setting> loadSetting() async {
    
-    //dynamic jsonObj = await FileUtil.readJson(FILE_NAME).then((value) => value);
-    //Setting userTextNotes = Setting.fromJson(jsonObj);
-    return  Setting();
+    dynamic jsonObj = await FileUtil.readJson(FILE_NAME).then((value) => value);
+    Setting userTextNotes = Setting.fromJson(jsonObj);
+    return  userTextNotes;
   }
 
   /// Save a text note file to local storage

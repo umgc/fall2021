@@ -194,7 +194,7 @@ class _MainNavigatorState extends State<MainNavigator> {
       return Scaffold(
           appBar: buildAppBar(context),
           body: Center(
-              child: OnBoardingScreen();
+              child: OnBoardingScreen()
           ));
         
     }
