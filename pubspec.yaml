@@ -88,6 +88,7 @@ flutter:
     - assets/images/Trigger.png
     - assets/images/Setting.png
     - assets/images/Help.png
+    - assets/images/dropdownarrow.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
