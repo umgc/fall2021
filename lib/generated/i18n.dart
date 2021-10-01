@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/Screens/Menu/GeneralSettings.dart';
-import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
+import 'package:untitled3/Screens/Settings/GeneralSettings.dart';
+import 'package:untitled3/Screens/Settings/SyncToCloud.dart';
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: camel_case_types
 // ignore_for_file: prefer_single_quotes
