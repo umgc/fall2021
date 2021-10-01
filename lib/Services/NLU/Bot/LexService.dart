@@ -6,7 +6,7 @@ import 'package:amazon_cognito_identity_dart_2/sig_v4.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:untitled3/Services/NoteService.dart';
 
 ///The different types of responses a [LexResponse] can be
 enum DialogState {
@@ -37,8 +37,8 @@ class LexService {
     this._url = 'https://runtime-v2-lex.us-west-2.amazonaws.com';
     this._region = 'us-west-2';
     this._serviceName = 'lex';
-    this._accessKey = '';
-    this._secretKey = '';
+    this._accessKey = 'AKIAYHE3SPHSCGFUDEGD';
+    this._secretKey = '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';
     this._botId = 'KCQ0L420SM';
     this._botAliasId = 'TSTALIASID';
     this._localeId = 'en_US';
@@ -48,7 +48,8 @@ class LexService {
     @required String? text,
     ///[userId] is the unique ID for the current user/session/etc
     ///This can be fixed, generated randomly, or taken from a known source.
-    String userId = 'testuser1232',
+    required String userId,
+    required String locale
   }) async {
     Map<String, dynamic> value = new Map();
     try {

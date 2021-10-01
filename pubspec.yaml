@@ -57,6 +57,7 @@ dependencies:
   nanoid: ^1.0.0
   device_info_plus: ^2.1.0
   fluttertoast: ^8.0.8
+  enum_to_string: ^2.0.1
 
 dev_dependencies:
   flutter_test:

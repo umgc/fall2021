@@ -4,17 +4,18 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(nullable: true)
 class NLUResponse {
-  NLUAction nluAction;
+  ActionType actionType;
   String inputText;
-  String response;
-  NLUResponse(this.nluAction,
+  String outputText;
+
+  NLUResponse(this.actionType,
       this.inputText,
-      this.response);
+      this.outputText);
 
   String toJson() {
-    String jsonStr = """{"nluAction": "${this.nluAction}",
+    String jsonStr = """{"actionType": "${this.actionType}",
                         "inputText": "${this.inputText}",
-                        "response": "${this.response}""";
+                        "response": "${this.outputText}""";
     return jsonStr;
   }
 }

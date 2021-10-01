@@ -1,9 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(nullable: true)
-enum NLUAction {
+enum ActionType {
   CreateNote,
-  Answer,
-  CreateAppointment,
-  SystemAction
+  Complete,
+  AppHelpNotes
 }
