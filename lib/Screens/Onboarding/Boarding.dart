@@ -11,7 +11,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+
         body: Center(
           child: Text("Onbarding screen"),
         ),
@@ -19,16 +19,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         persistentFooterButtons: [
           Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [ElevatedButton(
+          children: [
+            ElevatedButton(
                     child: Text("BACK"),
                     onPressed: null,
                   ), 
-          ElevatedButton(
+            ElevatedButton(
                     child: Text("NEXT"),
                     onPressed: null,
                   ),
 
-          ])          
+          ])
         ],
     );
   }
