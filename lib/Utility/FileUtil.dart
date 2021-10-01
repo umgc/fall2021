@@ -48,7 +48,6 @@ class FileUtil {
     return data;
   }
 
-
   static Future<void> writeJson(String fileName, String data) async {
      try {
         var textNotesDirectory = await _getTextNotesDirectory();
