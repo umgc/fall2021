@@ -24,6 +24,10 @@ void main() {
 class MyApp extends StatelessWidget {
   
   MyApp(){
+
+    //Setting file has to be preloaded 
+    //check if setting file exist, if not create it.
+    //Note: if note files exist, then this is not the first time app is run on device 
     SettingService.save(Setting());
   }
 
