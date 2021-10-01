@@ -96,6 +96,7 @@ flutter:
     - assets/images/Help.png
     - assets/images/dropdownarrow.png
     - assets/NLU/lite-model_mobilebert_1_metadata_1.tflite
+    - assets/NLU/Lex_Credentials.xml
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

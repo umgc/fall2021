@@ -4,5 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 enum ActionType {
   CreateNote,
   Complete,
+  InComplete,
   AppHelpNotes
 }

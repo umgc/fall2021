@@ -11,14 +11,14 @@ class MyNLUTestingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TFL Question and Answer',
+      title: 'NLU Testing tool',
       theme: ThemeData(
         textTheme: GoogleFonts.robotoTextTheme(
           Theme.of(context).textTheme,
         ),
         primarySwatch: Colors.orange,
       ),
-      home: MyNLUTestHomePage(title: 'TFL Question and Answer'),
+      home: MyNLUTestHomePage(title: 'NLU Testing tool'),
     );
   }
 }

@@ -1,12 +1,8 @@
-
-import 'dart:convert';
-
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Model/Note.dart';
-
 import '../../NoteService.dart';
 import '../BertQA/BertQaService.dart';
 import 'LexService.dart';
@@ -15,15 +11,18 @@ import 'LexService.dart';
 
     late final BertQAService bertQAService;
     late final LexService lexService;
-
+    static const String FallbackResponse = "Sorry not able to understand.";
+    static const String AppHelp = "AppHelp";
+    static const String SearchNotes = "SearchNotes";
+    static const String InterpretationsJsonStr = "interpretations";
+    static const String DefaultLocale = "en-US";
     NLULibService() {
       lexService = LexService();
       bertQAService = BertQAService();
     }
 
-
     Future<String> getNLUResponseUITest(String text) async {
-      NLUResponse nluResponse = (await getNLUResponse(text, "en-US"));
+      NLUResponse nluResponse = (await getNLUResponse(text, DefaultLocale));
       String response = nluResponse.toJson().toString();
       return response;
     }
@@ -34,20 +33,25 @@ import 'LexService.dart';
       String outputText = "";
       String sessionId = TextNoteService.generateUUID();
       Map<String, dynamic> lexResponse = await lexService.getLexResponse(
-          text: inputText,userId: sessionId,locale: locale );
-      var lexResponseObj = LexResponse.fromJson(lexResponse);
-      if (lexResponseObj != null) {
-        String intentName = getIntentName(lexResponseObj);
-        if (intentName.isNotEmpty) {
-          if (intentName.startsWith("AppHelp")) {
-            actionType = EnumToString.fromString(
-                ActionType.values, intentName)!; //, TestEnum.ValueOne
-            outputText = getMessage(lexResponseObj);
-          } else if (intentName == "SearchNotes") {
-            actionType = ActionType.Complete;
-            outputText = await searchNotes(inputText);
+          text: inputText, userId: sessionId, locale: locale);
+      if (lexResponse[InterpretationsJsonStr] != null) {
+        var lexResponseObj = LexResponse.fromJson(lexResponse);
+        if (lexResponseObj != null) {
+          String intentName = getIntentName(lexResponseObj);
+          if (intentName.isNotEmpty) {
+            if (intentName.startsWith(AppHelp)) {
+              actionType = EnumToString.fromString(
+                  ActionType.values, intentName)!; //, TestEnum.ValueOne
+              outputText = getMessage(lexResponseObj);
+            } else if (intentName == SearchNotes) {
+              actionType = ActionType.Complete;
+              outputText = await searchNotesByInput(inputText);
+            }
           }
         }
+      } else {
+        actionType = ActionType.InComplete;
+        outputText = FallbackResponse;
       }
       nluResponse = new NLUResponse(actionType, inputText, outputText);
       return nluResponse;
@@ -99,7 +103,7 @@ import 'LexService.dart';
       return outputText;
     }
 
-    Future<String> searchNotes(String message) async {
+    Future<String> searchNotesByInput(String message) async {
       String answer = "";
       String notes = await getNotes();
       if (notes != null && notes != "") {
