@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -6,6 +8,8 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  MainNavObserver screenNav = MainNavObserver();
+
   //String dropDownValue1 = 'Delete Notes after 14 Days';
   //String dropDownValue2 = 'Delete Notes after 14 Days';
   //String dropDownValue3 = 'Delete Notes after 14 Days';
@@ -39,16 +43,8 @@ class _SettingState extends State<Setting> {
     "Large Sized Font",
     "Extra Large Sized Font",
   ];
-  var language;
-  List<String> lang = [
-    "English",
-    "Arabic",
-    "Chinese (Simplified)",
-    "French",
-    "Hindi",
-    "Portuguese",
-    "Spanish",
-  ];
+
+  var language = I18n.locale;
 
   @override
   Widget build(BuildContext context) {
@@ -195,17 +191,19 @@ class _SettingState extends State<Setting> {
                   color: Colors.blue,   // Add this
                 ),
                 value: language,
-                onChanged: (newValue) {
+                onChanged: (Locale? newLocale) {
                   setState(() {
-                    language = newValue;
+                    if (newLocale != null) {
+                      language = newLocale;
+                    }
                   });
                 },
                 isExpanded: true,
                 underline: SizedBox(),
                 style: TextStyle(color: Colors.black, fontSize: 22),
-                items: lang.map((valueItem) {
+                items: GeneratedLocalizationsDelegate().supportedLocales.map((valueItem) {
                   return DropdownMenuItem(
-                      value: valueItem, child: Text((valueItem)));
+                      value: valueItem, child: Text((valueItem.languageCode)));
                 }).toList(),
               ),
             ),
@@ -216,7 +214,9 @@ class _SettingState extends State<Setting> {
             padding:
             const EdgeInsets.only(left: 0, top: 22, right: 0, bottom: 0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                  I18n.onLocaleChanged!(language!);
+              },
               child: Text("Save", style: TextStyle(fontSize: 22),),
 
               style: ElevatedButton.styleFrom(

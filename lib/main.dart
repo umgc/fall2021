@@ -11,8 +11,24 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    I18n.onLocaleChanged = onLocaleChange;
+  }
+
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      I18n.locale = locale;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.delegate;
