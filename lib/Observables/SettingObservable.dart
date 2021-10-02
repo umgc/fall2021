@@ -11,7 +11,8 @@ class SettingObserver = _AbstractSettingObserver with _$SettingObserver;
 abstract class _AbstractSettingObserver with Store {
 
   _AbstractSettingObserver(){
-    SettingService.loadSetting().then((value) => (value));
+    SettingService.loadSetting().then((value) => initSettings(value));
+
   }
 
   @observable
