@@ -37,12 +37,12 @@ class Setting {
   factory Setting.fromJson(dynamic jsonObj) {
     Setting setting = Setting();
     print("extracting jsonObj $jsonObj");
-    //setting.daysToKeepFiles = jsonObj['daysToKeepFiles'];
-    //setting.secondsSilence = jsonObj['secondsSilence'];
-    // setting.pathToWakeWord = jsonObj['pathToWakeWord'];
-    // setting.currentLanguage = jsonObj['currentLanguage'];
-    // setting.isFirstRun = jsonObj['isFirstRun'];
-    // setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
+    setting.daysToKeepFiles = jsonObj['daysToKeepFiles'];
+    setting.secondsSilence = jsonObj['secondsSilence'];
+    setting.pathToWakeWord = jsonObj['pathToWakeWord'];
+    setting.currentLanguage = jsonObj['currentLanguage'];
+    setting.isFirstRun = jsonObj['isFirstRun'];
+    setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
 
     return setting;
   }
