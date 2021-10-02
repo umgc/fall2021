@@ -13,7 +13,9 @@ import 'LexService.dart';
     late final LexService lexService;
     static const String FallbackResponse = "Sorry not able to understand.";
     static const String AppHelp = "AppHelp";
+    static const String AppNav = "AppNav";
     static const String SearchNotes = "SearchNotes";
+    static const String CreateNote = "CreateNote";
     static const String InterpretationsJsonStr = "interpretations";
     static const String DefaultLocale = "en-US";
     NLULibService() {
@@ -24,12 +26,13 @@ import 'LexService.dart';
     Future<String> getNLUResponseUITest(String text) async {
       NLUResponse nluResponse = (await getNLUResponse(text, DefaultLocale));
       String response = nluResponse.toJson().toString();
+      print(response);
       return response;
     }
 
     Future<NLUResponse> getNLUResponse(String inputText, String locale) async {
       NLUResponse nluResponse;
-      ActionType actionType = ActionType.Complete;
+      ActionType actionType = ActionType.COMPLETE;
       String outputText = "";
       String sessionId = TextNoteService.generateUUID();
       Map<String, dynamic> lexResponse = await lexService.getLexResponse(
@@ -40,17 +43,22 @@ import 'LexService.dart';
           String intentName = getIntentName(lexResponseObj);
           if (intentName.isNotEmpty) {
             if (intentName.startsWith(AppHelp)) {
-              actionType = EnumToString.fromString(
-                  ActionType.values, intentName)!; //, TestEnum.ValueOne
+              actionType = ActionType.APP_HELP;
               outputText = getMessage(lexResponseObj);
+            } else if (intentName.startsWith(AppNav)) {
+              actionType = ActionType.APP_NAV;
+              outputText = getMessage(lexResponseObj);
+            } else if (intentName == CreateNote) {
+              actionType = ActionType.CREATE_NOTE;
+              outputText = inputText;
             } else if (intentName == SearchNotes) {
-              actionType = ActionType.Complete;
+              actionType = ActionType.COMPLETE;
               outputText = await searchNotesByInput(inputText);
             }
           }
         }
       } else {
-        actionType = ActionType.InComplete;
+        actionType = ActionType.INCOMPLETE;
         outputText = FallbackResponse;
       }
       nluResponse = new NLUResponse(actionType, inputText, outputText);
