@@ -3,10 +3,10 @@ import '../../Observables/MenuObservable.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../Utility/Constant.dart';
-import 'package:untitled3/Screens/Menu/Trigger.dart';
-import 'package:untitled3/Screens/Menu/Help.dart';
-import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
-import 'package:untitled3/Screens/Menu/GeneralSettings.dart';
+import 'package:untitled3/Screens/Settings/Trigger.dart';
+import 'package:untitled3/Screens/Settings/Help.dart';
+import 'package:untitled3/Screens/Settings/SyncToCloud.dart';
+import 'package:untitled3/Screens/Settings/GeneralSettings.dart';
 
 
 

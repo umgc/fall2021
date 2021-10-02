@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'HomeScreen.dart';
-import 'package:untitled3/Screens/Note/Note.dart';
-import 'NotificationScreen.dart';
-import 'package:untitled3/Screens/Menu/Menu.dart';
 
 
 class Home extends StatefulWidget {

@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:untitled3/Screens/Note/Note.dart';
-import 'package:untitled3/Screens/Settings.dart';
 import 'package:untitled3/generated/i18n.dart';
-import 'package:provider/provider.dart';
 
+import 'Settings/Setting.dart';
 import 'Note/Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'package:untitled3/Screens/Menu/Menu.dart';
-import 'package:untitled3/Screens/Menu/Trigger.dart';
-import 'package:untitled3/Screens/Menu/Help.dart';
-import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
-import 'package:untitled3/Screens/Menu/GeneralSettings.dart';
+import 'package:untitled3/Screens/Settings/Trigger.dart';
+import 'package:untitled3/Screens/Settings/Help.dart';
+import 'package:untitled3/Screens/Settings/SyncToCloud.dart';
+import 'package:untitled3/Screens/Settings/GeneralSettings.dart';
 
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../Utility/Constant.dart';
 import '../Observables/ScreenNavigator.dart';
 
 final mainScaffoldKey = GlobalKey<ScaffoldState>();

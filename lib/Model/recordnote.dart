@@ -4,6 +4,8 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/generated/i18n.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -14,9 +16,15 @@ class SpeechScreen extends StatefulWidget {
 
 class _SpeechScreenState extends State<SpeechScreen> {
   SpeechToText _speech = SpeechToText();
+  late FlutterTts flutterTts;
 
   bool _isListening = false;
   String _textSpeech = '';
+
+  String speechBubbleText =
+      'Hello from Memory Magic, press the mic to start recording';
+  List<Widget> actions = [];
+  bool alreadyDelayed = false;
 
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
@@ -96,6 +104,16 @@ class _SpeechScreenState extends State<SpeechScreen> {
     super.initState();
     _isListening = false;
     _speech = SpeechToText();
+    initTts();
+  }
+  initTts() async {
+    flutterTts = FlutterTts();
+
+    await flutterTts.awaitSpeakCompletion(true);
+    await _speak();
+  }
+  Future<void> _speak() async {
+    await flutterTts.speak(speechBubbleText);
   }
 
   @override

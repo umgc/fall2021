@@ -42,7 +42,12 @@ dependencies:
   mobx: ^2.0.0
   flutter_mobx: ^2.0.0
   provider: ^6.0.0
-
+  quiver: ^3.0.1
+  http: ^0.13.3
+  json_serializable: ^5.0.2
+  amazon_cognito_identity_dart_2: ^1.0.3
+  google_fonts: ^2.1.0
+  random_color: ^1.0.6-nullsafety
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -52,6 +57,7 @@ dependencies:
   nanoid: ^1.0.0
   device_info_plus: ^2.1.0
   fluttertoast: ^8.0.8
+  enum_to_string: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +95,8 @@ flutter:
     - assets/images/Setting.png
     - assets/images/Help.png
     - assets/images/dropdownarrow.png
+    - assets/NLU/lite-model_mobilebert_1_metadata_1.tflite
+    - assets/NLU/Lex_Credentials.xml
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
