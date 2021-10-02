@@ -218,7 +218,7 @@ class _SettingState extends State<Settings> {
               //SAVE BUTTON
               Container(
                 padding: const EdgeInsets.only(
-                    left: 0, top: 22, right: 0, bottom: 0),
+                    left: 0, top: 16, right: 0, bottom: 0),
                 child: ElevatedButton(
                   onPressed: () {
                     I18n.onLocaleChanged!(language!);
