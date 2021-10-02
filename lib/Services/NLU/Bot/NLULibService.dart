@@ -1,5 +1,4 @@
-import 'package:enum_to_string/enum_to_string.dart';
-import 'package:untitled3/Model/LexResponse.dart';
+fiximport 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Model/Note.dart';
@@ -32,7 +31,7 @@ import 'LexService.dart';
 
     Future<NLUResponse> getNLUResponse(String inputText, String locale) async {
       NLUResponse nluResponse;
-      ActionType actionType = ActionType.COMPLETE;
+      ActionType actionType = ActionType.INCOMPLETE;
       String outputText = "";
       String sessionId = TextNoteService.generateUUID();
       Map<String, dynamic> lexResponse = await lexService.getLexResponse(
@@ -135,6 +134,7 @@ import 'LexService.dart';
               && textNote.noteId != "" && textNote.text != null
               && textNote.text != "") {
             strBufffer.write(textNote.text);
+            strBufffer.write(". ");
           }
         }
       }
