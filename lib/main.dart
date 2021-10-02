@@ -1,17 +1,17 @@
 // Official
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 // Internal
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:untitled3/Model/Setting.dart';
+import 'package:untitled3/Screens/Onboarding/Boarding.dart';
 import 'package:untitled3/Services/SettingService.dart';
 import 'generated/i18n.dart';
 import 'Screens/Main.dart';
 import 'package:provider/provider.dart';
 
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:untitled3/Observables/MenuObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
@@ -23,17 +23,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   
-  MyApp(){
-
-    //Setting file has to be preloaded 
-    //check if setting file exist, if not create it.
-    //Note: if note files exist, then this is not the first time app is run on device 
-    SettingService.save(Setting());
-  }
+  MyApp();
 
   @override
   Widget build(BuildContext context) { 
-    
+
+    SettingObserver settingObserver = SettingObserver();
+        
     final i18n = I18n.delegate;
     return MultiProvider(
         providers: [
@@ -44,7 +40,7 @@ class MyApp extends StatelessWidget {
         ],
       child: (MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:MainNavigator(),
+      home: Observer( builder: (_) => (settingObserver.userSettings.isFirstRun == false)? MainNavigator() :OnBoardingScreen() ),
       localizationsDelegates: [
         i18n,
         GlobalMaterialLocalizations.delegate,
