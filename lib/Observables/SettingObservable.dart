@@ -11,7 +11,7 @@ class SettingObserver = _AbstractSettingObserver with _$SettingObserver;
 abstract class _AbstractSettingObserver with Store {
 
   _AbstractSettingObserver(){
-    SettingService.loadSetting().then((value) => initSettings(value));
+    SettingService.loadSetting().then((value) => (value));
   }
 
   @observable
@@ -43,5 +43,11 @@ abstract class _AbstractSettingObserver with Store {
     print("Setting Screen changed to: "+ name);
     currentScreen = name;
   }
+
+  @action 
+  void setIsFirstRun(bool value){
+    userSettings.isFirstRun = value;
+  }
+  
 }
 
