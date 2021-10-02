@@ -9,17 +9,14 @@ import '../../Observables/NoteObservable.dart';
 import '../Services/NoteService.dart';
 /// Example event class.
 class Event {
-  final String title;
 
-  const Event(this.title);
+ String title ="note title";// TextNote().text;
+
+   Event(this.title);
 
   @override
   String toString() => title;
 }
-
-//final TextNoteService textNoteService = new TextNoteService();
-
-final noteEvent = TextNote().isEvent;
 
 /// Example events.
 ///
@@ -33,11 +30,11 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
 final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
     key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
     value: (item) => List.generate(
-        item % 4 + 1, (index) =>  Event('Event $item | ${index + 1}')))
+        item % 4 + 1, (index) =>  Event(TextNote().text)))
   ..addAll({
     kToday: [
 
-      Event("test 1"),
+      Event("title"),
    //   Event('Today\'s Event 2'),
     ],
   });

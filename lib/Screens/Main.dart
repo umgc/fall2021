@@ -19,6 +19,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../Utility/Constant.dart';
 import '../Observables/ScreenNavigator.dart';
 import 'calendar.dart';
+import 'Checklist.dart';
 
 final mainScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -60,7 +61,8 @@ class _MainNavigatorState extends State<MainNavigator> {
       I18n.of(context)!.notesScreenName,
       I18n.of(context)!.notificationsScreenName,
       I18n.of(context)!.homeScreenName,
-      I18n.of(context)!.calendarScreenName
+      I18n.of(context)!.calendarScreenName,
+      I18n.of(context)!.checklistScreenName
     ];
 
     _setScreenName(screenNames[index]);
@@ -79,6 +81,9 @@ class _MainNavigatorState extends State<MainNavigator> {
      * TODO: Uncomment for calendar*/
       if(name == I18n.of(context)!.calendarScreenName){
       return Calendar();
+    }
+    if(name == I18n.of(context)!.checklistScreenName){
+      return Checklist();
     }
     return _widgetOptions.elementAt(index);
   }
@@ -147,6 +152,15 @@ class _MainNavigatorState extends State<MainNavigator> {
       actions: <Widget>[
         Row(
           children: <Widget>[
+            IconButton(
+                onPressed: () {
+                  _setScreenName(I18n.of(context)!.checklistScreenName);
+                },
+                icon: Icon(
+                  Icons.checklist,
+                  color: Colors.white,
+                  size: 35,
+                )),
             IconButton(
                 onPressed: () {
                   _setScreenName(I18n.of(context)!.calendarScreenName);
