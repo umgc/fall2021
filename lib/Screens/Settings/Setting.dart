@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Setting extends StatefulWidget {
+class Settings extends StatefulWidget {
   @override
   _SettingState createState() => _SettingState();
 }
 
-class _SettingState extends State<Setting> {
+class _SettingState extends State<Settings> {
   //String dropDownValue1 = 'Delete Notes after 14 Days';
   //String dropDownValue2 = 'Delete Notes after 14 Days';
   //String dropDownValue3 = 'Delete Notes after 14 Days';
