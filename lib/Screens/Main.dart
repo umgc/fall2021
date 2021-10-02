@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/Observables/SettingObservable.dart';
-import 'package:untitled3/Screens/Home.dart';
 
 import 'package:untitled3/Screens/Note/Note.dart';
-import 'package:untitled3/Screens/Onboarding/Boarding.dart';
 import 'package:untitled3/Screens/Settings.dart';
 import 'package:untitled3/generated/i18n.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +9,6 @@ import 'Note/Note.dart';
 import 'HomeScreen.dart';
 import 'NotificationScreen.dart';
 import 'package:untitled3/Screens/Menu/Menu.dart';
-import './Note/SaveNote.dart';
 import 'package:untitled3/Screens/Menu/Trigger.dart';
 import 'package:untitled3/Screens/Menu/Help.dart';
 import 'package:untitled3/Screens/Menu/SyncToCloud.dart';
@@ -188,16 +184,6 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    final settingObserver = Provider.of<SettingObserver>(context);
-
-    if (settingObserver.userSettings.isFirstRun == true){
-      return Scaffold(
-          appBar: buildAppBar(context),
-          body: Center(
-              child: OnBoardingScreen()
-          ));
-        
-    }
     
     return Scaffold(
           appBar: buildAppBar(context),
@@ -205,8 +191,8 @@ class _MainNavigatorState extends State<MainNavigator> {
           
           body: Center(
               child: Observer(
-                  builder: (_) =>
-                      _changeScreen(screenNav.currentScreen, _currentIndex)
+                  builder: (_) =>_changeScreen(screenNav.currentScreen, _currentIndex)
+                      
           )
           ),
           
