@@ -40,7 +40,7 @@ class FileUtil {
         final File file =
         fileSystem.file('${textNotesDirectory.path}/$fileName');
         String fileContent = file.readAsStringSync().trim();
-        print("fileContent $fileContent");
+        //print("fileContent $fileContent");
         data = await json.decode(fileContent);
       } catch (e) {
       print("ERROR-Couldn't read file: ${e.toString()}");
@@ -54,7 +54,7 @@ class FileUtil {
         final File file =
         fileSystem.file('${textNotesDirectory.path}/$fileName');
         file.writeAsString(data);
-        print("data has been writted to file ${file.path}");
+        //print("data has been writted to file ${file.path}");
       } catch (e) {
       print("ERROR-Couldn't write to file: ${e.toString()}");
     }
