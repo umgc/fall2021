@@ -48,6 +48,7 @@ dependencies:
   amazon_cognito_identity_dart_2: ^1.0.3
   google_fonts: ^2.1.0
   random_color: ^1.0.6-nullsafety
+  chat_bubbles: ^1.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
