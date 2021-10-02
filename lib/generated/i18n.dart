@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/Screens/Settings/GeneralSettings.dart';
-import 'package:untitled3/Screens/Settings/SyncToCloud.dart';
+
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: camel_case_types
 // ignore_for_file: prefer_single_quotes
@@ -60,6 +59,15 @@ class I18n implements WidgetsLocalizations {
 	String get SyncToCloudScreen => "Sync to Cloud";
 	/// "General Settings"
 	String get GeneralSettingsScreen => "General Settings";
+
+  // "Oboard Cloud Settup"
+	String get OboardCloudSettup => "cloud setup";
+	//"Oboard Permission Setup"
+	String get OboardPermissionSetup => "Permission";
+	///"Oboard Lang Setup"
+	String get OboardLangSetup => "Select Language";
+	/// "General Settings"
+	String get WalkthroughScreen => "Walk Intro";
 
 
 
