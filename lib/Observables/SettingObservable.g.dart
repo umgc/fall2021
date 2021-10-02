@@ -78,6 +78,17 @@ mixin _$SettingObserver on _AbstractSettingObserver, Store {
   }
 
   @override
+  void setIsFirstRun(bool value) {
+    final _$actionInfo = _$_AbstractSettingObserverActionController.startAction(
+        name: '_AbstractSettingObserver.setIsFirstRun');
+    try {
+      return super.setIsFirstRun(value);
+    } finally {
+      _$_AbstractSettingObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentScreen: ${currentScreen},
