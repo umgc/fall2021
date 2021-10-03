@@ -173,10 +173,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
             children: [
               for( int i=0; i < 10; i++)   
                 ( i%2 == 0)?
-                 ChatMsgBubble(message:"How are you today memory?")
-                : ChatMsgBubble(message:"I am find",
-                               isSender: true,
-                               color: const Color(0xDE5744AA)),              
+                 ChatMsgBubble(message:"How are you today memory?", isSender: true )
+                : ChatMsgBubble(message:"I am find" ),              
             ])),
         
       ])

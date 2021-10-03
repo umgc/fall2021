@@ -7,7 +7,6 @@ class ChatMsgBubble extends StatelessWidget {
   bool hasAction;
   bool isSender;
   TextStyle textStyle;
-  Color color;
 
   ChatMsgBubble({
     Key? key,
@@ -15,7 +14,6 @@ class ChatMsgBubble extends StatelessWidget {
     this.isSender = false,
     this.hasAction= false,
     this.textStyle = const TextStyle(fontSize: 20),
-    this.color = const Color(0xAF52FF8C),
   }) : super(key: key);
 
 
@@ -24,9 +22,9 @@ class ChatMsgBubble extends StatelessWidget {
     final messageTextGroup = Column(
                 children: [
                   BubbleSpecialOne(
-                    text: this.message!,
-                    isSender: false,
-                    color: this.color,
+                    text: '${(this.isSender)?'Me': 'System'}\n${this.message!}',
+                    isSender: this.isSender, 
+                    color: (this.isSender)?const Color(0xAFdbf2d5):const Color(0xAFa6ffd1),
                     textStyle: this.textStyle
                   ),
 
