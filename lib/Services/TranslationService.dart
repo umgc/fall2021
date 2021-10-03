@@ -5,13 +5,14 @@ class TranslationService {
   /// Constructor
   TranslationService();
 
-  // translatedNote extends from note and has an additional property called EnglishTranslations
   static Future translate({
     required String textToTranslate,
     required GoogleTranslator translator,
-    locale = const Locale("en", "US"),
+    Locale fromLocale = const Locale("en", "US"),
+    Locale toLocale = const Locale("en", "US"),
   }) async {
-    var translation = await translator.translate(textToTranslate);
+    var translation = await translator.translate(textToTranslate,
+        from: fromLocale.languageCode, to: toLocale.languageCode);
     return translation.toString();
     // return new TranslatedTextNote();
     // const TranslatedNote = new TranslatedNote();
