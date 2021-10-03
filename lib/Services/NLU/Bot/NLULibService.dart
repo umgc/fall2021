@@ -1,10 +1,11 @@
-fiximport 'package:untitled3/Model/LexResponse.dart';
+import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
+import 'LexService.dart';
 import 'package:untitled3/Model/Note.dart';
 import '../../NoteService.dart';
 import '../BertQA/BertQaService.dart';
-import 'LexService.dart';
+
 
   class NLULibService {
 
