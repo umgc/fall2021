@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled3/Screens/Mic/system_msg.dart';
-import 'package:untitled3/Screens/Mic/user_msg.dart';
+import 'package:untitled3/Model/LexResponse.dart';
+import 'package:untitled3/Screens/Mic/ChatBubble.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/generated/i18n.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
-import 'package:provider/provider.dart';
-import '../../Observables/NoteObservable.dart';
-import 'package:untitled3/Model/Note.dart';
-
-
 
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
@@ -160,7 +153,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
               onPressed: onListen,
             ),
           )),
-          
+
       body: Column(children: <Widget>[
          Container(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
@@ -180,8 +173,10 @@ class _SpeechScreenState extends State<SpeechScreen> {
             children: [
               for( int i=0; i < 10; i++)   
                 ( i%2 == 0)?
-                 ReceivedMessageScreen()
-                : SentMessageScreen(),              
+                 ChatMsgBubble(message:"How are you today memory?")
+                : ChatMsgBubble(message:"I am find",
+                               isSender: true,
+                               color: const Color(0xDE5744AA)),              
             ])),
         
       ])

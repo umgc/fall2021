@@ -1,26 +1,33 @@
 
-import 'dart:math' as math; // import this
-
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/Screens/Mic/CustomMsgShape.dart';
 
-class ReceivedMessageScreen extends StatelessWidget {
-  // final String? message;
-  // const ReceivedMessageScreen({
-  //   Key? key,
-  //   @required this.message,
-  // }) : super(key: key);
-  bool hasAction = false;
+class ChatMsgBubble extends StatelessWidget {
+  final String? message;
+  bool hasAction;
+  bool isSender;
+  TextStyle textStyle;
+  Color color;
+
+  ChatMsgBubble({
+    Key? key,
+    @required this.message, 
+    this.isSender = false,
+    this.hasAction= false,
+    this.textStyle = const TextStyle(fontSize: 20),
+    this.color = const Color(0xAF52FF8C),
+  }) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     final messageTextGroup = Column(
                 children: [
                   BubbleSpecialOne(
-                    text: 'Would you like to save your note?',
+                    text: this.message!,
                     isSender: false,
-                    color: Color(0xAF52FF8C),
-                    textStyle: TextStyle(fontSize: 20)
+                    color: this.color,
+                    textStyle: this.textStyle
                   ),
 
                   if(hasAction)
