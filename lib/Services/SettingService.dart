@@ -1,8 +1,32 @@
 
+import '../Model/Setting.dart';
+import '../Utility/FileUtil.dart';
+import 'package:uuid/uuid.dart';
+
+
 /// Encapsulates all file I/O for text notes
 class SettingService {
-  String FILE_NAME = "memory_user_settings.json";
-  //Please reference Noteservice implementation  
+
+  static String FILE_NAME = "settings.json";
+
+  /// Constructor
+  SettingService();
+
+  /// Save a text note file to local storage
+  static Future<Setting> loadSetting() async {
+   
+    dynamic jsonObj = await FileUtil.readJson(FILE_NAME).then((value) => value);
+    Setting userTextNotes = Setting.fromJson(jsonObj);
+    return  userTextNotes;
+  }
+
+  /// Save a text note file to local storage
+  static Future<void> save( Setting settingObj) async {
+    print("Saving settings");
+    FileUtil.writeJson(FILE_NAME, "${settingObj.toString()}" );
+  }
+
+
 }
 
 
