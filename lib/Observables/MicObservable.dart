@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
-import 'package:untitled3/Model/LexResponse.dart';
+import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
@@ -12,7 +12,7 @@ class MicObserver = _AbstractMicObserver with _$MicObserver;
 abstract class _AbstractMicObserver with Store {
 
  List<dynamic> mockedInteraction = ["Please remind me to go to the market tomorrow",
-    NLUResponse(ActionType.InComplete, "Please remind me to go to the market tomorrow", "Sure I will. Is there anything else I can help you with"),
+    NLUResponse(ActionType.InComplete, "Please remind me to go to the market tomorrow", "Sure I will. Is there anything else I can help you with?"),
    "No. Thank you",
     NLUResponse(ActionType.Complete, "Thank you", "Thank you")
    ];
@@ -71,7 +71,7 @@ abstract class _AbstractMicObserver with Store {
       if(isSysrMsg==true){
            VoiceOverTextService.speakOutLoud( (value as NLUResponse).outputText );
            messageInputText = (value as NLUResponse).outputText;
-           Timer(Duration(seconds: 3), () {
+           Timer(Duration(seconds: (readingTime(messageInputText).minutes as int) ), () {
                 addSystemMessage( (value as NLUResponse) );              
           });
 

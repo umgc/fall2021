@@ -60,6 +60,7 @@ dependencies:
   device_info_plus: ^2.1.0
   fluttertoast: ^8.0.8
   enum_to_string: ^2.0.1
+  reading_time: ^2.0.0
 
 dev_dependencies:
   flutter_test:

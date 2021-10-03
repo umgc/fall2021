@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:untitled3/Model/LexResponse.dart';
+import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Screens/Mic/ChatBubble.dart';
@@ -36,7 +37,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   String get textSpeech => _textSpeech;
   String speechBubbleText =
-      'Hello from Memory Magic, press the mic to start recording';
+      'Press the mic to speak';
   List<Widget> actions = [];
   bool alreadyDelayed = false;
 
@@ -185,9 +186,16 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 dynamic chatObj =  micObserver.systemUserMessage[index];
                 //Display text at the top before moving it to the chat bubble
                 if(chatObj is String){
+                  
                  return ChatMsgBubble(message:chatObj.toString(), isSender: true );
                 }
                 NLUResponse nluResponse =  (chatObj as NLUResponse);
+
+                //YES_OR_NO Inqueries.
+                if(nluResponse.actionType ==ActionType.InComplete){
+                    return ChatMsgBubble(message:nluResponse.outputText, hasAction: true);
+                }
+
                 return ChatMsgBubble(message:nluResponse.outputText);
             }
           ))
