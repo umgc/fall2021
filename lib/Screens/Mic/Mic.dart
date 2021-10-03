@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:untitled3/Model/LexResponse.dart';
+import 'package:untitled3/Model/NLUResponse.dart';
+import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Screens/Mic/ChatBubble.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/generated/i18n.dart';
@@ -120,6 +122,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
     //final noteObserver = Provider.of<NoteObserver>(context);
       ScrollController _controller = new ScrollController();
 
+    MicObserver micObserver = MicObserver();
 
     return Scaffold(
       key: recordNoteScaffoldKey,
@@ -157,8 +160,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
       body: Column(children: <Widget>[
          Container(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
-              child: Text(
-                "Hey Magic, remind me for a good sleep tomorrowr",
+              child: Text( 
+                micObserver.messageInputText,
                 style: TextStyle(
                     fontSize: 24,
                     color: Colors.black,
@@ -166,16 +169,22 @@ class _SpeechScreenState extends State<SpeechScreen> {
             )),
         
         //if (getChat)
-         Expanded ( child:ListView(
+         Expanded ( 
+           child:ListView.builder(
             shrinkWrap: true,
             physics: const AlwaysScrollableScrollPhysics(),
             controller: _controller,
-            children: [
-              for( int i=0; i < 10; i++)   
-                ( i%2 == 0)?
-                 ChatMsgBubble(message:"How are you today memory?", isSender: true )
-                : ChatMsgBubble(message:"I am find" ),              
-            ])),
+            itemCount: micObserver.systemUserMessage.length,
+            itemBuilder: (BuildContext context, int index){
+                dynamic chatObj =  micObserver.systemUserMessage[index];
+                //Display text at the top before moving it to the chat bubble
+                if(chatObj is String){
+                 return ChatMsgBubble(message:chatObj.toString(), isSender: true );
+                }
+                NLUResponse nluResponse =  (chatObj as NLUResponse);
+                return ChatMsgBubble(message:nluResponse.outputText);
+            }
+          )),
         
       ])
     );
