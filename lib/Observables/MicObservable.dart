@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
+import 'package:untitled3/Services/VoiceOverTextService.dart';
 part 'MicObservable.g.dart';
 
 class MicObserver = _AbstractMicObserver with _$MicObserver;
@@ -14,12 +17,19 @@ abstract class _AbstractMicObserver with Store {
     NLUResponse(ActionType.Complete, "Thank you", "Thank you")
    ];
 
+  //remove this.
+  @observable
+  int mockIndex = 0;
+
   //messageInputText will be initialize and read and then its content will be added to the systemUserMessage to be displayed in the chat bubble.
   @observable
   String messageInputText = ""; 
 
   @observable
-  List<dynamic> systemUserMessage = [];
+  ObservableList<dynamic> systemUserMessage = ObservableList();
+
+  @observable
+  NLUResponse? nluResponse;
 
   @action
   void addUserMessage(String name){
@@ -39,13 +49,62 @@ abstract class _AbstractMicObserver with Store {
     //etc.
   }
 
-  @action 
-  void displayMessageInMessageInput(){
-
+  @action
+  void clearMsgTextInput(){
+    messageInputText = "";
   }
 
   @action 
-  void setMessageInputText(String value){
-      this.messageInputText = value;
+  void callNLU(String speechText){
+      print(" $mockIndex Calling NLU with speechText $speechText");
+      //call NLU service
+      nluResponse = (mockedInteraction[mockIndex] as NLUResponse);
+      //set as MessageInputText 
+      setMessageInputText(nluResponse, true);
+
+      mockIndex++;
+  }
+
+  @action 
+  void setMessageInputText(dynamic value, bool isSysrMsg){
+      //push prev message to chartBubble 
+      if(isSysrMsg==true){
+           VoiceOverTextService.speakOutLoud( (value as NLUResponse).outputText );
+           messageInputText = (value as NLUResponse).outputText;
+           Timer(Duration(seconds: 3), () {
+                addSystemMessage( (value as NLUResponse) );              
+          });
+
+      }else{
+          print("adding a user message $value");
+          messageInputText =value;
+
+           Timer(Duration(seconds: 1), () {
+              addUserMessage(value);
+          });
+          
+      }
+  }
+
+  @action
+  void mockInteraction(){
+      if(mockIndex >= mockedInteraction.length){
+        clearMsgTextInput();
+        return;
+      }
+      Timer(Duration(seconds: 2), () {
+        print("mockIndex $mockIndex");
+        setMessageInputText(mockedInteraction[mockIndex], false);
+        mockIndex = mockIndex+1;
+
+        Timer(Duration(seconds: 2), () {
+          callNLU(messageInputText);
+
+          Timer(Duration(seconds: 2), () {
+              mockInteraction();
+           });
+        });
+      });
+
   }
 }

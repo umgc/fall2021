@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:untitled3/Model/LexResponse.dart';
@@ -40,7 +43,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
 
-
+ 
   void onListen() async {
     if (!_isListening) {
       _textSpeech = "";
@@ -77,6 +80,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
       });
     }
   }
+
 
   void voiceHandler(Map<String, dynamic> inference) {
     if (inference['isUnderstood']) {
@@ -153,24 +157,26 @@ class _SpeechScreenState extends State<SpeechScreen> {
                       fontSize: 20,
                     ))
               ]),
-              onPressed: onListen,
+              onPressed: ()=> micObserver.mockInteraction(),
             ),
           )),
 
       body: Column(children: <Widget>[
          Container(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
-              child: Text( 
+              child: Observer(
+              builder: (_) => Text( 
                 micObserver.messageInputText,
                 style: TextStyle(
                     fontSize: 24,
                     color: Colors.black,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500)),
             )),
         
         //if (getChat)
          Expanded ( 
-           child:ListView.builder(
+           child:Observer(
+              builder: (_) => ListView.builder(
             shrinkWrap: true,
             physics: const AlwaysScrollableScrollPhysics(),
             controller: _controller,
@@ -184,7 +190,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 NLUResponse nluResponse =  (chatObj as NLUResponse);
                 return ChatMsgBubble(message:nluResponse.outputText);
             }
-          )),
+          ))
+          ),
         
       ])
     );
