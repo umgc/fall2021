@@ -6,7 +6,7 @@ import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import '../Services/NoteService.dart';
 import 'package:provider/provider.dart';
-import '../../Utility/Constant.dart';
+//import '../../Utility/Constant.dart';
 import 'Checklist.dart';
 import  '../../Observables/ScreenNavigator.dart';
 import '../generated/i18n.dart';
@@ -127,7 +127,7 @@ class CalendarState extends State<Calendar> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: ListTile(
-                            onTap: () => (noteObserver.CurrNoteForDetails),
+                            onTap: () => (noteObserver.currNoteForDetails),
                             title: Text(noteText.toString()),
                           ),
 

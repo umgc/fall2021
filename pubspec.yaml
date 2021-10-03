@@ -64,6 +64,7 @@ dependencies:
   enum_to_string: ^2.0.1
   permission_handler: ^8.0.1+1
   url_launcher: ^6.0.12
+  flutter_localized_locales: ^2.0.3
 
  
 
