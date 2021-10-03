@@ -52,6 +52,10 @@ class I18n implements WidgetsLocalizations {
 	String get micButton => "Mic";
 	/// "Press to Record"
 	String get pressToRecord => "Press to Record";
+
+	/// "Checklist"
+	String get checklistScreenName => "Checklist";
+
 	// "HelpScreen"
 	String get HelpScreen => "Help";
 	/// "Trigger"
@@ -73,7 +77,7 @@ class I18n implements WidgetsLocalizations {
 	String get LimitedAccessScreen => "Limited Access";
 
 
-
+ 
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();

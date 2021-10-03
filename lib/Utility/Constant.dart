@@ -7,8 +7,22 @@ class SCREEN_NAMES {
    static final String SETTING = "SETTING";
    static final String CALENDAR = "CALENDAR";
    static final String NOTE_DETAIL = "NOTE_DETAIL";
+
+   static final String CHECKLIST = "CHECKLIST";
+ }
+
+ const SUPPORTED_LOCALES = [Locale('en', 'US'), Locale('es', 'US')];
+
+const LOCALIZATION_DELEGATES = [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+       GlobalWidgetsLocalizations.delegate,
+       GlobalCupertinoLocalizations.delegate,
+];
+
    static final String HELP = "HELP";
    static final String TRIGGER = "TRIGGER";
    static final String GENERAL_SETTING = "GENERAL_SETTING";
    static final String SYNC_TO_CLOUD = "SYNC_TO_CLOUD";
 }
+
