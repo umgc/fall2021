@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled3/Screens/Mic/system_msg.dart';
+import 'package:untitled3/Screens/Mic/user_msg.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/generated/i18n.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -21,14 +23,12 @@ class SpeechScreen extends StatefulWidget {
 }
 
 class _SpeechScreenState extends State<SpeechScreen> {
+  
   final textController = TextEditingController();
   bool _getChat = false;
 
   bool get getChat => _getChat;
 
-  set getChat(bool value) {
-    _getChat = value;
-  }
 
   SpeechToText _speech = SpeechToText();
   late FlutterTts flutterTts;
@@ -44,6 +44,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
+
 
   void onListen() async {
     if (!_isListening) {
@@ -74,7 +75,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
             _textSpeech != 'Press the mic button to start') {
           // if it was, then save it as a note
           setState(() {
-            getChat = true;
+            //getChat = true;
           });
           initTts();
         }
@@ -123,11 +124,13 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final noteObserver = Provider.of<NoteObserver>(context);
+    //final noteObserver = Provider.of<NoteObserver>(context);
+      ScrollController _controller = new ScrollController();
+
 
     return Scaffold(
       key: recordNoteScaffoldKey,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: AvatarGlow(
           animate: _isListening,
           glowColor: Theme.of(context).primaryColor,
@@ -157,136 +160,30 @@ class _SpeechScreenState extends State<SpeechScreen> {
               onPressed: onListen,
             ),
           )),
+          
       body: Column(children: <Widget>[
-        SingleChildScrollView(
-          reverse: true,
-          child: Container(
-              padding: EdgeInsets.fromLTRB(30, 30, 30, 25),
+         Container(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
               child: Text(
-                _textSpeech,
+                "Hey Magic, remind me for a good sleep tomorrowr",
                 style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 24,
                     color: Colors.black,
                     fontWeight: FontWeight.w500),
-              )),
-        ),
-
-        if (getChat)
-
-          SingleChildScrollView(
-            child: Column(children: [
-              Column(
-                children: [
-                  BubbleSpecialOne(
-                    text: speechBubbleText =
-                    'Would you like to save your note?',
-                    isSender: false,
-                    color: Color(0xAF52FF8C),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 40, right: 20.0),
-                        child: ButtonTheme(
-                          buttonColor: Colors.white,
-                          minWidth: 100.0,
-                          height: 20,
-                          child: ElevatedButton(
-                            onPressed: () {
-                                if(textSpeech.length > 0) {
-                                TextNote note = TextNote();
-                                note.text = textSpeech.toString();
-                                noteObserver.addNote(note);
-                                noteObserver.changeScreen(
-                                    I18n.of(context)!.notesScreenName);
-                              }
-                            },
-                            child: Text("yes"),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: ButtonTheme(
-                          buttonColor: Colors.white,
-                          minWidth: 100.0,
-                          height: 20,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                noteObserver.changeScreen(
-                                    I18n.of(context)!.notesScreenName);
-                              });
-                            },
-                            child: Text("No"),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ]),
-          ),
-        /*
-        if(GetNote)
-          SingleChildScrollView(
-            child: Column(children: [
-    Column(
-    children: [
-    BubbleSpecialOne(
-    text: speechBubbleText =
-    'Would you like to save your note?',
-    isSender: false,
-    color: Color(0xAF52FF8C),
-    ),
-              Column(
-                children: [
-                  BubbleSpecialOne(
-                    text: speechBubbleText =
-                    'Would you like to save your note?',
-                    isSender: false,
-                    color: Color(0xAF52FF8C),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 40, right: 20.0),
-                        child: ButtonTheme(
-                          buttonColor: Colors.white,
-                          minWidth: 100.0,
-                          height: 20,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                getChat = true;
-                              });
-                            },
-                            child: Text("No"),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: ButtonTheme(
-                          buttonColor: Colors.white,
-                          minWidth: 100.0,
-                          height: 20,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                getChat = true;
-                              });
-                            },
-                            child: Text("No"),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ]),
-          ),*/
-
+            )),
+        
+        //if (getChat)
+         Expanded ( child:ListView(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            controller: _controller,
+            children: [
+              for( int i=0; i < 10; i++)   
+                ( i%2 == 0)?
+                 ReceivedMessageScreen()
+                : SentMessageScreen(),              
+            ])),
+        
       ])
     );
   }
