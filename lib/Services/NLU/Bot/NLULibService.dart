@@ -68,7 +68,7 @@ import '../BertQA/BertQaService.dart';
       if (nluResponse == null) {
         nluResponse = getFallBackResponse(inputText);
       }
-      if (nluResponse.state == NLUState.INPROGRESS) {
+      if (nluResponse.state == NLUState.MORE_INFO_NEEDED) {
         previousSessionId = sessionId;
       } else {
         previousSessionId = "";
@@ -286,7 +286,7 @@ import '../BertQA/BertQaService.dart';
       DateTime? eventDateTime;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
-        state = NLUState.INPROGRESS;
+        state = NLUState.MORE_INFO_NEEDED;
         if (eventTypeResolved != null && eventTypeResolved.length > 0 &&
             eventTypeResolved.length > 1) {
           resolvedValues = eventTypeResolved;
