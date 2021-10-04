@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
+import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
 part 'MicObservable.g.dart';
 
@@ -12,9 +13,7 @@ class MicObserver = _AbstractMicObserver with _$MicObserver;
 abstract class _AbstractMicObserver with Store {
 
  List<dynamic> mockedInteraction = ["Please remind me to go to the market tomorrow",
-    NLUResponse(ActionType.InComplete, "Please remind me to go to the market tomorrow", "Sure I will. Is there anything else I can help you with?"),
-   "No. Thank you",
-    NLUResponse(ActionType.Complete, "Thank you", "Thank you")
+   "No. Thank you"
    ];
 
   //remove this.
@@ -58,7 +57,8 @@ abstract class _AbstractMicObserver with Store {
   void callNLU(String speechText){
       print(" $mockIndex Calling NLU with speechText $speechText");
       //call NLU service
-      nluResponse = (mockedInteraction[mockIndex] as NLUResponse);
+      //nluResponse = (mockedInteraction[mockIndex] as NLUResponse);
+      print("nluResponse ${nluResponse!.actionType}");
       //set as MessageInputText 
       setMessageInputText(nluResponse, true);
 
@@ -71,15 +71,16 @@ abstract class _AbstractMicObserver with Store {
       if(isSysrMsg==true){
            VoiceOverTextService.speakOutLoud( (value as NLUResponse).outputText );
            messageInputText = (value as NLUResponse).outputText;
-           Timer(Duration(seconds: (readingTime(messageInputText).minutes as int) ), () {
+           Timer(Duration(seconds: 2 ), () {
                 addSystemMessage( (value as NLUResponse) );              
           });
 
       }else{
           print("adding a user message $value");
           messageInputText =value;
-
-           Timer(Duration(seconds: 1), () {
+          NLULibService().getNLUResponse(messageInputText, "en-US").
+              then((value) => nluResponse = value);
+          Timer(Duration(seconds: 1), () {
               addUserMessage(value);
           });
           
