@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
-import 'package:reading_time/reading_time.dart';
+//import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
@@ -28,13 +28,29 @@ abstract class _AbstractMicObserver with Store {
 
   //messageInputText will be initialize and read and then its content will be added to the systemUserMessage to be displayed in the chat bubble.
   @observable
-  String messageInputText = ""; 
+  String messageInputText = "";
+
+  @observable
+  bool micIsListening = false; 
 
   @observable
   ObservableList<dynamic> systemUserMessage = ObservableList();
 
   @observable
   NLUResponse? nluResponse;
+
+
+  @action 
+  void startListening(){
+    print("MicObserver: Starting listening mode ");
+    micIsListening = true;
+  }
+
+  @action 
+  void stopListening(){
+    print("MicObserver: exiting listening mode ");
+    micIsListening = false;
+  }
 
   @action
   void addUserMessage(String name){

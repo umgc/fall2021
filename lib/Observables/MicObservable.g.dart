@@ -40,6 +40,22 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
+  final _$micIsListeningAtom =
+      Atom(name: '_AbstractMicObserver.micIsListening');
+
+  @override
+  bool get micIsListening {
+    _$micIsListeningAtom.reportRead();
+    return super.micIsListening;
+  }
+
+  @override
+  set micIsListening(bool value) {
+    _$micIsListeningAtom.reportWrite(value, super.micIsListening, () {
+      super.micIsListening = value;
+    });
+  }
+
   final _$systemUserMessageAtom =
       Atom(name: '_AbstractMicObserver.systemUserMessage');
 
@@ -73,6 +89,28 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
 
   final _$_AbstractMicObserverActionController =
       ActionController(name: '_AbstractMicObserver');
+
+  @override
+  void startListening() {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.startListening');
+    try {
+      return super.startListening();
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopListening() {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.stopListening');
+    try {
+      return super.stopListening();
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void addUserMessage(String name) {
@@ -156,6 +194,7 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     return '''
 mockIndex: ${mockIndex},
 messageInputText: ${messageInputText},
+micIsListening: ${micIsListening},
 systemUserMessage: ${systemUserMessage},
 nluResponse: ${nluResponse}
     ''';
