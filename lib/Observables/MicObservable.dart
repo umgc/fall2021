@@ -12,7 +12,7 @@ class MicObserver = _AbstractMicObserver with _$MicObserver;
 
 abstract class _AbstractMicObserver with Store {
 
- List<dynamic> mockedInteraction = ["Please remind me to go to the market tomorrow",
+ List<dynamic> mockedInteraction = ["how to create note",
    "No. Thank you"
    ];
 
@@ -69,8 +69,8 @@ abstract class _AbstractMicObserver with Store {
   void setMessageInputText(dynamic value, bool isSysrMsg){
       //push prev message to chartBubble 
       if(isSysrMsg==true){
-           VoiceOverTextService.speakOutLoud( (value as NLUResponse).outputText );
-           messageInputText = (value as NLUResponse).outputText;
+           VoiceOverTextService.speakOutLoud( (value as NLUResponse).response! );
+           messageInputText = (value as NLUResponse).response!;
            Timer(Duration(seconds: 2 ), () {
                 addSystemMessage( (value as NLUResponse) );              
           });

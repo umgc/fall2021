@@ -192,11 +192,11 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 NLUResponse nluResponse =  (chatObj as NLUResponse);
 
                 //YES_OR_NO Inqueries.
-                if(nluResponse.actionType ==ActionType.InComplete){
-                    return ChatMsgBubble(message:nluResponse.outputText, hasAction: true);
+                if(nluResponse.actionType ==ActionType.ANSWER){
+                    return ChatMsgBubble(message:nluResponse.response, hasAction: true);
                 }
 
-                return ChatMsgBubble(message:nluResponse.outputText);
+                return ChatMsgBubble(message:nluResponse.response);
             }
           ))
           ),
