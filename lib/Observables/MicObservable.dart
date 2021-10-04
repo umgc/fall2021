@@ -16,6 +16,12 @@ abstract class _AbstractMicObserver with Store {
    "No. Thank you"
    ];
 
+ late final NLULibService nluLibService;
+
+ _AbstractMicObserver() {
+   nluLibService = NLULibService();
+ }
+
   //remove this.
   @observable
   int mockIndex = 0;
@@ -78,7 +84,7 @@ abstract class _AbstractMicObserver with Store {
       }else{
           print("adding a user message $value");
           messageInputText =value;
-          NLULibService().getNLUResponse(messageInputText, "en-US").
+          nluLibService.getNLUResponse(messageInputText, "en-US").
               then((value) => nluResponse = value);
           Timer(Duration(seconds: 1), () {
               addUserMessage(value);
