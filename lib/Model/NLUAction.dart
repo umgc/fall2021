@@ -1,9 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
 
 enum ActionType {
   CREATE_NOTE,
   COMPLETE,
-  INCOMPLETE,
+  NOTFOUND,
   APP_HELP,
-  APP_NAV
+  APP_NAV,
+  ANSWER,
+  CREATE_EVENT
 }
