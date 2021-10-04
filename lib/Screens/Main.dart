@@ -17,6 +17,8 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../Observables/ScreenNavigator.dart';
+import 'calendar.dart';
+import 'Checklist.dart';
 
 final mainScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -58,6 +60,8 @@ class _MainNavigatorState extends State<MainNavigator> {
       I18n.of(context)!.notesScreenName,
       I18n.of(context)!.notificationsScreenName,
       I18n.of(context)!.homeScreenName,
+      I18n.of(context)!.calendarScreenName,
+      I18n.of(context)!.checklistScreenName
     ];
 
     _setScreenName(screenNames[index]);
@@ -93,10 +97,13 @@ class _MainNavigatorState extends State<MainNavigator> {
     }
 
     /**
-     * TODO: Uncomment for calendar
-     * if(name == AppLocalizations.of(context)!.calendarScreenName){
+     * TODO: Uncomment for calendar*/
+      if(name == I18n.of(context)!.calendarScreenName){
       return Calendar();
-    }*/
+    }
+    if(name == I18n.of(context)!.checklistScreenName){
+      return Checklist();
+    }
     return _widgetOptions.elementAt(index);
   }
 
@@ -167,7 +174,16 @@ class _MainNavigatorState extends State<MainNavigator> {
           children: <Widget>[
             IconButton(
                 onPressed: () {
-                  //_setScreenName(SCREEN_NAMES.CALENDAR);
+                  _setScreenName(I18n.of(context)!.checklistScreenName);
+                },
+                icon: Icon(
+                  Icons.checklist,
+                  color: Colors.white,
+                  size: 35,
+                )),
+            IconButton(
+                onPressed: () {
+                  _setScreenName(I18n.of(context)!.calendarScreenName);
                 },
                 icon: Icon(
                   Icons.event_note_sharp,

@@ -134,21 +134,88 @@ class Intent {
   }
 }
 
+class Value {
+  late String interpretedValue;
+  late String originalValue;
+  late List<String> resolvedValues;
+
+  Value({required this.interpretedValue, required this.originalValue, required this.resolvedValues});
+
+  Value.fromJson(Map<String, dynamic> json) {
+    if (json['interpretedValue'] != null)
+         interpretedValue = json['interpretedValue'];
+    if (json['originalValue'] != null)
+          originalValue = json['originalValue'];
+    if (json['resolvedValues'] != null)
+          resolvedValues = json['resolvedValues'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['interpretedValue'] = this.interpretedValue;
+    data['originalValue'] = this.originalValue;
+    data['resolvedValues'] = this.resolvedValues;
+    return data;
+  }
+}
+
+
+class AppointmentType {
+  late Value? value;
+
+  AppointmentType({required this.value});
+
+  AppointmentType.fromJson(Map<String, dynamic> json) {
+    value = (json['value'] != null ? new Value.fromJson(json['value']) : null)!;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.value != null) {
+      data['value'] = this.value!.toJson();
+    }
+    return data;
+  }
+}
+
 class Slots {
+  late AppointmentType? appointmentType;
+  late AppointmentType? date;
+  late AppointmentType? time;
 
+  Slots({this.appointmentType, this.date, this.time});
 
-  Slots() {
-}
+  Slots.fromJson(Map<String, dynamic> json) {
+    if (json['AppointmentType'] == null) {
+      appointmentType = null;
+    } else {
+      appointmentType = new AppointmentType.fromJson(json['AppointmentType']);
+    }
+    if (json['Date'] == null) {
+      date = null;
+    } else {
+      date = new AppointmentType.fromJson(json['Date']);
+    }
+    if (json['Time'] == null) {
+      time = null;
+    } else {
+      time = new AppointmentType.fromJson(json['Time']);
+    }
+  }
 
-
-
-Slots.fromJson(Map<String, dynamic> json) {
-}
-
-Map<String, dynamic> toJson() {
-  final Map<String, dynamic> data = new Map<String, dynamic>();
-  return data;
-}
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.appointmentType != null) {
+      data['AppointmentType'] = this.appointmentType!.toJson();
+    }
+    if (this.date != null) {
+      data['Date'] = this.date;
+    }
+    if (this.time != null) {
+      data['Time'] = this.time;
+    }
+    return data;
+  }
 }
 
 class NluConfidence {

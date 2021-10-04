@@ -1,9 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
 
-//@JsonSerializable(nullable: true)
 enum ActionType {
-  CreateNote,
-  Complete,
-  InComplete,
-  AppHelpNotes
+  CREATE_NOTE,
+  COMPLETE,
+  NOTFOUND,
+  APP_HELP,
+  APP_NAV,
+  ANSWER,
+  CREATE_EVENT
 }

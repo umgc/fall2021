@@ -34,7 +34,6 @@ dependencies:
   xml: ^5.1.2
   encrypt: ^5.0.0
   shared_preferences: ^2.0.6
-  picovoice: ^1.1.8
   timeago: ^3.1.0
   flutter_search_bar: ^3.0.0-dev.1
   flutter_tts: ^3.2.1
@@ -59,14 +58,22 @@ dependencies:
   nanoid: ^1.0.0
   device_info_plus: ^2.1.0
   fluttertoast: ^8.0.8
+ 
+  table_calendar: ^3.0.2
+ 
   enum_to_string: ^2.0.1
   reading_time: ^2.0.0
+  permission_handler: ^8.0.1+1
+  url_launcher: ^6.0.12
+  flutter_localized_locales: ^2.0.3
+
+ 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.9.2
-  build_runner: ^1.12.2
+  build_runner: ^2.1.4
   mobx_codegen: ^2.0.0
   i18n_json: ^0.9.0
 

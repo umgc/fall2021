@@ -1,0 +1,5 @@
+
+enum NLUState {
+  INPROGRESS,
+  COMPLETE
+}
