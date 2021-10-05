@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:untitled3/Model/NLUState.dart';
@@ -11,7 +12,8 @@ class NLUResponse {
   String? eventType;
   DateTime? eventTime;
   List<String>? resolvedValues;
-
+  String? recurringType;
+  TimeOfDay? timeOfDay;
 
   NLUResponse(this.actionType,
       this.inputMessage,
@@ -19,7 +21,9 @@ class NLUResponse {
       this.state,
       this.eventType,
       this.eventTime,
-      this.resolvedValues);
+      this.resolvedValues,
+      this.recurringType,
+      this.timeOfDay);
 
   String toJson() {
     String jsonStr = """{"actionType": "${this.actionType}",
@@ -29,6 +33,8 @@ class NLUResponse {
                         "eventType": "${this.eventType},
                         "eventTime": "${this.eventTime},
                         "resolvedValues": "${this.resolvedValues}
+                        "recurringType": "${this.recurringType}
+                        "timeOfDay": "${this.timeOfDay}
                         """;
     return jsonStr;
   }
