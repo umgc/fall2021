@@ -10,7 +10,7 @@ import '../Services/NoteService.dart';
 /// Example event class.
 class Event {
 
- String title ="note title";// TextNote().text;
+ String title ="";
 
    Event(this.title);
 
@@ -28,13 +28,13 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
 
 
 final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
+    key: (item) => TextNote().eventDate,//DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
     value: (item) => List.generate(
         item % 4 + 1, (index) =>  Event(TextNote().text)))
   ..addAll({
     kToday: [
 
-      Event("title"),
+      Event(TextNote().text),
    //   Event('Today\'s Event 2'),
     ],
   });
