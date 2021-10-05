@@ -29,12 +29,12 @@ class NLUResponse {
     String jsonStr = """{"actionType": "${this.actionType}",
                         "inputMessage": "${this.inputMessage}",
                         "response": "${this.response}",
-                        "state": "${this.state},
-                        "eventType": "${this.eventType},
-                        "eventTime": "${this.eventTime},
-                        "resolvedValues": "${this.resolvedValues}
-                        "recurringType": "${this.recurringType}
-                        "timeOfDay": "${this.timeOfDay}
+                        "state": "${this.state}",
+                        "eventType": "${this.eventType}",
+                        "eventTime": "${this.eventTime}", 
+                        "resolvedValues": "${this.resolvedValues}",
+                        "recurringType": "${this.recurringType}",
+                        "timeOfDay": "${this.timeOfDay}"
                         """;
     return jsonStr;
   }

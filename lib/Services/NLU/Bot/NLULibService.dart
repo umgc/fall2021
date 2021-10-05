@@ -19,7 +19,19 @@ import '../BertQA/BertQaService.dart';
     static const String CreateNote = "CreateNote";
     static const String CreateEvent = "MakeAppointment";
     static const String CreateRecurringEvent = "CreateRecurringEvent";
+    static const String HowAreYou = "HowAreYou";
+    static const String Hello = "Hello";
+    static const String WhatIsYourName = "WhatIsYourName";
+    static const String ThankYou = "ThankYou";
+    static const String LastThingSaid = "LastThingSaid";
+    static const String Compliment = "Compliment";
+    static const String Insult = "Insult";
+    static const String Goodbye = "Goodbye";
+    static const String UserLocation = "UserLocation";
     static const String InterpretationsJsonStr = "interpretations";
+
+    String lastValidInput = "";
+
     static const String DefaultLocale = "en-US";
     String previousSessionId = "";
 
@@ -47,6 +59,9 @@ import '../BertQA/BertQaService.dart';
           String currentState = getState(lexResponseObj);
           Slots? currentSlots = getSlots(lexResponseObj);
           String outputText = getMessage(lexResponseObj);
+
+          print(currentState);
+
           if (intentName.isNotEmpty) {
             if (intentName.startsWith(AppHelp)) {
               nluResponse = getAppHelpResponse(lexResponseObj, currentState,
@@ -66,6 +81,18 @@ import '../BertQA/BertQaService.dart';
             } else if (intentName == CreateRecurringEvent) {
               nluResponse =  getCreateRecurringResponse(lexResponseObj,
                   currentState, inputText, outputText, currentSlots);
+            } else if (intentName == LastThingSaid) {
+              nluResponse =  getLastThingSaidResponse(lexResponseObj,
+                  currentState, inputText, outputText);
+            } else if (intentName == UserLocation) {
+              nluResponse = getUserLocationResponse(lexResponseObj,
+                  currentState, inputText, outputText);
+            } else if (intentName == HowAreYou || intentName == Hello ||
+                intentName == WhatIsYourName || intentName == ThankYou ||
+                intentName == Compliment || intentName == Insult ||
+                intentName == Goodbye) {
+              nluResponse = getChitChatResponse(lexResponseObj,
+                  currentState, inputText, outputText);
             } else {
               nluResponse = (await getSearchNoteResponse(inputText));
             }
@@ -75,7 +102,7 @@ import '../BertQA/BertQaService.dart';
       if (nluResponse == null) {
         nluResponse = getFallBackResponse(inputText);
       }
-      if (nluResponse.state == NLUState.INPROGRESS) {
+      if (nluResponse.state == NLUState.IN_PROGRESS) {
         previousSessionId = sessionId;
       } else {
         previousSessionId = "";
@@ -220,6 +247,7 @@ import '../BertQA/BertQaService.dart';
         String outputText) {
       ActionType actionType = ActionType.APP_HELP;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
       return new NLUResponse(
           actionType,
           inputText,
@@ -238,6 +266,7 @@ import '../BertQA/BertQaService.dart';
         String outputText) {
       ActionType actionType = ActionType.APP_NAV;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
       return new NLUResponse(
           actionType,
           inputText,
@@ -256,6 +285,8 @@ import '../BertQA/BertQaService.dart';
         String outputText) {
       ActionType actionType = ActionType.CREATE_NOTE;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
+      outputText = inputText;
       return new NLUResponse(
           actionType,
           inputText,
@@ -270,8 +301,9 @@ import '../BertQA/BertQaService.dart';
 
     Future<NLUResponse?> getSearchNoteResponse(
         String inputText) async {
-      ActionType actionType = ActionType.CREATE_NOTE;
+      ActionType actionType = ActionType.ANSWER;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
       String outputText = await searchNotesByInput(inputText);
       return new NLUResponse(
           actionType,
@@ -300,7 +332,7 @@ import '../BertQA/BertQaService.dart';
 
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
-        state = NLUState.INPROGRESS;
+        state = NLUState.IN_PROGRESS;
         if (recurringTypeResolved != null && recurringTypeResolved.length > 0 &&
             recurringTypeResolved.length > 1) {
           resolvedValues = recurringTypeResolved;
@@ -332,6 +364,69 @@ import '../BertQA/BertQaService.dart';
           timeOfDay);
     }
 
+    NLUResponse getLastThingSaidResponse(LexResponse lexResponseObj,
+        String currentState,
+        String inputText,
+        String outputText) {
+      ActionType actionType = ActionType.ANSWER;
+      NLUState state = NLUState.COMPLETE;
+      if (lastValidInput.trim().isNotEmpty) {
+        outputText = "You said '$lastValidInput'.";
+      } else {
+        outputText = "You didn't say anything.";
+      }
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          null,
+          null,
+          null);
+    }
+
+    NLUResponse getUserLocationResponse(LexResponse lexResponseObj,
+        String currentState,
+        String inputText,
+        String outputText) {
+      ActionType actionType = ActionType.USER_LOCATION;
+      NLUState state = NLUState.COMPLETE;
+      outputText = "";
+      lastValidInput = inputText;
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          null,
+          null,
+          null);
+    }
+
+    NLUResponse getChitChatResponse(LexResponse lexResponseObj,
+        String currentState,
+        String inputText,
+        String outputText) {
+      ActionType actionType = ActionType.ANSWER;
+      NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          null,
+          null,
+          null);
+    }
+
+
     NLUResponse getCreateEventResponse(LexResponse lexResponseObj,
         String currentState,
         String inputText,
@@ -350,7 +445,7 @@ import '../BertQA/BertQaService.dart';
       DateTime? eventDateTime;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
-        state = NLUState.INPROGRESS;
+        state = NLUState.IN_PROGRESS;
         if (eventTypeResolved != null && eventTypeResolved.length > 0 &&
             eventTypeResolved.length > 1) {
           resolvedValues = eventTypeResolved;
