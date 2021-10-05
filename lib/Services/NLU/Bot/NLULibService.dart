@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
@@ -17,6 +18,7 @@ import '../BertQA/BertQaService.dart';
     static const String SearchNotes = "SearchNotes";
     static const String CreateNote = "CreateNote";
     static const String CreateEvent = "MakeAppointment";
+    static const String CreateRecurringEvent = "CreateRecurringEvent";
     static const String InterpretationsJsonStr = "interpretations";
     static const String DefaultLocale = "en-US";
     String previousSessionId = "";
@@ -60,7 +62,12 @@ import '../BertQA/BertQaService.dart';
                   currentState, inputText, outputText, currentSlots);
             } else if (intentName == SearchNotes) {
               nluResponse = (await getSearchNoteResponse(
-                  lexResponseObj, currentState, inputText));
+                  inputText));
+            } else if (intentName == CreateRecurringEvent) {
+              nluResponse =  getCreateRecurringResponse(lexResponseObj,
+                  currentState, inputText, outputText, currentSlots);
+            } else {
+              nluResponse = (await getSearchNoteResponse(inputText));
             }
           }
         }
@@ -193,7 +200,10 @@ import '../BertQA/BertQaService.dart';
           date: new AppointmentType(value: new Value(interpretedValue: "",
               originalValue: "", resolvedValues: new List.empty())),
           time: new AppointmentType(value: new Value(interpretedValue: "",
-              originalValue: "", resolvedValues: new List.empty())));
+              originalValue: "", resolvedValues: new List.empty())),
+          recurringType: new RecurringType(
+            value: new Value(interpretedValue: "",
+                originalValue: "", resolvedValues: new List.empty())));
       if (lexResponseObj != null) {
         if (lexResponseObj.sessionState != null
             && lexResponseObj.sessionState.intent != null
@@ -217,6 +227,8 @@ import '../BertQA/BertQaService.dart';
           state,
           null,
           null,
+          null,
+          null,
           null);
     }
 
@@ -231,6 +243,8 @@ import '../BertQA/BertQaService.dart';
           inputText,
           outputText,
           state,
+          null,
+          null,
           null,
           null,
           null);
@@ -249,11 +263,12 @@ import '../BertQA/BertQaService.dart';
           state,
           null,
           null,
+          null,
+          null,
           null);
     }
 
-    Future<NLUResponse?> getSearchNoteResponse(LexResponse lexResponseObj,
-        String currentState,
+    Future<NLUResponse?> getSearchNoteResponse(
         String inputText) async {
       ActionType actionType = ActionType.CREATE_NOTE;
       NLUState state = NLUState.COMPLETE;
@@ -265,7 +280,56 @@ import '../BertQA/BertQaService.dart';
           state,
           null,
           null,
+          null,
+          null,
           null);
+    }
+
+    NLUResponse getCreateRecurringResponse(LexResponse lexResponseObj,
+        String currentState, String inputText,
+        String outputText, Slots currentSlots) {
+
+      ActionType actionType;
+      NLUState state;
+      List<String>? recurringTypeResolved = getRecurringEventType(currentSlots);
+      List<String>? eventTimeResolved = getEventTime(currentSlots);
+      List<String>? resolvedValues;
+      String recurringType = "",
+          eventTime = "";
+      TimeOfDay? timeOfDay;
+
+      if (currentState == "InProgress") {
+        actionType = ActionType.ANSWER;
+        state = NLUState.INPROGRESS;
+        if (recurringTypeResolved != null && recurringTypeResolved.length > 0 &&
+            recurringTypeResolved.length > 1) {
+          resolvedValues = recurringTypeResolved;
+        } else if (eventTimeResolved != null && eventTimeResolved.length > 0 &&
+            eventTimeResolved.length > 1) {
+          resolvedValues = eventTimeResolved;
+        }
+      } else {
+        actionType = ActionType.CREATE_RECURRING_EVENT;
+        state = NLUState.COMPLETE;
+        if (recurringTypeResolved != null && recurringTypeResolved.length > 0) {
+          recurringType = recurringTypeResolved.first;
+        }
+        if (eventTimeResolved != null && eventTimeResolved.length > 0) {
+          eventTime = eventTimeResolved.first;
+        }
+        timeOfDay = getTimeOfDay(eventTime);
+        outputText = inputText;
+      }
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          resolvedValues,
+          recurringType,
+          timeOfDay);
     }
 
     NLUResponse getCreateEventResponse(LexResponse lexResponseObj,
@@ -310,7 +374,7 @@ import '../BertQA/BertQaService.dart';
           eventTime = eventTimeResolved.first;
         }
         eventDateTime = getEventDateTime(eventDateTime, eventDate, eventTime);
-        outputText = "Book " + eventType + " appointment" + " at " + eventDateTime.toString();
+        outputText = inputText;
       }
       return new NLUResponse(
           actionType,
@@ -319,7 +383,9 @@ import '../BertQA/BertQaService.dart';
           state,
           eventType,
           eventDateTime,
-          resolvedValues);
+          resolvedValues,
+          null,
+          null);
     }
 
     DateTime getEventDateTime(DateTime? eventDateTime, String eventDate, String eventTime) {
@@ -338,6 +404,22 @@ import '../BertQA/BertQaService.dart';
       return eventDateTime;
     }
 
+    TimeOfDay getTimeOfDay(String eventTime) {
+      int currentHour = 0, currentMin =0;
+      if (eventTime.isNotEmpty) {
+        List<String> hourMin = eventTime.split(":");
+        if (hourMin != null && hourMin.length > 0) {
+          if (hourMin.first != null && hourMin.first.isNotEmpty) {
+            currentHour = int.parse(hourMin.first);
+          }
+          if (hourMin.last != null && hourMin.last.isNotEmpty) {
+            currentMin = int.parse(hourMin.last);
+          }
+        }
+      }
+      return TimeOfDay(hour: currentHour, minute: currentMin); ;
+    }
+
     List<String>? getEventType(Slots? slots) {
       if (slots != null
           && slots.appointmentType != null
@@ -345,6 +427,17 @@ import '../BertQA/BertQaService.dart';
           && slots.appointmentType!.value!.resolvedValues != null
           && slots.appointmentType!.value!.resolvedValues.length > 0) {
         return slots.appointmentType!.value!.resolvedValues;
+      }
+      return null;
+    }
+
+    List<String>? getRecurringEventType(Slots? slots) {
+      if (slots != null
+          && slots.recurringType != null
+          && slots.recurringType!.value != null
+          && slots.recurringType!.value!.resolvedValues != null
+          && slots.recurringType!.value!.resolvedValues.length > 0) {
+        return slots.recurringType!.value!.resolvedValues;
       }
       return null;
     }
@@ -381,6 +474,8 @@ import '../BertQA/BertQaService.dart';
           inputText,
           outputText,
           state,
+          null,
+          null,
           null,
           null,
           null);

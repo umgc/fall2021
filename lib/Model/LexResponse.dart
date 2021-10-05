@@ -178,18 +178,42 @@ class AppointmentType {
   }
 }
 
+class RecurringType {
+  late Value? value;
+
+  RecurringType({required this.value});
+
+  RecurringType.fromJson(Map<String, dynamic> json) {
+    value = json['value'] != null ? new Value.fromJson(json['value']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.value != null) {
+      data['value'] = this.value!.toJson();
+    }
+    return data;
+  }
+}
+
 class Slots {
   late AppointmentType? appointmentType;
   late AppointmentType? date;
   late AppointmentType? time;
+  late RecurringType? recurringType;
 
-  Slots({this.appointmentType, this.date, this.time});
+  Slots({this.appointmentType, this.date, this.time, this.recurringType});
 
   Slots.fromJson(Map<String, dynamic> json) {
     if (json['AppointmentType'] == null) {
       appointmentType = null;
     } else {
       appointmentType = new AppointmentType.fromJson(json['AppointmentType']);
+    }
+    if (json['RecurringType'] == null) {
+      recurringType = null;
+    } else {
+      recurringType = new RecurringType.fromJson(json['RecurringType']);
     }
     if (json['Date'] == null) {
       date = null;
