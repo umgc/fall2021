@@ -33,8 +33,8 @@ class NLUResponse {
                         "eventType": "${this.eventType}",
                         "eventTime": "${this.eventTime}", 
                         "resolvedValues": "${this.resolvedValues}",
-                        "recurringType": "${this.recurringType} every month
-                        "timeOfDay": "${this.timeOfDay}
+                        "recurringType": "${this.recurringType}",
+                        "timeOfDay": "${this.timeOfDay}"
                         """;
     return jsonStr;
   }
