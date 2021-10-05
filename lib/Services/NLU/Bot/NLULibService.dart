@@ -102,7 +102,7 @@ import '../BertQA/BertQaService.dart';
       if (nluResponse == null) {
         nluResponse = getFallBackResponse(inputText);
       }
-      if (nluResponse.state == NLUState.INPROGRESS) {
+      if (nluResponse.state == NLUState.IN_PROGRESS) {
         previousSessionId = sessionId;
       } else {
         previousSessionId = "";
@@ -301,7 +301,7 @@ import '../BertQA/BertQaService.dart';
 
     Future<NLUResponse?> getSearchNoteResponse(
         String inputText) async {
-      ActionType actionType = ActionType.CREATE_NOTE;
+      ActionType actionType = ActionType.ANSWER;
       NLUState state = NLUState.COMPLETE;
       lastValidInput = inputText;
       String outputText = await searchNotesByInput(inputText);
@@ -332,7 +332,7 @@ import '../BertQA/BertQaService.dart';
 
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
-        state = NLUState.INPROGRESS;
+        state = NLUState.IN_PROGRESS;
         if (recurringTypeResolved != null && recurringTypeResolved.length > 0 &&
             recurringTypeResolved.length > 1) {
           resolvedValues = recurringTypeResolved;
@@ -368,7 +368,7 @@ import '../BertQA/BertQaService.dart';
         String currentState,
         String inputText,
         String outputText) {
-      ActionType actionType = ActionType.COMPLETE;
+      ActionType actionType = ActionType.ANSWER;
       NLUState state = NLUState.COMPLETE;
       if (lastValidInput.trim().isNotEmpty) {
         outputText = "You said '$lastValidInput'.";
@@ -411,7 +411,7 @@ import '../BertQA/BertQaService.dart';
         String currentState,
         String inputText,
         String outputText) {
-      ActionType actionType = ActionType.COMPLETE;
+      ActionType actionType = ActionType.ANSWER;
       NLUState state = NLUState.COMPLETE;
       lastValidInput = inputText;
       return new NLUResponse(
@@ -445,7 +445,7 @@ import '../BertQA/BertQaService.dart';
       DateTime? eventDateTime;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
-        state = NLUState.INPROGRESS;
+        state = NLUState.IN_PROGRESS;
         if (eventTypeResolved != null && eventTypeResolved.length > 0 &&
             eventTypeResolved.length > 1) {
           resolvedValues = eventTypeResolved;

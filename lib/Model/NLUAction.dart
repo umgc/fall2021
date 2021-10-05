@@ -1,7 +1,6 @@
 
 enum ActionType {
   CREATE_NOTE,
-  COMPLETE,
   NOTFOUND,
   APP_HELP,
   APP_NAV,

@@ -1,5 +1,5 @@
 
 enum NLUState {
-  INPROGRESS,
+  IN_PROGRESS,
   COMPLETE
 }
