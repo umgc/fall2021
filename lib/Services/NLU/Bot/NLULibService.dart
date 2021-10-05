@@ -93,11 +93,7 @@ import '../BertQA/BertQaService.dart';
                 intentName == Goodbye) {
               nluResponse = getChitChatResponse(lexResponseObj,
                   currentState, inputText, outputText);
-            }
-
-
-
-              else {
+            } else {
               nluResponse = (await getSearchNoteResponse(inputText));
             }
           }
