@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/Model/Setting.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Screens/Settings/Setting.dart';
 import '../../Observables/MenuObservable.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -6,7 +9,6 @@ import '../../Utility/Constant.dart';
 import 'package:untitled3/Screens/Settings/Trigger.dart';
 import 'package:untitled3/Screens/Settings/Help.dart';
 import 'package:untitled3/Screens/Settings/SyncToCloud.dart';
-import 'package:untitled3/Screens/Settings/GeneralSettings.dart';
 
 
 
@@ -20,16 +22,16 @@ class Menu extends StatefulWidget {
 
 class MenuState extends State<Menu> {
 
-
   @override
   Widget build(BuildContext context) {
     final menuObserver = Provider.of<MenuObserver>(context);
-    menuObserver.changeScreen(SCREEN_NAMES.MENU);
+    print("${(menuObserver.currentScreen == MENU_SCREENS.MENU)}");
+    print("${(menuObserver.currentScreen )}");
     return
       Observer(
         builder: (_)
     =>
-    (menuObserver.currentScreen.toUpperCase() == SCREEN_NAMES.MENU) ?
+    (menuObserver.currentScreen == MENU_SCREENS.MENU) ?
     Scaffold(
       body: Column(
 
@@ -54,7 +56,7 @@ class MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30.0)),
                             minimumSize: Size(40, 40)),
                         onPressed: () {
-                          menuObserver.changeScreen(SCREEN_NAMES.SYNC_TO_CLOUD);
+                          menuObserver.changeScreen(MENU_SCREENS.SYNC_TO_CLOUD);
 
                         },
                         child: Column(children: [
@@ -86,7 +88,7 @@ class MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30.0)),
                             minimumSize: Size(10, 10)),
                         onPressed: () {
-                          menuObserver.changeScreen(SCREEN_NAMES.TRIGGER);
+                          menuObserver.changeScreen(MENU_SCREENS.TRIGGER);
 
                         },
                         child: Column(children: [
@@ -132,7 +134,7 @@ class MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30.0)),
                             minimumSize: Size(10, 10)),
                         onPressed: () {
-                          menuObserver.changeScreen(SCREEN_NAMES.GENERAL_SETTING);
+                          menuObserver.changeScreen(MENU_SCREENS.GENERAL_SETTING);
 
                         },
                         child: Column(children: [
@@ -169,7 +171,7 @@ class MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30.0)),
                             minimumSize: Size(10, 10)),
                         onPressed: () {
-                          menuObserver.changeScreen(SCREEN_NAMES.HELP);
+                          menuObserver.changeScreen(MENU_SCREENS.HELP);
                         },
                         child: Column(children: [
                           Padding(
@@ -200,14 +202,14 @@ class MenuState extends State<Menu> {
         ],
       ),
     )
-        : (menuObserver.currentScreen == SCREEN_NAMES.TRIGGER)
-        ? Trigger()
-        : (menuObserver.currentScreen == SCREEN_NAMES.HELP)?
-        Help()
-        : (menuObserver.currentScreen == SCREEN_NAMES.GENERAL_SETTING)?
-          GeneralSetting()
-        : (menuObserver.currentScreen == SCREEN_NAMES.SYNC_TO_CLOUD)?
-          SyncToCloud()
+        : (menuObserver.currentScreen == MENU_SCREENS.TRIGGER)
+        ?   Trigger()
+        : (menuObserver.currentScreen == MENU_SCREENS.HELP)?
+            Help()
+        : (menuObserver.currentScreen == MENU_SCREENS.GENERAL_SETTING)?
+            Settings()
+        : (menuObserver.currentScreen == MENU_SCREENS.SYNC_TO_CLOUD)?
+            SyncToCloud()
         : Text("Oopps")
       );
   }

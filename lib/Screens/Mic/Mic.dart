@@ -118,37 +118,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
               builder: (_) => 
       Scaffold(
       key: recordNoteScaffoldKey,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: AvatarGlow(
-          animate: micObserver.micIsListening,
-          glowColor: Theme.of(context).primaryColor,
-          endRadius: 80,
-          duration: Duration(milliseconds: 2000),
-          repeatPauseDuration: const Duration(milliseconds: 100),
-          repeat: true,
-          child: Container(
-            width: 200.0,
-            height: 200.0,
-            child: new RawMaterialButton(
-              shape: new CircleBorder(),
-              elevation: 0.0,
-              child: Column(children: [
-                Image(
-                  image: AssetImage("assets/images/mic.png"),
-                  color: Color(0xFF33ACE3),
-                  height: 100,
-                  width: 100.82,
-                ),
-                Text(I18n.of(context)!.notesScreenName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ))
-              ]),
-              onPressed: ()=> onListen(micObserver),
-            ),
-          )),
-
+      
       body: Column(children: <Widget>[
          Container(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 15),

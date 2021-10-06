@@ -19,7 +19,7 @@ class Calendar extends StatefulWidget {
 
 class CalendarState extends State<Calendar> {
 
- late final PageController pageController;
+  late final PageController pageController;
   late final ValueNotifier<List<Event>> calendarEvents;
 
   CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
@@ -90,7 +90,7 @@ class CalendarState extends State<Calendar> {
                 lastDay: kLastDay,
                 focusedDay: _focusedDay.value,
                 headerVisible: true,
-                selectedDayPredicate: (day) => selectedDays.contains(day),
+                //selectedDayPredicate: (day) => selectedDays.contains(day),
                 rangeStartDay: _rangeStart,
                 rangeEndDay: _rangeEnd,
                 calendarFormat: _calendarFormat,

@@ -7,6 +7,13 @@ abstract class _AbstractOnboardObserver with Store {
   @observable
   int currentScreenIndex = 0;
   
+  @observable
+  bool micAccessAllowed = true;
+
+   @action
+  void setMicAccessAllowed(value){
+    micAccessAllowed = value;
+  }
 
   @action
   void moveToNextScreen(){
