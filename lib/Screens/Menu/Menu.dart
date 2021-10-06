@@ -25,8 +25,7 @@ class MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     final menuObserver = Provider.of<MenuObserver>(context);
-    print("${(menuObserver.currentScreen == MENU_SCREENS.MENU)}");
-    print("${(menuObserver.currentScreen )}");
+    
     return
       Observer(
         builder: (_)
