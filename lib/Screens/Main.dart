@@ -232,7 +232,7 @@ class _MainNavigatorState extends State<MainNavigator> {
             child: BottomNavigationBar(
                 currentIndex: _currentIndex,
                 onTap: screenNav.setFocusedBtn,
-                selectedItemColor: Colors.white,
+                selectedItemColor: Colors.black,
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.black,
                 showUnselectedLabels: true,
