@@ -1,4 +1,6 @@
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../Services/NoteService.dart';
 
 class TextNote {
@@ -27,6 +29,9 @@ class TextNote {
   /// Whether or not this text file is flagged as a favorite
   bool isFavorite = false;
 
+  /// Date and time of event
+  DateTime eventDate = DateTime.now() ;
+
   String toJson() {
     String jsonStr = """{"noteId": "${this.noteId}",
                         "recordedTime": "${this.recordedTime}",
@@ -35,8 +40,8 @@ class TextNote {
                         "isCheckList": ${this.isCheckList},
                         "isEvent": ${this.isEvent},
                         "text": "${this.text}",
-                        "isFavorite": ${this.isFavorite}}""";
-
+                        "isFavorite": ${this.isFavorite}",
+                        "eventDate": "${this.eventDate}""";
     return jsonStr;
   }
 
@@ -52,6 +57,7 @@ class TextNote {
     note.isEvent = jsonObj['isEvent'];
     note.text = jsonObj['text'];
     note.isFavorite = jsonObj['isFavorite'];
+    note.eventDate = jsonObj['eventDate'];
     return note;
   }
 
