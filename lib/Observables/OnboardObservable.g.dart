@@ -25,8 +25,35 @@ mixin _$OnboardObserver on _AbstractOnboardObserver, Store {
     });
   }
 
+  final _$micAccessAllowedAtom =
+      Atom(name: '_AbstractOnboardObserver.micAccessAllowed');
+
+  @override
+  bool get micAccessAllowed {
+    _$micAccessAllowedAtom.reportRead();
+    return super.micAccessAllowed;
+  }
+
+  @override
+  set micAccessAllowed(bool value) {
+    _$micAccessAllowedAtom.reportWrite(value, super.micAccessAllowed, () {
+      super.micAccessAllowed = value;
+    });
+  }
+
   final _$_AbstractOnboardObserverActionController =
       ActionController(name: '_AbstractOnboardObserver');
+
+  @override
+  void setMicAccessAllowed(dynamic value) {
+    final _$actionInfo = _$_AbstractOnboardObserverActionController.startAction(
+        name: '_AbstractOnboardObserver.setMicAccessAllowed');
+    try {
+      return super.setMicAccessAllowed(value);
+    } finally {
+      _$_AbstractOnboardObserverActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void moveToNextScreen() {
@@ -64,7 +91,8 @@ mixin _$OnboardObserver on _AbstractOnboardObserver, Store {
   @override
   String toString() {
     return '''
-currentScreenIndex: ${currentScreenIndex}
+currentScreenIndex: ${currentScreenIndex},
+micAccessAllowed: ${micAccessAllowed}
     ''';
   }
 }

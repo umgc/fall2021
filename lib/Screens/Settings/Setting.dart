@@ -43,6 +43,7 @@ class _SettingState extends State<Settings> {
     "Extra Large Sized Font",
   ];
 
+
   var language = I18n.locale;
 
   @override

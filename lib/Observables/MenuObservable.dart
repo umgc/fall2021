@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:untitled3/Utility/Constant.dart';
 part 'MenuObservable.g.dart';
 
 class MenuObserver = _AbstractMenuObserver with _$MenuObserver;
@@ -6,12 +7,14 @@ class MenuObserver = _AbstractMenuObserver with _$MenuObserver;
 abstract class _AbstractMenuObserver with Store {
 
   @observable
-  String currentScreen = "";
+  dynamic currentScreen = MENU_SCREENS.MENU;
+
+  @observable
+  String focusedIcon = "";
 
   @action
-  void changeScreen(String name){
-    print("Screen changed to: "+ name);
-    currentScreen = name;
+  void changeScreen(dynamic screen){
+    currentScreen = screen;
   }
 
 }
