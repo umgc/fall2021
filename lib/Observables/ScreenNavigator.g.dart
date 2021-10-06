@@ -40,19 +40,19 @@ mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
     });
   }
 
-  final _$bottomNavIndexAtom =
-      Atom(name: '_AbstractMainNavObserver.bottomNavIndex');
+  final _$focusedNavBtnAtom =
+      Atom(name: '_AbstractMainNavObserver.focusedNavBtn');
 
   @override
-  int get bottomNavIndex {
-    _$bottomNavIndexAtom.reportRead();
-    return super.bottomNavIndex;
+  dynamic get focusedNavBtn {
+    _$focusedNavBtnAtom.reportRead();
+    return super.focusedNavBtn;
   }
 
   @override
-  set bottomNavIndex(int value) {
-    _$bottomNavIndexAtom.reportWrite(value, super.bottomNavIndex, () {
-      super.bottomNavIndex = value;
+  set focusedNavBtn(dynamic value) {
+    _$focusedNavBtnAtom.reportWrite(value, super.focusedNavBtn, () {
+      super.focusedNavBtn = value;
     });
   }
 
@@ -82,11 +82,11 @@ mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
   }
 
   @override
-  void setBottomNavIndex(int index) {
+  void setFocusedBtn(dynamic focusedBtn) {
     final _$actionInfo = _$_AbstractMainNavObserverActionController.startAction(
-        name: '_AbstractMainNavObserver.setBottomNavIndex');
+        name: '_AbstractMainNavObserver.setFocusedBtn');
     try {
-      return super.setBottomNavIndex(index);
+      return super.setFocusedBtn(focusedBtn);
     } finally {
       _$_AbstractMainNavObserverActionController.endAction(_$actionInfo);
     }
@@ -97,7 +97,7 @@ mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
     return '''
 currentScreen: ${currentScreen},
 screenTitle: ${screenTitle},
-bottomNavIndex: ${bottomNavIndex}
+focusedNavBtn: ${focusedNavBtn}
     ''';
   }
 }

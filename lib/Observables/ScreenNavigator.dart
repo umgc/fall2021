@@ -12,12 +12,12 @@ abstract class _AbstractMainNavObserver with Store {
   String screenTitle ="";
 
   @observable
-  int bottomNavIndex = 0;
+  dynamic focusedNavBtn = 0;
 
   @action
   void changeScreen(dynamic screen){
     currentScreen = screen;
-    bottomNavIndex = -1;
+    focusedNavBtn = -1;
   }
 
   @action
@@ -28,8 +28,8 @@ abstract class _AbstractMainNavObserver with Store {
   }
 
   @action
-  void setBottomNavIndex(int index){
-    bottomNavIndex = index;
+  void setFocusedBtn(dynamic focusedBtn){
+    focusedNavBtn = focusedBtn;
   }
 
 }

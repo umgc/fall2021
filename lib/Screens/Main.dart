@@ -130,6 +130,14 @@ class _MainNavigatorState extends State<MainNavigator> {
     searchFilter = "";
   }
 
+  _getIconColor(btn){
+
+    if(screenNav.focusedNavBtn ==btn){
+        return Colors.white;
+    }
+    return Colors.black;
+  }
+
   _getSearchBar() {
     searchFilter = "";
     return new SearchBar(
@@ -167,29 +175,29 @@ class _MainNavigatorState extends State<MainNavigator> {
                   onPressed: () {
                     screenNav.changeScreen(MAIN_SCREENS.NOTIFICATION);
                   },
-                  icon: Icon(
+                  icon: Observer( builder: (_) =>Icon(
                     Icons.notification_add_outlined,
-                    color: Colors.white,
-                    size: 46,
-                  )),
+                    color: (screenNav.focusedNavBtn==MAIN_SCREENS.NOTIFICATION) ?Colors.white: Colors.black,
+                    size: 46,))
+                  ),
               IconButton(
                   onPressed: () {
                     screenNav.changeScreen(MAIN_SCREENS.CHECKLIST);
                   },
-                  icon: Icon(
+                  icon: Observer( builder: (_) => Icon(
                     Icons.checklist,
-                    color: Colors.white,
+                    color: (screenNav.focusedNavBtn==MAIN_SCREENS.CHECKLIST) ?Colors.white: Colors.black,
                     size: 46,
-                  )),
+                  ))),
               IconButton(
                   onPressed: () {
                     screenNav.changeScreen(MAIN_SCREENS.CALENDAR);
                   },
-                  icon: Icon(
+                  icon: Observer( builder: (_) => Icon(
                     Icons.event_note_outlined,
-                    color: Colors.white,
+                    color: (screenNav.focusedNavBtn==MAIN_SCREENS.CALENDAR) ?Colors.white: Colors.black,
                     size: 46,
-                  ))
+                  )))
             ],
           )
         ],
@@ -206,7 +214,7 @@ class _MainNavigatorState extends State<MainNavigator> {
         body: Center(
             child: Observer(
                 builder: (_) =>
-                    _changeScreen(screenNav.currentScreen, screenNav.bottomNavIndex))),
+                    _changeScreen(screenNav.currentScreen, screenNav.focusedNavBtn))),
         bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),
           notchMargin: 8.0,
@@ -223,7 +231,7 @@ class _MainNavigatorState extends State<MainNavigator> {
             ),
             child: BottomNavigationBar(
                 currentIndex: _currentIndex,
-                onTap: screenNav.setBottomNavIndex,
+                onTap: screenNav.setFocusedBtn,
                 selectedItemColor: Colors.white,
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.black,
@@ -233,13 +241,15 @@ class _MainNavigatorState extends State<MainNavigator> {
                 
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.menu_book, size: 46),
+                    icon: Observer( builder: (_) => Icon(Icons.menu_book, size: 46,  color: (screenNav.focusedNavBtn==0)?Colors.white: Colors.black,)),
                     label: I18n.of(context)!.menuScreenName,
                   ),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.mic, size: 46), label: ''),
+                      icon: Observer( builder: (_) =>Icon( Icons.mic, size: 46, color: (screenNav.focusedNavBtn==1)?Colors.white: Colors.black,)),
+                                  label: ''),
+                                  
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.notes, size: 46),
+                    icon: Observer( builder: (_) => Icon(Icons.notes, size: 46, color: (screenNav.focusedNavBtn==2)?Colors.white: Colors.black,)),
                     label: I18n.of(context)!.notesScreenName,
                   ),
                 ]),
