@@ -160,12 +160,12 @@ class Value {
 }
 
 
-class AppointmentType {
+class EventType {
   late Value? value;
 
-  AppointmentType({required this.value});
+  EventType({required this.value});
 
-  AppointmentType.fromJson(Map<String, dynamic> json) {
+  EventType.fromJson(Map<String, dynamic> json) {
     value = (json['value'] != null ? new Value.fromJson(json['value']) : null)!;
   }
 
@@ -196,19 +196,44 @@ class RecurringType {
   }
 }
 
+class ActionEventType {
+  late Value? value;
+
+  ActionEventType({required this.value});
+
+  ActionEventType.fromJson(Map<String, dynamic> json) {
+    value = json['value'] != null ? new Value.fromJson(json['value']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.value != null) {
+      data['value'] = this.value!.toJson();
+    }
+    return data;
+  }
+}
+
+
 class Slots {
-  late AppointmentType? appointmentType;
-  late AppointmentType? date;
-  late AppointmentType? time;
+  late EventType? eventType;
+  late ActionEventType? actionEventType;
+  late EventType? date;
+  late EventType? time;
   late RecurringType? recurringType;
 
-  Slots({this.appointmentType, this.date, this.time, this.recurringType});
+  Slots({this.eventType, this.date, this.time, this.recurringType, this.actionEventType});
 
   Slots.fromJson(Map<String, dynamic> json) {
-    if (json['AppointmentType'] == null) {
-      appointmentType = null;
+    if (json['EventType'] == null) {
+      eventType = null;
     } else {
-      appointmentType = new AppointmentType.fromJson(json['AppointmentType']);
+      eventType = new EventType.fromJson(json['EventType']);
+    }
+    if (json['ActionEventType'] == null) {
+      actionEventType = null;
+    } else {
+      actionEventType = new ActionEventType.fromJson(json['ActionEventType']);
     }
     if (json['RecurringType'] == null) {
       recurringType = null;
@@ -218,19 +243,19 @@ class Slots {
     if (json['Date'] == null) {
       date = null;
     } else {
-      date = new AppointmentType.fromJson(json['Date']);
+      date = new EventType.fromJson(json['Date']);
     }
     if (json['Time'] == null) {
       time = null;
     } else {
-      time = new AppointmentType.fromJson(json['Time']);
+      time = new EventType.fromJson(json['Time']);
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.appointmentType != null) {
-      data['AppointmentType'] = this.appointmentType!.toJson();
+    if (this.eventType != null) {
+      data['EventType'] = this.eventType!.toJson();
     }
     if (this.date != null) {
       data['Date'] = this.date;
