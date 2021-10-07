@@ -64,7 +64,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 color: Colors.blue, // Add this
               ),
               value: language,
-              onChanged: (newLocale) {
+              onChanged: (Locale? newLocale) {
                 setState(() {
                   if (newLocale != null) {
                     language = newLocale;
