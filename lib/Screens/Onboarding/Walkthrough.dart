@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   @override
@@ -7,13 +7,20 @@ class WalkthroughScreen extends StatefulWidget {
 }
 
 class _WalkthroughScreenState extends State<WalkthroughScreen> {
-  launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
-    } else {
-      throw 'Could not launch $url';
-    }
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +30,8 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Here is a link to a brief"
-            "walk-through of how to use"
+            "Here is a video to a brief "
+            "walk-through of how to use "
             "the Memory Magic App.",
             style: TextStyle(
               fontSize: 28,
@@ -32,15 +39,44 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
             ),
           ),
         ),
-        new InkWell(
-            child: new Text('Memory Magic Walk-Through',
-                style: TextStyle(fontSize: 25, color: Colors.blueAccent)),
-            onTap: () {
-              const url = 'https://google.com';
-              // TODO now it's google but we can change it to our url.
-              launchURL(url);
-            }),
+    Padding(
+    padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
+           child: Center(
+            child: _controller.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  )
+                : Container(),
+          ),),
+          Padding(
+            padding: EdgeInsets.fromLTRB(15,10, 20, 20),
+            child:
+
+          FloatingActionButton(
+
+            onPressed: () {
+              setState(() {
+                _controller.value.isPlaying
+                    ? _controller.pause()
+                    : _controller.play();
+              });
+            },
+            child: Icon(
+              _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+            ),
+          ),),
+
       ],
     ));
+
   }
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
 }
+
+

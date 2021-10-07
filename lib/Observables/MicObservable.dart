@@ -1,12 +1,16 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
+import 'package:permission_handler/permission_handler.dart';
 //import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 part 'MicObservable.g.dart';
+
 
 class MicObserver = _AbstractMicObserver with _$MicObserver;
 
@@ -31,6 +35,12 @@ abstract class _AbstractMicObserver with Store {
   String messageInputText = "";
 
   @observable
+  late Permission permission;
+
+
+
+
+ @observable
   bool micIsListening = false; 
 
   @observable
@@ -43,7 +53,8 @@ abstract class _AbstractMicObserver with Store {
   @action 
   void startListening(){
     print("MicObserver: Starting listening mode ");
-    micIsListening = true;
+    if(Permission.microphone.isGranted == true){
+    micIsListening = true;}
   }
 
   @action 

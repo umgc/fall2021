@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/MicObservable.dart';
 import '../../Observables/OnboardObservable.dart';
-import 'package:untitled3/Screens/Onboarding/LimitedAccess.dart';
 
 class PermissionScreen extends StatefulWidget {
   @override
@@ -10,43 +11,14 @@ class PermissionScreen extends StatefulWidget {
 }
 
 class _PermissionScreenState extends State<PermissionScreen> {
-
-  int id =1;
-  late Permission permission;
-  PermissionStatus permissionStatus = PermissionStatus.denied;
-
-  void _listenForPermission() async {
-    final status = await Permission.microphone.status;
-    setState(() {
-      permissionStatus = status;
-    });
-    switch (status) {
-      case PermissionStatus.denied:
-        permissionStatus.isDenied;
-        break;
-      case PermissionStatus.granted:
-        permissionStatus.isGranted;
-        break;
-    }
-  }
-
-  Future<void> requestForPermission() async {
-    final status = await Permission.microphone.request();
-    setState(() {
-      permissionStatus = status;
-
-    });
-  }
-
-  @override
-  void initState() {
-    _listenForPermission();
-    super.initState();
-  }
+  bool denied = false;
+  int id = 1;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final onboardingObserver = Provider.of<OnboardObserver>(context);
+    return Observer(builder: (_) =>
+        Scaffold(
         body: Column(
       children: [
         Container(
@@ -61,17 +33,18 @@ class _PermissionScreenState extends State<PermissionScreen> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Radio(
               value: 1,
               onChanged: (val) {
                 setState(() {
-                  permissionStatus.isGranted;
-                      id =1;
-
+                  onboardingObserver.micAccessAllowed = true;
+                  denied = false;
+                  id = 1;
                 });
               },
               groupValue: id,
+
             ),
             Text(
               'Yes',
@@ -84,13 +57,11 @@ class _PermissionScreenState extends State<PermissionScreen> {
               value: 2,
               onChanged: (val) {
                 setState(() {
-                  Permission.microphone.status.isDenied;
-                  id = 2;
-                });
-
+                onboardingObserver.micAccessAllowed = false;
                 id = 2;
-
-              },
+                denied = true;
+                });
+                },
               groupValue: id,
             ),
             Text(
@@ -98,8 +69,43 @@ class _PermissionScreenState extends State<PermissionScreen> {
               style: new TextStyle(fontSize: 17.0),
             ),
           ],
-        )
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: Container(
+            child: Container(
+              margin: const EdgeInsets.all(3.0),
+              padding: const EdgeInsets.all(3.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey, width: 3),
+              ),
+              child: Text(
+                "NOTE: This permission will allow all types of voice interaction.",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+        if (denied)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 300, 15, 0),
+            child: Container(
+              child: Text(
+                "You will have a limited features "
+                "without allowing permission to "
+                "access the microphone.",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ),
       ],
-    ));
+    )));
   }
 }
