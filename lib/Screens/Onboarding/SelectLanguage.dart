@@ -9,7 +9,11 @@ class SelectLanguageScreen extends StatefulWidget {
 }
 
 class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
-  var language;
+  var language = (I18n.locale?.countryCode != null &&
+          I18n.locale?.languageCode != null)
+      ? I18n.locale
+      // its simply not supported unless it has a language code and a country code
+      : Locale("en", "US");
 
   @override
   Widget build(BuildContext context) {
