@@ -4,12 +4,7 @@ import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'dart:collection';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
-import '../Services/NoteService.dart';
 import 'package:provider/provider.dart';
-import '../../Utility/Constant.dart';
-import 'Checklist.dart';
-import  '../../Observables/ScreenNavigator.dart';
-import '../generated/i18n.dart';
 
 class Calendar extends StatefulWidget {
 

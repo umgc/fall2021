@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/Model/Setting.dart';
-import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Screens/Settings/Setting.dart';
 import '../../Observables/MenuObservable.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +7,6 @@ import '../../Utility/Constant.dart';
 import 'package:untitled3/Screens/Settings/Trigger.dart';
 import 'package:untitled3/Screens/Settings/Help.dart';
 import 'package:untitled3/Screens/Settings/SyncToCloud.dart';
-
-
-
-
 
 class Menu extends StatefulWidget {
 

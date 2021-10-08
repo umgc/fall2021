@@ -1,18 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:avatar_glow/avatar_glow.dart';
-import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Screens/Mic/ChatBubble.dart';
 import 'package:untitled3/Services/NoteService.dart';
-import 'package:untitled3/generated/i18n.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();

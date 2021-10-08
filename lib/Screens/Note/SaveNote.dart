@@ -3,10 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Services/NoteService.dart';
-
 import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
-
 
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 

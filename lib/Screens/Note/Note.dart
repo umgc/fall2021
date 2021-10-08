@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:untitled3/generated/i18n.dart';
-
 import '../../Observables/NoteObservable.dart';
 import 'SaveNote.dart';
 import '../../Model/Note.dart';
