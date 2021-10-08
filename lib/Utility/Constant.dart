@@ -24,6 +24,3 @@ enum NOTE_SCREENS {
 
 
 
-
-
-
