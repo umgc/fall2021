@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import '../../Observables/OnboardObservable.dart';
-import 'package:untitled3/Screens/Onboarding/LimitedAccess.dart';
 
 class PermissionScreen extends StatefulWidget {
   @override

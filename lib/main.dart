@@ -7,8 +7,6 @@ import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:untitled3/Screens/Onboarding/Boarding.dart';
-import 'package:untitled3/Services/SettingService.dart';
-import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'generated/i18n.dart';
 import 'Screens/Main.dart';
 import 'package:provider/provider.dart';
