@@ -32,8 +32,7 @@ abstract class _AbstractMicObserver with Store {
   @observable
   String messageInputText = "";
 
-  @observable
-  late Permission permission;
+
 
 
 
@@ -51,8 +50,7 @@ abstract class _AbstractMicObserver with Store {
   @action 
   void startListening(){
     print("MicObserver: Starting listening mode ");
-    if(Permission.microphone.isGranted == true){
-    micIsListening = true;}
+    micIsListening = true;
   }
 
   @action 
