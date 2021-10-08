@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled3/Observables/MicObservable.dart';
 import '../../Observables/OnboardObservable.dart';
 
 class PermissionScreen extends StatefulWidget {
@@ -11,8 +9,6 @@ class PermissionScreen extends StatefulWidget {
 }
 
 class _PermissionScreenState extends State<PermissionScreen> {
-  bool denied = false;
-  int id = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +31,13 @@ class _PermissionScreenState extends State<PermissionScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Radio(
-              value: 1,
-              onChanged: (val) {
-                setState(() {
-                  onboardingObserver.micAccessAllowed = true;
-                  denied = false;
-                  id = 1;
-                });
-              },
-              groupValue: id,
+
+              value:onboardingObserver.id,
+              onChanged:(value) {
+                onboardingObserver.permissionYes(1);
+                },
+
+              groupValue: 1 ,
 
             ),
             Text(
@@ -54,15 +48,9 @@ class _PermissionScreenState extends State<PermissionScreen> {
               padding: EdgeInsets.fromLTRB(70.0, 22.0, 0.0, 8.0),
             ),
             Radio(
-              value: 2,
-              onChanged: (val) {
-                setState(() {
-                onboardingObserver.micAccessAllowed = false;
-                id = 2;
-                denied = true;
-                });
-                },
-              groupValue: id,
+              value:onboardingObserver.id ,
+              onChanged: (val) => onboardingObserver.permissionNo(2),
+             groupValue: 2,
             ),
             Text(
               'No',
@@ -89,7 +77,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
             ),
           ),
         ),
-        if (denied)
+        if (onboardingObserver.denied)
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 300, 15, 0),
             child: Container(
