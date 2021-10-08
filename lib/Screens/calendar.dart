@@ -4,12 +4,7 @@ import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'dart:collection';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
-import '../Services/NoteService.dart';
 import 'package:provider/provider.dart';
-//import '../../Utility/Constant.dart';
-import 'Checklist.dart';
-import  '../../Observables/ScreenNavigator.dart';
-import '../generated/i18n.dart';
 
 class Calendar extends StatefulWidget {
 
@@ -31,6 +26,7 @@ class CalendarState extends State<Calendar> {
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+ DateTime? eventDate ;
 
   @override
   void initState() {
@@ -75,13 +71,17 @@ class CalendarState extends State<Calendar> {
     String noteText = "";
 
     for (TextNote textNote in noteObserver.usersNotes) {
-      if (textNote.text.toString() != "") {
-          noteText += textNote.text.toString();
+      bool isEvent = textNote.isEvent;
+      if (isEvent) {
+        if (textNote.text.toString() != "") {
+          noteText = textNote.text.toString();
         }
+        eventDate = textNote.eventDate;
+      }
     }
 
       return Scaffold(
-        body: //(noteObserver.CurrNoteForDetails == null)?
+        body:
         Column(
 
             children: [
@@ -91,6 +91,7 @@ class CalendarState extends State<Calendar> {
                 focusedDay: _focusedDay.value,
                 headerVisible: true,
                 //selectedDayPredicate: (day) => selectedDays.contains(day),
+                selectedDayPredicate:  (day) => selectedDays.contains(day),
                 rangeStartDay: _rangeStart,
                 rangeEndDay: _rangeEnd,
                 calendarFormat: _calendarFormat,
@@ -128,7 +129,7 @@ class CalendarState extends State<Calendar> {
                           ),
                           child: ListTile(
                             onTap: () => (noteObserver.currNoteForDetails),
-                            title: Text(noteText.toString()),
+                            title: Text(noteText),
                           ),
 
                         );

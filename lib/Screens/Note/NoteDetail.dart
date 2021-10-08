@@ -3,11 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
-import 'package:untitled3/Screens/Menu/Menu.dart';
 import 'package:untitled3/Services/NoteService.dart';
-import '../../Model/Note.dart';
 import 'package:untitled3/generated/i18n.dart';
-
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({

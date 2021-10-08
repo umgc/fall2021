@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Services/LocaleService.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 class Settings extends StatefulWidget {
@@ -44,7 +45,11 @@ class _SettingState extends State<Settings> {
   ];
 
 
-  var language = I18n.locale;
+  var language =
+      (I18n.locale?.countryCode != null && I18n.locale?.languageCode != null)
+          ? I18n.locale
+      // its simply not supported unless it has a language code and a country code
+          : Locale("en", "US");
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +215,7 @@ class _SettingState extends State<Settings> {
                         .map((valueItem) {
                       return DropdownMenuItem(
                           value: valueItem,
-                          child: Text((valueItem.languageCode)));
+                          child: Text((LocaleService.getDisplayLanguage(valueItem.languageCode)["name"])));
                     }).toList(),
                   ),
                 ),
