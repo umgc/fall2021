@@ -224,16 +224,20 @@ import '../BertQA/BertQaService.dart';
     }
 
     Slots getSlots(LexResponse lexResponseObj) {
-      Slots slots = new Slots(eventType: new EventType(
-          value: new Value(interpretedValue: "",
+      Slots slots = new Slots(
+          eventType: new EventType(value: new Value(interpretedValue: "",
               originalValue: "", resolvedValues: new List.empty())),
           date: new EventType(value: new Value(interpretedValue: "",
               originalValue: "", resolvedValues: new List.empty())),
           time: new EventType(value: new Value(interpretedValue: "",
               originalValue: "", resolvedValues: new List.empty())),
-          recurringType: new RecurringType(
-              value: new Value(interpretedValue: "",
-                  originalValue: "", resolvedValues: new List.empty())));
+          recurringType: new RecurringType(value: new Value(interpretedValue: "",
+                  originalValue: "", resolvedValues: new List.empty())),
+          actionEventType: new ActionEventType(value: new Value(interpretedValue: "",
+              originalValue: "", resolvedValues: new List.empty())),
+          auxiliaryVerbType: new AuxiliaryVerbType(value: new Value(interpretedValue: "",
+              originalValue: "", resolvedValues: new List.empty()))
+      );
       if (lexResponseObj != null) {
         if (lexResponseObj.sessionState != null
             && lexResponseObj.sessionState.intent != null
@@ -432,24 +436,36 @@ import '../BertQA/BertQaService.dart';
     NLUResponse? getCreateActionEventResponse(LexResponse lexResponseObj,
         String currentState, String inputText, String outputText,
         Slots currentSlots) {
+
       ActionType actionType;
       NLUState state;
       List<String>? actionEventTypeResolved = getActionEventType(currentSlots);
       List<String>? eventDateResolved = getEventDate(currentSlots);
       List<String>? eventTimeResolved = getEventTime(currentSlots);
+      List<String>? auxiliaryVerbTypeResolved = getAuxiliaryVerbType(currentSlots);
+      List<String>? subjectTypeResolved = getSubjectType(currentSlots);
       List<String>? resolvedValues;
       String actionEventType = "",
           eventTime = "",
-          eventDate = "";
+          eventDate = "",
+          auxiliaryVerbType = "",
+          subjectType = "";
 
       DateTime? eventDateTime;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
         state = NLUState.IN_PROGRESS;
+
         if (actionEventTypeResolved != null &&
             actionEventTypeResolved.length > 0 &&
             actionEventTypeResolved.length > 1) {
           resolvedValues = actionEventTypeResolved;
+        } else if (subjectTypeResolved != null && subjectTypeResolved.length > 0 &&
+            subjectTypeResolved.length > 1) {
+          resolvedValues = subjectTypeResolved;
+        } else if (auxiliaryVerbTypeResolved != null && auxiliaryVerbTypeResolved.length > 0 &&
+            auxiliaryVerbTypeResolved.length > 1) {
+          resolvedValues = auxiliaryVerbTypeResolved;
         } else if (eventDateResolved != null && eventDateResolved.length > 0 &&
             eventDateResolved.length > 1) {
           resolvedValues = eventDateResolved;
@@ -457,12 +473,24 @@ import '../BertQA/BertQaService.dart';
             eventTimeResolved.length > 1) {
           resolvedValues = eventTimeResolved;
         }
+
+        if (subjectTypeResolved != null && subjectTypeResolved.length > 0 &&
+            auxiliaryVerbTypeResolved != null && auxiliaryVerbTypeResolved.length > 0) {
+          outputText = formatResponseText(outputText, subjectTypeResolved.first, auxiliaryVerbTypeResolved.first);
+        }
+
       } else {
         actionType = ActionType.CREATE_EVENT;
         state = NLUState.COMPLETE;
         if (actionEventTypeResolved != null &&
             actionEventTypeResolved.length > 0) {
           actionEventType = actionEventTypeResolved.first;
+        }
+        if (subjectTypeResolved != null && subjectTypeResolved.length > 0) {
+          subjectType = subjectTypeResolved.first;
+        }
+        if (auxiliaryVerbTypeResolved != null && auxiliaryVerbTypeResolved.length > 0) {
+          auxiliaryVerbType = auxiliaryVerbTypeResolved.first;
         }
         if (eventDateResolved != null && eventDateResolved.length > 0) {
           eventDate = eventDateResolved.first;
@@ -471,8 +499,7 @@ import '../BertQA/BertQaService.dart';
           eventTime = eventTimeResolved.first;
         }
         eventDateTime = getEventDateTime(eventDateTime, eventDate, eventTime);
-        outputText =
-            "I shall " + actionEventType + " on " + eventDate + " at " +
+        outputText = subjectType + " " + auxiliaryVerbType + " " + actionEventType + " on " + eventDate + " at " +
                 eventTime;
       }
       return new NLUResponse(
@@ -486,7 +513,6 @@ import '../BertQA/BertQaService.dart';
           null,
           null);
     }
-
 
     NLUResponse getCreateEventResponse(LexResponse lexResponseObj,
         String currentState,
@@ -605,13 +631,34 @@ import '../BertQA/BertQaService.dart';
       if (slots != null
           && slots.actionEventType != null
           && slots.actionEventType!.value != null
-          && slots.actionEventType!.value!.resolvedValues != null
-          && slots.actionEventType!.value!.resolvedValues.length > 0) {
-        return slots.actionEventType!.value!.resolvedValues;
+          && slots.actionEventType!.value!.interpretedValue != null
+          && slots.actionEventType!.value!.interpretedValue.isNotEmpty) {
+        return new List.from([slots.actionEventType!.value!.interpretedValue]);
       }
       return null;
     }
 
+    List<String>? getSubjectType(Slots slots) {
+      if (slots != null
+          && slots.subjectType != null
+          && slots.subjectType!.value != null
+          && slots.subjectType!.value!.resolvedValues != null
+          && slots.subjectType!.value!.resolvedValues.length > 0) {
+        return slots.subjectType!.value!.resolvedValues;
+      }
+      return null;
+    }
+
+    List<String>? getAuxiliaryVerbType(Slots slots) {
+      if (slots != null
+          && slots.auxiliaryVerbType != null
+          && slots.auxiliaryVerbType!.value != null
+          && slots.auxiliaryVerbType!.value!.resolvedValues != null
+          && slots.auxiliaryVerbType!.value!.resolvedValues.length > 0) {
+        return slots.auxiliaryVerbType!.value!.resolvedValues;
+      }
+      return null;
+    }
 
     List<String>? getEventDate(Slots? slots) {
       if (slots != null
@@ -649,6 +696,45 @@ import '../BertQA/BertQaService.dart';
           null,
           null,
           null);
+    }
+
+    String formatResponseText(String outputText, String subjectType, String auxiliaryVerbType) {
+
+      print("entering format method -> "+outputText);
+
+      outputText = firstToSecondPerson(outputText);
+      subjectType = firstToSecondPerson(subjectType);
+      auxiliaryVerbType = firstToSecondPerson(auxiliaryVerbType);
+
+      List auxiliaryVerbWords = auxiliaryVerbType.split(" ");
+      if (auxiliaryVerbWords.length == 2) {
+        if ((auxiliaryVerbWords[0].substring(auxiliaryVerbWords[0].length - 1).toLowerCase() == "s")) {
+          auxiliaryVerbWords[0] = auxiliaryVerbWords[0].substring(0, auxiliaryVerbWords[0].length - 1);
+          outputText = outputText.replaceAll(auxiliaryVerbType+" "+subjectType, "does " +subjectType+ " "+auxiliaryVerbWords[0]+ " "+auxiliaryVerbWords[1]);
+        } else {
+          outputText = outputText.replaceAll(auxiliaryVerbType+" "+subjectType, "do " +subjectType+ " "+auxiliaryVerbWords[0]+ " "+auxiliaryVerbWords[1]);
+        }
+      } else if (auxiliaryVerbWords.length == 3) {
+          outputText = outputText.replaceAll(auxiliaryVerbType+" "+subjectType, auxiliaryVerbWords[0]+ " " +subjectType+ " "+auxiliaryVerbWords[1]+ " "+auxiliaryVerbWords[2]);
+      }
+
+      // CAPITOLIZE FIRST CHAR
+      // ADD PERIOD IF ABSENT
+      return outputText;
+    }
+
+    String firstToSecondPerson(String text) {
+      text = " " + text + " ";
+      text = text.replaceAll(" I ", " you ")
+          .replaceAll(" i ", " you ")
+          .replaceAll(" am ", " are ")
+          .replaceAll(" my ", " your ")
+          .replaceAll(" me ", " you ")
+          .replaceAll(" myself ", " yourself ")
+          .replaceAll(" we ", " you ")
+          .replaceAll(" ourselves ", " yourselves ");
+      text = text.trim();
+      return text;
     }
 
   }
