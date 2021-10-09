@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/Services/LocaleService.dart';
 import 'package:untitled3/generated/i18n.dart';
+import 'package:untitled3/Observables/OnboardObservable.dart';
+import 'package:provider/provider.dart';
+
 
 class SelectLanguageScreen extends StatefulWidget {
   @override
@@ -17,6 +20,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final onboardingObserver = Provider.of<OnboardObserver>(context);
     return Scaffold(
         body: Column(
       children: [
@@ -64,13 +68,10 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 color: Colors.blue, // Add this
               ),
               value: language,
-              onChanged: (Locale? newLocale) {
-                setState(() {
-                  if (newLocale != null) {
-                    language = newLocale;
-                    I18n.onLocaleChanged!(language!);
-                  }
-                });
+
+              onChanged: (language){
+                onboardingObserver.languageChange(language);
+
               },
               isExpanded: true,
               underline: SizedBox(),

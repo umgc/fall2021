@@ -30,7 +30,7 @@ abstract class _AbstractMicObserver with Store {
   @observable
   String messageInputText = "";
 
-  @observable
+ @observable
   bool micIsListening = false; 
 
   @observable

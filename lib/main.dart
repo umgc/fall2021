@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
+import 'package:untitled3/Observables/OnboardObservable.dart';
 // Internal
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:untitled3/Screens/Onboarding/Boarding.dart';
+
 import 'generated/i18n.dart';
 import 'Screens/Main.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +49,7 @@ class _MyAppState extends State<MyApp> {
     final i18n = I18n.delegate;
     return MultiProvider(
         providers: [
+          Provider<OnboardObserver>(create: (_) => OnboardObserver()),
           Provider<MenuObserver>(create: (_) => MenuObserver()),
           Provider<NoteObserver>(create: (_) => NoteObserver()),
           Provider<MainNavObserver>(create: (_) => MainNavObserver()),
@@ -55,10 +58,13 @@ class _MyAppState extends State<MyApp> {
         ],
         child: (MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Observer(
-              builder: (_) => (settingObserver.userSettings.isFirstRun == false)
-                  ? MainNavigator()
-                  : OnBoardingScreen()),
+          home:  Observer(
+         builder: (_) => (settingObserver.userSettings.isFirstRun == false)
+        ? MainNavigator()
+        : OnBoardingScreen()),
+
+
+
           localizationsDelegates: [
             i18n,
             GlobalMaterialLocalizations.delegate,
