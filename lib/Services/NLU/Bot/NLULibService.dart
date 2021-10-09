@@ -61,8 +61,6 @@ import '../BertQA/BertQaService.dart';
           Slots? currentSlots = getSlots(lexResponseObj);
           String outputText = getMessage(lexResponseObj);
 
-          print(currentState);
-
           if (intentName.isNotEmpty) {
             if (intentName.startsWith(AppHelp)) {
               nluResponse = getAppHelpResponse(lexResponseObj, currentState,
@@ -451,6 +449,10 @@ import '../BertQA/BertQaService.dart';
           auxiliaryVerbType = "",
           subjectType = "";
 
+
+
+
+
       DateTime? eventDateTime;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
@@ -499,8 +501,7 @@ import '../BertQA/BertQaService.dart';
           eventTime = eventTimeResolved.first;
         }
         eventDateTime = getEventDateTime(eventDateTime, eventDate, eventTime);
-        outputText = subjectType + " " + auxiliaryVerbType + " " + actionEventType + " on " + eventDate + " at " +
-                eventTime;
+        outputText = subjectType + " " + auxiliaryVerbType + " " + actionEventType;
       }
       return new NLUResponse(
           actionType,
@@ -642,9 +643,9 @@ import '../BertQA/BertQaService.dart';
       if (slots != null
           && slots.subjectType != null
           && slots.subjectType!.value != null
-          && slots.subjectType!.value!.resolvedValues != null
-          && slots.subjectType!.value!.resolvedValues.length > 0) {
-        return slots.subjectType!.value!.resolvedValues;
+          && slots.subjectType!.value!.interpretedValue != null
+          && slots.subjectType!.value!.interpretedValue.isNotEmpty) {
+        return new List.from([slots.subjectType!.value!.interpretedValue]);
       }
       return null;
     }
@@ -700,15 +701,20 @@ import '../BertQA/BertQaService.dart';
 
     String formatResponseText(String outputText, String subjectType, String auxiliaryVerbType) {
 
-      print("entering format method -> "+outputText);
-
       outputText = firstToSecondPerson(outputText);
       subjectType = firstToSecondPerson(subjectType);
       auxiliaryVerbType = firstToSecondPerson(auxiliaryVerbType);
 
+      print("outputText -> " +outputText);
+      print("subjectType -> " +subjectType);
+      print("auxiliaryVerbType -> " +auxiliaryVerbType);
+
       List auxiliaryVerbWords = auxiliaryVerbType.split(" ");
       if (auxiliaryVerbWords.length == 2) {
         if ((auxiliaryVerbWords[0].substring(auxiliaryVerbWords[0].length - 1).toLowerCase() == "s")) {
+
+          print("You have made it here");
+
           auxiliaryVerbWords[0] = auxiliaryVerbWords[0].substring(0, auxiliaryVerbWords[0].length - 1);
           outputText = outputText.replaceAll(auxiliaryVerbType+" "+subjectType, "does " +subjectType+ " "+auxiliaryVerbWords[0]+ " "+auxiliaryVerbWords[1]);
         } else {
