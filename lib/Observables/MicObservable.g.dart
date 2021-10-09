@@ -119,6 +119,37 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
+  final _$mainNavObserverAtom =
+      Atom(name: '_AbstractMicObserver.mainNavObserver');
+
+  @override
+  MainNavObserver get mainNavObserver {
+    _$mainNavObserverAtom.reportRead();
+    return super.mainNavObserver;
+  }
+
+  @override
+  set mainNavObserver(MainNavObserver value) {
+    _$mainNavObserverAtom.reportWrite(value, super.mainNavObserver, () {
+      super.mainNavObserver = value;
+    });
+  }
+
+  final _$noteObserverAtom = Atom(name: '_AbstractMicObserver.noteObserver');
+
+  @override
+  NoteObserver get noteObserver {
+    _$noteObserverAtom.reportRead();
+    return super.noteObserver;
+  }
+
+  @override
+  set noteObserver(NoteObserver value) {
+    _$noteObserverAtom.reportWrite(value, super.noteObserver, () {
+      super.noteObserver = value;
+    });
+  }
+
   final _$setMessageInputTextAsyncAction =
       AsyncAction('_AbstractMicObserver.setMessageInputText');
 
@@ -143,33 +174,55 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
-  void addUserMessage(String name) {
+  void addUserMessage(String userMsg) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
         name: '_AbstractMicObserver.addUserMessage');
     try {
-      return super.addUserMessage(name);
+      return super.addUserMessage(userMsg);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addSystemMessage(NLUResponse name) {
+  void addSystemMessage(NLUResponse nluResponse) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
         name: '_AbstractMicObserver.addSystemMessage');
     try {
-      return super.addSystemMessage(name);
+      return super.addSystemMessage(nluResponse);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void fufillTask(NLUResponse name) {
+  void setMainNavObserver(MainNavObserver observer) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.fufillTask');
+        name: '_AbstractMicObserver.setMainNavObserver');
     try {
-      return super.fufillTask(name);
+      return super.setMainNavObserver(observer);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setNoteObserver(NoteObserver observer) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.setNoteObserver');
+    try {
+      return super.setNoteObserver(observer);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void fufillNLUTask(NLUResponse nluResponse) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.fufillNLUTask');
+    try {
+      return super.fufillNLUTask(nluResponse);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -206,7 +259,9 @@ micIsExpectedToListen: ${micIsExpectedToListen},
 micStatus: ${micStatus},
 speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
-nluResponse: ${nluResponse}
+nluResponse: ${nluResponse},
+mainNavObserver: ${mainNavObserver},
+noteObserver: ${noteObserver}
     ''';
   }
 }
