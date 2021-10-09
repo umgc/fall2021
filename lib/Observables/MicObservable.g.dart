@@ -56,6 +56,22 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
+  final _$speechConfidenceAtom =
+      Atom(name: '_AbstractMicObserver.speechConfidence');
+
+  @override
+  double get speechConfidence {
+    _$speechConfidenceAtom.reportRead();
+    return super.speechConfidence;
+  }
+
+  @override
+  set speechConfidence(double value) {
+    _$speechConfidenceAtom.reportWrite(value, super.speechConfidence, () {
+      super.speechConfidence = value;
+    });
+  }
+
   final _$systemUserMessageAtom =
       Atom(name: '_AbstractMicObserver.systemUserMessage');
 
@@ -85,6 +101,22 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     _$nluResponseAtom.reportWrite(value, super.nluResponse, () {
       super.nluResponse = value;
     });
+  }
+
+  final _$setMessageInputTextAsyncAction =
+      AsyncAction('_AbstractMicObserver.setMessageInputText');
+
+  @override
+  Future<void> setMessageInputText(dynamic value, bool isSysrMsg) {
+    return _$setMessageInputTextAsyncAction
+        .run(() => super.setMessageInputText(value, isSysrMsg));
+  }
+
+  final _$listenAsyncAction = AsyncAction('_AbstractMicObserver.listen');
+
+  @override
+  Future<void> listen() {
+    return _$listenAsyncAction.run(() => super.listen());
   }
 
   final _$_AbstractMicObserverActionController =
@@ -157,33 +189,11 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
-  void callNLU(String speechText) {
+  void setVoiceMsgTextInput(dynamic value) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.callNLU');
+        name: '_AbstractMicObserver.setVoiceMsgTextInput');
     try {
-      return super.callNLU(speechText);
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setMessageInputText(dynamic value, bool isSysrMsg) {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.setMessageInputText');
-    try {
-      return super.setMessageInputText(value, isSysrMsg);
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void mockInteraction() {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.mockInteraction');
-    try {
-      return super.mockInteraction();
+      return super.setVoiceMsgTextInput(value);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -195,6 +205,7 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
 mockIndex: ${mockIndex},
 messageInputText: ${messageInputText},
 micIsListening: ${micIsListening},
+speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
 nluResponse: ${nluResponse}
     ''';

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 //import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
@@ -12,11 +13,7 @@ class MicObserver = _AbstractMicObserver with _$MicObserver;
 
 abstract class _AbstractMicObserver with Store {
 
- List<dynamic> mockedInteraction = ["how to create note",
-   "No. Thank you"
-   ];
-
- late final NLULibService nluLibService;
+late final NLULibService nluLibService;
 
  _AbstractMicObserver() {
    nluLibService = NLULibService();
@@ -34,11 +31,15 @@ abstract class _AbstractMicObserver with Store {
   bool micIsListening = false; 
 
   @observable
+  double speechConfidence = 0;
+
+  @observable
   ObservableList<dynamic> systemUserMessage = ObservableList();
 
   @observable
   NLUResponse? nluResponse;
 
+  SpeechToText _speech = SpeechToText();
 
   @action 
   void startListening(){
@@ -54,6 +55,7 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void addUserMessage(String name){
+    print("added user message");
     systemUserMessage.add(name);
   }
 
@@ -75,20 +77,13 @@ abstract class _AbstractMicObserver with Store {
     messageInputText = "";
   }
 
-  @action 
-  void callNLU(String speechText){
-      print(" $mockIndex Calling NLU with speechText $speechText");
-      //call NLU service
-      //nluResponse = (mockedInteraction[mockIndex] as NLUResponse);
-      print("nluResponse ${nluResponse!.actionType}");
-      //set as MessageInputText 
-      setMessageInputText(nluResponse, true);
-
-      mockIndex++;
+  @action
+  void setVoiceMsgTextInput(value){
+    messageInputText = value;
   }
 
   @action 
-  void setMessageInputText(dynamic value, bool isSysrMsg){
+  Future<void> setMessageInputText(dynamic value, bool isSysrMsg) async{
       //push prev message to chartBubble 
       if(isSysrMsg==true){
            VoiceOverTextService.speakOutLoud( (value as NLUResponse).response! );
@@ -100,8 +95,8 @@ abstract class _AbstractMicObserver with Store {
       }else{
           print("adding a user message $value");
           messageInputText =value;
-          nluLibService.getNLUResponse(messageInputText, "en-US").
-              then((value) => nluResponse = value);
+          await nluLibService.getNLUResponse(messageInputText, "en-US").
+              then((value) =>  setMessageInputText(value, true) ) ;
           Timer(Duration(seconds: 1), () {
               addUserMessage(value);
           });
@@ -109,25 +104,52 @@ abstract class _AbstractMicObserver with Store {
       }
   }
 
-  @action
-  void mockInteraction(){
-      if(mockIndex >= mockedInteraction.length){
-        clearMsgTextInput();
-        return;
-      }
-      Timer(Duration(seconds: 2), () {
-        print("mockIndex $mockIndex");
-        setMessageInputText(mockedInteraction[mockIndex], false);
-        mockIndex = mockIndex+1;
-
-        Timer(Duration(seconds: 2), () {
-          callNLU(messageInputText);
-
-          Timer(Duration(seconds: 2), () {
-              mockInteraction();
-           });
-        });
-      });
-
+  
+  void onDone(status) async {
+    print('onStatus: $status');
+    if (status == "notListening") {
+      print('confidence: $speechConfidence');
+      //_listen(micObserver);
+      //micObserver.addUserMessage(_text);
+    }
   }
+   void onError(status) async {
+    print('onStatus: $status');
+    //TODO: Re-initiate speech service on error
+  }
+
+  @action 
+  Future<void> listen() async {
+    print('onStatus: ${micIsListening}');
+    
+    if (!micIsListening) {
+
+        bool available = await _speech.initialize(
+          onStatus: (val) => onDone(val),
+          onError: (val) => print("Error $val"),
+        );
+        print("available $available");
+
+        if (available) {
+          startListening();
+          //setState(() => _isListening = true);
+          _speech.listen(
+            onResult: (val) =>  {
+              setVoiceMsgTextInput(val.recognizedWords),
+              if (val.hasConfidenceRating && val.confidence > 0) {
+                speechConfidence = val.confidence
+              }
+            },
+          );
+        }
+    } else {
+      //setState(() => _isListening = false);
+       stopListening();
+      _speech.stop();
+      if (messageInputText.isNotEmpty) 
+          setMessageInputText(messageInputText, false);
+      clearMsgTextInput();
+    }
+  }
+  
 }
