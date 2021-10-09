@@ -110,14 +110,14 @@ abstract class _AbstractMicObserver with Store {
     }
   }
 
-  void onDone(status) async {
+  void _onDone(status) async {
     print('onStatus: $status');
     if (status == "notListening" && micIsExpectedToListen == true) {
       //Re-initiate speech service if user still expects it to listen
       _listen(micIsExpectedToListen);
     }
   }
-  void onError(status) async {
+  void _onError(status) async {
     print('onStatus: $status');
     //Re-initiate speech service on error
     _listen(micIsExpectedToListen);
@@ -125,9 +125,10 @@ abstract class _AbstractMicObserver with Store {
 
   Future<void> _listen(micIsExpectedToListen) async {
     bool available = await _speech.initialize(
-      onStatus: (val) => onDone(val),
-      onError: (val) => onError(val)),
+      onStatus: (val) => _onDone(val),
+      onError: (val) => _onError(val),
     );
+
     print("available $available");
 
     if (available) {
