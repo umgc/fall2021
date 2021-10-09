@@ -40,19 +40,35 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$micIsListeningAtom =
-      Atom(name: '_AbstractMicObserver.micIsListening');
+  final _$micIsExpectedToListenAtom =
+      Atom(name: '_AbstractMicObserver.micIsExpectedToListen');
 
   @override
-  bool get micIsListening {
-    _$micIsListeningAtom.reportRead();
-    return super.micIsListening;
+  bool get micIsExpectedToListen {
+    _$micIsExpectedToListenAtom.reportRead();
+    return super.micIsExpectedToListen;
   }
 
   @override
-  set micIsListening(bool value) {
-    _$micIsListeningAtom.reportWrite(value, super.micIsListening, () {
-      super.micIsListening = value;
+  set micIsExpectedToListen(bool value) {
+    _$micIsExpectedToListenAtom.reportWrite(value, super.micIsExpectedToListen,
+        () {
+      super.micIsExpectedToListen = value;
+    });
+  }
+
+  final _$micStatusAtom = Atom(name: '_AbstractMicObserver.micStatus');
+
+  @override
+  String get micStatus {
+    _$micStatusAtom.reportRead();
+    return super.micStatus;
+  }
+
+  @override
+  set micStatus(String value) {
+    _$micStatusAtom.reportWrite(value, super.micStatus, () {
+      super.micStatus = value;
     });
   }
 
@@ -112,33 +128,15 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
         .run(() => super.setMessageInputText(value, isSysrMsg));
   }
 
-  final _$listenAsyncAction = AsyncAction('_AbstractMicObserver.listen');
-
-  @override
-  Future<void> listen() {
-    return _$listenAsyncAction.run(() => super.listen());
-  }
-
   final _$_AbstractMicObserverActionController =
       ActionController(name: '_AbstractMicObserver');
 
   @override
-  void startListening() {
+  void toggleListeningMode() {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.startListening');
+        name: '_AbstractMicObserver.toggleListeningMode');
     try {
-      return super.startListening();
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void stopListening() {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.stopListening');
-    try {
-      return super.stopListening();
+      return super.toggleListeningMode();
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -204,7 +202,8 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     return '''
 mockIndex: ${mockIndex},
 messageInputText: ${messageInputText},
-micIsListening: ${micIsListening},
+micIsExpectedToListen: ${micIsExpectedToListen},
+micStatus: ${micStatus},
 speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
 nluResponse: ${nluResponse}

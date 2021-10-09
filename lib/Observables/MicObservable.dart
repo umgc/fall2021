@@ -12,12 +12,11 @@ part 'MicObservable.g.dart';
 class MicObserver = _AbstractMicObserver with _$MicObserver;
 
 abstract class _AbstractMicObserver with Store {
+  late final NLULibService nluLibService;
 
-late final NLULibService nluLibService;
-
- _AbstractMicObserver() {
-   nluLibService = NLULibService();
- }
+  _AbstractMicObserver() {
+    nluLibService = NLULibService();
+  }
 
   //remove this.
   @observable
@@ -28,7 +27,10 @@ late final NLULibService nluLibService;
   String messageInputText = "";
 
   @observable
-  bool micIsListening = false; 
+  bool micIsExpectedToListen = false;
+
+  @observable
+  String micStatus = "";
 
   @observable
   double speechConfidence = 0;
@@ -41,31 +43,36 @@ late final NLULibService nluLibService;
 
   SpeechToText _speech = SpeechToText();
 
-  @action 
-  void startListening(){
+  @action
+  void toggleListeningMode() {
     print("MicObserver: Starting listening mode ");
-    micIsListening = true;
-  }
+    (!micIsExpectedToListen)
+        ? micIsExpectedToListen = true
+        : micIsExpectedToListen = false;
 
-  @action 
-  void stopListening(){
-    print("MicObserver: exiting listening mode ");
-    micIsListening = false;
+    if (micIsExpectedToListen) {
+      _listen(micIsExpectedToListen);
+    } else {
+      _speech.stop();
+      if (messageInputText.isNotEmpty)
+        setMessageInputText(messageInputText, false);
+      clearMsgTextInput();
+    }
   }
 
   @action
-  void addUserMessage(String name){
+  void addUserMessage(String name) {
     print("added user message");
     systemUserMessage.add(name);
   }
 
   @action
-  void addSystemMessage(NLUResponse name){
+  void addSystemMessage(NLUResponse name) {
     systemUserMessage.add(name);
   }
 
-  @action 
-  void fufillTask(NLUResponse name){
+  @action
+  void fufillTask(NLUResponse name) {
     //Save notes
     //Go to help screeen
     //Navigate to another screen
@@ -73,83 +80,66 @@ late final NLULibService nluLibService;
   }
 
   @action
-  void clearMsgTextInput(){
+  void clearMsgTextInput() {
     messageInputText = "";
   }
 
   @action
-  void setVoiceMsgTextInput(value){
+  void setVoiceMsgTextInput(value) {
     messageInputText = value;
   }
 
-  @action 
-  Future<void> setMessageInputText(dynamic value, bool isSysrMsg) async{
-      //push prev message to chartBubble 
-      if(isSysrMsg==true){
-           VoiceOverTextService.speakOutLoud( (value as NLUResponse).response! );
-           messageInputText = (value as NLUResponse).response!;
-           Timer(Duration(seconds: 2 ), () {
-                addSystemMessage( (value as NLUResponse) );              
-          });
-
-      }else{
-          print("adding a user message $value");
-          messageInputText =value;
-          await nluLibService.getNLUResponse(messageInputText, "en-US").
-              then((value) =>  setMessageInputText(value, true) ) ;
-          Timer(Duration(seconds: 1), () {
-              addUserMessage(value);
-          });
-          
-      }
+  @action
+  Future<void> setMessageInputText(dynamic value, bool isSysrMsg) async {
+    //push prev message to chartBubble
+    if (isSysrMsg == true) {
+      VoiceOverTextService.speakOutLoud((value as NLUResponse).response!);
+      messageInputText = (value as NLUResponse).response!;
+      Timer(Duration(seconds: 2), () {
+        addSystemMessage((value as NLUResponse));
+      });
+    } else {
+      print("adding a user message $value");
+      messageInputText = value;
+      await nluLibService
+          .getNLUResponse(messageInputText, "en-US")
+          .then((value) => setMessageInputText(value, true));
+      Timer(Duration(seconds: 1), () {
+        addUserMessage(value);
+      });
+    }
   }
 
-  
   void onDone(status) async {
     print('onStatus: $status');
-    if (status == "notListening") {
-      print('confidence: $speechConfidence');
-      //_listen(micObserver);
-      //micObserver.addUserMessage(_text);
+    if (status == "notListening" && micIsExpectedToListen == true) {
+      //Re-initiate speech service if user still expects it to listen
+      _listen(micIsExpectedToListen);
     }
   }
-   void onError(status) async {
+  void onError(status) async {
     print('onStatus: $status');
-    //TODO: Re-initiate speech service on error
+    //Re-initiate speech service on error
+    _listen(micIsExpectedToListen);
   }
 
-  @action 
-  Future<void> listen() async {
-    print('onStatus: ${micIsListening}');
-    
-    if (!micIsListening) {
+  Future<void> _listen(micIsExpectedToListen) async {
+    bool available = await _speech.initialize(
+      onStatus: (val) => onDone(val),
+      onError: (val) => onError(val)),
+    );
+    print("available $available");
 
-        bool available = await _speech.initialize(
-          onStatus: (val) => onDone(val),
-          onError: (val) => print("Error $val"),
-        );
-        print("available $available");
-
-        if (available) {
-          startListening();
-          //setState(() => _isListening = true);
-          _speech.listen(
-            onResult: (val) =>  {
-              setVoiceMsgTextInput(val.recognizedWords),
-              if (val.hasConfidenceRating && val.confidence > 0) {
-                speechConfidence = val.confidence
-              }
-            },
-          );
-        }
-    } else {
-      //setState(() => _isListening = false);
-       stopListening();
-      _speech.stop();
-      if (messageInputText.isNotEmpty) 
-          setMessageInputText(messageInputText, false);
-      clearMsgTextInput();
+    if (available) {
+      _speech.listen(
+        onResult: (val) => {
+          setVoiceMsgTextInput( val.recognizedWords),
+          //setVoiceMsgTextInput( val.finalResult),
+          //val.finalResult
+          if (val.hasConfidenceRating && val.confidence > 0)
+            {speechConfidence = val.confidence}
+        },
+      );
     }
   }
-  
 }
