@@ -22,7 +22,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Do we have permission to access your microphone?",
+            I18n.of,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,

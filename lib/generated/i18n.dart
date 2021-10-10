@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: camel_case_types
 // ignore_for_file: prefer_single_quotes
@@ -37,10 +36,6 @@ class I18n implements WidgetsLocalizations {
 	String get menuScreenName => "Menu";
 	/// "Notes"
 	String get notesScreenName => "Notes";
-  //Note Detail
-  String get notesDetailScreenName => "Notes Details";
-  //Save notes screen
-  String get addNotesScreenName => "Add Notes";
 	/// "Notifications"
 	String get notificationsScreenName => "Notifications";
 	/// "Setting"
@@ -51,157 +46,53 @@ class I18n implements WidgetsLocalizations {
 	String get micButton => "Mic";
 	/// "Press to Record"
 	String get pressToRecord => "Press to Record";
-
+	/// "Yes"
+	String get yes => "Yes";
+	/// "Save Note"
+	String get saveNote => "Save Note";
+	/// "Date"
+	String get date => "Date";
+	/// "Note"
+	String get note => "Note";
+	/// "Notes Details"
+	String get notesDetailScreenName => "Notes Details";
+	/// "Add Notes"
+	String get addNotesScreenName => "Add Notes";
 	/// "Checklist"
 	String get checklistScreenName => "Checklist";
-
-	// "HelpScreen"
-	String get HelpScreen => "Help";
+	/// "Help"
+	String get helpScreen => "Help";
 	/// "Trigger"
-	String get TriggerScreen => "Trigger";
+	String get triggerScreen => "Trigger";
 	/// "Sync to Cloud"
-	String get SyncToCloudScreen => "Sync to Cloud";
+	String get syncToCloudScreen => "Sync to Cloud";
 	/// "General Settings"
-	String get GeneralSettingsScreen => "General Settings";
-
-  // "Oboard Cloud Settup"
-	String get OboardCloudSettup => "cloud setup";
-	//"Oboard Permission Setup"
-	String get OboardPermissionSetup => "Permission";
-	///"Oboard Lang Setup"
-	String get OboardLangSetup => "Select Language";
-	/// "Oboard Walk Through"
-	String get WalkthroughScreen => "Walk Intro";
-	/// "Oboard Limited Access"
-
-
- 
+	String get generalSettingsScreen => "General Settings";
+	/// "Cloud Setup"
+	String get onboardCloudSetup => "Cloud Setup";
+	/// "Permission"
+	String get onboardPermissionSetup => "Permission";
+	/// "Select Language"
+	String get onboardLangSetup => "Select Language";
+	/// "Introduction"
+	String get walkthroughScreen => "Introduction";
+	/// "Would you like to setup a cloud account?"
+	String get cloudSetupPrompt => "Would you like to setup a cloud account?";
+	/// "No"
+	String get no => "No";
+	/// "Welcome to Memory Magic"
+	String get welcome => "Welcome to Memory Magic";
+	/// "Back"
+	String get back => "Back";
+	/// "Next"
+	String get next => "Next";
+	/// "Please select your primary language."
+	String get selectLanguage => "Please select your primary language.";
+	/// "Language"
+	String get language => "Language";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
-}
-class _I18n_ar_SY extends I18n {
-  const _I18n_ar_SY();
-  @override
-  TextDirection get textDirection => TextDirection.rtl;
-	/// "الصفحة الرئيسية"
-	@override
-	String get homeScreenName => "الصفحة الرئيسية";
-	/// "الصفحة القائمة"
-	@override
-	String get menuScreenName => "الصفحة القائمة";
-	/// "صفحة المسودات"
-	@override
-	String get notesScreenName => "صفحة المسودات";
-	/// "صفحة الإشعارات"
-	@override
-	String get notificationsScreenName => "صفحة الإشعارات";
-	/// "صفحة الإعدادات"
-	@override
-	String get settingScreenName => "صفحة الإعدادات";
-	/// "صفحة التقويم"
-	@override
-	String get calendarScreenName => "صفحة التقويم";
-	/// "ميكروفون"
-	@override
-	String get micButton => "ميكروفون";
-	/// "اضغط للتسجيل"
-	@override
-	String get pressToRecord => "اضغط للتسجيل";
-	/// "مساعدة"
-	@override
-	String get HelpScreen => "مساعدة";
-	/// "مشغل"
-	@override
-	String get TriggerScreen => "مشغل";
-	/// "مزامنة مع السحابة"
-	@override
-	String get SyncToCloudScreen => "مزامنة مع السحابة";
-	/// "الاعدادات العامة"
-	@override
-	String get GeneralSettingsScreen => "الاعدادات العامة";
-}
-class _I18n_zh_CN extends I18n {
-  const _I18n_zh_CN();
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
-	/// "家"
-	@override
-	String get homeScreenName => "家";
-	/// "菜单"
-	@override
-	String get menuScreenName => "菜单";
-	/// "笔记"
-	@override
-	String get notesScreenName => "笔记";
-	/// "通知"
-	@override
-	String get notificationsScreenName => "通知";
-	/// "环境"
-	@override
-	String get settingScreenName => "环境";
-	/// "日历"
-	@override
-	String get calendarScreenName => "日历";
-	/// "麦克风"
-	@override
-	String get micButton => "麦克风";
-	/// "按录制"
-	@override
-	String get pressToRecord => "按录制";
-	/// "幫助"
-	@override
-	String get HelpScreen => "幫助";
-	/// "扳機"
-	@override
-	String get TriggerScreen => "扳機";
-	/// "同步到雲端"
-	@override
-	String get SyncToCloudScreen => "同步到雲端";
-	/// "通用設置"
-	@override
-	String get GeneralSettingsScreen => "通用設置";
-}
-class _I18n_pt_BR extends I18n {
-  const _I18n_pt_BR();
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
-	/// "Casa"
-	@override
-	String get homeScreenName => "Casa";
-	/// "Cardápio"
-	@override
-	String get menuScreenName => "Cardápio";
-	/// "Notas"
-	@override
-	String get notesScreenName => "Notas";
-	/// "Notificações"
-	@override
-	String get notificationsScreenName => "Notificações";
-	/// "Configuração"
-	@override
-	String get settingScreenName => "Configuração";
-	/// "Calendário"
-	@override
-	String get calendarScreenName => "Calendário";
-	/// "Microfone"
-	@override
-	String get micButton => "Microfone";
-	/// "Pressione para gravar"
-	@override
-	String get pressToRecord => "Pressione para gravar";
-	/// "Ajuda"
-	@override
-	String get HelpScreen => "Ajuda";
-	/// "Desencadear"
-	@override
-	String get TriggerScreen => "Desencadear";
-	/// "Sincronizar com a nuvem"
-	@override
-	String get SyncToCloudScreen => "Sincronizar com a nuvem";
-	/// "Configurações Gerais"
-	@override
-	String get GeneralSettingsScreen => "Configurações Gerais";
 }
 class _I18n_es_US extends I18n {
   const _I18n_es_US();
@@ -231,28 +122,367 @@ class _I18n_es_US extends I18n {
 	/// "Presione para grabar"
 	@override
 	String get pressToRecord => "Presione para grabar";
-	/// "Ayudar"
+	/// "sí"
 	@override
-	String get HelpScreen => "Ayudar";
-	/// "Desencadenar"
+	String get yes => "sí";
+	/// "Guardar nota"
 	@override
-	String get TriggerScreen => "Desencadenar";
-	///"Sincronizar con la nube"
+	String get saveNote => "Guardar nota";
+	/// "Fecha"
 	@override
-	String get SyncToCloudScreen => "Sincronizar con la nube";
-	///"Configuración general"
+	String get date => "Fecha";
+	/// "Nota"
 	@override
-	String get GeneralSettingsScreen => "Configuración general";
+	String get note => "Nota";
+	/// "Detalles de notas"
+	@override
+	String get notesDetailScreenName => "Detalles de notas";
+	/// "Agregar notas"
+	@override
+	String get addNotesScreenName => "Agregar notas";
+	/// "Lista de Verificación"
+	@override
+	String get checklistScreenName => "Lista de Verificación";
+	/// "Ayuda"
+	@override
+	String get helpScreen => "Ayuda";
+	/// "Palabras Claves"
+	@override
+	String get triggerScreen => "Palabras Claves";
+	/// "Sincronizar con la nube"
+	@override
+	String get syncToCloudScreen => "Sincronizar con la nube";
+	/// "Configuración general"
+	@override
+	String get generalSettingsScreen => "Configuración general";
+	/// "Configuración de la nube"
+	@override
+	String get onboardCloudSetup => "Configuración de la nube";
+	/// "Permiso"
+	@override
+	String get onboardPermissionSetup => "Permiso";
+	/// "Seleccione el idioma"
+	@override
+	String get onboardLangSetup => "Seleccione el idioma";
+	/// "Introducción"
+	@override
+	String get walkthroughScreen => "Introducción";
+	/// "¿Le gustaría configurar una cuenta en la nube?"
+	@override
+	String get cloudSetupPrompt => "¿Le gustaría configurar una cuenta en la nube?";
+	/// "No"
+	@override
+	String get no => "No";
+	/// "Bienvenido a Memory Magic"
+	@override
+	String get welcome => "Bienvenido a Memory Magic";
+	/// "atrás"
+	@override
+	String get back => "atrás";
+	/// "próximo"
+	@override
+	String get next => "próximo";
+	/// "Seleccione su idioma principal."
+	@override
+	String get selectLanguage => "Seleccione su idioma principal.";
+	/// "Idioma"
+	@override
+	String get language => "Idioma";
+}
+class _I18n_zh_CN extends I18n {
+  const _I18n_zh_CN();
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+	/// "家"
+	@override
+	String get homeScreenName => "家";
+	/// "菜单"
+	@override
+	String get menuScreenName => "菜单";
+	/// "笔记"
+	@override
+	String get notesScreenName => "笔记";
+	/// "通知"
+	@override
+	String get notificationsScreenName => "通知";
+	/// "环境"
+	@override
+	String get settingScreenName => "环境";
+	/// "日历"
+	@override
+	String get calendarScreenName => "日历";
+	/// "麦克风"
+	@override
+	String get micButton => "麦克风";
+	/// "按录制"
+	@override
+	String get pressToRecord => "按录制";
+	/// "是的"
+	@override
+	String get yes => "是的";
+	/// "保存笔记"
+	@override
+	String get saveNote => "保存笔记";
+	/// "日期"
+	@override
+	String get date => "日期";
+	/// "笔记"
+	@override
+	String get note => "笔记";
+	/// "笔记详情"
+	@override
+	String get notesDetailScreenName => "笔记详情";
+	/// "添加注释"
+	@override
+	String get addNotesScreenName => "添加注释";
+	/// "清单"
+	@override
+	String get checklistScreenName => "清单";
+	/// "帮助"
+	@override
+	String get helpScreen => "帮助";
+	/// "扳机"
+	@override
+	String get triggerScreen => "扳机";
+	/// "同步到云端"
+	@override
+	String get syncToCloudScreen => "同步到云端";
+	/// "通用设置"
+	@override
+	String get generalSettingsScreen => "通用设置";
+	/// "云设置"
+	@override
+	String get onboardCloudSetup => "云设置";
+	/// "允许"
+	@override
+	String get onboardPermissionSetup => "允许";
+	/// "选择语言"
+	@override
+	String get onboardLangSetup => "选择语言";
+	/// "介绍"
+	@override
+	String get walkthroughScreen => "介绍";
+	/// "您想设置一个云帐户吗？"
+	@override
+	String get cloudSetupPrompt => "您想设置一个云帐户吗？";
+	/// "不"
+	@override
+	String get no => "不";
+	/// "欢迎来到记忆魔法"
+	@override
+	String get welcome => "欢迎来到记忆魔法";
+	/// "后退"
+	@override
+	String get back => "后退";
+	/// "下一个"
+	@override
+	String get next => "下一个";
+	/// "请选择您的主要语言。"
+	@override
+	String get selectLanguage => "请选择您的主要语言。";
+	/// "语"
+	@override
+	String get language => "语";
+}
+class _I18n_pt_BR extends I18n {
+  const _I18n_pt_BR();
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+	/// "Casa"
+	@override
+	String get homeScreenName => "Casa";
+	/// "Cardápio"
+	@override
+	String get menuScreenName => "Cardápio";
+	/// "Notas"
+	@override
+	String get notesScreenName => "Notas";
+	/// "Notificações"
+	@override
+	String get notificationsScreenName => "Notificações";
+	/// "Configuração"
+	@override
+	String get settingScreenName => "Configuração";
+	/// "Calendário"
+	@override
+	String get calendarScreenName => "Calendário";
+	/// "Microfone"
+	@override
+	String get micButton => "Microfone";
+	/// "Pressione para gravar"
+	@override
+	String get pressToRecord => "Pressione para gravar";
+	/// "sim"
+	@override
+	String get yes => "sim";
+	/// "Salvar nota"
+	@override
+	String get saveNote => "Salvar nota";
+	/// "Encontro"
+	@override
+	String get date => "Encontro";
+	/// "Observação"
+	@override
+	String get note => "Observação";
+	/// "Detalhes das notas"
+	@override
+	String get notesDetailScreenName => "Detalhes das notas";
+	/// "Adicionar notas"
+	@override
+	String get addNotesScreenName => "Adicionar notas";
+	/// "Lista de controle"
+	@override
+	String get checklistScreenName => "Lista de controle";
+	/// "Ajuda"
+	@override
+	String get helpScreen => "Ajuda";
+	/// "Desencadear"
+	@override
+	String get triggerScreen => "Desencadear";
+	/// "Sincronizar com a nuvem"
+	@override
+	String get syncToCloudScreen => "Sincronizar com a nuvem";
+	/// "Configurações Gerais"
+	@override
+	String get generalSettingsScreen => "Configurações Gerais";
+	/// "Configuração da nuvem"
+	@override
+	String get onboardCloudSetup => "Configuração da nuvem";
+	/// "Permissão"
+	@override
+	String get onboardPermissionSetup => "Permissão";
+	/// "Selecione o idioma"
+	@override
+	String get onboardLangSetup => "Selecione o idioma";
+	/// "Introdução"
+	@override
+	String get walkthroughScreen => "Introdução";
+	/// "Você gostaria de configurar uma conta na nuvem?"
+	@override
+	String get cloudSetupPrompt => "Você gostaria de configurar uma conta na nuvem?";
+	/// "Não"
+	@override
+	String get no => "Não";
+	/// "Bem-vindo ao Memory Magic"
+	@override
+	String get welcome => "Bem-vindo ao Memory Magic";
+	/// "Voltar"
+	@override
+	String get back => "Voltar";
+	/// "Próximo"
+	@override
+	String get next => "Próximo";
+	/// "Selecione seu idioma principal."
+	@override
+	String get selectLanguage => "Selecione seu idioma principal.";
+	/// "Língua"
+	@override
+	String get language => "Língua";
+}
+class _I18n_ar_SY extends I18n {
+  const _I18n_ar_SY();
+  @override
+  TextDirection get textDirection => TextDirection.rtl;
+	/// "الصفحة الرئيسية"
+	@override
+	String get homeScreenName => "الصفحة الرئيسية";
+	/// "الصفحة القائمة"
+	@override
+	String get menuScreenName => "الصفحة القائمة";
+	/// "صفحة المسودات"
+	@override
+	String get notesScreenName => "صفحة المسودات";
+	/// "صفحة الإشعارات"
+	@override
+	String get notificationsScreenName => "صفحة الإشعارات";
+	/// "صفحة الإعدادات"
+	@override
+	String get settingScreenName => "صفحة الإعدادات";
+	/// "صفحة التقويم"
+	@override
+	String get calendarScreenName => "صفحة التقويم";
+	/// "ميكروفون"
+	@override
+	String get micButton => "ميكروفون";
+	/// "اضغط للتسجيل"
+	@override
+	String get pressToRecord => "اضغط للتسجيل";
+	/// "نعم"
+	@override
+	String get yes => "نعم";
+	/// "حفظ الملاحظة"
+	@override
+	String get saveNote => "حفظ الملاحظة";
+	/// "تاريخ"
+	@override
+	String get date => "تاريخ";
+	/// "ملحوظة"
+	@override
+	String get note => "ملحوظة";
+	/// "تفاصيل الملاحظات"
+	@override
+	String get notesDetailScreenName => "تفاصيل الملاحظات";
+	/// "أضف ملاحظات"
+	@override
+	String get addNotesScreenName => "أضف ملاحظات";
+	/// "قائمة تدقيق"
+	@override
+	String get checklistScreenName => "قائمة تدقيق";
+	/// "يساعد"
+	@override
+	String get helpScreen => "يساعد";
+	/// "مشغل"
+	@override
+	String get triggerScreen => "مشغل";
+	/// "مزامنة مع السحابة"
+	@override
+	String get syncToCloudScreen => "مزامنة مع السحابة";
+	/// "الاعدادات العامة"
+	@override
+	String get generalSettingsScreen => "الاعدادات العامة";
+	/// "إعداد السحابة"
+	@override
+	String get onboardCloudSetup => "إعداد السحابة";
+	/// "إذن"
+	@override
+	String get onboardPermissionSetup => "إذن";
+	/// "اختار اللغة"
+	@override
+	String get onboardLangSetup => "اختار اللغة";
+	/// "مقدمة"
+	@override
+	String get walkthroughScreen => "مقدمة";
+	/// "هل ترغب في إعداد حساب سحابي؟"
+	@override
+	String get cloudSetupPrompt => "هل ترغب في إعداد حساب سحابي؟";
+	/// "لا"
+	@override
+	String get no => "لا";
+	/// "مرحبًا بك في Memory Magic"
+	@override
+	String get welcome => "مرحبًا بك في Memory Magic";
+	/// "خلف"
+	@override
+	String get back => "خلف";
+	/// "التالي"
+	@override
+	String get next => "التالي";
+	/// "الرجاء تحديد لغتك الأساسية."
+	@override
+	String get selectLanguage => "الرجاء تحديد لغتك الأساسية.";
+	/// "لغة"
+	@override
+	String get language => "لغة";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale("en", "US"),
-			Locale("ar", "SY"),
 			Locale("es", "US"),
 			Locale("pt", "BR"),
-			Locale("zh", "CN")
+			Locale("zh", "CN"),
+			Locale("ar", "SY")
     ];
   }
 
@@ -275,9 +505,6 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
     if ("en_US" == lang) {
 			return SynchronousFuture<WidgetsLocalizations>(const _I18n_en_US());
 		}
-		else if ("ar_SY" == lang) {
-			return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
-		}
 		else if ("es_US" == lang) {
 			return SynchronousFuture<WidgetsLocalizations>(const _I18n_es_US());
 		}
@@ -287,11 +514,11 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
 		else if ("zh_CN" == lang) {
 			return SynchronousFuture<WidgetsLocalizations>(const _I18n_zh_CN());
 		}
+		else if ("ar_SY" == lang) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
+		}
     else if ("en" == languageCode) {
 			return SynchronousFuture<WidgetsLocalizations>(const _I18n_en_US());
-		}
-		else if ("ar" == languageCode) {
-			return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
 		}
 		else if ("es" == languageCode) {
 			return SynchronousFuture<WidgetsLocalizations>(const _I18n_es_US());
@@ -301,6 +528,9 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
 		}
 		else if ("zh" == languageCode) {
 			return SynchronousFuture<WidgetsLocalizations>(const _I18n_zh_CN());
+		}
+		else if ("ar" == languageCode) {
+			return SynchronousFuture<WidgetsLocalizations>(const _I18n_ar_SY());
 		}
 
     return SynchronousFuture<WidgetsLocalizations>(const I18n());
