@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:untitled3/Utility/Video_Player.dart';
+import 'package:untitled3/generated/i18n.dart';
+
 
 class WalkthroughScreen extends StatefulWidget {
   @override
@@ -16,9 +18,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       Container(
         padding: EdgeInsets.fromLTRB(15, 20, 20, 40),
         child: Text(
-          "Here is a link to a brief"
-          "walk-through of how to use"
-          "the Memory Magic App.",
+          I18n.of(context)!.walkthroughVideo,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       ),
       Container(
           width: 500,
-          height: 450,
+          height: 420,
           child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 250),
               child: VideosList(

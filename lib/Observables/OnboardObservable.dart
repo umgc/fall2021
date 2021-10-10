@@ -18,7 +18,7 @@ abstract class _AbstractOnboardObserver with Store {
   var language;
 
   @observable
-  int id = 0;
+  int id = 1;
 
   @observable
   bool denied = false;
