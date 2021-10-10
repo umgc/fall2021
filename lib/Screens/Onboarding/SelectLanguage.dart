@@ -69,9 +69,9 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
               ),
               value: language,
 
-              onChanged: (language){
+              onChanged: (Locale? locale){
+                language = locale;
                 onboardingObserver.languageChange(language);
-
               },
               isExpanded: true,
               underline: SizedBox(),
