@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
+import 'package:untitled3/Utility/Video_Player.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   @override
@@ -7,75 +9,42 @@ class WalkthroughScreen extends StatefulWidget {
 }
 
 class _WalkthroughScreenState extends State<WalkthroughScreen> {
-  late VideoPlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-      });
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
-          child: Text(
-            "Here is a video to a brief "
-            "walk-through of how to use "
-            "the Memory Magic App.",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+        body: Column(children: [
+      Container(
+        padding: EdgeInsets.fromLTRB(15, 20, 20, 40),
+        child: Text(
+          "Here is a link to a brief"
+          "walk-through of how to use"
+          "the Memory Magic App.",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
           ),
         ),
-    Padding(
-    padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
-           child: Center(
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                : Container(),
-          ),),
-          Padding(
-            padding: EdgeInsets.fromLTRB(15,10, 20, 20),
-            child:
+      ),
+      Container(
+          width: 500,
+          height: 450,
+          child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 250),
+              child: VideosList(
+                looping: true,
 
-          FloatingActionButton(
-
-            onPressed: () {
-              setState(() {
-                _controller.value.isPlaying
-                    ? _controller.pause()
-                    : _controller.play();
-              });
-            },
-            child: Icon(
-              _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-            ),
-          ),),
-
-      ],
-    ));
-
+                videoPlayerController: VideoPlayerController.network(
+                    'https://assets.mixkit.co/videos/preview/mixkit-daytime-city-traffic-aerial-view-56-large.mp4'),
+                // NOTE: if you save the videos as mp4 in assets file , you can use:
+                /*
+                      VideosList(
+                        videoPlayerController: VideoPlayerController.asset(
+                            'videos/Specialist_In_Python.MP4',
+                        ),
+                        looping: true,
+                      ),
+                      */
+              )))
+    ]));
   }
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
 }
-
-
