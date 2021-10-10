@@ -101,8 +101,8 @@ class I18n implements WidgetsLocalizations {
 	@override
 	String get permissionNote => "NOTE: This permission will allow all types of voice interaction.";
 	///"You will have a limited features "
-	// 			"without allowing permission to "
-	// 			"access the microphone."
+	/// "without allowing permission to "
+	/// "access the microphone."
 	@override
 	String get permissionDenied => "You will have a limited features "
 			"without allowing permission to "
@@ -209,8 +209,8 @@ class _I18n_es_US extends I18n {
 	@override
 	String get promptPermission => "¿Tenemos permiso para acceder a su micrófono?";
 	///"Aquí hay un enlace a un resumen "
-	// 			"guía de cómo utilizar "
-	// 			"la aplicación Memory Magic"
+	/// "guía de cómo utilizar "
+	/// "la aplicación Memory Magic"
 	@override
 	String get walkthroughVideo =>"Aquí hay un enlace a un resumen "
 			"guía de cómo utilizar "
@@ -219,8 +219,8 @@ class _I18n_es_US extends I18n {
 	@override
 	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz";
 	///"Tendrás funciones limitadas"
-	// 			"sin permitir permiso para"
-	// 			"acceder al micrófono"
+	/// "sin permitir permiso para"
+	/// "acceder al micrófono"
 	@override
 	String get permissionDenied => "Tendrás funciones limitadas"
 			"sin permitir permiso para"
@@ -324,8 +324,8 @@ class _I18n_pt_BR extends I18n {
 	@override
 	String get promptPermission => "Temos permissão para acessar seu microfone?";
 	///"Aqui está um link para um briefing"
-	// 			"passo a passo de como usar "
-	// 			"o aplicativo Memory Magic"
+	// "passo a passo de como usar "
+	// "o aplicativo Memory Magic"
 	@override
 	String get walkthroughVideo => "Aqui está um link para um briefing"
 			"passo a passo de como usar "
@@ -335,8 +335,8 @@ class _I18n_pt_BR extends I18n {
 	@override
 	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação de voz.";
 	///"Você terá recursos limitados"
-	// 			"sem permitir permissão para"
-	// 			"acessar o microfone."
+	// "sem permitir permissão para"
+	// "acessar o microfone."
 	@override
 	String get permissionDenied => "Você terá recursos limitados"
 			"sem permitir permissão para"
@@ -440,8 +440,8 @@ class _I18n_zh_CN extends I18n {
 	@override
 	String get promptPermission => "我们是否有权访问您的麦克风？";
 	///"這是一個簡短的鏈接"
-	// 	"使用方法演練"
-	// 	"記憶魔法應用程序."
+	// "使用方法演練"
+	// "記憶魔法應用程序."
 	@override
 	String get walkthroughVideo => "這是一個簡短的鏈接"
 	"使用方法演練"
@@ -450,8 +450,8 @@ class _I18n_zh_CN extends I18n {
 	@override
 	String get permissionNote => "注意：此權限將允許所有類型的語音交互";
 	///"您將擁有有限的功能"
-	// 	"未經許可"
-	// 	"訪問麥克風。"
+	/// "未經許可"
+	/// "訪問麥克風。"
 	@override
 	String get permissionDenied => "您將擁有有限的功能"
 	"未經許可"
@@ -555,8 +555,8 @@ class _I18n_ar_SY extends I18n {
 	@override
 	String get promptPermission => "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟";
 	///"هنا رابط موجز"
-			"  جولة تفصيلية حول كيفية الاستخدام "
-			"تطبيق Memory Magic "
+	///"  جولة تفصيلية حول كيفية الاستخدام "
+	///"تطبيق Memory Magic "
 	@override
 	String get walkthroughVideo => "هنا رابط موجز"
 			"  جولة تفصيلية حول كيفية الاستخدام "
@@ -566,8 +566,8 @@ class _I18n_ar_SY extends I18n {
 	@override
 	String get permissionNote => "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
 	///" سيكون لديك ميزات محدودة "
-	// 			"دون السماح بإذن "
-	// 			"الدخول إلى الميكروفون."
+	// "دون السماح بإذن "
+	// "الدخول إلى الميكروفون."
 	@override
 	String get permissionDenied => " سيكون لديك ميزات محدودة "
 			"دون السماح بإذن "
