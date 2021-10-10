@@ -23,7 +23,7 @@ abstract class _AbstractMainNavObserver with Store {
 
   @action
   void setTitle(String title){
-    print("Screen changed to: "+ title);
+    print("Change Screen tittle to: "+ title);
     screenTitle = title;
     
   }
@@ -31,6 +31,8 @@ abstract class _AbstractMainNavObserver with Store {
   @action
   void setFocusedBtn(dynamic focusedBtn){
     focusedNavBtn = focusedBtn;
+    if(focusedBtn == 2) currentScreen = MAIN_SCREENS.NOTE;
+    if(focusedBtn == 0) currentScreen = MAIN_SCREENS.MENU;
   }
 
 }
