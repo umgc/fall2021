@@ -23,7 +23,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            I18n.of(context).promptPermission,
+            I18n.of(context)!.promptPermission,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
