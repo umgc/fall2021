@@ -1,8 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Model/Setting.dart';
 import 'package:untitled3/Services/SettingService.dart';
-import '../Model/Note.dart';
-import '../Services/NoteService.dart';
 
 part 'SettingObservable.g.dart';
 
