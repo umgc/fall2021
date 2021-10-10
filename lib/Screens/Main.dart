@@ -147,7 +147,13 @@ class _MainNavigatorState extends State<MainNavigator> {
         onCleared: onCleared,
         buildDefaultAppBar: buildAppBar);
   }
-
+  _onClickMic(MicObserver micObserver, MainNavObserver screenNav){
+    micObserver.toggleListeningMode();
+    print("${MAIN_SCREENS.HOME} and ${screenNav.currentScreen}");
+    if(screenNav.currentScreen != MAIN_SCREENS.HOME){
+        screenNav.changeScreen(MAIN_SCREENS.HOME);
+    }
+  }
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       toolbarHeight: 120,
@@ -257,7 +263,7 @@ class _MainNavigatorState extends State<MainNavigator> {
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
-        floatingActionButton: AvatarGlow(
+        floatingActionButton: Observer( builder: (_) =>  AvatarGlow(
             animate: micObserver.micIsExpectedToListen,
             glowColor: Theme.of(context).primaryColor,
             endRadius: 80,
@@ -270,7 +276,7 @@ class _MainNavigatorState extends State<MainNavigator> {
                 child: new RawMaterialButton(
                   shape: new CircleBorder(),
                   elevation: 0.01,
-                  onPressed: () => {screenNav.changeScreen(MAIN_SCREENS.HOME)},
+                  onPressed: () => { _onClickMic(micObserver, screenNav)},//{screenNav.changeScreen(MAIN_SCREENS.HOME)},
                   child: Column(children: [
                     Image(
                       image: AssetImage("assets/images/mic.png"),
@@ -279,6 +285,6 @@ class _MainNavigatorState extends State<MainNavigator> {
                       width: 80.82,
                     ),
                   ]),
-                ))));
+                )))));
   }
 }

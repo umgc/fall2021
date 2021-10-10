@@ -6,7 +6,7 @@ class MainNavObserver = _AbstractMainNavObserver with _$MainNavObserver;
 abstract class _AbstractMainNavObserver with Store {
 
   @observable
-  dynamic currentScreen = MAIN_SCREENS.HOME ;
+  dynamic currentScreen;
 
   @observable
   String screenTitle ="";
@@ -16,6 +16,7 @@ abstract class _AbstractMainNavObserver with Store {
 
   @action
   void changeScreen(dynamic screen){
+    print("Screen changed to: $screen");
     currentScreen = screen;
     focusedNavBtn = -1;
   }
