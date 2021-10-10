@@ -18,7 +18,8 @@ enum MAIN_SCREENS {
 }
 
 enum NOTE_SCREENS {
-    SAVE_NOTE,
+    NOTE,
+    ADD_NOTE,
     NOTE_DETAIL,
 }
 
