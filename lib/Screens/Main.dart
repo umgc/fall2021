@@ -37,34 +37,24 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends State<MainNavigator> {
   int _currentIndex = 0;
-  MainNavObserver screenNav = MainNavObserver();
-
-  static List<Widget> _widgetOptions = <Widget>[
-    Menu(),
-    Home(),
-    ViewNotes(),
-  ];
-
-
+ 
   Widget _changeScreen(screen, index) {
     
     print("index $index");
+    final screenNav =Provider.of<MainNavObserver>(context);
 
-    if( index >-1 && index < 3){
-      return _widgetOptions.elementAt(index);
-    }
     //main screen
-    if (screen == MAIN_SCREENS.HOME) {
-        screenNav.setTitle(I18n.of(context)!.menuScreenName);
-        return HomeScreen();
-    }
-    if (screen == MAIN_SCREENS.NOTE) {
+    if (screen == MAIN_SCREENS.NOTE ||index == 2) {
         screenNav.setTitle(I18n.of(context)!.notesScreenName);
         return ViewNotes();
     }
-    if (screen == MAIN_SCREENS.MENU) {
+    if (screen == MAIN_SCREENS.MENU ||index == 0 ) {
         screenNav.setTitle(I18n.of(context)!.menuScreenName);
         return Menu();
+    }
+    if (screen == MAIN_SCREENS.HOME) {
+        screenNav.setTitle(I18n.of(context)!.homeScreenName);
+        return HomeScreen();
     }
     if (screen == MAIN_SCREENS.CALENDAR) {
       screenNav.setTitle(I18n.of(context)!.calendarScreenName);
@@ -130,13 +120,6 @@ class _MainNavigatorState extends State<MainNavigator> {
     searchFilter = "";
   }
 
-  _getIconColor(btn){
-
-    if(screenNav.focusedNavBtn ==btn){
-        return Colors.white;
-    }
-    return Colors.black;
-  }
 
   _getSearchBar() {
     searchFilter = "";
@@ -147,6 +130,7 @@ class _MainNavigatorState extends State<MainNavigator> {
         onCleared: onCleared,
         buildDefaultAppBar: buildAppBar);
   }
+  
   _onClickMic(MicObserver micObserver, MainNavObserver screenNav){
     micObserver.toggleListeningMode();
     print("${MAIN_SCREENS.HOME} and ${screenNav.currentScreen}");
@@ -154,7 +138,10 @@ class _MainNavigatorState extends State<MainNavigator> {
         screenNav.changeScreen(MAIN_SCREENS.HOME);
     }
   }
+
   AppBar buildAppBar(BuildContext context) {
+    final screenNav =Provider.of<MainNavObserver>(context);
+
     return AppBar(
       toolbarHeight: 120,
       backgroundColor: Color(0xFF33ACE3),
@@ -214,6 +201,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   @override
   Widget build(BuildContext context) {
     final micObserver = Provider.of<MicObserver>(context);
+    final screenNav =Provider.of<MainNavObserver>(context);
 
     return Scaffold(
         appBar: buildAppBar(context),
