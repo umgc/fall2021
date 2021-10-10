@@ -27,7 +27,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Please select your primary language.",
+            I18n.of(context)!.selectLanguage,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(0.0, 22.0, 275.0, 8.0),
-          child: Text('Language',
+          child: Text(I18n.of(context)!.language,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         ),
         Padding(
@@ -50,7 +50,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
             ),
             child: DropdownButton(
               hint: Text(
-                "Select Language",
+                I18n.of(context)!.selectLanguage,
                 style: TextStyle(color: Colors.black, fontSize: 22),
               ),
               //icon: Icon(                // Add this

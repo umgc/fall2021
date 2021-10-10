@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/OnboardObservable.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 
 class CloudSetupScreen extends StatefulWidget {
@@ -13,6 +15,8 @@ class _CloudSetupScreenState extends State<CloudSetupScreen> {
   @override
   Widget build(BuildContext context) {
     final onboardingObserver = Provider.of<OnboardObserver>(context);
+    var yesText = toBeginningOfSentenceCase(I18n.of(context)!.yes) ?? I18n.of(context)!.yes;
+    var noText = toBeginningOfSentenceCase(I18n.of(context)!.no) ?? I18n.of(context)!.yes;
 
     return Observer(builder: (_) =>
         Scaffold(
@@ -22,7 +26,7 @@ class _CloudSetupScreenState extends State<CloudSetupScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Would you like to setup a cloud account?",
+            I18n.of(context)!.cloudSetupPrompt,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -41,7 +45,7 @@ class _CloudSetupScreenState extends State<CloudSetupScreen> {
               groupValue: 1 ,
             ),
             Text(
-              'Yes',
+              yesText,
               style: new TextStyle(fontSize: 17.0),
             ),
             Padding(
@@ -53,7 +57,7 @@ class _CloudSetupScreenState extends State<CloudSetupScreen> {
               groupValue: 2,
             ),
             Text(
-              'No',
+              noText,
               style: new TextStyle(fontSize: 17.0),
             ),
           ],

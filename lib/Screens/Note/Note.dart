@@ -14,12 +14,9 @@ final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 class ViewNotes extends StatefulWidget {
   @override
   _ViewNotesState createState() => _ViewNotesState();
-
-
 }
 
 class _ViewNotesState extends State<ViewNotes> {
-
   _ViewNotesState();
   // text to speech
   // FlutterTts flutterTts = FlutterTts();
@@ -40,126 +37,121 @@ class _ViewNotesState extends State<ViewNotes> {
   // }
 
 //Funtion retuns Floating button
-  Widget buildFloatingBtn(){
+  Widget buildFloatingBtn() {
     final noteObserver = Provider.of<NoteObserver>(context);
-    String addNoteScreen =I18n.of(context)!.addNotesScreenName;
+    String addNoteScreen = I18n.of(context)!.addNotesScreenName;
 
     return FloatingActionButton(
-
-                    onPressed: () {
-                      noteObserver.changeScreen(addNoteScreen);
-                    },
-                    tooltip: 'Save Note',
-                    child: Icon(Icons.add),
-                );
+      onPressed: () {
+        noteObserver.changeScreen(addNoteScreen);
+      },
+      tooltip: I18n.of(context)!.saveNote,
+      child: Icon(Icons.add),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    String noteDetailScreen =I18n.of(context)!.notesDetailScreenName;
-    String addNoteScreen =I18n.of(context)!.addNotesScreenName;
-    String noteScreen =I18n.of(context)!.notesScreenName;
+    String noteDetailScreen = I18n.of(context)!.notesDetailScreenName;
+    String addNoteScreen = I18n.of(context)!.addNotesScreenName;
+    String noteScreen = I18n.of(context)!.notesScreenName;
 
     final noteObserver = Provider.of<NoteObserver>(context);
     noteObserver.changeScreen(noteScreen);
-    
-    return Observer(
-        builder: (_) =>
-         (noteObserver.currentScreen == noteScreen 
-           && noteObserver.usersNotes.length > 0) ?
 
-            Scaffold(
+    return Observer(
+        builder: (_) => (noteObserver.currentScreen == noteScreen &&
+                noteObserver.usersNotes.length > 0)
+            ? Scaffold(
                 //appBar: buildAppBar(context),
                 key: viewNotesScaffoldKey,
-                body:SingleChildScrollView(
-                
-                     child: Table(
-                        border: TableBorder.all(),
-                        columnWidths: const <int, TableColumnWidth>{
-                          0: FlexColumnWidth(.45),
-                          1: FlexColumnWidth(),
-                          2: FlexColumnWidth()
-
-                        },
-                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                        children: <TableRow>[
-                          TableRow(
-                              decoration: const BoxDecoration(
-                                  color: Colors.blueGrey),
-                              children: <Widget>[
-                                TableCell(
-                                  verticalAlignment:
-                                  TableCellVerticalAlignment.top,
-                                  child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text('ID',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: Colors.white))),
-                                ),
-                                TableCell(
-                                  verticalAlignment:
-                                  TableCellVerticalAlignment.top,
-                                  child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text('DATE',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: Colors.white))),
-                                ),
-                                TableCell(
-                                  verticalAlignment:
-                                  TableCellVerticalAlignment.top,
-                                  child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text('NOTE',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: Colors.white))),
-                                ),
-                              ]),
-                          //not sure how to pass the correct element
+                body: SingleChildScrollView(
+                  child: Table(
+                      border: TableBorder.all(),
+                      columnWidths: const <int, TableColumnWidth>{
+                        0: FlexColumnWidth(.45),
+                        1: FlexColumnWidth(),
+                        2: FlexColumnWidth()
+                      },
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: <TableRow>[
+                        TableRow(
+                            decoration:
+                                const BoxDecoration(color: Colors.blueGrey),
+                            children: <Widget>[
+                              TableCell(
+                                verticalAlignment:
+                                    TableCellVerticalAlignment.top,
+                                child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text('ID',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white))),
+                              ),
+                              TableCell(
+                                verticalAlignment:
+                                    TableCellVerticalAlignment.top,
+                                child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                        I18n.of(context)!.date.toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white))),
+                              ),
+                              TableCell(
+                                verticalAlignment:
+                                    TableCellVerticalAlignment.top,
+                                child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                        I18n.of(context)!.note.toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white))),
+                              ),
+                            ]),
+                        //not sure how to pass the correct element
                         for (TextNote textNote in noteObserver.usersNotes)
-                            TableRow(children: <Widget>[
-                              TableCell(
-                                verticalAlignment:
-                                TableCellVerticalAlignment.top,
-                                child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: Text(
-                                        textNote.noteId,
-                                        style: TextStyle(fontSize: 20))),
-                              ),
-                              TableCell(
-                                verticalAlignment:
-                                TableCellVerticalAlignment.top,
-                                child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: Text(
-                                        timeago.format(textNote.recordedTime),
-                                        style: TextStyle(fontSize: 20))),
-                              ),
-                              TableCell(
-                                  verticalAlignment:
-                                  TableCellVerticalAlignment.top,
-                                  // text button used to test exact solution from
-                                  // https://flutter.dev/docs/cookbook/navigation/navigate-with-arguments
-                                  // - Alec
+                          TableRow(children: <Widget>[
+                            TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(textNote.noteId,
+                                      style: TextStyle(fontSize: 20))),
+                            ),
+                            TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                      timeago.format(textNote.recordedTime),
+                                      style: TextStyle(fontSize: 20))),
+                            ),
+                            TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              // text button used to test exact solution from
+                              // https://flutter.dev/docs/cookbook/navigation/navigate-with-arguments
+                              // - Alec
 
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          //noteObserver.changeScreen(addNoteScreen);
-                                      },
-                                          
+                              child: GestureDetector(
+                                  onTap: () {
+                                    //noteObserver.changeScreen(addNoteScreen);
+                                  },
                                   child: TextButton(
                                     onPressed: () {
                                       //set the target note for which we want to display details
-                                      noteObserver.setCurrNoteIdForDetails(textNote.noteId);
+                                      noteObserver.setCurrNoteIdForDetails(
+                                          textNote.noteId);
                                       //navigate to the note details screen
-                                      noteObserver.changeScreen(noteDetailScreen);
+                                      noteObserver
+                                          .changeScreen(noteDetailScreen);
                                     },
                                     child: Container(
                                         padding: EdgeInsets.all(10),
@@ -168,26 +160,19 @@ class _ViewNotesState extends State<ViewNotes> {
                                               fontSize: 20,
                                             ))),
                                   )),
-                              ),
-                            ]),
-                        ]),
+                            ),
+                          ]),
+                      ]),
                 ),
-                        // Add table rows for each text note
+                // Add table rows for each text note
 
-                floatingActionButton: buildFloatingBtn()
-            )
-            
+                floatingActionButton: buildFloatingBtn())
             : (noteObserver.currentScreen == addNoteScreen)
                 ? SaveNote()
-                : (noteObserver.currentScreen == noteDetailScreen)?
-                    NoteDetails()
-                : Scaffold( 
-                    body: Text("Oops you have not notes."),
-                    floatingActionButton: buildFloatingBtn()
-                )
-    );
+                : (noteObserver.currentScreen == noteDetailScreen)
+                    ? NoteDetails()
+                    : Scaffold(
+                        body: Text("Oops you have not notes."),
+                        floatingActionButton: buildFloatingBtn()));
   }
-
-  
-
 }
