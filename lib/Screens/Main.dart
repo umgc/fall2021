@@ -46,7 +46,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     //main screen
     if (screen == MAIN_SCREENS.NOTE ||index == 2) {
         screenNav.setTitle(I18n.of(context)!.notesScreenName);
-        return ViewNotes();
+        return Note();
     }
     if (screen == MAIN_SCREENS.MENU ||index == 0 ) {
         screenNav.setTitle(I18n.of(context)!.menuScreenName);
@@ -130,9 +130,10 @@ class _MainNavigatorState extends State<MainNavigator> {
         onCleared: onCleared,
         buildDefaultAppBar: buildAppBar);
   }
-  
+
   _onClickMic(MicObserver micObserver, MainNavObserver screenNav){
     micObserver.toggleListeningMode();
+    
     print("${MAIN_SCREENS.HOME} and ${screenNav.currentScreen}");
     if(screenNav.currentScreen != MAIN_SCREENS.HOME){
         screenNav.changeScreen(MAIN_SCREENS.HOME);

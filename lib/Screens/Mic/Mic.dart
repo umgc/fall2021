@@ -4,7 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
+import 'package:untitled3/Model/NLUState.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Screens/Mic/ChatBubble.dart';
 import 'package:untitled3/Services/NoteService.dart';
 
@@ -25,6 +28,10 @@ class _SpeechScreenState extends State<SpeechScreen> {
     ScrollController _controller = new ScrollController();
     //onListen(micObserver);
     final micObserver = Provider.of<MicObserver>(context); 
+    final noteObserver = Provider.of<NoteObserver>(context); 
+    final mainNavObserver = Provider.of<MainNavObserver>(context); 
+    micObserver.setMainNavObserver(mainNavObserver);
+    micObserver.setNoteObserver(noteObserver);
 
     return Observer(
               builder: (_) => 
@@ -55,11 +62,12 @@ class _SpeechScreenState extends State<SpeechScreen> {
                   
                  return ChatMsgBubble(message:chatObj.toString(), isSender: true );
                 }
-                NLUResponse nluResponse =  (chatObj as NLUResponse);
+                NLUResponse nluResponse = chatObj;
 
                 //NLU will send question with options of responses to chose from.
-                if(nluResponse.actionType ==ActionType.ANSWER){
-                    return ChatMsgBubble(message:nluResponse.response, hasAction: true);
+                print( "nluResponse.resolvedValues ${nluResponse.resolvedValues}");
+                if(nluResponse.actionType ==ActionType.ANSWER && nluResponse.resolvedValues != null){
+                    return ChatMsgBubble(message:nluResponse.response,actionOption: nluResponse.resolvedValues);
                 }
 
                 return ChatMsgBubble(message:nluResponse.response);
