@@ -1,0 +1,26 @@
+enum MENU_SCREENS {
+    MENU,
+    SETTING,
+    CALENDAR,
+    HELP,
+    TRIGGER,
+    GENERAL_SETTING,
+    SYNC_TO_CLOUD,
+}
+
+enum MAIN_SCREENS {
+    MENU, 
+    NOTE,
+    NOTIFICATION,
+    HOME,
+    CALENDAR,
+    CHECKLIST,
+}
+
+enum NOTE_SCREENS {
+    SAVE_NOTE,
+    NOTE_DETAIL,
+}
+
+
+
