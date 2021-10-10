@@ -90,6 +90,8 @@ class I18n implements WidgetsLocalizations {
 	String get selectLanguage => "Please select your primary language.";
 	/// "Language"
 	String get language => "Language";
+	/// "Do we have permission to access your microphone?"
+	String get promptPermission => "Do we have permission to access your microphone?";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -188,101 +190,9 @@ class _I18n_es_US extends I18n {
 	/// "Idioma"
 	@override
 	String get language => "Idioma";
-}
-class _I18n_zh_CN extends I18n {
-  const _I18n_zh_CN();
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
-	/// "家"
+	/// "¿Tenemos permiso para acceder a su micrófono?"
 	@override
-	String get homeScreenName => "家";
-	/// "菜单"
-	@override
-	String get menuScreenName => "菜单";
-	/// "笔记"
-	@override
-	String get notesScreenName => "笔记";
-	/// "通知"
-	@override
-	String get notificationsScreenName => "通知";
-	/// "环境"
-	@override
-	String get settingScreenName => "环境";
-	/// "日历"
-	@override
-	String get calendarScreenName => "日历";
-	/// "麦克风"
-	@override
-	String get micButton => "麦克风";
-	/// "按录制"
-	@override
-	String get pressToRecord => "按录制";
-	/// "是的"
-	@override
-	String get yes => "是的";
-	/// "保存笔记"
-	@override
-	String get saveNote => "保存笔记";
-	/// "日期"
-	@override
-	String get date => "日期";
-	/// "笔记"
-	@override
-	String get note => "笔记";
-	/// "笔记详情"
-	@override
-	String get notesDetailScreenName => "笔记详情";
-	/// "添加注释"
-	@override
-	String get addNotesScreenName => "添加注释";
-	/// "清单"
-	@override
-	String get checklistScreenName => "清单";
-	/// "帮助"
-	@override
-	String get helpScreen => "帮助";
-	/// "扳机"
-	@override
-	String get triggerScreen => "扳机";
-	/// "同步到云端"
-	@override
-	String get syncToCloudScreen => "同步到云端";
-	/// "通用设置"
-	@override
-	String get generalSettingsScreen => "通用设置";
-	/// "云设置"
-	@override
-	String get onboardCloudSetup => "云设置";
-	/// "允许"
-	@override
-	String get onboardPermissionSetup => "允许";
-	/// "选择语言"
-	@override
-	String get onboardLangSetup => "选择语言";
-	/// "介绍"
-	@override
-	String get walkthroughScreen => "介绍";
-	/// "您想设置一个云帐户吗？"
-	@override
-	String get cloudSetupPrompt => "您想设置一个云帐户吗？";
-	/// "不"
-	@override
-	String get no => "不";
-	/// "欢迎来到记忆魔法"
-	@override
-	String get welcome => "欢迎来到记忆魔法";
-	/// "后退"
-	@override
-	String get back => "后退";
-	/// "下一个"
-	@override
-	String get next => "下一个";
-	/// "请选择您的主要语言。"
-	@override
-	String get selectLanguage => "请选择您的主要语言。";
-	/// "语"
-	@override
-	String get language => "语";
+	String get promptPermission => "¿Tenemos permiso para acceder a su micrófono?";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -378,6 +288,107 @@ class _I18n_pt_BR extends I18n {
 	/// "Língua"
 	@override
 	String get language => "Língua";
+	/// "Temos permissão para acessar seu microfone?"
+	@override
+	String get promptPermission => "Temos permissão para acessar seu microfone?";
+}
+class _I18n_zh_CN extends I18n {
+  const _I18n_zh_CN();
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+	/// "家"
+	@override
+	String get homeScreenName => "家";
+	/// "菜单"
+	@override
+	String get menuScreenName => "菜单";
+	/// "笔记"
+	@override
+	String get notesScreenName => "笔记";
+	/// "通知"
+	@override
+	String get notificationsScreenName => "通知";
+	/// "环境"
+	@override
+	String get settingScreenName => "环境";
+	/// "日历"
+	@override
+	String get calendarScreenName => "日历";
+	/// "麦克风"
+	@override
+	String get micButton => "麦克风";
+	/// "按录制"
+	@override
+	String get pressToRecord => "按录制";
+	/// "是的"
+	@override
+	String get yes => "是的";
+	/// "保存笔记"
+	@override
+	String get saveNote => "保存笔记";
+	/// "日期"
+	@override
+	String get date => "日期";
+	/// "笔记"
+	@override
+	String get note => "笔记";
+	/// "笔记详情"
+	@override
+	String get notesDetailScreenName => "笔记详情";
+	/// "添加注释"
+	@override
+	String get addNotesScreenName => "添加注释";
+	/// "清单"
+	@override
+	String get checklistScreenName => "清单";
+	/// "帮助"
+	@override
+	String get helpScreen => "帮助";
+	/// "扳机"
+	@override
+	String get triggerScreen => "扳机";
+	/// "同步到云端"
+	@override
+	String get syncToCloudScreen => "同步到云端";
+	/// "通用设置"
+	@override
+	String get generalSettingsScreen => "通用设置";
+	/// "云设置"
+	@override
+	String get onboardCloudSetup => "云设置";
+	/// "允许"
+	@override
+	String get onboardPermissionSetup => "允许";
+	/// "选择语言"
+	@override
+	String get onboardLangSetup => "选择语言";
+	/// "介绍"
+	@override
+	String get walkthroughScreen => "介绍";
+	/// "您想设置一个云帐户吗？"
+	@override
+	String get cloudSetupPrompt => "您想设置一个云帐户吗？";
+	/// "不"
+	@override
+	String get no => "不";
+	/// "欢迎来到记忆魔法"
+	@override
+	String get welcome => "欢迎来到记忆魔法";
+	/// "后退"
+	@override
+	String get back => "后退";
+	/// "下一个"
+	@override
+	String get next => "下一个";
+	/// "请选择您的主要语言。"
+	@override
+	String get selectLanguage => "请选择您的主要语言。";
+	/// "语"
+	@override
+	String get language => "语";
+	/// "我们是否有权访问您的麦克风？"
+	@override
+	String get promptPermission => "我们是否有权访问您的麦克风？";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -473,6 +484,9 @@ class _I18n_ar_SY extends I18n {
 	/// "لغة"
 	@override
 	String get language => "لغة";
+	/// "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟"
+	@override
+	String get promptPermission => "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

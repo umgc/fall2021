@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/OnboardObservable.dart';
 
 
@@ -22,7 +23,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            I18n.of,
+            I18n.of(context)!.promptPermission,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,

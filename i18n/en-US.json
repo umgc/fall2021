@@ -28,5 +28,6 @@
     "back": "Back",
     "next": "Next",
     "selectLanguage": "Please select your primary language.",
-    "language": "Language"
+    "language": "Language",
+    "promptPermission": "Do we have permission to access your microphone?"
 }
