@@ -126,18 +126,18 @@ abstract class _AbstractMicObserver with Store {
 
         break;
 
-      case ActionType.COMPLETE:
-        //close out convirsation
-        break;
+      // case ActionType.COMPLETE:
+      //   //close out convirsation
+      //   break;
 
-      case ActionType.INCOMPLETE:
-        /**
-           * Ask user for more information:
-           *  -display NLU response on the screen 
-           *  -Turn on listening mode on the mic 
-           *    to recieve voice input form user
-           */
-        break;
+      // case ActionType.INCOMPLETE:
+      //   /**
+      //      * Ask user for more information:
+      //      *  -display NLU response on the screen 
+      //      *  -Turn on listening mode on the mic 
+      //      *    to recieve voice input form user
+      //      */
+      //   break;
 
       case ActionType.NOTFOUND:
         break;

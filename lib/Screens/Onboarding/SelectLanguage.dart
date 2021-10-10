@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled3/Services/LocaleService.dart';
 import 'package:untitled3/generated/i18n.dart';
+import 'package:untitled3/Observables/OnboardObservable.dart';
+import 'package:provider/provider.dart';
 
 
 class SelectLanguageScreen extends StatefulWidget {
@@ -9,19 +12,15 @@ class SelectLanguageScreen extends StatefulWidget {
 }
 
 class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
-  var language;
-  List<String> lang = [
-    "English",
-    "Arabic",
-    "Chinese (Simplified)",
-    "French",
-    "Hindi",
-    "Portuguese",
-    "Spanish",
-  ];
+  var language = (I18n.locale?.countryCode != null &&
+          I18n.locale?.languageCode != null)
+      ? I18n.locale
+      // its simply not supported unless it has a language code and a country code
+      : Locale("en", "US");
 
   @override
   Widget build(BuildContext context) {
+    final onboardingObserver = Provider.of<OnboardObserver>(context);
     return Scaffold(
         body: Column(
       children: [
@@ -36,7 +35,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(0.0, 22.0,275.0, 8.0),
+          padding: EdgeInsets.fromLTRB(0.0, 22.0, 275.0, 8.0),
           child: Text('Language',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         ),
@@ -69,13 +68,10 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 color: Colors.blue, // Add this
               ),
               value: language,
-              onChanged: (newLocale) {
-                setState(() {
-                  if (newLocale != null) {
-                    language = newLocale;
-                    I18n.onLocaleChanged!(language!);
-                  }
-                });
+
+              onChanged: (language){
+                onboardingObserver.languageChange(language);
+
               },
               isExpanded: true,
               underline: SizedBox(),
@@ -85,11 +81,13 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                   .map((valueItem) {
                 return DropdownMenuItem(
                     value: valueItem,
-                    child: Text((valueItem.languageCode)));
+                    child: Text((LocaleService.getDisplayLanguage(
+                        valueItem.languageCode)["name"])));
               }).toList(),
             ),
           ),
-        ),],
+        ),
+      ],
     ));
   }
 }

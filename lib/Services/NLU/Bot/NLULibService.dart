@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
@@ -16,8 +17,22 @@ import '../BertQA/BertQaService.dart';
     static const String AppNav = "AppNav";
     static const String SearchNotes = "SearchNotes";
     static const String CreateNote = "CreateNote";
-    static const String CreateEvent = "MakeAppointment";
+    static const String CreateEvent = "CreateEvent";
+    static const String CreateActionEvent = "CreateActionEvent";
+    static const String CreateRecurringEvent = "CreateRecurringEvent";
+    static const String HowAreYou = "HowAreYou";
+    static const String Hello = "Hello";
+    static const String WhatIsYourName = "WhatIsYourName";
+    static const String ThankYou = "ThankYou";
+    static const String LastThingSaid = "LastThingSaid";
+    static const String Compliment = "Compliment";
+    static const String Insult = "Insult";
+    static const String Goodbye = "Goodbye";
+    static const String UserLocation = "UserLocation";
     static const String InterpretationsJsonStr = "interpretations";
+
+    String lastValidInput = "";
+
     static const String DefaultLocale = "en-US";
     String previousSessionId = "";
 
@@ -45,6 +60,9 @@ import '../BertQA/BertQaService.dart';
           String currentState = getState(lexResponseObj);
           Slots? currentSlots = getSlots(lexResponseObj);
           String outputText = getMessage(lexResponseObj);
+
+          print(currentState);
+
           if (intentName.isNotEmpty) {
             if (intentName.startsWith(AppHelp)) {
               nluResponse = getAppHelpResponse(lexResponseObj, currentState,
@@ -58,9 +76,29 @@ import '../BertQA/BertQaService.dart';
             } else if (intentName == CreateEvent) {
               nluResponse = getCreateEventResponse(lexResponseObj,
                   currentState, inputText, outputText, currentSlots);
+            } else if (intentName == CreateActionEvent) {
+              nluResponse = getCreateActionEventResponse(lexResponseObj,
+                  currentState, inputText, outputText, currentSlots);
             } else if (intentName == SearchNotes) {
               nluResponse = (await getSearchNoteResponse(
-                  lexResponseObj, currentState, inputText));
+                  inputText));
+            } else if (intentName == CreateRecurringEvent) {
+              nluResponse = getCreateRecurringResponse(lexResponseObj,
+                  currentState, inputText, outputText, currentSlots);
+            } else if (intentName == LastThingSaid) {
+              nluResponse = getLastThingSaidResponse(lexResponseObj,
+                  currentState, inputText, outputText);
+            } else if (intentName == UserLocation) {
+              nluResponse = getUserLocationResponse(lexResponseObj,
+                  currentState, inputText, outputText);
+            } else if (intentName == HowAreYou || intentName == Hello ||
+                intentName == WhatIsYourName || intentName == ThankYou ||
+                intentName == Compliment || intentName == Insult ||
+                intentName == Goodbye) {
+              nluResponse = getChitChatResponse(lexResponseObj,
+                  currentState, inputText, outputText);
+            } else {
+              nluResponse = (await getSearchNoteResponse(inputText));
             }
           }
         }
@@ -68,7 +106,7 @@ import '../BertQA/BertQaService.dart';
       if (nluResponse == null) {
         nluResponse = getFallBackResponse(inputText);
       }
-      if (nluResponse.state == NLUState.INPROGRESS) {
+      if (nluResponse.state == NLUState.IN_PROGRESS) {
         previousSessionId = sessionId;
       } else {
         previousSessionId = "";
@@ -132,8 +170,7 @@ import '../BertQA/BertQaService.dart';
             }
           }
         }
-      } catch (error) {
-      }
+      } catch (error) {}
       return outputText;
     }
 
@@ -187,13 +224,16 @@ import '../BertQA/BertQaService.dart';
     }
 
     Slots getSlots(LexResponse lexResponseObj) {
-      Slots slots = new Slots(appointmentType: new AppointmentType(
+      Slots slots = new Slots(eventType: new EventType(
           value: new Value(interpretedValue: "",
               originalValue: "", resolvedValues: new List.empty())),
-          date: new AppointmentType(value: new Value(interpretedValue: "",
+          date: new EventType(value: new Value(interpretedValue: "",
               originalValue: "", resolvedValues: new List.empty())),
-          time: new AppointmentType(value: new Value(interpretedValue: "",
-              originalValue: "", resolvedValues: new List.empty())));
+          time: new EventType(value: new Value(interpretedValue: "",
+              originalValue: "", resolvedValues: new List.empty())),
+          recurringType: new RecurringType(
+              value: new Value(interpretedValue: "",
+                  originalValue: "", resolvedValues: new List.empty())));
       if (lexResponseObj != null) {
         if (lexResponseObj.sessionState != null
             && lexResponseObj.sessionState.intent != null
@@ -210,11 +250,14 @@ import '../BertQA/BertQaService.dart';
         String outputText) {
       ActionType actionType = ActionType.APP_HELP;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
       return new NLUResponse(
           actionType,
           inputText,
           outputText,
           state,
+          null,
+          null,
           null,
           null,
           null);
@@ -226,11 +269,14 @@ import '../BertQA/BertQaService.dart';
         String outputText) {
       ActionType actionType = ActionType.APP_NAV;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
       return new NLUResponse(
           actionType,
           inputText,
           outputText,
           state,
+          null,
+          null,
           null,
           null,
           null);
@@ -242,6 +288,8 @@ import '../BertQA/BertQaService.dart';
         String outputText) {
       ActionType actionType = ActionType.CREATE_NOTE;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
+      outputText = inputText;
       return new NLUResponse(
           actionType,
           inputText,
@@ -249,14 +297,15 @@ import '../BertQA/BertQaService.dart';
           state,
           null,
           null,
+          null,
+          null,
           null);
     }
 
-    Future<NLUResponse?> getSearchNoteResponse(LexResponse lexResponseObj,
-        String currentState,
-        String inputText) async {
-      ActionType actionType = ActionType.CREATE_NOTE;
+    Future<NLUResponse?> getSearchNoteResponse(String inputText) async {
+      ActionType actionType = ActionType.ANSWER;
       NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
       String outputText = await searchNotesByInput(inputText);
       return new NLUResponse(
           actionType,
@@ -265,8 +314,179 @@ import '../BertQA/BertQaService.dart';
           state,
           null,
           null,
+          null,
+          null,
           null);
     }
+
+    NLUResponse getCreateRecurringResponse(LexResponse lexResponseObj,
+        String currentState, String inputText,
+        String outputText, Slots currentSlots) {
+      ActionType actionType;
+      NLUState state;
+      List<String>? recurringTypeResolved = getRecurringEventType(currentSlots);
+      List<String>? eventTimeResolved = getEventTime(currentSlots);
+      List<String>? resolvedValues;
+      String recurringType = "",
+          eventTime = "";
+      TimeOfDay? timeOfDay;
+
+      if (currentState == "InProgress") {
+        actionType = ActionType.ANSWER;
+        state = NLUState.IN_PROGRESS;
+        if (recurringTypeResolved != null && recurringTypeResolved.length > 0 &&
+            recurringTypeResolved.length > 1) {
+          resolvedValues = recurringTypeResolved;
+        } else if (eventTimeResolved != null && eventTimeResolved.length > 0 &&
+            eventTimeResolved.length > 1) {
+          resolvedValues = eventTimeResolved;
+        }
+      } else {
+        actionType = ActionType.CREATE_RECURRING_EVENT;
+        state = NLUState.COMPLETE;
+        if (recurringTypeResolved != null && recurringTypeResolved.length > 0) {
+          recurringType = recurringTypeResolved.first;
+        }
+        if (eventTimeResolved != null && eventTimeResolved.length > 0) {
+          eventTime = eventTimeResolved.first;
+        }
+        timeOfDay = getTimeOfDay(eventTime);
+        outputText = inputText;
+      }
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          resolvedValues,
+          recurringType,
+          timeOfDay);
+    }
+
+    NLUResponse getLastThingSaidResponse(LexResponse lexResponseObj,
+        String currentState,
+        String inputText,
+        String outputText) {
+      ActionType actionType = ActionType.ANSWER;
+      NLUState state = NLUState.COMPLETE;
+      if (lastValidInput
+          .trim()
+          .isNotEmpty) {
+        outputText = "You said '$lastValidInput'.";
+      } else {
+        outputText = "You didn't say anything.";
+      }
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          null,
+          null,
+          null);
+    }
+
+    NLUResponse getUserLocationResponse(LexResponse lexResponseObj,
+        String currentState,
+        String inputText,
+        String outputText) {
+      ActionType actionType = ActionType.USER_LOCATION;
+      NLUState state = NLUState.COMPLETE;
+      outputText = "";
+      lastValidInput = inputText;
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          null,
+          null,
+          null);
+    }
+
+    NLUResponse getChitChatResponse(LexResponse lexResponseObj,
+        String currentState,
+        String inputText,
+        String outputText) {
+      ActionType actionType = ActionType.ANSWER;
+      NLUState state = NLUState.COMPLETE;
+      lastValidInput = inputText;
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          null,
+          null,
+          null,
+          null,
+          null);
+    }
+
+    NLUResponse? getCreateActionEventResponse(LexResponse lexResponseObj,
+        String currentState, String inputText, String outputText,
+        Slots currentSlots) {
+      ActionType actionType;
+      NLUState state;
+      List<String>? actionEventTypeResolved = getActionEventType(currentSlots);
+      List<String>? eventDateResolved = getEventDate(currentSlots);
+      List<String>? eventTimeResolved = getEventTime(currentSlots);
+      List<String>? resolvedValues;
+      String actionEventType = "",
+          eventTime = "",
+          eventDate = "";
+
+      DateTime? eventDateTime;
+      if (currentState == "InProgress") {
+        actionType = ActionType.ANSWER;
+        state = NLUState.IN_PROGRESS;
+        if (actionEventTypeResolved != null &&
+            actionEventTypeResolved.length > 0 &&
+            actionEventTypeResolved.length > 1) {
+          resolvedValues = actionEventTypeResolved;
+        } else if (eventDateResolved != null && eventDateResolved.length > 0 &&
+            eventDateResolved.length > 1) {
+          resolvedValues = eventDateResolved;
+        } else if (eventTimeResolved != null && eventTimeResolved.length > 0 &&
+            eventTimeResolved.length > 1) {
+          resolvedValues = eventTimeResolved;
+        }
+      } else {
+        actionType = ActionType.CREATE_EVENT;
+        state = NLUState.COMPLETE;
+        if (actionEventTypeResolved != null &&
+            actionEventTypeResolved.length > 0) {
+          actionEventType = actionEventTypeResolved.first;
+        }
+        if (eventDateResolved != null && eventDateResolved.length > 0) {
+          eventDate = eventDateResolved.first;
+        }
+        if (eventTimeResolved != null && eventTimeResolved.length > 0) {
+          eventTime = eventTimeResolved.first;
+        }
+        eventDateTime = getEventDateTime(eventDateTime, eventDate, eventTime);
+        outputText =
+            "I shall " + actionEventType + " on " + eventDate + " at " +
+                eventTime;
+      }
+      return new NLUResponse(
+          actionType,
+          inputText,
+          outputText,
+          state,
+          actionEventType,
+          eventDateTime,
+          resolvedValues,
+          null,
+          null);
+    }
+
 
     NLUResponse getCreateEventResponse(LexResponse lexResponseObj,
         String currentState,
@@ -286,7 +506,7 @@ import '../BertQA/BertQaService.dart';
       DateTime? eventDateTime;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
-        state = NLUState.INPROGRESS;
+        state = NLUState.IN_PROGRESS;
         if (eventTypeResolved != null && eventTypeResolved.length > 0 &&
             eventTypeResolved.length > 1) {
           resolvedValues = eventTypeResolved;
@@ -310,7 +530,8 @@ import '../BertQA/BertQaService.dart';
           eventTime = eventTimeResolved.first;
         }
         eventDateTime = getEventDateTime(eventDateTime, eventDate, eventTime);
-        outputText = "Book " + eventType + " appointment" + " at " + eventDateTime.toString();
+        outputText =
+            "I have a " + eventType + " on " + eventDate + " at " + eventTime;
       }
       return new NLUResponse(
           actionType,
@@ -319,35 +540,78 @@ import '../BertQA/BertQaService.dart';
           state,
           eventType,
           eventDateTime,
-          resolvedValues);
+          resolvedValues,
+          null,
+          null);
     }
 
-    DateTime getEventDateTime(DateTime? eventDateTime, String eventDate, String eventTime) {
-      eventDateTime =  DateTime.parse(eventDate);
-      List<String> hourMin =  eventTime.split(":");
+    DateTime getEventDateTime(DateTime? eventDateTime, String eventDate,
+        String eventTime) {
+      eventDateTime = DateTime.parse(eventDate);
+      List<String> hourMin = eventTime.split(":");
       if (hourMin != null && hourMin.length > 0) {
         if (hourMin.first != null && hourMin.first.isNotEmpty) {
           int currentHour = int.parse(hourMin.first);
-          eventDateTime =  eventDateTime.add(new Duration(hours: currentHour));
+          eventDateTime = eventDateTime.add(new Duration(hours: currentHour));
         }
         if (hourMin.last != null && hourMin.last.isNotEmpty) {
           int currentMin = int.parse(hourMin.last);
-          eventDateTime =  eventDateTime.add(new Duration(minutes: currentMin));
+          eventDateTime = eventDateTime.add(new Duration(minutes: currentMin));
         }
       }
       return eventDateTime;
     }
 
+    TimeOfDay getTimeOfDay(String eventTime) {
+      int currentHour = 0,
+          currentMin = 0;
+      if (eventTime.isNotEmpty) {
+        List<String> hourMin = eventTime.split(":");
+        if (hourMin != null && hourMin.length > 0) {
+          if (hourMin.first != null && hourMin.first.isNotEmpty) {
+            currentHour = int.parse(hourMin.first);
+          }
+          if (hourMin.last != null && hourMin.last.isNotEmpty) {
+            currentMin = int.parse(hourMin.last);
+          }
+        }
+      }
+      return TimeOfDay(hour: currentHour, minute: currentMin);;
+    }
+
     List<String>? getEventType(Slots? slots) {
       if (slots != null
-          && slots.appointmentType != null
-          && slots.appointmentType!.value != null
-          && slots.appointmentType!.value!.resolvedValues != null
-          && slots.appointmentType!.value!.resolvedValues.length > 0) {
-        return slots.appointmentType!.value!.resolvedValues;
+          && slots.eventType != null
+          && slots.eventType!.value != null
+          && slots.eventType!.value!.resolvedValues != null
+          && slots.eventType!.value!.resolvedValues.length > 0) {
+        return slots.eventType!.value!.resolvedValues;
       }
       return null;
     }
+
+    List<String>? getRecurringEventType(Slots? slots) {
+      if (slots != null
+          && slots.recurringType != null
+          && slots.recurringType!.value != null
+          && slots.recurringType!.value!.resolvedValues != null
+          && slots.recurringType!.value!.resolvedValues.length > 0) {
+        return slots.recurringType!.value!.resolvedValues;
+      }
+      return null;
+    }
+
+    List<String>? getActionEventType(Slots slots) {
+      if (slots != null
+          && slots.actionEventType != null
+          && slots.actionEventType!.value != null
+          && slots.actionEventType!.value!.resolvedValues != null
+          && slots.actionEventType!.value!.resolvedValues.length > 0) {
+        return slots.actionEventType!.value!.resolvedValues;
+      }
+      return null;
+    }
+
 
     List<String>? getEventDate(Slots? slots) {
       if (slots != null
@@ -371,8 +635,7 @@ import '../BertQA/BertQaService.dart';
       return null;
     }
 
-    NLUResponse getFallBackResponse(
-        String inputText) {
+    NLUResponse getFallBackResponse(String inputText) {
       ActionType actionType = ActionType.NOTFOUND;
       String outputText = FallbackResponse;
       NLUState state = NLUState.COMPLETE;
@@ -383,6 +646,10 @@ import '../BertQA/BertQaService.dart';
           state,
           null,
           null,
+          null,
+          null,
           null);
     }
+
   }
+

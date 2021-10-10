@@ -25,8 +25,113 @@ mixin _$OnboardObserver on _AbstractOnboardObserver, Store {
     });
   }
 
+  final _$micAccessAllowedAtom =
+      Atom(name: '_AbstractOnboardObserver.micAccessAllowed');
+
+  @override
+  bool get micAccessAllowed {
+    _$micAccessAllowedAtom.reportRead();
+    return super.micAccessAllowed;
+  }
+
+  @override
+  set micAccessAllowed(bool value) {
+    _$micAccessAllowedAtom.reportWrite(value, super.micAccessAllowed, () {
+      super.micAccessAllowed = value;
+    });
+  }
+
+  final _$languageAtom = Atom(name: '_AbstractOnboardObserver.language');
+
+  @override
+  dynamic get language {
+    _$languageAtom.reportRead();
+    return super.language;
+  }
+
+  @override
+  set language(dynamic value) {
+    _$languageAtom.reportWrite(value, super.language, () {
+      super.language = value;
+    });
+  }
+
+  final _$idAtom = Atom(name: '_AbstractOnboardObserver.id');
+
+  @override
+  int get id {
+    _$idAtom.reportRead();
+    return super.id;
+  }
+
+  @override
+  set id(int value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
+    });
+  }
+
+  final _$deniedAtom = Atom(name: '_AbstractOnboardObserver.denied');
+
+  @override
+  bool get denied {
+    _$deniedAtom.reportRead();
+    return super.denied;
+  }
+
+  @override
+  set denied(bool value) {
+    _$deniedAtom.reportWrite(value, super.denied, () {
+      super.denied = value;
+    });
+  }
+
   final _$_AbstractOnboardObserverActionController =
       ActionController(name: '_AbstractOnboardObserver');
+
+  @override
+  void permissionYes(dynamic value) {
+    final _$actionInfo = _$_AbstractOnboardObserverActionController.startAction(
+        name: '_AbstractOnboardObserver.permissionYes');
+    try {
+      return super.permissionYes(value);
+    } finally {
+      _$_AbstractOnboardObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void permissionNo(dynamic value) {
+    final _$actionInfo = _$_AbstractOnboardObserverActionController.startAction(
+        name: '_AbstractOnboardObserver.permissionNo');
+    try {
+      return super.permissionNo(value);
+    } finally {
+      _$_AbstractOnboardObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void languageChange(dynamic language) {
+    final _$actionInfo = _$_AbstractOnboardObserverActionController.startAction(
+        name: '_AbstractOnboardObserver.languageChange');
+    try {
+      return super.languageChange(language);
+    } finally {
+      _$_AbstractOnboardObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMicAccessAllowed(dynamic value) {
+    final _$actionInfo = _$_AbstractOnboardObserverActionController.startAction(
+        name: '_AbstractOnboardObserver.setMicAccessAllowed');
+    try {
+      return super.setMicAccessAllowed(value);
+    } finally {
+      _$_AbstractOnboardObserverActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void moveToNextScreen() {
@@ -64,7 +169,11 @@ mixin _$OnboardObserver on _AbstractOnboardObserver, Store {
   @override
   String toString() {
     return '''
-currentScreenIndex: ${currentScreenIndex}
+currentScreenIndex: ${currentScreenIndex},
+micAccessAllowed: ${micAccessAllowed},
+language: ${language},
+id: ${id},
+denied: ${denied}
     ''';
   }
 }

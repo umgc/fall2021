@@ -12,15 +12,30 @@ mixin _$MenuObserver on _AbstractMenuObserver, Store {
   final _$currentScreenAtom = Atom(name: '_AbstractMenuObserver.currentScreen');
 
   @override
-  String get currentScreen {
+  dynamic get currentScreen {
     _$currentScreenAtom.reportRead();
     return super.currentScreen;
   }
 
   @override
-  set currentScreen(String value) {
+  set currentScreen(dynamic value) {
     _$currentScreenAtom.reportWrite(value, super.currentScreen, () {
       super.currentScreen = value;
+    });
+  }
+
+  final _$focusedIconAtom = Atom(name: '_AbstractMenuObserver.focusedIcon');
+
+  @override
+  String get focusedIcon {
+    _$focusedIconAtom.reportRead();
+    return super.focusedIcon;
+  }
+
+  @override
+  set focusedIcon(String value) {
+    _$focusedIconAtom.reportWrite(value, super.focusedIcon, () {
+      super.focusedIcon = value;
     });
   }
 
@@ -28,11 +43,11 @@ mixin _$MenuObserver on _AbstractMenuObserver, Store {
       ActionController(name: '_AbstractMenuObserver');
 
   @override
-  void changeScreen(String name) {
+  void changeScreen(dynamic screen) {
     final _$actionInfo = _$_AbstractMenuObserverActionController.startAction(
         name: '_AbstractMenuObserver.changeScreen');
     try {
-      return super.changeScreen(name);
+      return super.changeScreen(screen);
     } finally {
       _$_AbstractMenuObserverActionController.endAction(_$actionInfo);
     }
@@ -41,7 +56,8 @@ mixin _$MenuObserver on _AbstractMenuObserver, Store {
   @override
   String toString() {
     return '''
-currentScreen: ${currentScreen}
+currentScreen: ${currentScreen},
+focusedIcon: ${focusedIcon}
     ''';
   }
 }

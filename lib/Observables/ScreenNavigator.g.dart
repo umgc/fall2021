@@ -13,15 +13,46 @@ mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
       Atom(name: '_AbstractMainNavObserver.currentScreen');
 
   @override
-  String get currentScreen {
+  dynamic get currentScreen {
     _$currentScreenAtom.reportRead();
     return super.currentScreen;
   }
 
   @override
-  set currentScreen(String value) {
+  set currentScreen(dynamic value) {
     _$currentScreenAtom.reportWrite(value, super.currentScreen, () {
       super.currentScreen = value;
+    });
+  }
+
+  final _$screenTitleAtom = Atom(name: '_AbstractMainNavObserver.screenTitle');
+
+  @override
+  String get screenTitle {
+    _$screenTitleAtom.reportRead();
+    return super.screenTitle;
+  }
+
+  @override
+  set screenTitle(String value) {
+    _$screenTitleAtom.reportWrite(value, super.screenTitle, () {
+      super.screenTitle = value;
+    });
+  }
+
+  final _$focusedNavBtnAtom =
+      Atom(name: '_AbstractMainNavObserver.focusedNavBtn');
+
+  @override
+  dynamic get focusedNavBtn {
+    _$focusedNavBtnAtom.reportRead();
+    return super.focusedNavBtn;
+  }
+
+  @override
+  set focusedNavBtn(dynamic value) {
+    _$focusedNavBtnAtom.reportWrite(value, super.focusedNavBtn, () {
+      super.focusedNavBtn = value;
     });
   }
 
@@ -29,11 +60,33 @@ mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
       ActionController(name: '_AbstractMainNavObserver');
 
   @override
-  void changeScreen(String name) {
+  void changeScreen(dynamic screen) {
     final _$actionInfo = _$_AbstractMainNavObserverActionController.startAction(
         name: '_AbstractMainNavObserver.changeScreen');
     try {
-      return super.changeScreen(name);
+      return super.changeScreen(screen);
+    } finally {
+      _$_AbstractMainNavObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTitle(String title) {
+    final _$actionInfo = _$_AbstractMainNavObserverActionController.startAction(
+        name: '_AbstractMainNavObserver.setTitle');
+    try {
+      return super.setTitle(title);
+    } finally {
+      _$_AbstractMainNavObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setFocusedBtn(dynamic focusedBtn) {
+    final _$actionInfo = _$_AbstractMainNavObserverActionController.startAction(
+        name: '_AbstractMainNavObserver.setFocusedBtn');
+    try {
+      return super.setFocusedBtn(focusedBtn);
     } finally {
       _$_AbstractMainNavObserverActionController.endAction(_$actionInfo);
     }
@@ -42,7 +95,9 @@ mixin _$MainNavObserver on _AbstractMainNavObserver, Store {
   @override
   String toString() {
     return '''
-currentScreen: ${currentScreen}
+currentScreen: ${currentScreen},
+screenTitle: ${screenTitle},
+focusedNavBtn: ${focusedNavBtn}
     ''';
   }
 }
