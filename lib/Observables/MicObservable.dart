@@ -236,7 +236,7 @@ abstract class _AbstractMicObserver with Store {
           //use a flag, expectingUserInput, to know when the user is expected to speak
           //expectingUserInput is toggled to off when system is audible.
         }
-        
+
         break;
     }
   }
@@ -256,7 +256,8 @@ abstract class _AbstractMicObserver with Store {
         await nluLibService
             .getNLUResponse(messageInputText, "en-US")
             .then((value) => {
-                print(value),
+                print("_onDone: response from NLU $value"),
+                addUserMessage(messageInputText),
                 fufillNLUTask(value),
             });
       }
