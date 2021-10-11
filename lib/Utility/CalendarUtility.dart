@@ -1,13 +1,10 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
-
+// Adapted for Memory Magic by Karen Crumb
 import 'dart:collection';
-
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Model/Note.dart';
-import '../../Observables/NoteObservable.dart';
-import '../Services/NoteService.dart';
-/// Example event class.
+
 class Event {
 
  String title ="";
@@ -19,9 +16,7 @@ class Event {
 }
 String textNote = TextNote().text;
 DateTime eventDate = TextNote().eventDate;
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
+
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
   equals: isSameDay,
   hashCode: getHashCode,
@@ -29,14 +24,14 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
 
 
 final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => eventDate,//DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
+    key: (item) => eventDate,
     value: (item) => List.generate(
         item % 4 + 1, (index) =>  Event(textNote)))
   ..addAll({
     kToday: [
 
-      Event(textNote),
-   //   Event('Today\'s Event 2'),
+     Event(textNote),
+
     ],
   });
 
@@ -56,3 +51,5 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
+// based on https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/basics_example.dart
+// Adapted for Memory Magic by Karen Crumb

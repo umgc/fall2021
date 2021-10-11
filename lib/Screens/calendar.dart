@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+//import 'package:quiver/collection.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'dart:collection';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
-import '../Services/NoteService.dart';
+
 import 'package:provider/provider.dart';
-import '../../Utility/Constant.dart';
-import 'Checklist.dart';
-import  '../../Observables/ScreenNavigator.dart';
-import '../generated/i18n.dart';
 
 class Calendar extends StatefulWidget {
 
@@ -69,17 +66,19 @@ class CalendarState extends State<Calendar> {
 
   CalendarFormat calendarFormat = CalendarFormat.twoWeeks;
   DateTime focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+
   @override
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
-    String noteText = "";
-
+    List<String>  noteText=[] ;
+    noteText.add("");
     for (TextNote textNote in noteObserver.usersNotes) {
       bool isEvent = textNote.isEvent;
       if (isEvent) {
         if (textNote.text.toString() != "") {
-          noteText = textNote.text.toString();
+
+         noteText.add(textNote.text.toString());
+
         }
         eventDate = textNote.eventDate;
       }
@@ -95,7 +94,6 @@ class CalendarState extends State<Calendar> {
                 lastDay: kLastDay,
                 focusedDay: _focusedDay.value,
                 headerVisible: true,
-                //selectedDayPredicate: (day) => selectedDays.contains(day),
                 selectedDayPredicate:  (day) => selectedDays.contains(day),
                 rangeStartDay: _rangeStart,
                 rangeEndDay: _rangeEnd,
@@ -133,8 +131,8 @@ class CalendarState extends State<Calendar> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: ListTile(
-                            onTap: () => (noteObserver.currNoteForDetails),
-                            title: Text(noteText),
+                            onTap: () => print('${noteObserver.currNoteForDetails}'),
+                            title: Text('${noteText[index]} '),
                           ),
 
                         );
@@ -147,8 +145,9 @@ class CalendarState extends State<Calendar> {
         ),
 
       );
+   }
 
-  }
 }
 
 // based on https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/basics_example.dart
+// Adapted for Memory Magic by Karen Crumb
