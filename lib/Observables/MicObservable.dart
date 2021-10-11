@@ -256,7 +256,7 @@ abstract class _AbstractMicObserver with Store {
         await nluLibService
             .getNLUResponse(messageInputText, "en-US")
             .then((value) => {
-                print("_onDone: response from NLU $value"),
+                print("_onDone: response from NLU ${ (value as NLUResponse).response }"),
                 addUserMessage(messageInputText),
                 fufillNLUTask(value),
             });
