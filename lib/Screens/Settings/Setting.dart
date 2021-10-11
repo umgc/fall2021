@@ -58,10 +58,6 @@ class _SettingState extends State<Settings> {
       }
     }
 
-    void resetSettings() {
-      settingObserver.saveSetting(Setting());
-    }
-
     return Observer(
       builder: (context) => Scaffold(
         body: Container(
@@ -69,7 +65,7 @@ class _SettingState extends State<Settings> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
                   Widget>[
-            Text("Days To Keep Notes", style: Theme.of(context).textTheme.bodyText2),
+            Text(I18n.of(context)!.daysToKeepNotes, style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(
@@ -105,7 +101,7 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-            Text("Note Font Size"),
+                Text(I18n.of(context)!.noteFontSize, style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(
@@ -142,7 +138,7 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-            Text("Menu Font Size"),
+                Text(I18n.of(context)!.menuFontSize, style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(

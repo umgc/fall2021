@@ -40,5 +40,8 @@
     "save": "يحفظ",
     "securitySettings": "اعدادات الامان",
     "resetSettings": "اعادة الضبط",
-    "permissionNote": "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي."
+    "permissionNote": "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.",
+    "daysToKeepNotes": "أيام للاحتفاظ بالملاحظات",
+    "noteFontSize": "لاحظ حجم الخط",
+    "menuFontSize": "حجم خط القائمة"
 }

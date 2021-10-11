@@ -40,5 +40,8 @@
     "save": "Salve ",
     "securitySettings": "Configurações de segurança",
     "resetSettings": "Redefinir as configurações",
-    "permissionNote": "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
+    "permissionNote": "NOTA: Esta permissão permitirá todos os tipos de interação por voz.",
+    "daysToKeepNotes": "Dias para fazer anotações",
+    "noteFontSize": "Tamanho da fonte da nota",
+    "menuFontSize": "Tamanho da fonte do menu"
 }

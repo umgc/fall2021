@@ -114,6 +114,12 @@ class I18n implements WidgetsLocalizations {
 	String get resetSettings => "Reset Settings";
 	/// "NOTE: This permission will allow all types of voice interaction."
 	String get permissionNote => "NOTE: This permission will allow all types of voice interaction.";
+	/// "Days to Keep Notes"
+	String get daysToKeepNotes => "Days to Keep Notes";
+	/// "Note Font Size"
+	String get noteFontSize => "Note Font Size";
+	/// "Menu Font Size"
+	String get menuFontSize => "Menu Font Size";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -248,6 +254,15 @@ class _I18n_es_US extends I18n {
 	/// "NOTA: Este permiso permitirá todo tipo de interacción de voz."
 	@override
 	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz.";
+	/// "Días para tomar notas"
+	@override
+	String get daysToKeepNotes => "Días para tomar notas";
+	/// "Tamaño de fuente de nota"
+	@override
+	String get noteFontSize => "Tamaño de fuente de nota";
+	/// "Tamaño de fuente del menú"
+	@override
+	String get menuFontSize => "Tamaño de fuente del menú";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -379,6 +394,15 @@ class _I18n_pt_BR extends I18n {
 	/// "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
 	@override
 	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação por voz.";
+	/// "Dias para fazer anotações"
+	@override
+	String get daysToKeepNotes => "Dias para fazer anotações";
+	/// "Tamanho da fonte da nota"
+	@override
+	String get noteFontSize => "Tamanho da fonte da nota";
+	/// "Tamanho da fonte do menu"
+	@override
+	String get menuFontSize => "Tamanho da fonte do menu";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -510,6 +534,15 @@ class _I18n_zh_CN extends I18n {
 	/// "注意：此权限将允许所有类型的语音交互。"
 	@override
 	String get permissionNote => "注意：此权限将允许所有类型的语音交互。";
+	/// "记笔记的天数"
+	@override
+	String get daysToKeepNotes => "记笔记的天数";
+	/// "注释字体大小"
+	@override
+	String get noteFontSize => "注释字体大小";
+	/// "菜单字体大小"
+	@override
+	String get menuFontSize => "菜单字体大小";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -641,6 +674,15 @@ class _I18n_ar_SY extends I18n {
 	/// "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي."
 	@override
 	String get permissionNote => "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
+	/// "أيام للاحتفاظ بالملاحظات"
+	@override
+	String get daysToKeepNotes => "أيام للاحتفاظ بالملاحظات";
+	/// "لاحظ حجم الخط"
+	@override
+	String get noteFontSize => "لاحظ حجم الخط";
+	/// "حجم خط القائمة"
+	@override
+	String get menuFontSize => "حجم خط القائمة";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
