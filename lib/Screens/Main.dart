@@ -118,15 +118,6 @@ class _MainNavigatorState extends State<MainNavigator> {
     searchFilter = "";
   }
 
-<<<<<<< HEAD
-=======
-  _getIconColor(btn) {
-    if (screenNav.focusedNavBtn == btn) {
-      return Colors.white;
-    }
-    return Colors.black;
-  }
->>>>>>> developer
 
   _getSearchBar() {
     searchFilter = "";
