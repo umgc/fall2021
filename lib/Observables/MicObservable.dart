@@ -63,6 +63,21 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void toggleListeningMode() {
+
+     /**
+     * User activates mic's listening mode
+     *  -micIsExpectedToListen = true;
+     * Call listen()
+     *  -Begin idle time count down (reset time each time the user speaks) 
+     *  -Gets user voice input stream 
+     *  -Stop listening 
+     *      * on mic button click [x]
+     *      * on timeout [x]
+     *      * on sleep word []
+     *  -update the UI message diplay.
+     *  -Send message collected to the NLU []
+     *  -Recieve NLU Response and call fulfill response 
+     */
     print("MicObserver: Starting listening mode ");
     (!micIsExpectedToListen)
         ? micIsExpectedToListen = true
@@ -225,27 +240,7 @@ abstract class _AbstractMicObserver with Store {
         break;
     }
   }
-  @action
-  Future<void> setMessageInputText(dynamic value) async {
-
-    /**
-     * User activates mic's listening mode
-     *  -micIsExpectedToListen = true;
-     * Call listen()
-     *  -Begin idle time count down (reset time each time the user speaks) 
-     *  -Gets user voice input stream 
-     *  -Stop listening 
-     *      * on mic button click [x]
-     *      * on timeout [x]
-     *      * on sleep word []
-     *  -update the UI message diplay.
-     *  -Send message collected to the NLU []
-     *  -Recieve NLU Response and call fulfill response 
-     */
-    //push prev message to chartBubble
-        
-  }
-
+ 
   void _onDone(status) async {
     print('_onDone: onStatus: $status');
     print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
@@ -260,7 +255,11 @@ abstract class _AbstractMicObserver with Store {
       if (messageInputText.isNotEmpty){
         await nluLibService
             .getNLUResponse(messageInputText, "en-US")
-            .then((value) => fufillNLUTask(value));
+            .then((value) => {
+                print("_onDone: response from NLU ${ (value as NLUResponse).response }"),
+                addUserMessage(messageInputText),
+                fufillNLUTask(value),
+            });
       }
     }
   }

@@ -120,15 +120,6 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$setMessageInputTextAsyncAction =
-      AsyncAction('_AbstractMicObserver.setMessageInputText');
-
-  @override
-  Future<void> setMessageInputText(dynamic value) {
-    return _$setMessageInputTextAsyncAction
-        .run(() => super.setMessageInputText(value));
-  }
-
   final _$_AbstractMicObserverActionController =
       ActionController(name: '_AbstractMicObserver');
 
