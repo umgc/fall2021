@@ -18,11 +18,11 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingState extends State<Settings> {
-  SettingObserver settingsObs = SettingObserver();
 
   var noteFontSize;
   var menuFontSize;
   var daysToKeepFiles;
+  var language;
 
   @override
   void initState() {
@@ -30,14 +30,10 @@ class _SettingState extends State<Settings> {
     noteFontSize = initialSetting.userSettings.noteFontSize;
     menuFontSize = initialSetting.userSettings.menuFontSize;
     daysToKeepFiles = initialSetting.userSettings.daysToKeepFiles;
+    language = initialSetting.userSettings.locale;
     super.initState();
   }
 
-  var language = (I18n.locale?.countryCode != null &&
-          I18n.locale?.languageCode != null)
-      ? I18n.locale
-      // its simply not supported unless it has a language code and a country code
-      : Locale("en", "US");
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +209,7 @@ class _SettingState extends State<Settings> {
                     color: Colors.blue, // Add this
                   ),
                   value: language,
-                  onChanged: (Locale? newLocale) {
+                  onChanged: (newLocale) {
                     setState(() {
                       if (newLocale != null) {
                         language = newLocale;
@@ -245,6 +241,7 @@ class _SettingState extends State<Settings> {
                   setting.noteFontSize = noteFontSize;
                   setting.daysToKeepFiles = daysToKeepFiles;
                   setting.menuFontSize = menuFontSize;
+                  setting.locale = language;
                   settingObserver.saveSetting(setting);
                   I18n.onLocaleChanged!(language!);
                 },
@@ -270,6 +267,9 @@ class _SettingState extends State<Settings> {
                   noteFontSize = setting.noteFontSize;
                   menuFontSize = setting.menuFontSize;
                   daysToKeepFiles = setting.daysToKeepFiles;
+                  language = setting.locale;
+                  I18n.onLocaleChanged!(DEFAULT_LOCALE);
+
                 },
                 child: Text(
                   I18n.of(context)!.resetSettings,

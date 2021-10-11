@@ -1,18 +1,16 @@
+import 'dart:ui';
+
 enum FontSize {
   SMALL,
   MEDIUM,
   LARGE,
 }
 
-extension ParseFontSizeToDisplay on FontSize {
-  String toShortString() {
-    return this.toString().split('.').last;
-  }
-}
-
 const DEFAULT_FONT_SIZE = FontSize.MEDIUM;
 
 const DEFAULT_DAYS_TO_KEEP_FILES = "7";
+
+const DEFAULT_LOCALE = const Locale("en", "US");
 
 /// Defines the settings object
 class Setting {
@@ -31,6 +29,8 @@ class Setting {
   // language of preference
   String currentLanguage = "English";
 
+  Locale locale = DEFAULT_LOCALE;
+
   /// path to the wake word file
   bool enableVoiceOverText = false;
 
@@ -44,6 +44,7 @@ class Setting {
     String jsonStr = """{"daysToKeepFiles": "${this.daysToKeepFiles}",
                         "secondsSilence": "${this.secondsSilence}",
                         "pathToWakeWord": "${this.pathToWakeWord}",
+                        "locale": "${this.locale.toString()}",
                         "currentLanguage": "${this.currentLanguage}",
                         "isFirstRun": ${this.isFirstRun},
                         "enableVoiceOverText": ${this.enableVoiceOverText},
@@ -63,6 +64,7 @@ class Setting {
       setting.secondsSilence = jsonObj['secondsSilence'];
       setting.pathToWakeWord = jsonObj['pathToWakeWord'];
       setting.currentLanguage = jsonObj['currentLanguage'];
+      setting.locale = jsonObj['locale'];
       setting.isFirstRun = jsonObj['isFirstRun'];
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
       setting.noteFontSize = jsonObj['noteFontSize'] ?? DEFAULT_FONT_SIZE;
