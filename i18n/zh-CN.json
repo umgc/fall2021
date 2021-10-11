@@ -29,5 +29,16 @@
     "next": "下一个",
     "selectLanguage": "请选择您的主要语言。",
     "language": "语",
-    "promptPermission": "我们是否有权访问您的麦克风？"
+    "promptPermission": "我们是否有权访问您的麦克风？",
+    "promptNoteFontSize": "为笔记选择字体大小",
+    "promptMenuFontSize": "为菜单选择字体大小",
+    "promptNoteDeletionTimeline": "选择笔记删除时间线",
+    "small": "小的",
+    "medium": "中等的",
+    "large": "大的",
+    "cancel": "取消",
+    "save": "节省",
+    "securitySettings": "安全设定",
+    "resetSettings": "重新设置",
+    "permissionNote": "注意：此权限将允许所有类型的语音交互。"
 }

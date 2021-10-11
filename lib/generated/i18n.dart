@@ -92,21 +92,28 @@ class I18n implements WidgetsLocalizations {
 	String get language => "Language";
 	/// "Do we have permission to access your microphone?"
 	String get promptPermission => "Do we have permission to access your microphone?";
-	///"WALKTHROUGH VIDEO"
-	@override
-	String get walkthroughVideo => "Here is a link to a brief "
-			"walk-through of how to use "
-			"the Memory Magic App.";
-	/// "NOTE in permission screen
-	@override
+	/// "Select Font Size for Notes"
+	String get promptNoteFontSize => "Select Font Size for Notes";
+	/// "Select Font Size for Menu"
+	String get promptMenuFontSize => "Select Font Size for Menu";
+	/// "Select Note Deletion Timeline"
+	String get promptNoteDeletionTimeline => "Select Note Deletion Timeline";
+	/// "Small"
+	String get small => "Small";
+	/// "Medium"
+	String get medium => "Medium";
+	/// "Large"
+	String get large => "Large";
+	/// "Cancel"
+	String get cancel => "Cancel";
+	/// "Save"
+	String get save => "Save";
+	/// "Security Settings"
+	String get securitySettings => "Security Settings";
+	/// "Reset Settings"
+	String get resetSettings => "Reset Settings";
+	/// "NOTE: This permission will allow all types of voice interaction."
 	String get permissionNote => "NOTE: This permission will allow all types of voice interaction.";
-	///"You will have a limited features "
-	/// "without allowing permission to "
-	/// "access the microphone."
-	@override
-	String get permissionDenied => "You will have a limited features "
-			"without allowing permission to "
-			"access the microphone.";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -208,23 +215,39 @@ class _I18n_es_US extends I18n {
 	/// "¿Tenemos permiso para acceder a su micrófono?"
 	@override
 	String get promptPermission => "¿Tenemos permiso para acceder a su micrófono?";
-	///"Aquí hay un enlace a un resumen "
-	/// "guía de cómo utilizar "
-	/// "la aplicación Memory Magic"
+	/// "Seleccionar tamaño de fuente para notas"
 	@override
-	String get walkthroughVideo =>"Aquí hay un enlace a un resumen "
-			"guía de cómo utilizar "
-			"la aplicación Memory Magic";
-	///"NOTA: Este permiso permitirá todo tipo de interacción de voz";
+	String get promptNoteFontSize => "Seleccionar tamaño de fuente para notas";
+	/// "Seleccionar tamaño de fuente para el menú"
 	@override
-	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz";
-	///"Tendrás funciones limitadas"
-	/// "sin permitir permiso para"
-	/// "acceder al micrófono"
+	String get promptMenuFontSize => "Seleccionar tamaño de fuente para el menú";
+	/// "Seleccione la línea de tiempo de eliminación de notas"
 	@override
-	String get permissionDenied => "Tendrás funciones limitadas"
-			"sin permitir permiso para"
-			"acceder al micrófono";
+	String get promptNoteDeletionTimeline => "Seleccione la línea de tiempo de eliminación de notas";
+	/// "Pequeña"
+	@override
+	String get small => "Pequeña";
+	/// "Medio"
+	@override
+	String get medium => "Medio";
+	/// "Grande"
+	@override
+	String get large => "Grande";
+	/// "Cancelar"
+	@override
+	String get cancel => "Cancelar";
+	/// "Ahorrar"
+	@override
+	String get save => "Ahorrar";
+	/// "Configuraciones de seguridad"
+	@override
+	String get securitySettings => "Configuraciones de seguridad";
+	/// "Reiniciar ajustes"
+	@override
+	String get resetSettings => "Reiniciar ajustes";
+	/// "NOTA: Este permiso permitirá todo tipo de interacción de voz."
+	@override
+	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz.";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -323,24 +346,39 @@ class _I18n_pt_BR extends I18n {
 	/// "Temos permissão para acessar seu microfone?"
 	@override
 	String get promptPermission => "Temos permissão para acessar seu microfone?";
-	///"Aqui está um link para um briefing"
-	// "passo a passo de como usar "
-	// "o aplicativo Memory Magic"
+	/// "Selecione o tamanho da fonte para as notas"
 	@override
-	String get walkthroughVideo => "Aqui está um link para um briefing"
-			"passo a passo de como usar "
-			"o aplicativo Memory Magic";
-
-	///"NOTA: Esta permissão permitirá todos os tipos de interação de voz.";
+	String get promptNoteFontSize => "Selecione o tamanho da fonte para as notas";
+	/// "Selecione o tamanho da fonte para o menu"
 	@override
-	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação de voz.";
-	///"Você terá recursos limitados"
-	// "sem permitir permissão para"
-	// "acessar o microfone."
+	String get promptMenuFontSize => "Selecione o tamanho da fonte para o menu";
+	/// "Selecione o cronograma de exclusão de notas"
 	@override
-	String get permissionDenied => "Você terá recursos limitados"
-			"sem permitir permissão para"
-			"acessar o microfone.";
+	String get promptNoteDeletionTimeline => "Selecione o cronograma de exclusão de notas";
+	/// "Pequena"
+	@override
+	String get small => "Pequena";
+	/// "Médio"
+	@override
+	String get medium => "Médio";
+	/// "Grande"
+	@override
+	String get large => "Grande";
+	/// "Cancelar"
+	@override
+	String get cancel => "Cancelar";
+	/// "Salve "
+	@override
+	String get save => "Salve ";
+	/// "Configurações de segurança"
+	@override
+	String get securitySettings => "Configurações de segurança";
+	/// "Redefinir as configurações"
+	@override
+	String get resetSettings => "Redefinir as configurações";
+	/// "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
+	@override
+	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação por voz.";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -439,23 +477,39 @@ class _I18n_zh_CN extends I18n {
 	/// "我们是否有权访问您的麦克风？"
 	@override
 	String get promptPermission => "我们是否有权访问您的麦克风？";
-	///"這是一個簡短的鏈接"
-	// "使用方法演練"
-	// "記憶魔法應用程序."
+	/// "为笔记选择字体大小"
 	@override
-	String get walkthroughVideo => "這是一個簡短的鏈接"
-	"使用方法演練"
-	"記憶魔法應用程序.";
-	///"注意：此權限將允許所有類型的語音交互"
+	String get promptNoteFontSize => "为笔记选择字体大小";
+	/// "为菜单选择字体大小"
 	@override
-	String get permissionNote => "注意：此權限將允許所有類型的語音交互";
-	///"您將擁有有限的功能"
-	/// "未經許可"
-	/// "訪問麥克風。"
+	String get promptMenuFontSize => "为菜单选择字体大小";
+	/// "选择笔记删除时间线"
 	@override
-	String get permissionDenied => "您將擁有有限的功能"
-	"未經許可"
-	"訪問麥克風。";
+	String get promptNoteDeletionTimeline => "选择笔记删除时间线";
+	/// "小的"
+	@override
+	String get small => "小的";
+	/// "中等的"
+	@override
+	String get medium => "中等的";
+	/// "大的"
+	@override
+	String get large => "大的";
+	/// "取消"
+	@override
+	String get cancel => "取消";
+	/// "节省"
+	@override
+	String get save => "节省";
+	/// "安全设定"
+	@override
+	String get securitySettings => "安全设定";
+	/// "重新设置"
+	@override
+	String get resetSettings => "重新设置";
+	/// "注意：此权限将允许所有类型的语音交互。"
+	@override
+	String get permissionNote => "注意：此权限将允许所有类型的语音交互。";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -554,24 +608,39 @@ class _I18n_ar_SY extends I18n {
 	/// "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟"
 	@override
 	String get promptPermission => "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟";
-	///"هنا رابط موجز"
-	///"  جولة تفصيلية حول كيفية الاستخدام "
-	///"تطبيق Memory Magic "
+	/// "حدد حجم الخط للملاحظات"
 	@override
-	String get walkthroughVideo => "هنا رابط موجز"
-			"  جولة تفصيلية حول كيفية الاستخدام "
-			"تطبيق Memory Magic ";
-	
-	///"ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
+	String get promptNoteFontSize => "حدد حجم الخط للملاحظات";
+	/// "حدد حجم الخط للقائمة"
+	@override
+	String get promptMenuFontSize => "حدد حجم الخط للقائمة";
+	/// "حدد الجدول الزمني لحذف الملاحظات"
+	@override
+	String get promptNoteDeletionTimeline => "حدد الجدول الزمني لحذف الملاحظات";
+	/// "صغير"
+	@override
+	String get small => "صغير";
+	/// "واسطة"
+	@override
+	String get medium => "واسطة";
+	/// "كبير"
+	@override
+	String get large => "كبير";
+	/// "يلغي"
+	@override
+	String get cancel => "يلغي";
+	/// "يحفظ"
+	@override
+	String get save => "يحفظ";
+	/// "اعدادات الامان"
+	@override
+	String get securitySettings => "اعدادات الامان";
+	/// "اعادة الضبط"
+	@override
+	String get resetSettings => "اعادة الضبط";
+	/// "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي."
 	@override
 	String get permissionNote => "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
-	///" سيكون لديك ميزات محدودة "
-	// "دون السماح بإذن "
-	// "الدخول إلى الميكروفون."
-	@override
-	String get permissionDenied => " سيكون لديك ميزات محدودة "
-			"دون السماح بإذن "
-			"الدخول إلى الميكروفون.";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

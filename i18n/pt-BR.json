@@ -29,5 +29,16 @@
     "next": "Próximo",
     "selectLanguage": "Selecione seu idioma principal.",
     "language": "Língua",
-    "promptPermission": "Temos permissão para acessar seu microfone?"
+    "promptPermission": "Temos permissão para acessar seu microfone?",
+    "promptNoteFontSize": "Selecione o tamanho da fonte para as notas",
+    "promptMenuFontSize": "Selecione o tamanho da fonte para o menu",
+    "promptNoteDeletionTimeline": "Selecione o cronograma de exclusão de notas",
+    "small": "Pequena",
+    "medium": "Médio",
+    "large": "Grande",
+    "cancel": "Cancelar",
+    "save": "Salve ",
+    "securitySettings": "Configurações de segurança",
+    "resetSettings": "Redefinir as configurações",
+    "permissionNote": "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
 }
