@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:untitled3/Utility/Constant.dart';
 import '../Model/Note.dart';
 import '../Services/NoteService.dart';
 
@@ -13,7 +14,7 @@ abstract class _AbstractNoteObserver with Store {
   }
 
   @observable
-  String currentScreen = "";
+  NOTE_SCREENS currentScreen = NOTE_SCREENS.NOTE;
 
   @observable
   TextNote? currNoteForDetails;
@@ -58,8 +59,8 @@ abstract class _AbstractNoteObserver with Store {
   }
 
   @action
-  void changeScreen(String name){
-    print("Note Screen changed to: "+ name);
+  void changeScreen(NOTE_SCREENS name){
+    print("Note Screen changed to: $name");
     currentScreen = name;
   }
 }

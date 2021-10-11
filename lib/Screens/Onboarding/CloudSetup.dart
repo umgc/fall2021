@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:untitled3/generated/i18n.dart';
+import '../../Observables/OnboardObservable.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
 
 class CloudSetupScreen extends StatefulWidget {
   @override
@@ -6,18 +12,21 @@ class CloudSetupScreen extends StatefulWidget {
 }
 
 class _CloudSetupScreenState extends State<CloudSetupScreen> {
-  int id = 1;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final onboardingObserver = Provider.of<OnboardObserver>(context);
+    var yesText = toBeginningOfSentenceCase(I18n.of(context)!.yes) ?? I18n.of(context)!.yes;
+    var noText = toBeginningOfSentenceCase(I18n.of(context)!.no) ?? I18n.of(context)!.yes;
+
+    return Observer(builder: (_) =>
+        Scaffold(
         body: Scaffold(
             body: Column(
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Would you like to setup a cloud account?",
+            I18n.of(context)!.cloudSetupPrompt,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -28,39 +37,32 @@ class _CloudSetupScreenState extends State<CloudSetupScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Radio(
-              value: 1,
-              onChanged: (val) {
-                setState(() {
-                  id = 1;
-                });
+              value:onboardingObserver.id,
+              onChanged:(value) {
+                onboardingObserver.permissionYes(1);
               },
-              groupValue: id,
+
+              groupValue: 1 ,
             ),
             Text(
-              'Yes',
+              yesText,
               style: new TextStyle(fontSize: 17.0),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(70.0, 22.0, 0.0, 8.0),
             ),
             Radio(
-              value: 2,
-              onChanged: (val) {
-                setState(() {
-                  id = 2;
-                });
-
-                id = 2;
-              },
-              groupValue: id,
+              value:onboardingObserver.id ,
+              onChanged: (val) => onboardingObserver.permissionNo(2),
+              groupValue: 2,
             ),
             Text(
-              'No',
+              noText,
               style: new TextStyle(fontSize: 17.0),
             ),
           ],
         )
       ],
-    )));
+    ))));
   }
 }
