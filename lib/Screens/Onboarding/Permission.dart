@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/OnboardObservable.dart';
 
 
@@ -12,9 +14,12 @@ class PermissionScreen extends StatefulWidget {
 
 class _PermissionScreenState extends State<PermissionScreen> {
 
+
   @override
   Widget build(BuildContext context) {
     final onboardingObserver = Provider.of<OnboardObserver>(context);
+    var yesText = toBeginningOfSentenceCase(I18n.of(context)!.yes) ?? I18n.of(context)!.yes;
+    var noText = toBeginningOfSentenceCase(I18n.of(context)!.no) ?? I18n.of(context)!.yes;
     return Observer(builder: (_) =>
         Scaffold(
         body: Column(
@@ -22,7 +27,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Do we have permission to access your microphone?",
+            I18n.of(context)!.promptPermission,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -43,7 +48,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
 
             ),
             Text(
-              'Yes',
+              yesText,
               style: new TextStyle(fontSize: 17.0),
             ),
             Padding(
@@ -55,7 +60,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
              groupValue: 2,
             ),
             Text(
-              'No',
+              noText,
               style: new TextStyle(fontSize: 17.0),
             ),
           ],
@@ -70,7 +75,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
                 border: Border.all(color: Colors.grey, width: 3),
               ),
               child: Text(
-                "NOTE: This permission will allow all types of voice interaction.",
+                I18n.of(context)!.permissionNote,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -81,12 +86,10 @@ class _PermissionScreenState extends State<PermissionScreen> {
         ),
         if (onboardingObserver.denied)
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 300, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 250, 15, 0),
             child: Container(
               child: Text(
-                "You will have a limited features "
-                "without allowing permission to "
-                "access the microphone.",
+                I18n.of(context)!.permissionDenied,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
