@@ -69,7 +69,7 @@ class _SettingState extends State<Settings> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
                   Widget>[
-            Text("Days To Keep Notes"),
+            Text("Days To Keep Notes", style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(

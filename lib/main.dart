@@ -76,7 +76,10 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 30.0, fontWeight: FontWeight.bold),
                       bodyText1: TextStyle(
                           fontSize: fontSizeToPixelMap(
-                              settingObserver.userSettings.menuFontSize)),
+                              settingObserver.userSettings.menuFontSize, false)),
+                        bodyText2: TextStyle(
+                            fontSize: fontSizeToPixelMap(
+                                settingObserver.userSettings.menuFontSize, true)),
                     ),
                   ),
                   supportedLocales: i18n.supportedLocales,
