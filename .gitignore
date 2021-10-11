@@ -27,3 +27,6 @@ assets/NLU/Lex_Credentials.xml
 # android generated files
 android/*/.*
 android/.*
+
+#vscode created files
+.vscode/

@@ -75,7 +75,6 @@ class _MyAppState extends State<MyApp> {
           localeResolutionCallback:
               i18n.resolution(fallback: new Locale("en", "US")),
           routes: {
-            '/view-notes': (context) => ViewNotes(),
             '/note-details': (context) => NoteDetails()
           },
         )));

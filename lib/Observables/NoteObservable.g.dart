@@ -12,13 +12,13 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   final _$currentScreenAtom = Atom(name: '_AbstractNoteObserver.currentScreen');
 
   @override
-  String get currentScreen {
+  NOTE_SCREENS get currentScreen {
     _$currentScreenAtom.reportRead();
     return super.currentScreen;
   }
 
   @override
-  set currentScreen(String value) {
+  set currentScreen(NOTE_SCREENS value) {
     _$currentScreenAtom.reportWrite(value, super.currentScreen, () {
       super.currentScreen = value;
     });
@@ -103,7 +103,7 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   }
 
   @override
-  void changeScreen(String name) {
+  void changeScreen(NOTE_SCREENS name) {
     final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.changeScreen');
     try {
