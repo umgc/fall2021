@@ -282,7 +282,7 @@ abstract class _AbstractMicObserver with Store {
 
     if (available) {
       _speech.listen(
-        listenFor: Duration(minutes: 15),
+        //listenFor: Duration(minutes: 15),
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),
           print(val.recognizedWords),
