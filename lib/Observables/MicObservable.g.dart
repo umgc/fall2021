@@ -124,9 +124,9 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
       AsyncAction('_AbstractMicObserver.setMessageInputText');
 
   @override
-  Future<void> setMessageInputText(dynamic value, bool isSysrMsg) {
+  Future<void> setMessageInputText(dynamic value) {
     return _$setMessageInputTextAsyncAction
-        .run(() => super.setMessageInputText(value, isSysrMsg));
+        .run(() => super.setMessageInputText(value));
   }
 
   final _$_AbstractMicObserverActionController =

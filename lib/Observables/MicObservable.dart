@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 //import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
@@ -69,14 +68,13 @@ abstract class _AbstractMicObserver with Store {
         ? micIsExpectedToListen = true
         : micIsExpectedToListen = false;
 
+    print("toggleListeningMode: micIsExpectedToListen  $micIsExpectedToListen");
+
     if (micIsExpectedToListen) {
       _listen(micIsExpectedToListen);
     } else {
       _speech.stop();
       systemUserMessage.clear();
-      setMessageInputText(testData[2].inputMessage, false);
-      //if (messageInputText.isNotEmpty)
-        //setMessageInputText(messageInputText, false);
       clearMsgTextInput();
     }
   }
@@ -228,48 +226,51 @@ abstract class _AbstractMicObserver with Store {
     }
   }
   @action
-  Future<void> setMessageInputText(dynamic value, bool isSysrMsg) async {
+  Future<void> setMessageInputText(dynamic value) async {
 
     /**
      * User activates mic's listening mode
-     * 
+     *  -micIsExpectedToListen = true;
+     * Call listen()
+     *  -Begin idle time count down (reset time each time the user speaks) 
+     *  -Gets user voice input stream 
+     *  -Stop listening 
+     *      * on mic button click [x]
+     *      * on timeout [x]
+     *      * on sleep word []
+     *  -update the UI message diplay.
+     *  -Send message collected to the NLU []
+     *  -Recieve NLU Response and call fulfill response 
      */
     //push prev message to chartBubble
-    if (isSysrMsg == true) {
-      VoiceOverTextService.speakOutLoud((value as NLUResponse).response!);
-      messageInputText = (value as NLUResponse).response!;
-      Timer(Duration(seconds: 2), () {
-        addSystemMessage((value as NLUResponse));
-      });
-    } else {
-      print("adding a user message $value");
-      messageInputText = value;
-      //await nluLibService
-        //  .getNLUResponse(messageInputText, "en-US")
-          //.then((value) => fufillNLUTask(testData[0]));
-      addUserMessage(value);
-
-
-      Timer(Duration(seconds: 1), () {
-          fufillNLUTask(testData[2]);
-          VoiceOverTextService.speakOutLoud(testData[2].response!);
-      });
-    }
+        
   }
 
   void _onDone(status) async {
-    print('onStatus: $status');
+    print('_onDone: onStatus: $status');
+    print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
+
     if (status == "notListening" && micIsExpectedToListen == true) {
       micIsExpectedToListen = false;
       //Re-initiate speech service if user still expects it to listen
       //_listen(micIsExpectedToListen);
     }
+    if(status == "done"){
+       print('_onDone: Calling the NLU  with text : "$messageInputText" ');
+      if (messageInputText.isNotEmpty){
+        await nluLibService
+            .getNLUResponse(messageInputText, "en-US")
+            .then((value) => fufillNLUTask(value));
+      }
+    }
   }
 
   void _onError(status) async {
-    print('onStatus: $status');
+    print('_onError: onStatus: $status');
     //Re-initiate speech service on error
-   // _listen(micIsExpectedToListen);
+    micIsExpectedToListen = true;
+
+    _listen(micIsExpectedToListen);
   }
 
   Future<void> _listen(micIsExpectedToListen) async {
@@ -282,11 +283,11 @@ abstract class _AbstractMicObserver with Store {
 
     if (available) {
       _speech.listen(
+        //listenFor: Duration(minutes: 15),
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),
           print(val.recognizedWords),
-          //setVoiceMsgTextInput( val.finalResult),
-          //val.finalResult
+
           if (val.hasConfidenceRating && val.confidence > 0)
             {speechConfidence = val.confidence}
         },
