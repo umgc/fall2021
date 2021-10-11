@@ -264,7 +264,13 @@ class _SettingState extends State<Settings> {
               padding:
                   const EdgeInsets.only(left: 0, top: 2, right: 0, bottom: 0),
               child: ElevatedButton(
-                onPressed: resetSettings,
+                onPressed: () {
+                  var setting = Setting();
+                  settingObserver.saveSetting(setting);
+                  noteFontSize = setting.noteFontSize;
+                  menuFontSize = setting.menuFontSize;
+                  daysToKeepFiles = setting.daysToKeepFiles;
+                },
                 child: Text(
                   I18n.of(context)!.resetSettings,
                   style: Theme.of(context).textTheme.bodyText1,
