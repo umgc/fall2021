@@ -64,7 +64,7 @@ class Setting {
       setting.secondsSilence = jsonObj['secondsSilence'];
       setting.pathToWakeWord = jsonObj['pathToWakeWord'];
       setting.currentLanguage = jsonObj['currentLanguage'];
-      setting.locale = jsonObj['locale'];
+      setting.locale = jsonObj['locale'] ?? DEFAULT_LOCALE;
       setting.isFirstRun = jsonObj['isFirstRun'];
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
       setting.noteFontSize = jsonObj['noteFontSize'] ?? DEFAULT_FONT_SIZE;
