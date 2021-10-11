@@ -9,21 +9,6 @@ part of 'MicObservable.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MicObserver on _AbstractMicObserver, Store {
-  final _$mockIndexAtom = Atom(name: '_AbstractMicObserver.mockIndex');
-
-  @override
-  int get mockIndex {
-    _$mockIndexAtom.reportRead();
-    return super.mockIndex;
-  }
-
-  @override
-  set mockIndex(int value) {
-    _$mockIndexAtom.reportWrite(value, super.mockIndex, () {
-      super.mockIndex = value;
-    });
-  }
-
   final _$messageInputTextAtom =
       Atom(name: '_AbstractMicObserver.messageInputText');
 
@@ -104,32 +89,17 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$nluResponseAtom = Atom(name: '_AbstractMicObserver.nluResponse');
-
-  @override
-  NLUResponse? get nluResponse {
-    _$nluResponseAtom.reportRead();
-    return super.nluResponse;
-  }
-
-  @override
-  set nluResponse(NLUResponse? value) {
-    _$nluResponseAtom.reportWrite(value, super.nluResponse, () {
-      super.nluResponse = value;
-    });
-  }
-
   final _$mainNavObserverAtom =
       Atom(name: '_AbstractMicObserver.mainNavObserver');
 
   @override
-  MainNavObserver get mainNavObserver {
+  dynamic get mainNavObserver {
     _$mainNavObserverAtom.reportRead();
     return super.mainNavObserver;
   }
 
   @override
-  set mainNavObserver(MainNavObserver value) {
+  set mainNavObserver(dynamic value) {
     _$mainNavObserverAtom.reportWrite(value, super.mainNavObserver, () {
       super.mainNavObserver = value;
     });
@@ -138,13 +108,13 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   final _$noteObserverAtom = Atom(name: '_AbstractMicObserver.noteObserver');
 
   @override
-  NoteObserver get noteObserver {
+  dynamic get noteObserver {
     _$noteObserverAtom.reportRead();
     return super.noteObserver;
   }
 
   @override
-  set noteObserver(NoteObserver value) {
+  set noteObserver(dynamic value) {
     _$noteObserverAtom.reportWrite(value, super.noteObserver, () {
       super.noteObserver = value;
     });
@@ -174,6 +144,17 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
+  void _clearChatHistory() {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver._clearChatHistory');
+    try {
+      return super._clearChatHistory();
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addUserMessage(String userMsg) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
         name: '_AbstractMicObserver.addUserMessage');
@@ -196,18 +177,7 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
-  void setMainNavObserver(MainNavObserver observer) {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.setMainNavObserver');
-    try {
-      return super.setMainNavObserver(observer);
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setNoteObserver(NoteObserver observer) {
+  void setNoteObserver(dynamic observer) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
         name: '_AbstractMicObserver.setNoteObserver');
     try {
@@ -218,11 +188,11 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
-  void fufillNLUTask(NLUResponse nluResponse) {
+  void setMainNavObserver(dynamic observer) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.fufillNLUTask');
+        name: '_AbstractMicObserver.setMainNavObserver');
     try {
-      return super.fufillNLUTask(nluResponse);
+      return super.setMainNavObserver(observer);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -251,15 +221,24 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
+  void fufillNLUTask(NLUResponse nluResponse) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.fufillNLUTask');
+    try {
+      return super.fufillNLUTask(nluResponse);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-mockIndex: ${mockIndex},
 messageInputText: ${messageInputText},
 micIsExpectedToListen: ${micIsExpectedToListen},
 micStatus: ${micStatus},
 speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
-nluResponse: ${nluResponse},
 mainNavObserver: ${mainNavObserver},
 noteObserver: ${noteObserver}
     ''';

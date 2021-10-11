@@ -1,14 +1,19 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 //import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
+import 'package:untitled3/Model/NLUState.dart';
+import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
+import 'package:untitled3/Utility/Constant.dart';
 part 'MicObservable.g.dart';
 
 class MicObserver = _AbstractMicObserver with _$MicObserver;
@@ -19,10 +24,6 @@ abstract class _AbstractMicObserver with Store {
   _AbstractMicObserver() {
     nluLibService = NLULibService();
   }
-
-  //remove this.
-  @observable
-  int mockIndex = 0;
 
   //messageInputText will be initialize and read and then its content will be added to the systemUserMessage to be displayed in the chat bubble.
   @observable
@@ -41,15 +42,25 @@ abstract class _AbstractMicObserver with Store {
   ObservableList<dynamic> systemUserMessage = ObservableList();
 
   @observable
-  NLUResponse? nluResponse;
+  dynamic mainNavObserver;
 
   @observable
-  late MainNavObserver mainNavObserver;
-
-  @observable
-  late NoteObserver noteObserver;
+  dynamic noteObserver;
 
   SpeechToText _speech = SpeechToText();
+
+  List<String> resolveVals = ["are going to", "am going to", "is going to"];
+  List<NLUResponse> testData = [
+
+    NLUResponse(ActionType.ANSWER, "John and Sally are going to buy me clothes",
+                 "On what date are John and Sally going to buy you clothes?", NLUState.IN_PROGRESS, "", null, ["are going to", "am going to", "is going to"], null, null),
+
+    NLUResponse(ActionType.CREATE_EVENT, "4 in the afternoon", "John and Sally are going to buy me clothes", NLUState.COMPLETE, "buy me clothes", DateTime.now(), null, null, null),
+    NLUResponse(ActionType.APP_NAV, "Go to notes screen", "notes", NLUState.COMPLETE, null, null, null, null, null),
+    NLUResponse(ActionType.APP_HELP, "Go to menu screen", "menu", NLUState.COMPLETE, null, null, ["Create Note", "Settng"], null, null)
+    
+  ];
+  
 
   @action
   void toggleListeningMode() {
@@ -62,10 +73,17 @@ abstract class _AbstractMicObserver with Store {
       _listen(micIsExpectedToListen);
     } else {
       _speech.stop();
-      if (messageInputText.isNotEmpty)
-        setMessageInputText(messageInputText, false);
+      systemUserMessage.clear();
+      setMessageInputText(testData[2].inputMessage, false);
+      //if (messageInputText.isNotEmpty)
+        //setMessageInputText(messageInputText, false);
       clearMsgTextInput();
     }
+  }
+
+  @action
+  void _clearChatHistory(){
+      systemUserMessage.clear();
   }
 
   @action
@@ -80,73 +98,13 @@ abstract class _AbstractMicObserver with Store {
   }
 
   @action
-  void setMainNavObserver(MainNavObserver observer) {
-    mainNavObserver = observer;
-  }
-
-  @action
-  void setNoteObserver(NoteObserver observer) {
+  void setNoteObserver(observer) {
     noteObserver = observer;
   }
 
   @action
-  void fufillNLUTask(NLUResponse nluResponse) {
-
-    switch (nluResponse.actionType) {
-      case ActionType.CREATE_NOTE:
-        //create note
-        break;
-
-      //we probably don't need this
-      case ActionType.CREATE_EVENT:
-        /**
-           * Ask user for more information:
-           *  -Display NLU response on the screen 
-           *  -Inform the user not has been created.
-           *  -Inquire if they need more help
-           */
-        //call the create event service
-        addSystemMessage(nluResponse);
-        break;
-      //we do not need a create note and a create event
-      case ActionType.CREATE_NOTE:
-        //create note
-        break;
-
-      //we probably don't need this
-      case ActionType.CREATE_EVENT:
-        /**
-           * Ask user for more information:
-           *  -Display NLU response on the screen 
-           *  -Inform the user not has been created.
-           *  -Inquire if they need more help
-           */
-        //call the create event service
-        addSystemMessage(nluResponse);
-
-        break;
-
-      // case ActionType.COMPLETE:
-      //   //close out convirsation
-      //   break;
-
-      // case ActionType.INCOMPLETE:
-      //   /**
-      //      * Ask user for more information:
-      //      *  -display NLU response on the screen 
-      //      *  -Turn on listening mode on the mic 
-      //      *    to recieve voice input form user
-      //      */
-      //   break;
-
-      case ActionType.NOTFOUND:
-        break;
-
-      case ActionType.ANSWER:
-        //display the text from NLU
-        //and follow up with
-        break;
-    }
+  void setMainNavObserver(observer) {
+    mainNavObserver = observer;
   }
 
   @action
@@ -159,8 +117,123 @@ abstract class _AbstractMicObserver with Store {
     messageInputText = value;
   }
 
+   @action
+  void fufillNLUTask(NLUResponse nluResponse) {
+
+    //final noteObserver = Provider.of<NoteObserver>(context); 
+    print("Processing NLU message with action type ${nluResponse.actionType}");
+    MainNavObserver resolvedMainNav = (mainNavObserver as MainNavObserver);
+
+    switch (nluResponse.actionType) {
+      
+      case ActionType.APP_NAV:
+
+          String screenName = nluResponse.response!;
+          switch (screenName) {
+            case 'menu':
+              resolvedMainNav.changeScreen(MAIN_SCREENS.MENU);
+              break;
+            case "notes":
+              resolvedMainNav.changeScreen(MAIN_SCREENS.NOTE);
+             break;
+            case "notifications":
+              resolvedMainNav.changeScreen(MAIN_SCREENS.NOTIFICATION);
+             break;
+            case "settings":
+              resolvedMainNav.changeScreen(MENU_SCREENS.SETTING);
+             break;
+            case "help":
+              resolvedMainNav.changeScreen(MENU_SCREENS.HELP);
+             break;
+            case "trigger":
+              resolvedMainNav.changeScreen(MENU_SCREENS.TRIGGER);
+             break;
+            //case "profile":
+              //resolvedMainNav.changeScreen(MENU_SCREENS.PROFILE);
+            // break;
+            //case "security":
+            //  resolvedMainNav.changeScreen(MENU_SCREENS.SECURITY);
+            // break;
+            case "calendar":
+              resolvedMainNav.changeScreen(MAIN_SCREENS.CALENDAR);
+             break;
+            case "checklist":
+              resolvedMainNav.changeScreen(MAIN_SCREENS.MENU);
+             break;
+            
+            default: //TODO ask for more info.
+
+          }
+        
+        //create note
+        break;
+
+      case ActionType.USER_LOCATION:
+          //get the user current location
+          //inform the user.
+          //Follow up if the user needs additional help
+          
+        break;
+      case ActionType.APP_HELP:
+          //Open the help instructions 
+          //(mainNavObserver as MainNavObserver).changeScreen(MAIN_SCREENS.CALENDAR)
+        break;
+
+      //we probably don't need this
+      case ActionType.CREATE_NOTE:
+        /**
+           * Ask user for more information:
+           *  -Display NLU response on the screen 
+           *  -Inform the user not has been created.
+           *  -Inquire if they need more help
+           */
+        //call the create event service
+        TextNote note = TextNote();
+        note.text = nluResponse.eventType!;
+        note.eventDate = nluResponse.eventTime!;
+        note.isCheckList = (nluResponse.recurringType != null);
+        //note.recordLocale = (nluResponse.recurringType != null);
+        note.recordedTime = DateTime.now();
+        print("Processing NLU message with action type ${nluResponse.actionType}");
+
+        //note.preferredLocale will always be their current local at time when data is pulled
+        print("Adding note ${nluResponse.actionType}");
+
+        (noteObserver as NoteObserver).addNote(note);
+
+        //FollowUpMessage
+        //addSystemMessage("And event has been created to 'eventType' on 'eventTime'");
+
+        //addSystemMessage("Is there anything I can help you with?");
+        
+        break;
+      case ActionType.NOTFOUND:
+        break;
+
+      case ActionType.ANSWER:
+        //display the text from NLU
+        //and follow up with
+        addSystemMessage(nluResponse);
+
+        if(nluResponse.state == NLUState.COMPLETE){
+          //FollowUpMessage
+          //addSystemMessage("Is there anything I can help you with?");
+        }else {
+          //get user input and send to the NLU
+          //use a flag, expectingUserInput, to know when the user is expected to speak
+          //expectingUserInput is toggled to off when system is audible.
+        }
+
+        break;
+    }
+  }
   @action
   Future<void> setMessageInputText(dynamic value, bool isSysrMsg) async {
+
+    /**
+     * User activates mic's listening mode
+     * 
+     */
     //push prev message to chartBubble
     if (isSysrMsg == true) {
       VoiceOverTextService.speakOutLoud((value as NLUResponse).response!);
@@ -171,11 +244,15 @@ abstract class _AbstractMicObserver with Store {
     } else {
       print("adding a user message $value");
       messageInputText = value;
-      await nluLibService
-          .getNLUResponse(messageInputText, "en-US")
-          .then((value) => setMessageInputText(value, true));
+      //await nluLibService
+        //  .getNLUResponse(messageInputText, "en-US")
+          //.then((value) => fufillNLUTask(testData[0]));
+      addUserMessage(value);
+
+
       Timer(Duration(seconds: 1), () {
-        addUserMessage(value);
+          fufillNLUTask(testData[2]);
+          VoiceOverTextService.speakOutLoud(testData[2].response!);
       });
     }
   }
@@ -183,15 +260,16 @@ abstract class _AbstractMicObserver with Store {
   void _onDone(status) async {
     print('onStatus: $status');
     if (status == "notListening" && micIsExpectedToListen == true) {
+      micIsExpectedToListen = false;
       //Re-initiate speech service if user still expects it to listen
-      _listen(micIsExpectedToListen);
+      //_listen(micIsExpectedToListen);
     }
   }
 
   void _onError(status) async {
     print('onStatus: $status');
     //Re-initiate speech service on error
-    _listen(micIsExpectedToListen);
+   // _listen(micIsExpectedToListen);
   }
 
   Future<void> _listen(micIsExpectedToListen) async {
@@ -206,6 +284,7 @@ abstract class _AbstractMicObserver with Store {
       _speech.listen(
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),
+          print(val.recognizedWords),
           //setVoiceMsgTextInput( val.finalResult),
           //val.finalResult
           if (val.hasConfidenceRating && val.confidence > 0)
