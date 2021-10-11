@@ -118,7 +118,6 @@ class _MainNavigatorState extends State<MainNavigator> {
     searchFilter = "";
   }
 
-
   _getSearchBar() {
     searchFilter = "";
     return new SearchBar(
