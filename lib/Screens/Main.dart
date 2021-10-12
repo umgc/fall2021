@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
-import 'package:untitled3/Screens/Home.dart';
+import 'package:untitled3/Screens/Mic/Mic.dart';
 
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/NotificationScreen.dart';
@@ -10,7 +10,6 @@ import 'package:untitled3/generated/i18n.dart';
 
 import 'Settings/Setting.dart';
 import 'Note/Note.dart';
-import 'HomeScreen.dart';
 import 'package:untitled3/Screens/Menu/Menu.dart';
 import 'package:untitled3/Screens/Settings/Trigger.dart';
 import 'package:untitled3/Screens/Settings/Help.dart';
@@ -53,7 +52,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     }
     if (screen == MAIN_SCREENS.HOME) {
         screenNav.setTitle(I18n.of(context)!.homeScreenName);
-        return HomeScreen();
+        return SpeechScreen();
     }
     if (screen == MAIN_SCREENS.CALENDAR) {
       screenNav.setTitle(I18n.of(context)!.calendarScreenName);
