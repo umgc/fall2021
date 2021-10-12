@@ -39,8 +39,6 @@ class Setting {
   bool isFirstRun = true;
 
   // language of preference
-  String currentLanguage = "English";
-
   Locale locale = DEFAULT_LOCALE;
 
   /// path to the wake word file
@@ -57,7 +55,6 @@ class Setting {
                         "secondsSilence": "${this.secondsSilence}",
                         "pathToWakeWord": "${this.pathToWakeWord}",
                         "locale": "${this.locale.toString()}",
-                        "currentLanguage": "${this.currentLanguage}",
                         "isFirstRun": ${this.isFirstRun},
                         "enableVoiceOverText": ${this.enableVoiceOverText},
                         "noteFontSize": "${this.noteFontSize.toString()}",
@@ -76,7 +73,6 @@ class Setting {
           jsonObj['daysToKeepFiles'].toString();
       setting.secondsSilence = jsonObj['secondsSilence'];
       setting.pathToWakeWord = jsonObj['pathToWakeWord'];
-      setting.currentLanguage = jsonObj['currentLanguage'];
       setting.locale = Locale(jsonObj['locale']);
       setting.isFirstRun = jsonObj['isFirstRun'];
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];

@@ -128,7 +128,7 @@ class _SettingState extends State<Settings> {
                     setState(() {
                       noteFontSize = newValue ?? DEFAULT_FONT_SIZE;
                     });
-                    settingObserver.userSettings.menuFontSize = menuFontSize;
+                    settingObserver.userSettings.noteFontSize = noteFontSize;
                   },
                   isExpanded: true,
                   underline: SizedBox(),
