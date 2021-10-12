@@ -180,7 +180,7 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-            Text(I18n.of(context)!.language),
+            Text(I18n.of(context)!.language, style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: const EdgeInsets.all(3),
               child: Container(
@@ -209,13 +209,12 @@ class _SettingState extends State<Settings> {
                     //size: 31,
                     color: Colors.blue, // Add this
                   ),
-                  value: language,
+                  value: settingObserver.userSettings.locale,
                   onChanged: (newLocale) {
                     setState(() {
-                      if (newLocale != null) {
                         language = newLocale;
-                      }
-                    });
+                   });
+                    settingObserver.userSettings.locale = language;
                   },
                   isExpanded: true,
                   underline: SizedBox(),
