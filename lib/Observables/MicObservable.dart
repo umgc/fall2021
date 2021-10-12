@@ -193,6 +193,8 @@ abstract class _AbstractMicObserver with Store {
         break;
 
       //we probably don't need this
+      case ActionType.CREATE_RECURRING_EVENT:
+      case ActionType.CREATE_EVENT:
       case ActionType.CREATE_NOTE:
         /**
            * Ask user for more information:

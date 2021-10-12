@@ -21,14 +21,9 @@ abstract class _AbstractSettingObserver with Store {
 
 
   @action
-  void saveSetting(Setting? userSettings){
+  void saveSetting(){
      //over-write old settings with incoming new one.
-     if(userSettings != null){
-       SettingService.save(userSettings);
-
-       this.userSettings = userSettings;
-     }
-      
+     SettingService.save(userSettings); 
   }
 
   @action

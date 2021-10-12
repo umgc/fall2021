@@ -233,12 +233,11 @@ class _SettingState extends State<Settings> {
                   const EdgeInsets.only(left: 0, top: 4, right: 0, bottom: 0),
               child: ElevatedButton(
                 onPressed: () {
-                  var setting = Setting();
-                  setting.noteFontSize = noteFontSize;
-                  setting.daysToKeepFiles = daysToKeepFiles;
-                  setting.menuFontSize = menuFontSize;
-                  setting.locale = language;
-                  settingObserver.saveSetting(setting);
+                  settingObserver.userSettings.noteFontSize = noteFontSize;
+                  settingObserver.userSettings.daysToKeepFiles = daysToKeepFiles;
+                  settingObserver.userSettings.menuFontSize = menuFontSize;
+                  settingObserver.userSettings.locale = language;
+                  settingObserver.saveSetting();
                   I18n.onLocaleChanged!(language!);
                 },
                 child: Text(
@@ -258,14 +257,14 @@ class _SettingState extends State<Settings> {
                   const EdgeInsets.only(left: 0, top: 2, right: 0, bottom: 0),
               child: ElevatedButton(
                 onPressed: () {
-                  var setting = Setting();
-                  settingObserver.saveSetting(setting);
+                
+                  Setting setting = settingObserver.userSettings;
+                  //settingObserver.saveSetting();
                   noteFontSize = setting.noteFontSize;
                   menuFontSize = setting.menuFontSize;
                   daysToKeepFiles = setting.daysToKeepFiles;
                   language = setting.locale;
                   I18n.onLocaleChanged!(DEFAULT_LOCALE);
-
                 },
                 child: Text(
                   I18n.of(context)!.resetSettings,

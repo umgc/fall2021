@@ -6,6 +6,7 @@ import 'package:untitled3/Observables/OnboardObservable.dart';
 // Internal
 import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:untitled3/Screens/Onboarding/Boarding.dart';
 
 import 'Utility/FontUtil.dart';
 import 'generated/i18n.dart';
@@ -63,7 +64,7 @@ class _MyAppState extends State<MyApp> {
                       builder: (_) =>
                           (settingObserver.userSettings.isFirstRun == false)
                               ? MainNavigator()
-                              : MainNavigator()),
+                              : (OnBoardingScreen()) ),
                   localizationsDelegates: [
                     i18n,
                     GlobalMaterialLocalizations.delegate,

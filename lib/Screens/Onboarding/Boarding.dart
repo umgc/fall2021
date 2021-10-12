@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Setting.dart';
 import 'package:untitled3/Observables/OnboardObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
+import 'package:untitled3/Screens/Home.dart';
 import 'package:untitled3/Screens/Main.dart';
 import 'package:untitled3/Screens/Onboarding/CloudSetup.dart';
 import 'package:untitled3/Screens/Onboarding/Permission.dart';
@@ -31,7 +32,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       I18n.of(context)!.onboardPermissionSetup,
       I18n.of(context)!.onboardCloudSetup,
       I18n.of(context)!.walkthroughScreen,
+      I18n.of(context)!.homeScreenName,
     ];
+
+    if(index > boardingScreens.length-1)
+      return "";
+
     return boardingScreens[index];
   }
 
@@ -39,17 +45,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     //when onboarding is completed
     if (index > NUM_OF_ONBOARDING_SCREEN - 1) {
       final settingObserver = Provider.of<SettingObserver>(context);
-      onbaordSetting.isFirstRun = false;
+      settingObserver.userSettings.isFirstRun = false;
 
-      settingObserver.saveSetting(onbaordSetting);
+      print("OnBoardingScreen. Saving onboarding settings");
+
+      settingObserver.saveSetting();
+
       //move to the Main screen
-      Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MainNavigator(),
-          ));
+      // Navigator.pushReplacement<void, void>(
+      //     context,
+      //     MaterialPageRoute<void>(
+      //       builder: (BuildContext context) => MainNavigator(),
+      //     ));
 
-      return Text(I18n.of(context)!.welcome);
+      return Home();
     }
 
     String name = _screenName(index);
@@ -89,14 +98,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Observer(
+              builder: (_) =>
+                  Scaffold(
       appBar: buildAppBar(context),
       body: Center(
-          child: Observer(
-              builder: (_) =>
-                  _changeScreen(onboardObserver.currentScreenIndex))),
+          child: _changeScreen(onboardObserver.currentScreenIndex)),
+
       persistentFooterButtons: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+       (onboardObserver.currentScreenIndex < NUM_OF_ONBOARDING_SCREEN)?
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           ElevatedButton(
             child: Text(I18n.of(context)!.back.toUpperCase()),
             onPressed: () => {onboardObserver.moveToPrevScreen()},
@@ -106,7 +119,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onPressed: () => {onboardObserver.moveToNextScreen()},
           ),
         ])
+        : Text("")
       ],
-    );
+    ));
   }
 }

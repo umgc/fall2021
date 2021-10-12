@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'dart:ui';
 
 enum FontSize {
-  SMALL,
-  MEDIUM,
-  LARGE,
+   SMALL,
+   MEDIUM,
+   LARGE,
 }
 
 const DEFAULT_FONT_SIZE = FontSize.MEDIUM;
@@ -48,11 +49,12 @@ class Setting {
                         "currentLanguage": "${this.currentLanguage}",
                         "isFirstRun": ${this.isFirstRun},
                         "enableVoiceOverText": ${this.enableVoiceOverText},
-                        "noteFontSize": ${this.noteFontSize.toString()},
-                        "menuFontSize": ${this.menuFontSize.toString()}}
+                        "noteFontSize": ${json.encode(this.noteFontSize)},
+                        "menuFontSize": ${json.encode(this.menuFontSize)} }
                         """;
-
+    
     return jsonStr;
+
   }
 
   factory Setting.fromJson(dynamic jsonObj) {
@@ -64,11 +66,11 @@ class Setting {
       setting.secondsSilence = jsonObj['secondsSilence'];
       setting.pathToWakeWord = jsonObj['pathToWakeWord'];
       setting.currentLanguage = jsonObj['currentLanguage'];
-      setting.locale = jsonObj['locale'] ?? DEFAULT_LOCALE;
+      setting.locale = Locale(jsonObj['locale']);
       setting.isFirstRun = jsonObj['isFirstRun'];
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
-      setting.noteFontSize = jsonObj['noteFontSize'] ?? DEFAULT_FONT_SIZE;
-      setting.menuFontSize = jsonObj['menuFontSize'] ?? DEFAULT_FONT_SIZE;
+      setting.noteFontSize = FontSize.values[json.decode(jsonObj['noteFontSize'])];
+      setting.menuFontSize =  FontSize.values[json.decode(jsonObj['menuFontSize'])];
     }
 
     return setting;
