@@ -89,8 +89,8 @@ class _SettingState extends State<Settings> {
                     setState(() {
                       daysToKeepFiles = newValue;
                     });
-                    settingObserver.userSettings.daysToKeepFiles = daysToKeepFiles;
-
+                    settingObserver.userSettings.daysToKeepFiles =
+                        daysToKeepFiles;
                   },
                   isExpanded: true,
                   underline: SizedBox(),
@@ -180,7 +180,8 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-            Text(I18n.of(context)!.language, style: Theme.of(context).textTheme.bodyText2),
+            Text(I18n.of(context)!.language,
+                style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: const EdgeInsets.all(3),
               child: Container(
@@ -209,12 +210,13 @@ class _SettingState extends State<Settings> {
                     //size: 31,
                     color: Colors.blue, // Add this
                   ),
-                  value: settingObserver.userSettings.locale,
+                  value: language,
                   onChanged: (newLocale) {
                     setState(() {
+                      if (newLocale != null) {
                         language = newLocale;
-                   });
-                    settingObserver.userSettings.locale = language;
+                      }
+                    });
                   },
                   isExpanded: true,
                   underline: SizedBox(),
