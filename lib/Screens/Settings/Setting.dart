@@ -18,7 +18,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingState extends State<Settings> {
-
   var noteFontSize;
   var menuFontSize;
   var daysToKeepFiles;
@@ -33,7 +32,6 @@ class _SettingState extends State<Settings> {
     language = initialSetting.userSettings.locale;
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +63,8 @@ class _SettingState extends State<Settings> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
                   Widget>[
-            Text(I18n.of(context)!.daysToKeepNotes, style: Theme.of(context).textTheme.bodyText2),
+            Text(I18n.of(context)!.daysToKeepNotes,
+                style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(
@@ -85,11 +84,13 @@ class _SettingState extends State<Settings> {
                     Icons.edit_sharp, // Add this
                     color: Colors.blue, // Add this
                   ),
-                  value: daysToKeepFiles,
+                  value: settingObserver.userSettings.daysToKeepFiles,
                   onChanged: (newValue) {
                     setState(() {
                       daysToKeepFiles = newValue;
                     });
+                    settingObserver.userSettings.daysToKeepFiles = daysToKeepFiles;
+
                   },
                   isExpanded: true,
                   underline: SizedBox(),
@@ -101,7 +102,8 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-                Text(I18n.of(context)!.noteFontSize, style: Theme.of(context).textTheme.bodyText2),
+            Text(I18n.of(context)!.noteFontSize,
+                style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(
@@ -121,11 +123,12 @@ class _SettingState extends State<Settings> {
                     Icons.edit_sharp, // Add this
                     color: Colors.blue, // Add this
                   ),
-                  value: noteFontSize,
+                  value: settingObserver.userSettings.noteFontSize,
                   onChanged: (newValue) {
                     setState(() {
                       noteFontSize = newValue ?? DEFAULT_FONT_SIZE;
                     });
+                    settingObserver.userSettings.menuFontSize = menuFontSize;
                   },
                   isExpanded: true,
                   underline: SizedBox(),
@@ -138,7 +141,8 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-                Text(I18n.of(context)!.menuFontSize, style: Theme.of(context).textTheme.bodyText2),
+            Text(I18n.of(context)!.menuFontSize,
+                style: Theme.of(context).textTheme.bodyText2),
             Padding(
               padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
               child: Container(
@@ -158,11 +162,12 @@ class _SettingState extends State<Settings> {
                     Icons.edit_sharp, // Add this
                     color: Colors.blue, // Add this
                   ),
-                  value: menuFontSize,
+                  value: settingObserver.userSettings.menuFontSize,
                   onChanged: (newValue) {
                     setState(() {
                       menuFontSize = newValue ?? DEFAULT_FONT_SIZE;
                     });
+                    settingObserver.userSettings.menuFontSize = menuFontSize;
                   },
                   isExpanded: true,
                   underline: SizedBox(),
@@ -233,10 +238,6 @@ class _SettingState extends State<Settings> {
                   const EdgeInsets.only(left: 0, top: 4, right: 0, bottom: 0),
               child: ElevatedButton(
                 onPressed: () {
-                  settingObserver.userSettings.noteFontSize = noteFontSize;
-                  settingObserver.userSettings.daysToKeepFiles = daysToKeepFiles;
-                  settingObserver.userSettings.menuFontSize = menuFontSize;
-                  settingObserver.userSettings.locale = language;
                   settingObserver.saveSetting();
                   I18n.onLocaleChanged!(language!);
                 },
@@ -257,9 +258,12 @@ class _SettingState extends State<Settings> {
                   const EdgeInsets.only(left: 0, top: 2, right: 0, bottom: 0),
               child: ElevatedButton(
                 onPressed: () {
-                
                   Setting setting = settingObserver.userSettings;
-                  //settingObserver.saveSetting();
+                  setting.menuFontSize = DEFAULT_FONT_SIZE;
+                  setting.noteFontSize = DEFAULT_FONT_SIZE;
+                  setting.daysToKeepFiles = DEFAULT_DAYS_TO_KEEP_FILES;
+                  setting.locale = DEFAULT_LOCALE;
+                  settingObserver.saveSetting();
                   noteFontSize = setting.noteFontSize;
                   menuFontSize = setting.menuFontSize;
                   daysToKeepFiles = setting.daysToKeepFiles;
