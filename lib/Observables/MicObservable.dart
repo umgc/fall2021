@@ -48,23 +48,38 @@ abstract class _AbstractMicObserver with Store {
 
   SpeechToText _speech = SpeechToText();
 
-  List<String> resolveVals = ["are going to", "am going to", "is going to"];
+  List<String> resolveVals = ["Remind me to buy eggs", "on Friday", "at 12pm"];
+  int index = 0;
   List<NLUResponse> testData = [
-
-    NLUResponse(ActionType.ANSWER, "John and Sally are going to buy me clothes",
-                 "On what date are John and Sally going to buy you clothes?", NLUState.IN_PROGRESS, "", null, ["are going to", "am going to", "is going to"], null, null),
-
-    NLUResponse(ActionType.CREATE_EVENT, "4 in the afternoon", "John and Sally are going to buy me clothes", NLUState.COMPLETE, "buy me clothes", DateTime.now(), null, null, null),
-    NLUResponse(ActionType.APP_NAV, "Go to notes screen", "notes", NLUState.COMPLETE, null, null, null, null, null),
-    NLUResponse(ActionType.APP_HELP, "Go to menu screen", "menu", NLUState.COMPLETE, null, null, ["Create Note", "Settng"], null, null)
-    
+    NLUResponse(
+        ActionType.ANSWER,
+        "John and Sally are going to buy me clothes",
+        "On what date are John and Sally going to buy you clothes?",
+        NLUState.IN_PROGRESS,
+        "",
+        null,
+        ["are going to", "am going to", "is going to"],
+        null,
+        null),
+    NLUResponse(
+        ActionType.CREATE_EVENT,
+        "4 in the afternoon",
+        "John and Sally are going to buy me clothes",
+        NLUState.COMPLETE,
+        "buy me clothes",
+        DateTime.now(),
+        null,
+        null,
+        null),
+    NLUResponse(ActionType.APP_NAV, "Go to notes screen", "notes",
+        NLUState.COMPLETE, null, null, null, null, null),
+    NLUResponse(ActionType.APP_HELP, "Go to menu screen", "menu",
+        NLUState.COMPLETE, null, null, ["Create Note", "Settng"], null, null)
   ];
-  
 
   @action
   void toggleListeningMode() {
-
-     /**
+    /**
      * User activates mic's listening mode
      *  -micIsExpectedToListen = true;
      * Call listen()
@@ -92,13 +107,13 @@ abstract class _AbstractMicObserver with Store {
       _speech.stop();
       systemUserMessage.clear();
       clearMsgTextInput();
-      //TODO:       Reset all values on stopping 
+      //Reset all values on stopping
     }
   }
 
   @action
-  void _clearChatHistory(){
-      systemUserMessage.clear();
+  void _clearChatHistory() {
+    systemUserMessage.clear();
   }
 
   @action
@@ -132,66 +147,63 @@ abstract class _AbstractMicObserver with Store {
     messageInputText = value;
   }
 
-   @action
+  @action
   void fufillNLUTask(NLUResponse nluResponse) {
-
-    //final noteObserver = Provider.of<NoteObserver>(context); 
+    //final noteObserver = Provider.of<NoteObserver>(context);
     print("Processing NLU message with action type ${nluResponse.actionType}");
     MainNavObserver resolvedMainNav = (mainNavObserver as MainNavObserver);
 
     switch (nluResponse.actionType) {
-      
       case ActionType.APP_NAV:
+        String screenName = nluResponse.response!;
+        switch (screenName) {
+          case 'menu':
+            resolvedMainNav.changeScreen(MAIN_SCREENS.MENU);
+            break;
+          case "notes":
+            resolvedMainNav.changeScreen(MAIN_SCREENS.NOTE);
+            break;
+          case "notifications":
+            resolvedMainNav.changeScreen(MAIN_SCREENS.NOTIFICATION);
+            break;
+          case "settings":
+            resolvedMainNav.changeScreen(MENU_SCREENS.SETTING);
+            break;
+          case "help":
+            resolvedMainNav.changeScreen(MENU_SCREENS.HELP);
+            break;
+          case "trigger":
+            resolvedMainNav.changeScreen(MENU_SCREENS.TRIGGER);
+            break;
+          //case "profile":
+          //resolvedMainNav.changeScreen(MENU_SCREENS.PROFILE);
+          // break;
+          //case "security":
+          //  resolvedMainNav.changeScreen(MENU_SCREENS.SECURITY);
+          // break;
+          case "calendar":
+            resolvedMainNav.changeScreen(MAIN_SCREENS.CALENDAR);
+            break;
+          case "checklist":
+            resolvedMainNav.changeScreen(MAIN_SCREENS.MENU);
+            break;
 
-          String screenName = nluResponse.response!;
-          switch (screenName) {
-            case 'menu':
-              resolvedMainNav.changeScreen(MAIN_SCREENS.MENU);
-              break;
-            case "notes":
-              resolvedMainNav.changeScreen(MAIN_SCREENS.NOTE);
-             break;
-            case "notifications":
-              resolvedMainNav.changeScreen(MAIN_SCREENS.NOTIFICATION);
-             break;
-            case "settings":
-              resolvedMainNav.changeScreen(MENU_SCREENS.SETTING);
-             break;
-            case "help":
-              resolvedMainNav.changeScreen(MENU_SCREENS.HELP);
-             break;
-            case "trigger":
-              resolvedMainNav.changeScreen(MENU_SCREENS.TRIGGER);
-             break;
-            //case "profile":
-              //resolvedMainNav.changeScreen(MENU_SCREENS.PROFILE);
-            // break;
-            //case "security":
-            //  resolvedMainNav.changeScreen(MENU_SCREENS.SECURITY);
-            // break;
-            case "calendar":
-              resolvedMainNav.changeScreen(MAIN_SCREENS.CALENDAR);
-             break;
-            case "checklist":
-              resolvedMainNav.changeScreen(MAIN_SCREENS.MENU);
-             break;
-            
-            default: //TODO ask for more info.
+          default: //TODO ask for more info.
 
-          }
-        
+        }
+
         //create note
         break;
 
       case ActionType.USER_LOCATION:
-          //get the user current location
-          //inform the user.
-          //Follow up if the user needs additional help
-          
+        //get the user current location
+        //inform the user.
+        //Follow up if the user needs additional help
+
         break;
       case ActionType.APP_HELP:
-          //Open the help instructions 
-          //(mainNavObserver as MainNavObserver).changeScreen(MAIN_SCREENS.CALENDAR)
+        //Open the help instructions
+        //(mainNavObserver as MainNavObserver).changeScreen(MAIN_SCREENS.CALENDAR)
         break;
 
       //we probably don't need this
@@ -204,7 +216,7 @@ abstract class _AbstractMicObserver with Store {
            *  -Inform the user not has been created.
            *  -Inquire if they need more help
            */
-         addSystemMessage(nluResponse);
+        addSystemMessage(nluResponse);
 
         //call the create event service
         TextNote note = TextNote();
@@ -213,7 +225,8 @@ abstract class _AbstractMicObserver with Store {
         note.isCheckList = (nluResponse.recurringType != null);
         //note.recordLocale = (nluResponse.recurringType != null);
         note.recordedTime = DateTime.now();
-        print("Processing NLU message with action type ${nluResponse.actionType}");
+        print(
+            "Processing NLU message with action type ${nluResponse.actionType}");
 
         //note.preferredLocale will always be their current local at time when data is pulled
         print("Adding note ${nluResponse.actionType}");
@@ -224,7 +237,7 @@ abstract class _AbstractMicObserver with Store {
         //addSystemMessage("And event has been created to 'eventType' on 'eventTime'");
 
         //addSystemMessage("Is there anything I can help you with?");
-        
+
         break;
       case ActionType.NOTFOUND:
         break;
@@ -232,50 +245,78 @@ abstract class _AbstractMicObserver with Store {
       case ActionType.ANSWER:
         //display the text from NLU
         //and follow up with
-        addSystemMessage(nluResponse);
+        //addSystemMessage(nluResponse);
 
-        if(nluResponse.state == NLUState.COMPLETE){
+        if (nluResponse.state == NLUState.COMPLETE) {
           //FollowUpMessage
           //addSystemMessage("Is there anything I can help you with?");
-        }else {
+        } else {
           //get user input and send to the NLU
           //use a flag, expectingUserInput, to know when the user is expected to speak
           //expectingUserInput is toggled to off when system is audible.
           micIsExpectedToListen = false;
           //_listen(micIsExpectedToListen);
 
-          Timer(Duration(seconds: 3), () {
-              
+          if (index > 1) {
+            messageInputText = resolveVals[index];
+            addUserMessage(resolveVals[index]);
             //.getNLUResponse(messageInputText, "en-US")
-           nluLibService.getNLUResponse("On Friday", "en-US")
-            .then((value) => {
-                print("_onDone: response from NLU ${ (value as NLUResponse).response }"),
-                addUserMessage("On Friday"),
-                //fufillNLUTask(value),
+            nluLibService
+                .getNLUResponse(resolveVals[index], "en-US")
+                .then((value) => {
+                      print(
+                          "_onDone: response from NLU ${(value as NLUResponse).response}"),
+                      addSystemMessage(value),
+                      VoiceOverTextService.speakOutLoud(value.response!),
+
+                      //fufillNLUTask(value)
+                    });
+              
+
+          } else {
+            messageInputText = resolveVals[index];
+            Timer(Duration(seconds: 3), () {
+              addUserMessage(resolveVals[index]);
+              //.getNLUResponse(messageInputText, "en-US")
+              nluLibService
+                  .getNLUResponse(resolveVals[index], "en-US")
+                  .then((value) => {
+                        print(
+                            "_onDone: response from NLU ${(value as NLUResponse).response}"),
+                        addSystemMessage(value),
+                        VoiceOverTextService.speakOutLoud(value.response!),
+                        index = index + 1,
+                        fufillNLUTask(value)
+                      });
             });
-          });
+          }
         }
 
         break;
     }
   }
- 
+
   void _onDone(status) async {
     print('_onDone: onStatus: $status');
     print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
 
-    if(status == "done"){
-       print('_onDone: Calling the NLU  with text : "$messageInputText" ');
-       messageInputText = "Remind me to buy eggs";
-      if (messageInputText.isNotEmpty){
+    if (status == "done") {
+      print('_onDone: Calling the NLU  with text : "$messageInputText" ');
+      messageInputText = "Remind john to buy eggs";
+      addUserMessage("Remind John to buy eggs");
+
+      if (messageInputText.isNotEmpty) {
         await nluLibService
             //.getNLUResponse(messageInputText, "en-US")
-            .getNLUResponse("Remind me to buy eggs", "en-US")
+            .getNLUResponse(resolveVals[index], "en-US")
             .then((value) => {
-                print("_onDone: response from NLU ${ (value as NLUResponse).actionType }"),
-                addUserMessage("Remind John to buy eggs"),
-                fufillNLUTask(value),
-            });
+                  print(
+                      "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
+                  addSystemMessage(value),
+                  VoiceOverTextService.speakOutLoud(value.response!),
+                  index = index + 1,
+                  fufillNLUTask(value),
+                });
         messageInputText = "";
       }
     }
@@ -303,7 +344,6 @@ abstract class _AbstractMicObserver with Store {
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),
           print(val.recognizedWords),
-
           if (val.hasConfidenceRating && val.confidence > 0)
             {speechConfidence = val.confidence}
         },
