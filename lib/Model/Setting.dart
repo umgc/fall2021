@@ -7,6 +7,17 @@ enum FontSize {
    LARGE,
 }
 
+fontSizeStringToEnum (String fontSizeString) {
+  switch (fontSizeString) {
+    case 'FontSize.MEDIUM':
+      return FontSize.MEDIUM;
+    case 'FontSize.SMALL':
+      return FontSize.SMALL;
+    case 'FontSize.LARGE':
+      return FontSize.LARGE;
+  }
+}
+
 const DEFAULT_FONT_SIZE = FontSize.MEDIUM;
 
 const DEFAULT_DAYS_TO_KEEP_FILES = "7";
@@ -28,8 +39,6 @@ class Setting {
   bool isFirstRun = true;
 
   // language of preference
-  String currentLanguage = "English";
-
   Locale locale = DEFAULT_LOCALE;
 
   /// path to the wake word file
@@ -46,11 +55,10 @@ class Setting {
                         "secondsSilence": "${this.secondsSilence}",
                         "pathToWakeWord": "${this.pathToWakeWord}",
                         "locale": "${this.locale.toString()}",
-                        "currentLanguage": "${this.currentLanguage}",
                         "isFirstRun": ${this.isFirstRun},
                         "enableVoiceOverText": ${this.enableVoiceOverText},
-                        "noteFontSize": ${json.encode(this.noteFontSize)},
-                        "menuFontSize": ${json.encode(this.menuFontSize)} }
+                        "noteFontSize": "${this.noteFontSize.toString()}",
+                        "menuFontSize": "${this.noteFontSize.toString()}" }
                         """;
     
     return jsonStr;
@@ -62,15 +70,14 @@ class Setting {
     print("extracting jsonObj $jsonObj");
     if (jsonObj != "") {
       setting.daysToKeepFiles =
-          jsonObj['daysToKeepFiles'] ?? DEFAULT_DAYS_TO_KEEP_FILES;
+          jsonObj['daysToKeepFiles'].toString();
       setting.secondsSilence = jsonObj['secondsSilence'];
       setting.pathToWakeWord = jsonObj['pathToWakeWord'];
-      setting.currentLanguage = jsonObj['currentLanguage'];
       setting.locale = Locale(jsonObj['locale']);
       setting.isFirstRun = jsonObj['isFirstRun'];
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
-      setting.noteFontSize = FontSize.values[json.decode(jsonObj['noteFontSize'])];
-      setting.menuFontSize =  FontSize.values[json.decode(jsonObj['menuFontSize'])];
+      setting.noteFontSize = fontSizeStringToEnum(jsonObj['noteFontSize']);
+      setting.menuFontSize = fontSizeStringToEnum(jsonObj['menuFontSize']);
     }
 
     return setting;
