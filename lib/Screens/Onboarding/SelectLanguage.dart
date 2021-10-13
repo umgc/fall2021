@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/Services/LocaleService.dart';
 import 'package:untitled3/generated/i18n.dart';
+import 'package:untitled3/Observables/OnboardObservable.dart';
+import 'package:provider/provider.dart';
+
 
 class SelectLanguageScreen extends StatefulWidget {
   @override
@@ -17,22 +20,20 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final onboardingObserver = Provider.of<OnboardObserver>(context);
     return Scaffold(
         body: Column(
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
-            "Please select your primary language.",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+            I18n.of(context)!.selectLanguage,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(0.0, 22.0, 275.0, 8.0),
-          child: Text('Language',
+          child: Text(I18n.of(context)!.language,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         ),
         Padding(
@@ -46,8 +47,8 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
             ),
             child: DropdownButton(
               hint: Text(
-                "Select Language",
-                style: TextStyle(color: Colors.black, fontSize: 22),
+                I18n.of(context)!.selectLanguage,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               //icon: Icon(                // Add this
               //  Icons.arrow_drop_down_outlined,  // Add this
@@ -64,17 +65,14 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 color: Colors.blue, // Add this
               ),
               value: language,
-              onChanged: (Locale? newLocale) {
-                setState(() {
-                  if (newLocale != null) {
-                    language = newLocale;
-                    I18n.onLocaleChanged!(language!);
-                  }
-                });
+
+              onChanged: (Locale? locale){
+                language = locale;
+                onboardingObserver.languageChange(language);
               },
               isExpanded: true,
               underline: SizedBox(),
-              style: TextStyle(color: Colors.black, fontSize: 22),
+              style: Theme.of(context).textTheme.bodyText1,
               items: GeneratedLocalizationsDelegate()
                   .supportedLocales
                   .map((valueItem) {

@@ -45,11 +45,11 @@ mixin _$SettingObserver on _AbstractSettingObserver, Store {
       ActionController(name: '_AbstractSettingObserver');
 
   @override
-  void saveSetting(Setting? userSettings) {
+  void saveSetting() {
     final _$actionInfo = _$_AbstractSettingObserverActionController.startAction(
         name: '_AbstractSettingObserver.saveSetting');
     try {
-      return super.saveSetting(userSettings);
+      return super.saveSetting();
     } finally {
       _$_AbstractSettingObserverActionController.endAction(_$actionInfo);
     }
