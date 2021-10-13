@@ -88,9 +88,11 @@ abstract class _AbstractMicObserver with Store {
     if (micIsExpectedToListen) {
       _listen(micIsExpectedToListen);
     } else {
+      micIsExpectedToListen = false;
       _speech.stop();
       systemUserMessage.clear();
       clearMsgTextInput();
+      //TODO:       Reset all values on stopping 
     }
   }
 
@@ -202,6 +204,8 @@ abstract class _AbstractMicObserver with Store {
            *  -Inform the user not has been created.
            *  -Inquire if they need more help
            */
+         addSystemMessage(nluResponse);
+
         //call the create event service
         TextNote note = TextNote();
         note.text = nluResponse.eventType!;
@@ -237,6 +241,19 @@ abstract class _AbstractMicObserver with Store {
           //get user input and send to the NLU
           //use a flag, expectingUserInput, to know when the user is expected to speak
           //expectingUserInput is toggled to off when system is audible.
+          micIsExpectedToListen = false;
+          //_listen(micIsExpectedToListen);
+
+          Timer(Duration(seconds: 3), () {
+              
+            //.getNLUResponse(messageInputText, "en-US")
+           nluLibService.getNLUResponse("On Friday", "en-US")
+            .then((value) => {
+                print("_onDone: response from NLU ${ (value as NLUResponse).response }"),
+                addUserMessage("On Friday"),
+                //fufillNLUTask(value),
+            });
+          });
         }
 
         break;
@@ -247,21 +264,19 @@ abstract class _AbstractMicObserver with Store {
     print('_onDone: onStatus: $status');
     print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
 
-    if (status == "notListening" && micIsExpectedToListen == true) {
-      micIsExpectedToListen = false;
-      //Re-initiate speech service if user still expects it to listen
-      //_listen(micIsExpectedToListen);
-    }
     if(status == "done"){
        print('_onDone: Calling the NLU  with text : "$messageInputText" ');
+       messageInputText = "Remind me to buy eggs";
       if (messageInputText.isNotEmpty){
         await nluLibService
-            .getNLUResponse(messageInputText, "en-US")
+            //.getNLUResponse(messageInputText, "en-US")
+            .getNLUResponse("Remind me to buy eggs", "en-US")
             .then((value) => {
-                print("_onDone: response from NLU ${ (value as NLUResponse).response }"),
-                addUserMessage(messageInputText),
+                print("_onDone: response from NLU ${ (value as NLUResponse).actionType }"),
+                addUserMessage("Remind John to buy eggs"),
                 fufillNLUTask(value),
             });
+        messageInputText = "";
       }
     }
   }
@@ -269,9 +284,9 @@ abstract class _AbstractMicObserver with Store {
   void _onError(status) async {
     print('_onError: onStatus: $status');
     //Re-initiate speech service on error
-    micIsExpectedToListen = true;
+    micIsExpectedToListen = false;
 
-    _listen(micIsExpectedToListen);
+    //_listen(micIsExpectedToListen);
   }
 
   Future<void> _listen(micIsExpectedToListen) async {
