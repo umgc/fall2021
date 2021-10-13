@@ -91,7 +91,7 @@ class I18n implements WidgetsLocalizations {
 	/// "Language"
 	String get language => "Language";
 	/// "Do we have permission to access your microphone?"
-	String get promptPermission => "Do we have permission to access your microphone?";
+	String get promptPermission => "Do we have permission to access your microphone and resources?";
 	/// "Select Font Size for Notes"
 	String get promptNoteFontSize => "Select Font Size for Notes";
 	/// "Select Font Size for Menu"

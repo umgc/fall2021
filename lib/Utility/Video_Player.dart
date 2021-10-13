@@ -23,7 +23,7 @@ class _VideosListState extends State<VideosList> {
 
     videosController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
-      aspectRatio: 16 / 8,
+      aspectRatio: 10/ 6,
       autoInitialize: true,
       looping: widget.looping,
       errorBuilder: (context, errorMessage) {
@@ -41,9 +41,10 @@ class _VideosListState extends State<VideosList> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Chewie(
+      child: Expanded(child:
+      Chewie(
         controller: videosController,
-      ),
+      ),)
     );
   }
 
