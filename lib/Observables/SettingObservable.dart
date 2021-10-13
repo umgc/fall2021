@@ -1,8 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Model/Setting.dart';
 import 'package:untitled3/Services/SettingService.dart';
-import '../Model/Note.dart';
-import '../Services/NoteService.dart';
 
 part 'SettingObservable.g.dart';
 
@@ -23,14 +21,9 @@ abstract class _AbstractSettingObserver with Store {
 
 
   @action
-  void saveSetting(Setting? userSettings){
+  void saveSetting(){
      //over-write old settings with incoming new one.
-     if(userSettings != null){
-       SettingService.save(userSettings);
-
-       this.userSettings = userSettings;
-     }
-      
+     SettingService.save(userSettings); 
   }
 
   @action

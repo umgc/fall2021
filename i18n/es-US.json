@@ -28,5 +28,20 @@
     "back": "atrás",
     "next": "próximo",
     "selectLanguage": "Seleccione su idioma principal.",
-    "language": "Idioma"
+    "language": "Idioma",
+    "promptPermission": "¿Tenemos permiso para acceder a su micrófono?",
+    "promptNoteFontSize": "Seleccionar tamaño de fuente para notas",
+    "promptMenuFontSize": "Seleccionar tamaño de fuente para el menú",
+    "promptNoteDeletionTimeline": "Seleccione la línea de tiempo de eliminación de notas",
+    "small": "Pequeña",
+    "medium": "Medio",
+    "large": "Grande",
+    "cancel": "Cancelar",
+    "save": "Ahorrar",
+    "securitySettings": "Configuraciones de seguridad",
+    "resetSettings": "Reiniciar ajustes",
+    "permissionNote": "NOTA: Este permiso permitirá todo tipo de interacción de voz.",
+    "daysToKeepNotes": "Días para tomar notas",
+    "noteFontSize": "Tamaño de fuente de nota",
+    "menuFontSize": "Tamaño de fuente del menú"
 }

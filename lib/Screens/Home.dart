@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'HomeScreen.dart';
+import 'package:untitled3/Screens/Main.dart';
+import 'package:untitled3/Screens/Mic/Mic.dart';
+
 
 
 class Home extends StatefulWidget {
@@ -47,9 +49,9 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(30.0)),
                       minimumSize: Size(40, 40)),
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => MainNavigator()),
                     );
                   },
                   child: Column(children: [
@@ -82,7 +84,10 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(30.0)),
                       minimumSize: Size(10, 10)),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/save-note');
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainNavigator()),
+                    );
                   },
                     child: Column(children: [
                     Padding(

@@ -90,6 +90,36 @@ class I18n implements WidgetsLocalizations {
 	String get selectLanguage => "Please select your primary language.";
 	/// "Language"
 	String get language => "Language";
+	/// "Do we have permission to access your microphone?"
+	String get promptPermission => "Do we have permission to access your microphone and resources?";
+	/// "Select Font Size for Notes"
+	String get promptNoteFontSize => "Select Font Size for Notes";
+	/// "Select Font Size for Menu"
+	String get promptMenuFontSize => "Select Font Size for Menu";
+	/// "Select Note Deletion Timeline"
+	String get promptNoteDeletionTimeline => "Select Note Deletion Timeline";
+	/// "Small"
+	String get small => "Small";
+	/// "Medium"
+	String get medium => "Medium";
+	/// "Large"
+	String get large => "Large";
+	/// "Cancel"
+	String get cancel => "Cancel";
+	/// "Save"
+	String get save => "Save";
+	/// "Security Settings"
+	String get securitySettings => "Security Settings";
+	/// "Reset Settings"
+	String get resetSettings => "Reset Settings";
+	/// "NOTE: This permission will allow all types of voice interaction."
+	String get permissionNote => "NOTE: This permission will allow all types of voice interaction.";
+	/// "Days to Keep Notes"
+	String get daysToKeepNotes => "Days to Keep Notes";
+	/// "Note Font Size"
+	String get noteFontSize => "Note Font Size";
+	/// "Menu Font Size"
+	String get menuFontSize => "Menu Font Size";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -188,101 +218,51 @@ class _I18n_es_US extends I18n {
 	/// "Idioma"
 	@override
 	String get language => "Idioma";
-}
-class _I18n_zh_CN extends I18n {
-  const _I18n_zh_CN();
-  @override
-  TextDirection get textDirection => TextDirection.ltr;
-	/// "家"
+	/// "¿Tenemos permiso para acceder a su micrófono?"
 	@override
-	String get homeScreenName => "家";
-	/// "菜单"
+	String get promptPermission => "¿Tenemos permiso para acceder a su micrófono?";
+	/// "Seleccionar tamaño de fuente para notas"
 	@override
-	String get menuScreenName => "菜单";
-	/// "笔记"
+	String get promptNoteFontSize => "Seleccionar tamaño de fuente para notas";
+	/// "Seleccionar tamaño de fuente para el menú"
 	@override
-	String get notesScreenName => "笔记";
-	/// "通知"
+	String get promptMenuFontSize => "Seleccionar tamaño de fuente para el menú";
+	/// "Seleccione la línea de tiempo de eliminación de notas"
 	@override
-	String get notificationsScreenName => "通知";
-	/// "环境"
+	String get promptNoteDeletionTimeline => "Seleccione la línea de tiempo de eliminación de notas";
+	/// "Pequeña"
 	@override
-	String get settingScreenName => "环境";
-	/// "日历"
+	String get small => "Pequeña";
+	/// "Medio"
 	@override
-	String get calendarScreenName => "日历";
-	/// "麦克风"
+	String get medium => "Medio";
+	/// "Grande"
 	@override
-	String get micButton => "麦克风";
-	/// "按录制"
+	String get large => "Grande";
+	/// "Cancelar"
 	@override
-	String get pressToRecord => "按录制";
-	/// "是的"
+	String get cancel => "Cancelar";
+	/// "Ahorrar"
 	@override
-	String get yes => "是的";
-	/// "保存笔记"
+	String get save => "Ahorrar";
+	/// "Configuraciones de seguridad"
 	@override
-	String get saveNote => "保存笔记";
-	/// "日期"
+	String get securitySettings => "Configuraciones de seguridad";
+	/// "Reiniciar ajustes"
 	@override
-	String get date => "日期";
-	/// "笔记"
+	String get resetSettings => "Reiniciar ajustes";
+	/// "NOTA: Este permiso permitirá todo tipo de interacción de voz."
 	@override
-	String get note => "笔记";
-	/// "笔记详情"
+	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz.";
+	/// "Días para tomar notas"
 	@override
-	String get notesDetailScreenName => "笔记详情";
-	/// "添加注释"
+	String get daysToKeepNotes => "Días para tomar notas";
+	/// "Tamaño de fuente de nota"
 	@override
-	String get addNotesScreenName => "添加注释";
-	/// "清单"
+	String get noteFontSize => "Tamaño de fuente de nota";
+	/// "Tamaño de fuente del menú"
 	@override
-	String get checklistScreenName => "清单";
-	/// "帮助"
-	@override
-	String get helpScreen => "帮助";
-	/// "扳机"
-	@override
-	String get triggerScreen => "扳机";
-	/// "同步到云端"
-	@override
-	String get syncToCloudScreen => "同步到云端";
-	/// "通用设置"
-	@override
-	String get generalSettingsScreen => "通用设置";
-	/// "云设置"
-	@override
-	String get onboardCloudSetup => "云设置";
-	/// "允许"
-	@override
-	String get onboardPermissionSetup => "允许";
-	/// "选择语言"
-	@override
-	String get onboardLangSetup => "选择语言";
-	/// "介绍"
-	@override
-	String get walkthroughScreen => "介绍";
-	/// "您想设置一个云帐户吗？"
-	@override
-	String get cloudSetupPrompt => "您想设置一个云帐户吗？";
-	/// "不"
-	@override
-	String get no => "不";
-	/// "欢迎来到记忆魔法"
-	@override
-	String get welcome => "欢迎来到记忆魔法";
-	/// "后退"
-	@override
-	String get back => "后退";
-	/// "下一个"
-	@override
-	String get next => "下一个";
-	/// "请选择您的主要语言。"
-	@override
-	String get selectLanguage => "请选择您的主要语言。";
-	/// "语"
-	@override
-	String get language => "语";
+	String get menuFontSize => "Tamaño de fuente del menú";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -378,6 +358,191 @@ class _I18n_pt_BR extends I18n {
 	/// "Língua"
 	@override
 	String get language => "Língua";
+	/// "Temos permissão para acessar seu microfone?"
+	@override
+	String get promptPermission => "Temos permissão para acessar seu microfone?";
+	/// "Selecione o tamanho da fonte para as notas"
+	@override
+	String get promptNoteFontSize => "Selecione o tamanho da fonte para as notas";
+	/// "Selecione o tamanho da fonte para o menu"
+	@override
+	String get promptMenuFontSize => "Selecione o tamanho da fonte para o menu";
+	/// "Selecione o cronograma de exclusão de notas"
+	@override
+	String get promptNoteDeletionTimeline => "Selecione o cronograma de exclusão de notas";
+	/// "Pequena"
+	@override
+	String get small => "Pequena";
+	/// "Médio"
+	@override
+	String get medium => "Médio";
+	/// "Grande"
+	@override
+	String get large => "Grande";
+	/// "Cancelar"
+	@override
+	String get cancel => "Cancelar";
+	/// "Salve "
+	@override
+	String get save => "Salve ";
+	/// "Configurações de segurança"
+	@override
+	String get securitySettings => "Configurações de segurança";
+	/// "Redefinir as configurações"
+	@override
+	String get resetSettings => "Redefinir as configurações";
+	/// "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
+	@override
+	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação por voz.";
+	/// "Dias para fazer anotações"
+	@override
+	String get daysToKeepNotes => "Dias para fazer anotações";
+	/// "Tamanho da fonte da nota"
+	@override
+	String get noteFontSize => "Tamanho da fonte da nota";
+	/// "Tamanho da fonte do menu"
+	@override
+	String get menuFontSize => "Tamanho da fonte do menu";
+}
+class _I18n_zh_CN extends I18n {
+  const _I18n_zh_CN();
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+	/// "家"
+	@override
+	String get homeScreenName => "家";
+	/// "菜单"
+	@override
+	String get menuScreenName => "菜单";
+	/// "笔记"
+	@override
+	String get notesScreenName => "笔记";
+	/// "通知"
+	@override
+	String get notificationsScreenName => "通知";
+	/// "环境"
+	@override
+	String get settingScreenName => "环境";
+	/// "日历"
+	@override
+	String get calendarScreenName => "日历";
+	/// "麦克风"
+	@override
+	String get micButton => "麦克风";
+	/// "按录制"
+	@override
+	String get pressToRecord => "按录制";
+	/// "是的"
+	@override
+	String get yes => "是的";
+	/// "保存笔记"
+	@override
+	String get saveNote => "保存笔记";
+	/// "日期"
+	@override
+	String get date => "日期";
+	/// "笔记"
+	@override
+	String get note => "笔记";
+	/// "笔记详情"
+	@override
+	String get notesDetailScreenName => "笔记详情";
+	/// "添加注释"
+	@override
+	String get addNotesScreenName => "添加注释";
+	/// "清单"
+	@override
+	String get checklistScreenName => "清单";
+	/// "帮助"
+	@override
+	String get helpScreen => "帮助";
+	/// "扳机"
+	@override
+	String get triggerScreen => "扳机";
+	/// "同步到云端"
+	@override
+	String get syncToCloudScreen => "同步到云端";
+	/// "通用设置"
+	@override
+	String get generalSettingsScreen => "通用设置";
+	/// "云设置"
+	@override
+	String get onboardCloudSetup => "云设置";
+	/// "允许"
+	@override
+	String get onboardPermissionSetup => "允许";
+	/// "选择语言"
+	@override
+	String get onboardLangSetup => "选择语言";
+	/// "介绍"
+	@override
+	String get walkthroughScreen => "介绍";
+	/// "您想设置一个云帐户吗？"
+	@override
+	String get cloudSetupPrompt => "您想设置一个云帐户吗？";
+	/// "不"
+	@override
+	String get no => "不";
+	/// "欢迎来到记忆魔法"
+	@override
+	String get welcome => "欢迎来到记忆魔法";
+	/// "后退"
+	@override
+	String get back => "后退";
+	/// "下一个"
+	@override
+	String get next => "下一个";
+	/// "请选择您的主要语言。"
+	@override
+	String get selectLanguage => "请选择您的主要语言。";
+	/// "语"
+	@override
+	String get language => "语";
+	/// "我们是否有权访问您的麦克风？"
+	@override
+	String get promptPermission => "我们是否有权访问您的麦克风？";
+	/// "为笔记选择字体大小"
+	@override
+	String get promptNoteFontSize => "为笔记选择字体大小";
+	/// "为菜单选择字体大小"
+	@override
+	String get promptMenuFontSize => "为菜单选择字体大小";
+	/// "选择笔记删除时间线"
+	@override
+	String get promptNoteDeletionTimeline => "选择笔记删除时间线";
+	/// "小的"
+	@override
+	String get small => "小的";
+	/// "中等的"
+	@override
+	String get medium => "中等的";
+	/// "大的"
+	@override
+	String get large => "大的";
+	/// "取消"
+	@override
+	String get cancel => "取消";
+	/// "节省"
+	@override
+	String get save => "节省";
+	/// "安全设定"
+	@override
+	String get securitySettings => "安全设定";
+	/// "重新设置"
+	@override
+	String get resetSettings => "重新设置";
+	/// "注意：此权限将允许所有类型的语音交互。"
+	@override
+	String get permissionNote => "注意：此权限将允许所有类型的语音交互。";
+	/// "记笔记的天数"
+	@override
+	String get daysToKeepNotes => "记笔记的天数";
+	/// "注释字体大小"
+	@override
+	String get noteFontSize => "注释字体大小";
+	/// "菜单字体大小"
+	@override
+	String get menuFontSize => "菜单字体大小";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -473,6 +638,51 @@ class _I18n_ar_SY extends I18n {
 	/// "لغة"
 	@override
 	String get language => "لغة";
+	/// "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟"
+	@override
+	String get promptPermission => "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟";
+	/// "حدد حجم الخط للملاحظات"
+	@override
+	String get promptNoteFontSize => "حدد حجم الخط للملاحظات";
+	/// "حدد حجم الخط للقائمة"
+	@override
+	String get promptMenuFontSize => "حدد حجم الخط للقائمة";
+	/// "حدد الجدول الزمني لحذف الملاحظات"
+	@override
+	String get promptNoteDeletionTimeline => "حدد الجدول الزمني لحذف الملاحظات";
+	/// "صغير"
+	@override
+	String get small => "صغير";
+	/// "واسطة"
+	@override
+	String get medium => "واسطة";
+	/// "كبير"
+	@override
+	String get large => "كبير";
+	/// "يلغي"
+	@override
+	String get cancel => "يلغي";
+	/// "يحفظ"
+	@override
+	String get save => "يحفظ";
+	/// "اعدادات الامان"
+	@override
+	String get securitySettings => "اعدادات الامان";
+	/// "اعادة الضبط"
+	@override
+	String get resetSettings => "اعادة الضبط";
+	/// "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي."
+	@override
+	String get permissionNote => "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
+	/// "أيام للاحتفاظ بالملاحظات"
+	@override
+	String get daysToKeepNotes => "أيام للاحتفاظ بالملاحظات";
+	/// "لاحظ حجم الخط"
+	@override
+	String get noteFontSize => "لاحظ حجم الخط";
+	/// "حجم خط القائمة"
+	@override
+	String get menuFontSize => "حجم خط القائمة";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

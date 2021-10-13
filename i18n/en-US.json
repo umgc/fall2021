@@ -28,5 +28,20 @@
     "back": "Back",
     "next": "Next",
     "selectLanguage": "Please select your primary language.",
-    "language": "Language"
+    "language": "Language",
+    "promptPermission": "Do we have permission to access your microphone?",
+    "promptNoteFontSize":  "Select Font Size for Notes",
+    "promptMenuFontSize":  "Select Font Size for Menu",
+    "promptNoteDeletionTimeline": "Select Note Deletion Timeline",
+    "small": "Small",
+    "medium": "Medium",
+    "large" : "Large",
+    "cancel": "Cancel",
+    "save": "Save",
+    "securitySettings": "Security Settings",
+    "resetSettings": "Reset Settings",
+    "permissionNote": "NOTE: This permission will allow all types of voice interaction.",
+    "daysToKeepNotes": "Days to Keep Notes",
+    "noteFontSize": "Note Font Size",
+    "menuFontSize": "Menu Font Size"
 }

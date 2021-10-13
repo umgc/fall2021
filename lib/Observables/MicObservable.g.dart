@@ -9,21 +9,6 @@ part of 'MicObservable.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MicObserver on _AbstractMicObserver, Store {
-  final _$mockIndexAtom = Atom(name: '_AbstractMicObserver.mockIndex');
-
-  @override
-  int get mockIndex {
-    _$mockIndexAtom.reportRead();
-    return super.mockIndex;
-  }
-
-  @override
-  set mockIndex(int value) {
-    _$mockIndexAtom.reportWrite(value, super.mockIndex, () {
-      super.mockIndex = value;
-    });
-  }
-
   final _$messageInputTextAtom =
       Atom(name: '_AbstractMicObserver.messageInputText');
 
@@ -40,19 +25,51 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$micIsListeningAtom =
-      Atom(name: '_AbstractMicObserver.micIsListening');
+  final _$micIsExpectedToListenAtom =
+      Atom(name: '_AbstractMicObserver.micIsExpectedToListen');
 
   @override
-  bool get micIsListening {
-    _$micIsListeningAtom.reportRead();
-    return super.micIsListening;
+  bool get micIsExpectedToListen {
+    _$micIsExpectedToListenAtom.reportRead();
+    return super.micIsExpectedToListen;
   }
 
   @override
-  set micIsListening(bool value) {
-    _$micIsListeningAtom.reportWrite(value, super.micIsListening, () {
-      super.micIsListening = value;
+  set micIsExpectedToListen(bool value) {
+    _$micIsExpectedToListenAtom.reportWrite(value, super.micIsExpectedToListen,
+        () {
+      super.micIsExpectedToListen = value;
+    });
+  }
+
+  final _$micStatusAtom = Atom(name: '_AbstractMicObserver.micStatus');
+
+  @override
+  String get micStatus {
+    _$micStatusAtom.reportRead();
+    return super.micStatus;
+  }
+
+  @override
+  set micStatus(String value) {
+    _$micStatusAtom.reportWrite(value, super.micStatus, () {
+      super.micStatus = value;
+    });
+  }
+
+  final _$speechConfidenceAtom =
+      Atom(name: '_AbstractMicObserver.speechConfidence');
+
+  @override
+  double get speechConfidence {
+    _$speechConfidenceAtom.reportRead();
+    return super.speechConfidence;
+  }
+
+  @override
+  set speechConfidence(double value) {
+    _$speechConfidenceAtom.reportWrite(value, super.speechConfidence, () {
+      super.speechConfidence = value;
     });
   }
 
@@ -72,18 +89,34 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$nluResponseAtom = Atom(name: '_AbstractMicObserver.nluResponse');
+  final _$mainNavObserverAtom =
+      Atom(name: '_AbstractMicObserver.mainNavObserver');
 
   @override
-  NLUResponse? get nluResponse {
-    _$nluResponseAtom.reportRead();
-    return super.nluResponse;
+  dynamic get mainNavObserver {
+    _$mainNavObserverAtom.reportRead();
+    return super.mainNavObserver;
   }
 
   @override
-  set nluResponse(NLUResponse? value) {
-    _$nluResponseAtom.reportWrite(value, super.nluResponse, () {
-      super.nluResponse = value;
+  set mainNavObserver(dynamic value) {
+    _$mainNavObserverAtom.reportWrite(value, super.mainNavObserver, () {
+      super.mainNavObserver = value;
+    });
+  }
+
+  final _$noteObserverAtom = Atom(name: '_AbstractMicObserver.noteObserver');
+
+  @override
+  dynamic get noteObserver {
+    _$noteObserverAtom.reportRead();
+    return super.noteObserver;
+  }
+
+  @override
+  set noteObserver(dynamic value) {
+    _$noteObserverAtom.reportWrite(value, super.noteObserver, () {
+      super.noteObserver = value;
     });
   }
 
@@ -91,55 +124,66 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
       ActionController(name: '_AbstractMicObserver');
 
   @override
-  void startListening() {
+  void toggleListeningMode() {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.startListening');
+        name: '_AbstractMicObserver.toggleListeningMode');
     try {
-      return super.startListening();
+      return super.toggleListeningMode();
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void stopListening() {
+  void _clearChatHistory() {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.stopListening');
+        name: '_AbstractMicObserver._clearChatHistory');
     try {
-      return super.stopListening();
+      return super._clearChatHistory();
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addUserMessage(String name) {
+  void addUserMessage(String userMsg) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
         name: '_AbstractMicObserver.addUserMessage');
     try {
-      return super.addUserMessage(name);
+      return super.addUserMessage(userMsg);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addSystemMessage(NLUResponse name) {
+  void addSystemMessage(NLUResponse nluResponse) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
         name: '_AbstractMicObserver.addSystemMessage');
     try {
-      return super.addSystemMessage(name);
+      return super.addSystemMessage(nluResponse);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void fufillTask(NLUResponse name) {
+  void setNoteObserver(dynamic observer) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.fufillTask');
+        name: '_AbstractMicObserver.setNoteObserver');
     try {
-      return super.fufillTask(name);
+      return super.setNoteObserver(observer);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMainNavObserver(dynamic observer) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.setMainNavObserver');
+    try {
+      return super.setMainNavObserver(observer);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -157,33 +201,22 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
-  void callNLU(String speechText) {
+  void setVoiceMsgTextInput(dynamic value) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.callNLU');
+        name: '_AbstractMicObserver.setVoiceMsgTextInput');
     try {
-      return super.callNLU(speechText);
+      return super.setVoiceMsgTextInput(value);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setMessageInputText(dynamic value, bool isSysrMsg) {
+  void fufillNLUTask(NLUResponse nluResponse) {
     final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.setMessageInputText');
+        name: '_AbstractMicObserver.fufillNLUTask');
     try {
-      return super.setMessageInputText(value, isSysrMsg);
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void mockInteraction() {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.mockInteraction');
-    try {
-      return super.mockInteraction();
+      return super.fufillNLUTask(nluResponse);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -192,11 +225,13 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   @override
   String toString() {
     return '''
-mockIndex: ${mockIndex},
 messageInputText: ${messageInputText},
-micIsListening: ${micIsListening},
+micIsExpectedToListen: ${micIsExpectedToListen},
+micStatus: ${micStatus},
+speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
-nluResponse: ${nluResponse}
+mainNavObserver: ${mainNavObserver},
+noteObserver: ${noteObserver}
     ''';
   }
 }

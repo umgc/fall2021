@@ -28,5 +28,20 @@
     "back": "خلف",
     "next": "التالي",
     "selectLanguage": "الرجاء تحديد لغتك الأساسية.",
-    "language": "لغة"
+    "language": "لغة",
+    "promptPermission": "هل لدينا إذن للوصول إلى الميكروفون الخاص بك؟",
+    "promptNoteFontSize": "حدد حجم الخط للملاحظات",
+    "promptMenuFontSize": "حدد حجم الخط للقائمة",
+    "promptNoteDeletionTimeline": "حدد الجدول الزمني لحذف الملاحظات",
+    "small": "صغير",
+    "medium": "واسطة",
+    "large": "كبير",
+    "cancel": "يلغي",
+    "save": "يحفظ",
+    "securitySettings": "اعدادات الامان",
+    "resetSettings": "اعادة الضبط",
+    "permissionNote": "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.",
+    "daysToKeepNotes": "أيام للاحتفاظ بالملاحظات",
+    "noteFontSize": "لاحظ حجم الخط",
+    "menuFontSize": "حجم خط القائمة"
 }

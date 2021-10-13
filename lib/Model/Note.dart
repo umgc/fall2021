@@ -33,15 +33,15 @@ class TextNote {
   DateTime eventDate = DateTime.now() ;
 
   String toJson() {
-    String jsonStr = """{"noteId": "${this.noteId}",
+    String jsonStr = """ {"noteId": "${this.noteId}",
                         "recordedTime": "${this.recordedTime}",
                         "recordLocale": "${this.recordLocale}",
                         "preferredLocale": "${this.preferredLocale}",
                         "isCheckList": ${this.isCheckList},
                         "isEvent": ${this.isEvent},
                         "text": "${this.text}",
-                        "isFavorite": ${this.isFavorite}",
-                        "eventDate": "${this.eventDate}""";
+                        "isFavorite": ${this.isFavorite},
+                        "eventDate": "${this.eventDate}"}""";
     return jsonStr;
   }
 
@@ -57,7 +57,7 @@ class TextNote {
     note.isEvent = jsonObj['isEvent'];
     note.text = jsonObj['text'];
     note.isFavorite = jsonObj['isFavorite'];
-    note.eventDate = jsonObj['eventDate'];
+    note.eventDate = DateTime.tryParse(jsonObj['eventDate'])!;
     return note;
   }
 

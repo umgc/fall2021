@@ -28,10 +28,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
           child: Text(
             I18n.of(context)!.selectLanguage,
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         Padding(
@@ -51,7 +48,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
             child: DropdownButton(
               hint: Text(
                 I18n.of(context)!.selectLanguage,
-                style: TextStyle(color: Colors.black, fontSize: 22),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               //icon: Icon(                // Add this
               //  Icons.arrow_drop_down_outlined,  // Add this
@@ -69,13 +66,13 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
               ),
               value: language,
 
-              onChanged: (language){
+              onChanged: (Locale? locale){
+                language = locale;
                 onboardingObserver.languageChange(language);
-
               },
               isExpanded: true,
               underline: SizedBox(),
-              style: TextStyle(color: Colors.black, fontSize: 22),
+              style: Theme.of(context).textTheme.bodyText1,
               items: GeneratedLocalizationsDelegate()
                   .supportedLocales
                   .map((valueItem) {
