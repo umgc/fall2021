@@ -43,5 +43,9 @@
     "permissionNote": "NOTA: Este permiso permitirá todo tipo de interacción de voz.",
     "daysToKeepNotes": "Días para tomar notas",
     "noteFontSize": "Tamaño de fuente de nota",
-    "menuFontSize": "Tamaño de fuente del menú"
+    "menuFontSize": "Tamaño de fuente del menú",
+    "help": "Ayudar",
+    "trigger": "Desencadenar",
+    "syncToCloud": "Sincronizar con la nube",
+    "generalSetting": "Configuración general"
 }

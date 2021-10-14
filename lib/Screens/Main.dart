@@ -77,7 +77,7 @@ class _MainNavigatorState extends State<MainNavigator> {
       return SyncToCloud();
     }
     if (screen == MENU_SCREENS.TRIGGER) {
-      screenNav.setTitle(I18n.of(context)!.triggerScreen);
+      screenNav.setTitle(I18n.of(context)!.trigger);
       return Trigger();
     }
     if (screen == MENU_SCREENS.SETTING) {
