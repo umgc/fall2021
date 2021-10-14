@@ -281,7 +281,7 @@ class _SettingState extends State<Settings> {
                     //size: 31,
                     color: Colors.blue, // Add this
                   ),
-                  value: appTheme,
+                  value: settingObserver.userSettings.appTheme,
                   onChanged: (newTheme) {
                     setState(() {
                       appTheme = newTheme;
