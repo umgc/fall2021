@@ -232,6 +232,42 @@ class AuxiliaryVerbType {
   }
 }
 
+class HaveType {
+  late Value? value;
+
+  HaveType({required this.value});
+
+  HaveType.fromJson(Map<String, dynamic> json) {
+    value = json['value'] != null ? new Value.fromJson(json['value']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.value != null) {
+      data['value'] = this.value!.toJson();
+    }
+    return data;
+  }
+}
+
+class BeType {
+  late Value? value;
+
+  BeType({required this.value});
+
+  BeType.fromJson(Map<String, dynamic> json) {
+    value = json['value'] != null ? new Value.fromJson(json['value']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.value != null) {
+      data['value'] = this.value!.toJson();
+    }
+    return data;
+  }
+}
+
 class SubjectType {
   late Value? value;
 
@@ -258,9 +294,11 @@ class Slots {
   late EventType? time;
   late RecurringType? recurringType;
   late AuxiliaryVerbType? auxiliaryVerbType;
+  late HaveType? haveType;
+  late BeType? beType;
   late SubjectType? subjectType;
 
-  Slots({this.eventType, this.date, this.time, this.recurringType, this.actionEventType, this.auxiliaryVerbType, this.subjectType});
+  Slots({this.eventType, this.date, this.time, this.recurringType, this.actionEventType, this.auxiliaryVerbType, this.haveType, this.beType, this.subjectType});
 
   Slots.fromJson(Map<String, dynamic> json) {
     if (json['EventType'] == null) {
@@ -282,6 +320,16 @@ class Slots {
       auxiliaryVerbType = null;
     } else {
       auxiliaryVerbType = new AuxiliaryVerbType.fromJson(json['AuxiliaryVerbType']);
+    }
+    if (json['HaveType'] == null) {
+      haveType = null;
+    } else {
+      haveType = new HaveType.fromJson(json['HaveType']);
+    }
+    if (json['BeType'] == null) {
+      beType = null;
+    } else {
+      beType = new BeType.fromJson(json['BeType']);
     }
     if (json['RecurringType'] == null) {
       recurringType = null;
