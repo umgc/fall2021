@@ -9,12 +9,17 @@ import 'package:untitled3/Model/NLUState.dart';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
-import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:untitled3/Utility/Constant.dart';
 part 'MicObservable.g.dart';
 
+/**
+ * TODO: 
+ *   - Enable multi languages.
+ *   - Bubble buttons are responsive.
+ * 
+ */
 class MicObserver = _AbstractMicObserver with _$MicObserver;
 
 abstract class _AbstractMicObserver with Store {
@@ -24,58 +29,41 @@ abstract class _AbstractMicObserver with Store {
     nluLibService = NLULibService();
   }
 
-  //messageInputText will be initialize and read and then its content will be added to the systemUserMessage to be displayed in the chat bubble.
+  //messageInputText will be initialize, read and added to the systemUserMessage to be displayed in the chat bubble.
   @observable
   String messageInputText = "";
 
+  //Flag is turn on when the system expects the user to speak. And off otherwise.
   @observable
   bool micIsExpectedToListen = false;
 
   @observable
-  String micStatus = "";
+  bool followUpMessageSent = false;
 
+  //Tracks the systems confidence in transcribing the users voice to text.
   @observable
   double speechConfidence = 0;
 
+  //Holds Message interaction between the NLU and the User to be displayed in the UI.
   @observable
   ObservableList<dynamic> systemUserMessage = ObservableList();
 
+  //Instance of MainNavObserver to be passed in from Mic.dart
   @observable
   dynamic mainNavObserver;
 
+  //Instance of Notebservable to be passed in from Mic.dart
   @observable
   dynamic noteObserver;
 
+  @observable
+  NLUResponse? lastNluMessage;
+
+  //Speech library user for interfacing with the device's mic resource.
   SpeechToText _speech = SpeechToText();
 
   List<String> resolveVals = ["Remind me to buy eggs", "on Friday", "at 12pm"];
   int index = 0;
-  List<NLUResponse> testData = [
-    NLUResponse(
-        ActionType.ANSWER,
-        "John and Sally are going to buy me clothes",
-        "On what date are John and Sally going to buy you clothes?",
-        NLUState.IN_PROGRESS,
-        "",
-        null,
-        ["are going to", "am going to", "is going to"],
-        null,
-        null),
-    NLUResponse(
-        ActionType.CREATE_EVENT,
-        "4 in the afternoon",
-        "John and Sally are going to buy me clothes",
-        NLUState.COMPLETE,
-        "buy me clothes",
-        DateTime.now(),
-        null,
-        null,
-        null),
-    NLUResponse(ActionType.APP_NAV, "Go to notes screen", "notes",
-        NLUState.COMPLETE, null, null, null, null, null),
-    NLUResponse(ActionType.APP_HELP, "Go to menu screen", "menu",
-        NLUState.COMPLETE, null, null, ["Create Note", "Settng"], null, null)
-  ];
 
   @action
   void toggleListeningMode() {
@@ -118,13 +106,29 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void addUserMessage(String userMsg) {
+    followUpMessageSent = false;
     print("added user message");
     systemUserMessage.add(userMsg);
   }
 
   @action
   void addSystemMessage(NLUResponse nluResponse) {
+
+    if(nluResponse.resolvedValues == null)
+      followUpMessageSent = false;
+
     systemUserMessage.add(nluResponse);
+  }
+
+  @action
+  void addFollowUpMessage(String message, List<String> responsOptions, FollowUpTypes followupType  ) {
+    followUpMessageSent = true;
+
+    //reply with a no action followup "Ok I will not create note"
+     AppMessage appMessage = AppMessage( message: "Ok I will not create note",
+                                         responsOptions :responsOptions,
+                                         followupType : followupType);
+    systemUserMessage.add(appMessage);
   }
 
   @action
@@ -147,6 +151,11 @@ abstract class _AbstractMicObserver with Store {
     messageInputText = value;
   }
 
+  /*
+   * 
+   * fufillNLUTask: As its name implies, it recieves an NLURespons
+   *  message object and process it based on its actionType
+   */
   @action
   void fufillNLUTask(NLUResponse nluResponse) {
     //final noteObserver = Provider.of<NoteObserver>(context);
@@ -189,9 +198,7 @@ abstract class _AbstractMicObserver with Store {
             break;
 
           default: //TODO ask for more info.
-
         }
-
         //create note
         break;
 
@@ -210,34 +217,26 @@ abstract class _AbstractMicObserver with Store {
       case ActionType.CREATE_RECURRING_EVENT:
       case ActionType.CREATE_EVENT:
       case ActionType.CREATE_NOTE:
-        /**
-           * Ask user for more information:
-           *  -Display NLU response on the screen 
-           *  -Inform the user not has been created.
-           *  -Inquire if they need more help
-           */
-        addSystemMessage(nluResponse);
 
-        //call the create event service
-        TextNote note = TextNote();
-        note.text = nluResponse.eventType!;
-        note.eventDate = nluResponse.eventTime!;
-        note.isCheckList = (nluResponse.recurringType != null);
-        //note.recordLocale = (nluResponse.recurringType != null);
-        note.recordedTime = DateTime.now();
-        print(
-            "Processing NLU message with action type ${nluResponse.actionType}");
+        //ask user if they will like the note create for the event.
+        //Pre-followup
+        if (followUpMessageSent == false) {
+          //send followup message.
+        } else {
+          //recieve follow up response
+          if(messageInputText.contains("yes")) {
+            
+            //create note 
+            _createNote(nluResponse);
+            //FollowUpMessage
+            //addSystemMessage("An event has been created to 'eventType' on 'eventTime'");
+          }
+          //else send NEE_HELP followup
+          //addSystemMessage("Is there anything I can help you with?");
+          //call _listen to get user input.
+        }
 
-        //note.preferredLocale will always be their current local at time when data is pulled
-        print("Adding note ${nluResponse.actionType}");
-
-        (noteObserver as NoteObserver).addNote(note);
-
-        //FollowUpMessage
-        //addSystemMessage("And event has been created to 'eventType' on 'eventTime'");
-
-        //addSystemMessage("Is there anything I can help you with?");
-
+        
         break;
       case ActionType.NOTFOUND:
         break;
@@ -245,57 +244,114 @@ abstract class _AbstractMicObserver with Store {
       case ActionType.ANSWER:
         //display the text from NLU
         //and follow up with
-        //addSystemMessage(nluResponse);
+        addSystemMessage(nluResponse);
 
-        if (nluResponse.state == NLUState.COMPLETE) {
-          //FollowUpMessage
-          //addSystemMessage("Is there anything I can help you with?");
-        } else {
+        if (nluResponse.state == NLUState.IN_PROGRESS) {
           //get user input and send to the NLU
           //use a flag, expectingUserInput, to know when the user is expected to speak
-          //expectingUserInput is toggled to off when system is audible.
-          micIsExpectedToListen = false;
-          //_listen(micIsExpectedToListen);
-
-          if (index > 1) {
-            messageInputText = resolveVals[index];
-            addUserMessage(resolveVals[index]);
-            //.getNLUResponse(messageInputText, "en-US")
-            nluLibService
-                .getNLUResponse(resolveVals[index], "en-US")
-                .then((value) => {
-                      print(
-                          "_onDone: response from NLU ${(value as NLUResponse).response}"),
-                      addSystemMessage(value),
-                      VoiceOverTextService.speakOutLoud(value.response!),
-
-                      //fufillNLUTask(value)
-                    });
-              
-
-          } else {
-            messageInputText = resolveVals[index];
-            Timer(Duration(seconds: 3), () {
-              addUserMessage(resolveVals[index]);
-              //.getNLUResponse(messageInputText, "en-US")
-              nluLibService
-                  .getNLUResponse(resolveVals[index], "en-US")
-                  .then((value) => {
-                        print(
-                            "_onDone: response from NLU ${(value as NLUResponse).response}"),
-                        addSystemMessage(value),
-                        VoiceOverTextService.speakOutLoud(value.response!),
-                        index = index + 1,
-                        fufillNLUTask(value)
-                      });
-            });
-          }
+          micIsExpectedToListen = true;
+          _listen(micIsExpectedToListen);
         }
 
         break;
     }
   }
 
+  //internally defined actionTypes will include
+  //CREATE_NOTE
+  //NEED_HELP
+  void onChatBubbleOptionSelected(
+      dynamic userSelection, FollowUpTypes followUpType) async {
+    //display the users response in the screen.
+
+    if (followUpMessageSent == false) {
+      //Call the NLU service with user response to process the information
+      //pass response from the NLU to fufillNLUTask
+
+      await nluLibService
+          .getNLUResponse(messageInputText, "en-US")
+          .then((value) => {
+                print(
+                    "onChatBubbleOptionSelected: response from NLU ${(value as NLUResponse).actionType}"),
+                fufillNLUTask(value),
+              });
+    } else {
+      switch (followUpType) {
+        case FollowUpTypes.CREATE_NOTE:
+          //call the create event service
+          if (userSelection == 'yes') {
+            //get the last message from the user.
+            NLUResponse nluResponse =
+                systemUserMessage[systemUserMessage.length - 2];  
+
+             print(
+                "Processing NLU message with action type ${nluResponse.actionType}");
+
+            print("onChatBubbleOptionSelected(): creating note ");
+
+            _createNote(nluResponse);
+
+          } else {
+            //reply with a no action followup "Ok I will not create note"
+            addFollowUpMessage("Ok I will not create note",[], FollowUpTypes.NO_ACTION);
+
+            //initiate a NEED_HELP followup: "Is there anything else I can do for you?"
+            //idealy, it will be more accurate to wait for the readtime of the previous statement.
+            Timer(Duration(seconds: 3), 
+                  () => {addFollowUpMessage("Ok I will not create note",[], FollowUpTypes.NEED_HELP)}
+            );
+
+          }
+          break;
+        case FollowUpTypes.NEED_HELP:
+          if (userSelection == 'yes') {
+            print("onChatBubbleOptionSelected(): user needs more asistance ");
+            //reply: "Sure! how can I help you?"
+            addFollowUpMessage("Sure! how can I help you?",[], FollowUpTypes.NO_ACTION);
+
+            //call listen function to get users input.
+            micIsExpectedToListen = true;
+            _listen(micIsExpectedToListen);
+
+          } else {
+            //reply with "Ok thank you! Bye bye"
+            addFollowUpMessage("Ok thank you! Bye bye",[], FollowUpTypes.NO_ACTION);
+            if(micIsExpectedToListen == true){
+              toggleListeningMode();
+            }
+          }
+          break;
+
+        default:
+      }
+    }
+  } //onChatBubbleOptionSelected Ends
+
+  /*
+   * Function creates and save notes.
+   */
+  void _createNote(NLUResponse nluResponse){
+      //get the last message from the user.
+
+            //call the create event service
+            TextNote note = TextNote();
+            note.text = nluResponse.eventType!;
+            note.eventDate = nluResponse.eventTime!;
+            note.isCheckList = (nluResponse.recurringType != null);
+            //note.recordLocale = (nluResponse.recurringType != null);
+            note.recordedTime = DateTime.now();
+            (noteObserver as NoteObserver).addNote(note);
+
+            //Note has been created.
+            addSystemMessage(nluResponse);
+
+            //FollowUpMessage
+            //addSystemMessage("Is there anything I can help you with?");
+  }
+
+  /*
+   * Call back function called when system is done listening.
+   */
   void _onDone(status) async {
     print('_onDone: onStatus: $status');
     print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
@@ -305,31 +361,46 @@ abstract class _AbstractMicObserver with Store {
       messageInputText = "Remind john to buy eggs";
       addUserMessage("Remind John to buy eggs");
 
-      if (messageInputText.isNotEmpty) {
-        await nluLibService
-            //.getNLUResponse(messageInputText, "en-US")
-            .getNLUResponse(resolveVals[index], "en-US")
-            .then((value) => {
-                  print(
-                      "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
-                  addSystemMessage(value),
-                  VoiceOverTextService.speakOutLoud(value.response!),
-                  index = index + 1,
-                  fufillNLUTask(value),
-                });
-        messageInputText = "";
+      if (followUpMessageSent == true) {
+        //get the last message from the NLU and fufill;
+        fufillNLUTask(lastNluMessage!);
+
+      } else {
+        if (messageInputText.isNotEmpty) {
+          await nluLibService
+              .getNLUResponse(messageInputText, "en-US")
+              .then((value) => {
+                    print(
+                        "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
+                    fufillNLUTask(value),
+                  });
+          messageInputText = "";
+        }
       }
     }
   }
 
+  /*
+   * Call back function called when system experiences an error while listening.
+   * When error occurs, it calls the _listen() function to re-initiate the listening mode
+   * Note that this function is first call in the _listen() and by it calling _listen() results
+   * to recursive calls.
+   */
   void _onError(status) async {
     print('_onError: onStatus: $status');
     //Re-initiate speech service on error
     micIsExpectedToListen = false;
 
-    //_listen(micIsExpectedToListen);
+    await _listen(micIsExpectedToListen);
   }
 
+  /*
+   * This function initialized the speech interface and turns on listening mode 
+   * It has two call back functions:
+   * _onDone - called when app is done listening.
+   * _onErro - called if an error occurs during the listening process. 
+   * 
+   */
   Future<void> _listen(micIsExpectedToListen) async {
     bool available = await _speech.initialize(
       onStatus: (val) => _onDone(val),
@@ -337,17 +408,28 @@ abstract class _AbstractMicObserver with Store {
     );
 
     print("available $available");
-
     if (available) {
       _speech.listen(
         //listenFor: Duration(minutes: 15),
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),
-          print(val.recognizedWords),
           if (val.hasConfidenceRating && val.confidence > 0)
-            {speechConfidence = val.confidence}
+            speechConfidence = val.confidence
         },
       );
     }
   }
+}
+
+enum FollowUpTypes { CREATE_NOTE, NEED_HELP, NO_ACTION}
+
+class AppMessage {
+  String message;
+  List<String> responsOptions;
+  FollowUpTypes followupType;
+
+  AppMessage(
+      {this.message = "Is there anything else I can help you with?",
+      this.responsOptions = const ["Yes", "No"],
+      this.followupType = FollowUpTypes.NEED_HELP});
 }

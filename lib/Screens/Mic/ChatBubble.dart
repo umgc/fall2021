@@ -1,12 +1,15 @@
 
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/MicObservable.dart';
 
 class ChatMsgBubble extends StatelessWidget {
   final String? message;
   List<String>? actionOption;
   bool isSender;
   TextStyle textStyle;
+  FollowUpTypes followUpType;
 
   ChatMsgBubble({
     Key? key,
@@ -14,18 +17,22 @@ class ChatMsgBubble extends StatelessWidget {
     this.isSender = false,
     this.actionOption = const [],
     this.textStyle = const TextStyle(fontSize: 20),
+    this.followUpType = FollowUpTypes.NEED_HELP 
   }) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
+    
+    final micObserver = Provider.of<MicObserver>(context); 
+
     final messageTextGroup = Column(
                 children: [
                   BubbleSpecialOne(
                     text: '${(this.isSender)?'Me': 'System'}\n${this.message!}',
                     isSender: this.isSender, 
                     color: (this.isSender)?const Color(0xAFdbf2d5):const Color(0xAFa6ffd1),
-                    textStyle: this.textStyle
+                    textStyle: this.textStyle,
                   ),
 
                   if(actionOption!.length > 0)
@@ -42,7 +49,7 @@ class ChatMsgBubble extends StatelessWidget {
                           height: 20,
                           child: ElevatedButton(
                             onPressed: () {
-                              //action
+                               micObserver.onChatBubbleOptionSelected(item, followUpType);
                             },
                             child: Text(item),
                           ),
