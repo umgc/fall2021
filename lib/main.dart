@@ -66,10 +66,6 @@ class _MyAppState extends State<MyApp> {
       return Colors.black;
     }
 
-    ButtonStyle buttonStyle = ButtonStyle(backgroundColor: MaterialStateProperty.resolveWith(getColor));
-
-    ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(style: buttonStyle);
-
     return Observer(
         builder: (_) => MultiProvider(
                 providers: [
@@ -99,10 +95,11 @@ class _MyAppState extends State<MyApp> {
                           themeToColor(settingObserver.userSettings.appTheme),
                     ),
                     elevatedButtonTheme: ElevatedButtonThemeData(
-                  style: ElevatedButton.styleFrom(
-                    primary:  themeToColor(settingObserver.userSettings.appTheme),
-                  ),
-                ),
+                      style: ElevatedButton.styleFrom(
+                        primary:
+                            themeToColor(settingObserver.userSettings.appTheme),
+                      ),
+                    ),
                     bottomNavigationBarTheme: bottomNavigationBarThemeData,
                     textTheme: TextTheme(
                       headline1: TextStyle(
