@@ -47,5 +47,16 @@
     "help": "帮助",
     "trigger": "扳机",
     "syncToCloud": "同步到云端",
-    "generalSetting": "通用设置"
+    "generalSetting": "通用设置",
+    "loading": "加载中",
+    "editNote": "编辑笔记",
+    "deleteNote": "删除笔记",
+    "confirmNoteDeletion": "确认笔记删除",
+    "areYouSureYouWantToDelete": "你确定要删除这条笔记么？",
+    "noteSaved": "笔记已保存",
+    "enterNoteText": "输入笔记的文本",
+    "ok": "好的",
+    "noteSavedSuccess": "笔记已成功保存。",
+    "addNote": "添加注释",
+    "speakOrWritePrompt": "您想发言还是写笔记？"
 }

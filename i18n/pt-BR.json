@@ -47,5 +47,16 @@
     "help": "Ajuda",
     "trigger": "Desencadear",
     "syncToCloud": "Sincronizar com a nuvem",
-    "generalSetting": "Configurações Gerais"
+    "generalSetting": "Configurações Gerais",
+    "loading": "Carregando",
+    "editNote": "Editar nota",
+    "deleteNote": "Apagar Nota",
+    "confirmNoteDeletion": "Confirmar exclusão de nota",
+    "areYouSureYouWantToDelete": "Tem certeza de que deseja excluir esta anotação?",
+    "noteSaved": "Nota salva",
+    "enterNoteText": "Insira o texto da sua nota",
+    "ok": "OK",
+    "noteSavedSuccess": "A nota foi salva com sucesso.",
+    "addNote": "Adicionar nota",
+    "speakOrWritePrompt": "Você gostaria de falar ou escrever uma nota?"
 }

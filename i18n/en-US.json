@@ -45,5 +45,16 @@
     "noteFontSize": "Note Font Size",
     "menuFontSize": "Menu Font Size",
     "syncToCloud": "Sync to Cloud",
-    "generalSetting": "General Settings"
+    "generalSetting": "General Settings",
+    "loading": "Loading",
+    "editNote": "Edit Note",
+    "deleteNote": "Delete Note",
+    "confirmNoteDeletion": "Confirm Note Deletion",
+    "areYouSureYouWantToDelete": "Are you sure you want to delete this note?",
+    "noteSaved": "Note Saved",
+    "enterNoteText": "Enter your note's text",
+    "ok": "Ok",
+    "noteSavedSuccess": "The note was save succeessfully.",
+    "addNote": "Add Note",
+    "speakOrWritePrompt": "Would you like to Speak or Write a note?"
 }

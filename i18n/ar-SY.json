@@ -47,5 +47,16 @@
     "help": "يساعد",
     "trigger": "مشغل",
     "syncToCloud": "مزامنة مع السحابة",
-    "generalSetting": "الاعدادات العامة"
+    "generalSetting": "الاعدادات العامة",
+    "loading": "تحميل",
+    "editNote": "تحرير مذكرة",
+    "deleteNote": "حذف الملاحظة",
+    "confirmNoteDeletion": "تأكيد حذف الملاحظة",
+    "areYouSureYouWantToDelete": "هل أنت متأكد أنك تريد حذف هذه الملاحظة؟",
+    "noteSaved": "تم حفظ الملاحظة",
+    "enterNoteText": "أدخل نص ملاحظتك",
+    "ok": "نعم",
+    "noteSavedSuccess": "تم حفظ المذكرة بنجاح.",
+    "addNote": "اضف ملاحظة",
+    "speakOrWritePrompt": "هل ترغب في التحدث أو كتابة ملاحظة؟"
 }
