@@ -43,5 +43,9 @@
     "permissionNote": "NOTA: Esta permissão permitirá todos os tipos de interação por voz.",
     "daysToKeepNotes": "Dias para fazer anotações",
     "noteFontSize": "Tamanho da fonte da nota",
-    "menuFontSize": "Tamanho da fonte do menu"
+    "menuFontSize": "Tamanho da fonte do menu",
+    "theme": "Tema",
+    "blue": "Azul",
+    "pink": "Cor de rosa",
+    "promptTheme": "Selecione o tema do aplicativo"
 }

@@ -10,6 +10,8 @@ import 'package:untitled3/generated/i18n.dart';
 
 List<FontSize> fontSizes = [FontSize.SMALL, FontSize.MEDIUM, FontSize.LARGE];
 
+List<AppTheme> themes = [AppTheme.BLUE, AppTheme.PINK];
+
 List<String> daysToKeepFilesOptions = ["1", "3", "5", "7", "14", "Forever"];
 
 class Settings extends StatefulWidget {
@@ -22,6 +24,7 @@ class _SettingState extends State<Settings> {
   var menuFontSize;
   var daysToKeepFiles;
   var language;
+  var appTheme;
 
   @override
   void initState() {
@@ -30,6 +33,7 @@ class _SettingState extends State<Settings> {
     menuFontSize = initialSetting.userSettings.menuFontSize;
     daysToKeepFiles = initialSetting.userSettings.daysToKeepFiles;
     language = initialSetting.userSettings.locale;
+    appTheme = initialSetting.userSettings.appTheme;
     super.initState();
   }
 
@@ -50,6 +54,21 @@ class _SettingState extends State<Settings> {
         case FontSize.LARGE:
           {
             return I18n.of(context)!.large;
+          }
+        default:
+          throw new UnimplementedError('not implemented');
+      }
+    }
+
+    themeToDisplayName(AppTheme appTheme) {
+      switch (appTheme) {
+        case AppTheme.BLUE:
+          {
+            return I18n.of(context)!.blue;
+          }
+        case AppTheme.PINK:
+          {
+            return I18n.of(context)!.pink;
           }
         default:
           throw new UnimplementedError('not implemented');
@@ -232,7 +251,53 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-
+            Text(I18n.of(context)!.theme,
+                style: Theme.of(context).textTheme.bodyText2),
+            Padding(
+              padding: const EdgeInsets.all(3),
+              child: Container(
+                width: 60,
+                height: 40,
+                padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                ),
+                child: DropdownButton(
+                  hint: Text(
+                    I18n.of(context)!.promptTheme,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  //icon: Icon(                // Add this
+                  //  Icons.arrow_drop_down_outlined,  // Add this
+                  //  color: Colors.blue,   // Add this
+                  //),
+                  icon: Image.asset(
+                    // Add this
+                    //Icons.arrow_drop_down_outlined, //size: 38.0,  // Add this
+                    "assets/images/dropdownarrow.png",
+                    width: 28,
+                    height: 18,
+                    //Icons.arrow_drop_down_outlined,
+                    //size: 31,
+                    color: Colors.blue, // Add this
+                  ),
+                  value: appTheme,
+                  onChanged: (newTheme) {
+                    setState(() {
+                      appTheme = newTheme;
+                    });
+                    settingObserver.userSettings.appTheme = appTheme;
+                  },
+                  isExpanded: true,
+                  underline: SizedBox(),
+                  style: Theme.of(context).textTheme.bodyText1,
+                  items: themes.map((theme) {
+                    return DropdownMenuItem(
+                        value: theme, child: Text(themeToDisplayName(theme)));
+                  }).toList(),
+                ),
+              ),
+            ),
             //SAVE BUTTON
             Container(
               padding:
@@ -246,10 +311,6 @@ class _SettingState extends State<Settings> {
                   I18n.of(context)!.save,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(30, 40),
-                    primary: Colors.lightBlue,
-                    onPrimary: Colors.black),
               ),
             ),
 
@@ -264,21 +325,19 @@ class _SettingState extends State<Settings> {
                   setting.noteFontSize = DEFAULT_FONT_SIZE;
                   setting.daysToKeepFiles = DEFAULT_DAYS_TO_KEEP_FILES;
                   setting.locale = DEFAULT_LOCALE;
+                  setting.appTheme = DEFAULT_APP_THEME;
                   settingObserver.saveSetting();
                   noteFontSize = setting.noteFontSize;
                   menuFontSize = setting.menuFontSize;
                   daysToKeepFiles = setting.daysToKeepFiles;
                   language = setting.locale;
+                  appTheme = setting.appTheme;
                   I18n.onLocaleChanged!(DEFAULT_LOCALE);
                 },
                 child: Text(
                   I18n.of(context)!.resetSettings,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(30, 40),
-                    primary: Colors.lightBlue,
-                    onPrimary: Colors.black),
               ),
             ),
 
@@ -292,10 +351,6 @@ class _SettingState extends State<Settings> {
                   I18n.of(context)!.securitySettings,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(30, 40),
-                    primary: Colors.lightBlue,
-                    onPrimary: Colors.black),
               ),
             ),
 

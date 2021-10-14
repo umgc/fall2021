@@ -43,5 +43,9 @@
     "permissionNote": "注意：此权限将允许所有类型的语音交互。",
     "daysToKeepNotes": "记笔记的天数",
     "noteFontSize": "注释字体大小",
-    "menuFontSize": "菜单字体大小"
+    "menuFontSize": "菜单字体大小",
+    "theme": "主题",
+    "blue": "蓝色",
+    "pink": "粉色的",
+    "promptTheme": "选择应用主题"
 }

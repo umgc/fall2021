@@ -29,7 +29,8 @@
     "next": "Next",
     "selectLanguage": "Please select your primary language.",
     "language": "Language",
-    "promptPermission": "Do we have permission to access your microphone?",
+    "promptPermission": "Do we have permission to access your microphone and resources?",
+    "promptTheme": "Select App Theme",
     "promptNoteFontSize":  "Select Font Size for Notes",
     "promptMenuFontSize":  "Select Font Size for Menu",
     "promptNoteDeletionTimeline": "Select Note Deletion Timeline",
@@ -43,5 +44,8 @@
     "permissionNote": "NOTE: This permission will allow all types of voice interaction.",
     "daysToKeepNotes": "Days to Keep Notes",
     "noteFontSize": "Note Font Size",
-    "menuFontSize": "Menu Font Size"
+    "menuFontSize": "Menu Font Size",
+    "theme": "Theme",
+    "blue": "Blue",
+    "pink": "Pink"
 }
