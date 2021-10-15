@@ -43,5 +43,9 @@
     "permissionNote": "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.",
     "daysToKeepNotes": "أيام للاحتفاظ بالملاحظات",
     "noteFontSize": "لاحظ حجم الخط",
-    "menuFontSize": "حجم خط القائمة"
+    "menuFontSize": "حجم خط القائمة",
+    "theme": "سمة",
+    "blue": "أزرق",
+    "pink": "لون القرنفل",
+    "promptTheme": "حدد سمة التطبيق"
 }

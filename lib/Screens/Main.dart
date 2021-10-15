@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Screens/Mic/Mic.dart';
 
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/NotificationScreen.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/Utility/ThemeUtil.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 import 'Settings/Setting.dart';
@@ -36,23 +38,23 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends State<MainNavigator> {
   int _currentIndex = 0;
- 
+
   Widget _changeScreen(screen, index) {
     print("index $index");
-    final screenNav =Provider.of<MainNavObserver>(context);
+    final screenNav = Provider.of<MainNavObserver>(context);
 
     //main screen
-    if (screen == MAIN_SCREENS.NOTE ||index == 2) {
-        screenNav.setTitle(I18n.of(context)!.notesScreenName);
-        return Note();
+    if (screen == MAIN_SCREENS.NOTE || index == 2) {
+      screenNav.setTitle(I18n.of(context)!.notesScreenName);
+      return Note();
     }
-    if (screen == MAIN_SCREENS.MENU ||index == 0 ) {
-        screenNav.setTitle(I18n.of(context)!.menuScreenName);
-        return Menu();
+    if (screen == MAIN_SCREENS.MENU || index == 0) {
+      screenNav.setTitle(I18n.of(context)!.menuScreenName);
+      return Menu();
     }
     if (screen == MAIN_SCREENS.HOME) {
-        screenNav.setTitle(I18n.of(context)!.homeScreenName);
-        return SpeechScreen();
+      screenNav.setTitle(I18n.of(context)!.homeScreenName);
+      return SpeechScreen();
     }
     if (screen == MAIN_SCREENS.CALENDAR) {
       screenNav.setTitle(I18n.of(context)!.calendarScreenName);
@@ -127,21 +129,20 @@ class _MainNavigatorState extends State<MainNavigator> {
         buildDefaultAppBar: buildAppBar);
   }
 
-  _onClickMic(MicObserver micObserver, MainNavObserver screenNav){
+  _onClickMic(MicObserver micObserver, MainNavObserver screenNav) {
     micObserver.toggleListeningMode();
-    
+
     print("${MAIN_SCREENS.HOME} and ${screenNav.currentScreen}");
-    if(screenNav.currentScreen != MAIN_SCREENS.HOME){
-        screenNav.changeScreen(MAIN_SCREENS.HOME);
+    if (screenNav.currentScreen != MAIN_SCREENS.HOME) {
+      screenNav.changeScreen(MAIN_SCREENS.HOME);
     }
   }
 
   AppBar buildAppBar(BuildContext context) {
-    final screenNav =Provider.of<MainNavObserver>(context);
+    final screenNav = Provider.of<MainNavObserver>(context);
 
     return AppBar(
       toolbarHeight: 120,
-      backgroundColor: Color(0xFF33ACE3),
       centerTitle: true,
       title: Column(
         children: [
@@ -210,7 +211,8 @@ class _MainNavigatorState extends State<MainNavigator> {
   @override
   Widget build(BuildContext context) {
     final micObserver = Provider.of<MicObserver>(context);
-    final screenNav =Provider.of<MainNavObserver>(context);
+    final screenNav = Provider.of<MainNavObserver>(context);
+    final settingObserver = Provider.of<SettingObserver>(context);
 
     return Scaffold(
         appBar: buildAppBar(context),
@@ -240,7 +242,6 @@ class _MainNavigatorState extends State<MainNavigator> {
                 unselectedItemColor: Colors.black,
                 showUnselectedLabels: true,
                 showSelectedLabels: true,
-                backgroundColor: Color(0xFF33ACE3),
                 items: [
                   BottomNavigationBarItem(
                     icon: Observer(
@@ -279,28 +280,31 @@ class _MainNavigatorState extends State<MainNavigator> {
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
-        floatingActionButton: Observer( builder: (_) =>  AvatarGlow(
-            animate: micObserver.micIsExpectedToListen,
-            glowColor: Theme.of(context).primaryColor,
-            endRadius: 80,
-            duration: Duration(milliseconds: 2000),
-            repeatPauseDuration: const Duration(milliseconds: 100),
-            repeat: true,
-            child: Container(
-                width: 120.0,
-                height: 85.0,
-                child: new RawMaterialButton(
-                  shape: new CircleBorder(),
-                  elevation: 0.01,
-                  onPressed: () => { _onClickMic(micObserver, screenNav)},//{screenNav.changeScreen(MAIN_SCREENS.HOME)},
-                  child: Column(children: [
-                    Image(
-                      image: AssetImage("assets/images/mic.png"),
-                      color: Color(0xFF33ACE3),
-                      height: 80,
-                      width: 80.82,
-                    ),
-                  ]),
-                )))));
+        floatingActionButton: Observer(
+            builder: (_) => AvatarGlow(
+                animate: micObserver.micIsExpectedToListen,
+                endRadius: 80,
+                duration: Duration(milliseconds: 2000),
+                repeatPauseDuration: const Duration(milliseconds: 100),
+                repeat: true,
+                child: Container(
+                    width: 120.0,
+                    height: 85.0,
+                    child: new RawMaterialButton(
+                      shape: new CircleBorder(),
+                      elevation: 0.01,
+                      onPressed: () => {
+                        _onClickMic(micObserver, screenNav)
+                      }, //{screenNav.changeScreen(MAIN_SCREENS.HOME)},
+                      child: Column(children: [
+                        Image(
+                          image: AssetImage("assets/images/mic.png"),
+                          color: themeToColor(
+                              settingObserver.userSettings.appTheme),
+                          height: 80,
+                          width: 80.82,
+                        ),
+                      ]),
+                    )))));
   }
 }
