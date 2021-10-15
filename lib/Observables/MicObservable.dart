@@ -214,8 +214,6 @@ abstract class _AbstractMicObserver with Store {
         break;
 
       //we probably don't need this
-      case ActionType.CREATE_RECURRING_EVENT:
-      case ActionType.CREATE_EVENT:
       case ActionType.CREATE_NOTE:
 
         //ask user if they will like the note create for the event.
@@ -354,7 +352,7 @@ abstract class _AbstractMicObserver with Store {
     //call the create event service
     TextNote note = TextNote();
     note.text = nluResponse.eventType!;
-    note.eventDate = nluResponse.eventTime!;
+    note.eventDate = DateTime.parse(nluResponse.eventTime!);
     note.isCheckList = (nluResponse.recurringType != null);
     //note.recordLocale = (nluResponse.recurringType != null);
     note.recordedTime = DateTime.now();
