@@ -1,6 +1,5 @@
 import 'package:encrypt/encrypt.dart';
 
-
 class EncryptUtil{
 
  /// Encryption key to use in encrypting and decrypting text notes

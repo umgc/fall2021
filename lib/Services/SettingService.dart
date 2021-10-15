@@ -1,8 +1,5 @@
-
 import '../Model/Setting.dart';
 import '../Utility/FileUtil.dart';
-import 'package:uuid/uuid.dart';
-
 
 /// Encapsulates all file I/O for text notes
 class SettingService {

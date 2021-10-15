@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ChatMsgBubble extends StatelessWidget {
   final String? message;
-  bool hasAction;
+  List<String>? actionOption;
   bool isSender;
   TextStyle textStyle;
 
@@ -12,7 +12,7 @@ class ChatMsgBubble extends StatelessWidget {
     Key? key,
     @required this.message, 
     this.isSender = false,
-    this.hasAction= false,
+    this.actionOption = const [],
     this.textStyle = const TextStyle(fontSize: 20),
   }) : super(key: key);
 
@@ -28,24 +28,14 @@ class ChatMsgBubble extends StatelessWidget {
                     textStyle: this.textStyle
                   ),
 
-                  if(hasAction)
-                  Row(
+                  if(actionOption!.length > 0)
+                  
+                  Wrap(        
+                    alignment: WrapAlignment.spaceEvenly,            
                     children: [
+                     for (var item in actionOption!)
                       Container(
-                        margin: const EdgeInsets.only(left: 40, right: 20.0),
-                        child: ButtonTheme(
-                          buttonColor: Colors.white,
-                          minWidth: 100.0,
-                          height: 20,
-                          child: ElevatedButton(
-                            onPressed: () {
-                                //take action when pressed 
-                            },
-                            child: Text("yes"),
-                          ),
-                        ),
-                      ),
-                      Container(
+                        margin: new EdgeInsets.symmetric(horizontal: 2.0),
                         child: ButtonTheme(
                           buttonColor: Colors.white,
                           minWidth: 100.0,
@@ -54,7 +44,7 @@ class ChatMsgBubble extends StatelessWidget {
                             onPressed: () {
                               //action
                             },
-                            child: Text("No"),
+                            child: Text(item),
                           ),
                         ),
                       )

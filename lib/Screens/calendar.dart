@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-//import 'package:quiver/collection.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'dart:collection';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 
-import 'package:provider/provider.dart';
 
 class Calendar extends StatefulWidget {
 
