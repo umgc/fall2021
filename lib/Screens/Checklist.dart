@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
-import '../Observables/ScreenNavigator.dart';
-import 'Main.dart';
+import '../Observables/ChecklistObservable.dart';
+
+final ChecklistObserver checklistObserver = new ChecklistObserver();
 
 class Checklist extends StatefulWidget {
 
@@ -14,57 +16,90 @@ class Checklist extends StatefulWidget {
 class ChecklistState extends State<Checklist> {
 
 
-
-
-
-
   @override
 
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
-    String noteText = "";
-    for (TextNote textNote in noteObserver.usersNotes) {
-      if (textNote.text.toString() != "") {
-        noteText += textNote.text.toString();
-      }
-    }
+
+   String noteText="" ;
+    bool isChecked = checklistObserver.IsChecked;
     Map<String, bool> checkListEvent ={
-      'Brush Teeth' :false,
-     'Get Mail'    : false,
-    'Drink Water' : false,
-    'Make Dinner' : false,
-      noteText :false
+      /* 'Brush Teeth' : true,
+      'Get Mail'    : isChecked,
+      'Drink Water' : isChecked,
+      'Make Dinner' : isChecked,*/
+
+      noteText : isChecked
 
     };
     var checkListEvents=[];
+     for (TextNote textNote in noteObserver.usersNotes) {
+      if (textNote.text.toString() != "" && textNote.isCheckList) {
 
-    getList(){
-    checkListEvent.forEach((key, value) {
-    if (value == true)
-    {
-    checkListEvents.add(key);
+        noteText = textNote.text.toString();
+        checkListEvents.add(noteText);
+
+      }
     }
+
+
+   /* for  (checkListEvent in checkListEvents) {
+      for  (TextNote textNote in noteObserver.usersNotes) {
+     // if (textNote.text.toString() != "" && textNote.isCheckList) {
+
+        noteText = textNote.text.toString();
+        checkListEvents.add(noteText);
+
+
+      }
+    }*/
+  /*  getList(){
+    checkListEvent.forEach((noteText, isChecked) {
+      for  (TextNote textNote in noteObserver.usersNotes) {
+        // if (textNote.text.toString() != "" && textNote.isCheckList) {
+
+        noteText = textNote.text.toString();
+        checkListEvents.add(noteText);
+
+        /* if (isChecked == true)*/
+
+
+  //  checkListEvents.add(noteText);
+   }
     });
-    }
-    return Column (children: <Widget>[
+    }*/
 
+return Column (children: <Widget>[
       Expanded(
         child :
+
         ListView(
           children: checkListEvent.keys.map(( key) {
             return new CheckboxListTile(
-              title: new Text(key),
-              value: checkListEvent[key],
+              title: Text(noteText),
+              value:  checkListEvent[key],
               activeColor: Colors.white,
-              checkColor: Colors.white,
-              onChanged: ( isChecked) {
-                setState(() {
-                    checkListEvent[key] = false ;
-                });
+              checkColor: Colors.black,
+
+              onChanged: (isChecked) {
+                  if (isChecked == true){
+                    checklistObserver.checked();
+                  }
+                  else{
+                    checklistObserver.unChecked();
+                  }
+                 checkListEvent[key] = isChecked!;
+
               },
             );
           }).toList(),
         ),
-      ),]);
+
+      ),
+
+    ]
+    );
   }
+
 }
+
