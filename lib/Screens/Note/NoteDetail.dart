@@ -48,7 +48,7 @@ class _NoteDetailssState extends State<NoteDetails> {
               
             body: 
               (noteObserver.currNoteForDetails == null)?
-                  Text("Loading...")
+                  Text(I18n.of(context)!.loading)
               : ListView(
                 children: <Widget>[
                   Container(
@@ -103,7 +103,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                                   Icons.save,
                                   color: Colors.black,
                                   size: 50.0,
-                                  semanticLabel: 'Edit Note',
+                                  semanticLabel: I18n.of(context)!.editNote,
                                 ),
                               ),
                             ],
@@ -120,7 +120,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                                   Icons.delete,
                                   color: Colors.red,
                                   size: 50.0,
-                                  semanticLabel: 'Delete Note',
+                                  semanticLabel: I18n.of(context)!.deleteNote,
                                 ),
                               ),
                             ],
@@ -177,11 +177,11 @@ class _NoteDetailssState extends State<NoteDetails> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
-        "Confirm Note Deletion",
+        I18n.of(context)!.confirmNoteDeletion,
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
       content: Text(
-        "Are you sure you want to delete this note?",
+        I18n.of(context)!.areYouSureYouWantToDelete,
         style: TextStyle(fontSize: 20),
       ),
       actions: [

@@ -152,7 +152,7 @@ class _ViewNotesState extends State<ViewNotes> {
                     onPressed: () {
                       noteObserver.changeScreen(NOTE_SCREENS.ADD_NOTE);
                     },
-                    tooltip: 'Add Note',
+                    tooltip: I18n.of(context)!.addNote,
                     child: Icon(Icons.add),
                 );
   }
