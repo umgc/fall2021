@@ -113,21 +113,21 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void addSystemMessage(NLUResponse nluResponse) {
-
-    if(nluResponse.resolvedValues == null)
-      followUpMessageSent = false;
+    if (nluResponse.resolvedValues == null) followUpMessageSent = false;
 
     systemUserMessage.add(nluResponse);
   }
 
   @action
-  void addFollowUpMessage(String message, List<String> responsOptions, FollowUpTypes followupType  ) {
+  void addFollowUpMessage(
+      String message, List<String> responsOptions, FollowUpTypes followupType) {
     followUpMessageSent = true;
 
     //reply with a no action followup "Ok I will not create note"
-     AppMessage appMessage = AppMessage( message: "Ok I will not create note",
-                                         responsOptions :responsOptions,
-                                         followupType : followupType);
+    AppMessage appMessage = AppMessage(
+        message: "Ok I will not create note",
+        responsOptions: responsOptions,
+        followupType: followupType);
     systemUserMessage.add(appMessage);
   }
 
@@ -220,13 +220,15 @@ abstract class _AbstractMicObserver with Store {
 
         //ask user if they will like the note create for the event.
         //Pre-followup
+
         if (followUpMessageSent == false) {
           //send followup message.
+          addFollowUpMessage("Should I create a note", ["yes", "no"],
+              FollowUpTypes.CREATE_NOTE);
         } else {
           //recieve follow up response
-          if(messageInputText.contains("yes")) {
-            
-            //create note 
+          if (messageInputText.contains("yes")) {
+            //create note
             _createNote(nluResponse);
             //FollowUpMessage
             //addSystemMessage("An event has been created to 'eventType' on 'eventTime'");
@@ -236,7 +238,6 @@ abstract class _AbstractMicObserver with Store {
           //call _listen to get user input.
         }
 
-        
         break;
       case ActionType.NOTFOUND:
         break;
@@ -244,6 +245,7 @@ abstract class _AbstractMicObserver with Store {
       case ActionType.ANSWER:
         //display the text from NLU
         //and follow up with
+        print("Case ActionType.ANSWER: ${nluResponse.state}");
         addSystemMessage(nluResponse);
 
         if (nluResponse.state == NLUState.IN_PROGRESS) {
@@ -251,6 +253,9 @@ abstract class _AbstractMicObserver with Store {
           //use a flag, expectingUserInput, to know when the user is expected to speak
           micIsExpectedToListen = true;
           _listen(micIsExpectedToListen);
+        } else {
+          addFollowUpMessage(
+              "Sure! how can I help you?", [], FollowUpTypes.NO_ACTION);
         }
 
         break;
@@ -263,6 +268,8 @@ abstract class _AbstractMicObserver with Store {
   void onChatBubbleOptionSelected(
       dynamic userSelection, FollowUpTypes followUpType) async {
     //display the users response in the screen.
+    print("onChatBubbleOptionSelected: Selection $userSelection ");
+    print("onChatBubbleOptionSelected: followUpType $followUpType ");
 
     if (followUpMessageSent == false) {
       //Call the NLU service with user response to process the information
@@ -282,47 +289,58 @@ abstract class _AbstractMicObserver with Store {
           if (userSelection == 'yes') {
             //get the last message from the user.
             NLUResponse nluResponse =
-                systemUserMessage[systemUserMessage.length - 2];  
+                systemUserMessage[systemUserMessage.length - 2];
 
-             print(
+            print(
                 "Processing NLU message with action type ${nluResponse.actionType}");
 
             print("onChatBubbleOptionSelected(): creating note ");
 
             _createNote(nluResponse);
-
           } else {
             //reply with a no action followup "Ok I will not create note"
-            addFollowUpMessage("Ok I will not create note",[], FollowUpTypes.NO_ACTION);
+            addFollowUpMessage(
+                "Ok I will not create note", [], FollowUpTypes.NO_ACTION);
 
             //initiate a NEED_HELP followup: "Is there anything else I can do for you?"
             //idealy, it will be more accurate to wait for the readtime of the previous statement.
-            Timer(Duration(seconds: 3), 
-                  () => {addFollowUpMessage("Ok I will not create note",[], FollowUpTypes.NEED_HELP)}
-            );
-
+            Timer(
+                Duration(seconds: 3),
+                () => {
+                      addFollowUpMessage("Ok I will not create note", [],
+                          FollowUpTypes.NEED_HELP)
+                    });
           }
           break;
         case FollowUpTypes.NEED_HELP:
           if (userSelection == 'yes') {
             print("onChatBubbleOptionSelected(): user needs more asistance ");
             //reply: "Sure! how can I help you?"
-            addFollowUpMessage("Sure! how can I help you?",[], FollowUpTypes.NO_ACTION);
+            addFollowUpMessage(
+                "Sure! how can I help you?", [], FollowUpTypes.NO_ACTION);
 
             //call listen function to get users input.
             micIsExpectedToListen = true;
             _listen(micIsExpectedToListen);
-
           } else {
             //reply with "Ok thank you! Bye bye"
-            addFollowUpMessage("Ok thank you! Bye bye",[], FollowUpTypes.NO_ACTION);
-            if(micIsExpectedToListen == true){
+            addFollowUpMessage(
+                "Ok thank you! Bye bye", [], FollowUpTypes.NO_ACTION);
+            if (micIsExpectedToListen == true) {
               toggleListeningMode();
             }
           }
           break;
 
         default:
+          print("Sending user selection to NLU: $userSelection");
+          await nluLibService
+              .getNLUResponse(userSelection, "en-US")
+              .then((value) => {
+                    print(
+                        "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
+                    fufillNLUTask(value),
+                  });
       }
     }
   } //onChatBubbleOptionSelected Ends
@@ -330,23 +348,23 @@ abstract class _AbstractMicObserver with Store {
   /*
    * Function creates and save notes.
    */
-  void _createNote(NLUResponse nluResponse){
-      //get the last message from the user.
+  void _createNote(NLUResponse nluResponse) {
+    //get the last message from the user.
 
-            //call the create event service
-            TextNote note = TextNote();
-            note.text = nluResponse.eventType!;
-            note.eventDate = nluResponse.eventTime!;
-            note.isCheckList = (nluResponse.recurringType != null);
-            //note.recordLocale = (nluResponse.recurringType != null);
-            note.recordedTime = DateTime.now();
-            (noteObserver as NoteObserver).addNote(note);
+    //call the create event service
+    TextNote note = TextNote();
+    note.text = nluResponse.eventType!;
+    note.eventDate = nluResponse.eventTime!;
+    note.isCheckList = (nluResponse.recurringType != null);
+    //note.recordLocale = (nluResponse.recurringType != null);
+    note.recordedTime = DateTime.now();
+    (noteObserver as NoteObserver).addNote(note);
 
-            //Note has been created.
-            addSystemMessage(nluResponse);
+    //Note has been created.
+    addSystemMessage(nluResponse);
 
-            //FollowUpMessage
-            //addSystemMessage("Is there anything I can help you with?");
+    //FollowUpMessage
+    //addSystemMessage("Is there anything I can help you with?");
   }
 
   /*
@@ -357,16 +375,15 @@ abstract class _AbstractMicObserver with Store {
     print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
 
     if (status == "done") {
-      print('_onDone: Calling the NLU  with text : "$messageInputText" ');
-      messageInputText = "Remind john to buy eggs";
-      addUserMessage("Remind John to buy eggs");
-
+      print(
+          '_onDone: Calling the NLU  with text : "$messageInputText  followUpMessageSent $followUpMessageSent" ');
+      if (lastNluMessage == null) followUpMessageSent = false;
       if (followUpMessageSent == true) {
         //get the last message from the NLU and fufill;
         fufillNLUTask(lastNluMessage!);
-
       } else {
         if (messageInputText.isNotEmpty) {
+          addUserMessage(messageInputText);
           await nluLibService
               .getNLUResponse(messageInputText, "en-US")
               .then((value) => {
@@ -421,7 +438,7 @@ abstract class _AbstractMicObserver with Store {
   }
 }
 
-enum FollowUpTypes { CREATE_NOTE, NEED_HELP, NO_ACTION}
+enum FollowUpTypes { CREATE_NOTE, NEED_HELP, NO_ACTION, NLU_FOLLOWUP }
 
 class AppMessage {
   String message;
