@@ -410,10 +410,10 @@ abstract class _AbstractMicObserver with Store {
     if (status == "done") {
       print(
           '_onDone: Calling the NLU  with text : "$messageInputText  expectingUserFollowupResponse $expectingUserFollowupResponse" ');
-      if (lastNluMessage == null) expectingUserFollowupResponse = false;
 
       //if incoming message is a voice response from a followup
-      if (expectingUserFollowupResponse == true) {
+      if (expectingUserFollowupResponse == true &&
+          messageInputText.isNotEmpty) {
         String yesNo = (messageInputText.contains("yes")) ? "yes" : "no";
         processFollowups(yesNo, followUpTypesForMsgSent!);
       } else {
@@ -440,9 +440,13 @@ abstract class _AbstractMicObserver with Store {
           if (expectingUserFollowupResponse == false) {
             addFollowUpMessage(
                 "What can I help you with?", [], FollowUpTypes.NO_ACTION);
-            //_listen(micIsExpectedToListen);
+            await _listen(micIsExpectedToListen);
           } else {
-            _listen(micIsExpectedToListen);
+            //read out the last followup mesage
+
+            //call listener to get user response
+            //_speech.stop();
+            await _listen(micIsExpectedToListen);
           }
         }
       }
@@ -458,9 +462,9 @@ abstract class _AbstractMicObserver with Store {
   void _onError(status) async {
     print('_onError: onStatus: $status');
     //Re-initiate speech service on error
-    micIsExpectedToListen = false;
+    micIsExpectedToListen = true;
 
-    await _listen(micIsExpectedToListen);
+    //await _listen(micIsExpectedToListen);
   }
 
   /*
