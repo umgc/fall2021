@@ -38,7 +38,7 @@ abstract class _AbstractMicObserver with Store {
   bool micIsExpectedToListen = false;
 
   @observable
-  bool followUpMessageSent = false;
+  bool expectingUserFollowupResponse = false;
 
   //Tracks the systems confidence in transcribing the users voice to text.
   @observable
@@ -58,6 +58,9 @@ abstract class _AbstractMicObserver with Store {
 
   @observable
   NLUResponse? lastNluMessage;
+
+  @observable
+  FollowUpTypes? followUpTypesForMsgSent;
 
   //Speech library user for interfacing with the device's mic resource.
   SpeechToText _speech = SpeechToText();
@@ -106,14 +109,15 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void addUserMessage(String userMsg) {
-    followUpMessageSent = false;
+    expectingUserFollowupResponse = false;
     print("added user message");
     systemUserMessage.add(userMsg);
   }
 
   @action
   void addSystemMessage(NLUResponse nluResponse) {
-    if (nluResponse.resolvedValues == null) followUpMessageSent = false;
+    if (nluResponse.resolvedValues == null)
+      expectingUserFollowupResponse = false;
 
     systemUserMessage.add(nluResponse);
   }
@@ -121,14 +125,30 @@ abstract class _AbstractMicObserver with Store {
   @action
   void addFollowUpMessage(
       String message, List<String> responsOptions, FollowUpTypes followupType) {
-    followUpMessageSent = true;
+    if (expectingUserFollowupResponse == true) {
+      print(
+          "addFollowUpMessage: Still waiting user to respond to the previous followup message");
+
+      //call the listener function
+      //_listen(micIsExpectedToListen);
+      return;
+    }
+
+    expectingUserFollowupResponse = true;
+
+    followUpTypesForMsgSent = followupType;
 
     //reply with a no action followup "Ok I will not create note"
     AppMessage appMessage = AppMessage(
-        message: "Ok I will not create note",
+        message: message,
         responsOptions: responsOptions,
         followupType: followupType);
     systemUserMessage.add(appMessage);
+
+    //call _listener to wait for user's input
+    micIsExpectedToListen = true;
+
+    _listen(micIsExpectedToListen);
   }
 
   @action
@@ -218,10 +238,15 @@ abstract class _AbstractMicObserver with Store {
 
         //ask user if they will like the note create for the event.
         //Pre-followup
+        print(
+            " case ActionType.CREATE_NOTE: expectingUserFollowupResponse $expectingUserFollowupResponse");
 
-        if (followUpMessageSent == false) {
+        if (expectingUserFollowupResponse == false) {
           //send followup message.
-          addFollowUpMessage("Should I create a note", ["yes", "no"],
+          print(
+              "case ActionType.CREATE_NOTE: ask user if note should be created");
+
+          addFollowUpMessage("Should I create a note?", ["yes", "no"],
               FollowUpTypes.CREATE_NOTE);
         } else {
           //recieve follow up response
@@ -252,8 +277,14 @@ abstract class _AbstractMicObserver with Store {
           micIsExpectedToListen = true;
           _listen(micIsExpectedToListen);
         } else {
-          addFollowUpMessage(
-              "Sure! how can I help you?", [], FollowUpTypes.NO_ACTION);
+          print("case ActionType.ANSWER: following up");
+          Timer(
+              Duration(seconds: 2),
+              () => addFollowUpMessage(
+                  "how can I help you?", [], FollowUpTypes.NO_ACTION));
+
+          micIsExpectedToListen = true;
+          _listen(micIsExpectedToListen);
         }
 
         break;
@@ -263,85 +294,85 @@ abstract class _AbstractMicObserver with Store {
   //internally defined actionTypes will include
   //CREATE_NOTE
   //NEED_HELP
-  void onChatBubbleOptionSelected(
+  void processFollowups(
       dynamic userSelection, FollowUpTypes followUpType) async {
     //display the users response in the screen.
-    print("onChatBubbleOptionSelected: Selection $userSelection ");
-    print("onChatBubbleOptionSelected: followUpType $followUpType ");
+    print("processFollowups: Selection $userSelection ");
+    print("processFollowups: followUpType $followUpType ");
+    expectingUserFollowupResponse = false;
 
-    if (followUpMessageSent == false) {
-      //Call the NLU service with user response to process the information
-      //pass response from the NLU to fufillNLUTask
+    switch (followUpType) {
+      case FollowUpTypes.NLU_FOLLOWUP:
+        //Call the NLU service with user response to process the information
+        //pass response from the NLU to fufillNLUTask
+        await nluLibService
+            .getNLUResponse(messageInputText, "en-US")
+            .then((value) => {
+                  print(
+                      "processFollowups: response from NLU ${(value as NLUResponse).actionType}"),
+                  fufillNLUTask(value),
+                });
+        break;
 
-      await nluLibService
-          .getNLUResponse(messageInputText, "en-US")
-          .then((value) => {
-                print(
-                    "onChatBubbleOptionSelected: response from NLU ${(value as NLUResponse).actionType}"),
-                fufillNLUTask(value),
-              });
-    } else {
-      switch (followUpType) {
-        case FollowUpTypes.CREATE_NOTE:
-          //call the create event service
-          if (userSelection == 'yes') {
-            //get the last message from the user.
-            NLUResponse nluResponse =
-                systemUserMessage[systemUserMessage.length - 2];
+      case FollowUpTypes.CREATE_NOTE:
+        //call the create event service
 
-            print(
-                "Processing NLU message with action type ${nluResponse.actionType}");
+        if (userSelection == 'yes') {
+          //get the last message from the user.
+          late NLUResponse nluCreateNote;
+          for (int i = systemUserMessage.length - 1; i > 0; i--) {
+            if (systemUserMessage[i] is NLUResponse) {
+              nluCreateNote = systemUserMessage[i];
+              print(
+                  "Processing NLU message with action type ${nluCreateNote.actionType}");
 
-            print("onChatBubbleOptionSelected(): creating note ");
+              print("processFollowups(): creating note ");
 
-            _createNote(nluResponse);
-          } else {
-            //reply with a no action followup "Ok I will not create note"
-            addFollowUpMessage(
-                "Ok I will not create note", [], FollowUpTypes.NO_ACTION);
-
-            //initiate a NEED_HELP followup: "Is there anything else I can do for you?"
-            //idealy, it will be more accurate to wait for the readtime of the previous statement.
-            Timer(
-                Duration(seconds: 3),
-                () => {
-                      addFollowUpMessage("Ok I will not create note", [],
-                          FollowUpTypes.NEED_HELP)
-                    });
-          }
-          break;
-        case FollowUpTypes.NEED_HELP:
-          if (userSelection == 'yes') {
-            print("onChatBubbleOptionSelected(): user needs more asistance ");
-            //reply: "Sure! how can I help you?"
-            addFollowUpMessage(
-                "Sure! how can I help you?", [], FollowUpTypes.NO_ACTION);
-
-            //call listen function to get users input.
-            micIsExpectedToListen = true;
-            _listen(micIsExpectedToListen);
-          } else {
-            //reply with "Ok thank you! Bye bye"
-            addFollowUpMessage(
-                "Ok thank you! Bye bye", [], FollowUpTypes.NO_ACTION);
-            if (micIsExpectedToListen == true) {
-              toggleListeningMode();
+              _createNote(nluCreateNote);
             }
           }
-          break;
+        } else {
+          //reply with a no action followup "Ok I will not create note"
+          //addFollowUpMessage(
+          //   "Ok I will not create note", [], FollowUpTypes.NO_ACTION);
 
-        default:
-          print("Sending user selection to NLU: $userSelection");
-          await nluLibService
-              .getNLUResponse(userSelection, "en-US")
-              .then((value) => {
-                    print(
-                        "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
-                    fufillNLUTask(value),
+          //initiate a NEED_HELP followup: "Is there anything else I can do for you?"
+          //idealy, it will be more accurate to wait for the readtime of the previous statement.
+          Timer(
+              Duration(seconds: 3),
+              () => {
+                    addFollowUpMessage("Ok I will not create note", [],
+                        FollowUpTypes.NEED_HELP)
                   });
-      }
-    }
-  } //onChatBubbleOptionSelected Ends
+        }
+        break;
+      case FollowUpTypes.NEED_HELP:
+        if (userSelection == 'yes') {
+          print("processFollowups(): user needs more asistance ");
+          //reply: "Sure! how can I help you?"
+          addFollowUpMessage(
+              "Sure! how can I help you?", [], FollowUpTypes.NO_ACTION);
+        } else {
+          //reply with "Ok thank you! Bye bye"
+          addFollowUpMessage(
+              "Ok thank you! Bye bye", [], FollowUpTypes.NO_ACTION);
+          if (micIsExpectedToListen == true) {
+            toggleListeningMode();
+          }
+        }
+        break;
+
+      default:
+        print("Sending user selection to NLU: $userSelection");
+        await nluLibService
+            .getNLUResponse(userSelection, "en-US")
+            .then((value) => {
+                  print(
+                      "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
+                  fufillNLUTask(value),
+                });
+    } //switch (followUpType)
+  } //processFollowups Ends
 
   /*
    * Function creates and save notes.
@@ -352,7 +383,11 @@ abstract class _AbstractMicObserver with Store {
     //call the create event service
     TextNote note = TextNote();
     note.text = nluResponse.eventType!;
-    note.eventDate = DateTime.parse(nluResponse.eventTime!);
+    note.eventDate =
+        ((nluResponse.eventDate != null) ? nluResponse.eventDate : "")!;
+
+    note.eventTime =
+        ((nluResponse.eventTime != null) ? nluResponse.eventTime : "")!;
     note.isCheckList = (nluResponse.recurringType != null);
     //note.recordLocale = (nluResponse.recurringType != null);
     note.recordedTime = DateTime.now();
@@ -374,12 +409,15 @@ abstract class _AbstractMicObserver with Store {
 
     if (status == "done") {
       print(
-          '_onDone: Calling the NLU  with text : "$messageInputText  followUpMessageSent $followUpMessageSent" ');
-      if (lastNluMessage == null) followUpMessageSent = false;
-      if (followUpMessageSent == true) {
-        //get the last message from the NLU and fufill;
-        fufillNLUTask(lastNluMessage!);
+          '_onDone: Calling the NLU  with text : "$messageInputText  expectingUserFollowupResponse $expectingUserFollowupResponse" ');
+      if (lastNluMessage == null) expectingUserFollowupResponse = false;
+
+      //if incoming message is a voice response from a followup
+      if (expectingUserFollowupResponse == true) {
+        String yesNo = (messageInputText.contains("yes")) ? "yes" : "no";
+        processFollowups(yesNo, followUpTypesForMsgSent!);
       } else {
+        //if messageInputText is populated (user's voice was captured), call the NLU
         if (messageInputText.isNotEmpty) {
           addUserMessage(messageInputText);
           await nluLibService
@@ -387,9 +425,25 @@ abstract class _AbstractMicObserver with Store {
               .then((value) => {
                     print(
                         "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
+                    print(
+                        "_onDone: response from NLU ${(value as NLUResponse).response}"),
                     fufillNLUTask(value),
                   });
           messageInputText = "";
+        }
+
+        //Else messageInputText is empty (user's voice was NOT captured)
+        // -Follow up if user needs help
+        // - reiniated the listening; to get user's response.
+        else {
+          //if message last sent was FollowUpTypes.NO_ACTION
+          if (expectingUserFollowupResponse == false) {
+            addFollowUpMessage(
+                "What can I help you with?", [], FollowUpTypes.NO_ACTION);
+            _listen(micIsExpectedToListen);
+          } else {
+            _listen(micIsExpectedToListen);
+          }
         }
       }
     }
