@@ -440,7 +440,7 @@ abstract class _AbstractMicObserver with Store {
           if (expectingUserFollowupResponse == false) {
             addFollowUpMessage(
                 "What can I help you with?", [], FollowUpTypes.NO_ACTION);
-            _listen(micIsExpectedToListen);
+            //_listen(micIsExpectedToListen);
           } else {
             _listen(micIsExpectedToListen);
           }
