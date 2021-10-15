@@ -58,5 +58,9 @@
     "ok": "OK",
     "noteSavedSuccess": "A nota foi salva com sucesso.",
     "addNote": "Adicionar nota",
-    "speakOrWritePrompt": "Você gostaria de falar ou escrever uma nota?"
+    "speakOrWritePrompt": "Você gostaria de falar ou escrever uma nota?",
+    "promptTheme": "Selecione o tema do aplicativo",
+    "theme": "Tema",
+    "blue": "Azul",
+    "pink": "Cor de rosa"
 }

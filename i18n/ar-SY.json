@@ -58,5 +58,9 @@
     "ok": "نعم",
     "noteSavedSuccess": "تم حفظ المذكرة بنجاح.",
     "addNote": "اضف ملاحظة",
-    "speakOrWritePrompt": "هل ترغب في التحدث أو كتابة ملاحظة؟"
+    "speakOrWritePrompt": "هل ترغب في التحدث أو كتابة ملاحظة؟",
+    "promptTheme": "حدد سمة التطبيق",
+    "theme": "سمة",
+    "blue": "أزرق",
+    "pink": "لون القرنفل"
 }

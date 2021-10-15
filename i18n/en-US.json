@@ -29,7 +29,8 @@
     "next": "Next",
     "selectLanguage": "Please select your primary language.",
     "language": "Language",
-    "promptPermission": "Do we have permission to access your microphone?",
+    "promptPermission": "Do we have permission to access your microphone and resources?",
+    "promptTheme": "Select App Theme",
     "promptNoteFontSize":  "Select Font Size for Notes",
     "promptMenuFontSize":  "Select Font Size for Menu",
     "promptNoteDeletionTimeline": "Select Note Deletion Timeline",
@@ -56,5 +57,8 @@
     "ok": "Ok",
     "noteSavedSuccess": "The note was save succeessfully.",
     "addNote": "Add Note",
-    "speakOrWritePrompt": "Would you like to Speak or Write a note?"
+    "speakOrWritePrompt": "Would you like to Speak or Write a note?",
+    "theme": "Theme",
+    "blue": "Blue",
+    "pink": "Pink"
 }
