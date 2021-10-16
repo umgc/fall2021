@@ -25,12 +25,10 @@ fontSizeStringToEnum (String fontSizeString) {
 
 appThemeStringToEnum (String appTheme) {
   switch (appTheme) {
-    case 'BLUE':
+    case 'AppTheme.BLUE':
       return AppTheme.BLUE;
-    case 'PINK':
+    case 'AppTheme.PINK':
       return AppTheme.PINK;
-    default:
-      return AppTheme.BLUE;
   }
 }
 
