@@ -3,9 +3,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
-import 'package:untitled3/generated/i18n.dart';
+import 'package:untitled3/Utility/FontUtil.dart';
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({
@@ -38,15 +39,20 @@ class _NoteDetailssState extends State<NoteDetails> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     final noteObserver = Provider.of<NoteObserver>(context);
     editController.text = noteObserver.currNoteForDetails!.text;
     editController.addListener( ()=> noteObserver.currNoteForDetails!.text = ('${editController.text}'));
 
+    final settingObserver = Provider.of<SettingObserver>(context);
+
+    var fontSize = fontSizeToPixelMap(settingObserver.userSettings.noteFontSize, false);
+
+
     return Observer(
              builder: (_) => Scaffold(
-              
-            body: 
+
+            body:
               (noteObserver.currNoteForDetails == null)?
                   Text("Loading...")
               : ListView(
@@ -88,9 +94,9 @@ class _NoteDetailssState extends State<NoteDetails> {
                             children: <Widget>[
                               ElevatedButton(
                                 onPressed: () async {
-                                  
+
                                   /*
-                                  TODO: Update function 
+                                  TODO: Update function
                                   textNoteService.updateTextFile(new TextNote(
                                       selectedNote.data.fileName,
                                       selectedNote.data.dateTime,
@@ -140,7 +146,7 @@ class _NoteDetailssState extends State<NoteDetails> {
                       enableInteractiveSelection: true,
                       maxLines: null,
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: fontSize,
                       ),
                     ),
                   ),
