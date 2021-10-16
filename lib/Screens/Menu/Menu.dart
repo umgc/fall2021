@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/Screens/Settings/Setting.dart';
+import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/MenuObservable.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -60,7 +61,7 @@ class MenuState extends State<Menu> {
                             height: 150,
                             width: 155,
                           ),
-                          Text('Sync to Cloud',
+                          Text(I18n.of(context)!.syncToCloud,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black))
@@ -95,7 +96,7 @@ class MenuState extends State<Menu> {
                             width: 155,
                           ),
 
-                          Text('Trigger',
+                          Text(I18n.of(context)!.trigger,
 
                               style: TextStyle(
                                 fontSize: 20,
@@ -143,7 +144,7 @@ class MenuState extends State<Menu> {
                           Padding(
                             padding: new EdgeInsets.all(10.0),
                           ),
-                          Text('General Setting',
+                          Text(I18n.of(context)!.generalSetting,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black))
@@ -179,7 +180,7 @@ class MenuState extends State<Menu> {
                           Padding(
                             padding: new EdgeInsets.all(6.0),
                           ),
-                          Text('Help',
+                          Text(I18n.of(context)!.help,
 
                               style: TextStyle(
                                 fontSize: 20,
