@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/Components/CancelButton.dart';
 
 class Trigger extends StatefulWidget {
   @override
@@ -110,19 +111,7 @@ class TriggerState extends State<Trigger> {
               ),
 
               //CANCEL BUTTON
-              Container(
-                padding: const EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 0),
-                child: ElevatedButton(
-
-                  onPressed: () {},
-                  child: Text("Cancel", style: TextStyle(fontSize: 22),),
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(30, 40),
-                      primary: Colors.grey
-                  ),
-                ),
-              )
-
+              cancelButton(context)
             ],
           ),
 
