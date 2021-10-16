@@ -42,21 +42,6 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$micStatusAtom = Atom(name: '_AbstractMicObserver.micStatus');
-
-  @override
-  String get micStatus {
-    _$micStatusAtom.reportRead();
-    return super.micStatus;
-  }
-
-  @override
-  set micStatus(String value) {
-    _$micStatusAtom.reportWrite(value, super.micStatus, () {
-      super.micStatus = value;
-    });
-  }
-
   final _$speechConfidenceAtom =
       Atom(name: '_AbstractMicObserver.speechConfidence');
 
@@ -227,7 +212,6 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     return '''
 messageInputText: ${messageInputText},
 micIsExpectedToListen: ${micIsExpectedToListen},
-micStatus: ${micStatus},
 speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
 mainNavObserver: ${mainNavObserver},

@@ -19,64 +19,68 @@ class SpeechScreen extends StatefulWidget {
 }
 
 class _SpeechScreenState extends State<SpeechScreen> {
- 
   _SpeechScreenState();
-
 
   @override
   Widget build(BuildContext context) {
     ScrollController _controller = new ScrollController();
     //onListen(micObserver);
-    final micObserver = Provider.of<MicObserver>(context); 
-    final noteObserver = Provider.of<NoteObserver>(context); 
-    final mainNavObserver = Provider.of<MainNavObserver>(context); 
+    final micObserver = Provider.of<MicObserver>(context);
+    final noteObserver = Provider.of<NoteObserver>(context);
+    final mainNavObserver = Provider.of<MainNavObserver>(context);
     micObserver.setMainNavObserver(mainNavObserver);
     micObserver.setNoteObserver(noteObserver);
 
     return Observer(
-              builder: (_) => 
-      Scaffold(
-      key: recordNoteScaffoldKey,
-      
-      body: Column(children: <Widget>[
-         Container(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
-              child: Text( 
-                micObserver.messageInputText,
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500)),
-            ),
-        
-         Expanded ( 
-           child:ListView.builder(
-            shrinkWrap: true,
-            physics: const AlwaysScrollableScrollPhysics(),
-            controller: _controller,
-            itemCount: micObserver.systemUserMessage.length,
-            itemBuilder: (BuildContext context, int index){
-                dynamic chatObj =  micObserver.systemUserMessage[index];
-                //Display text at the top before moving it to the chat bubble
-                if(chatObj is String){
-                  
-                 return ChatMsgBubble(message:chatObj.toString(), isSender: true );
-                }
-                NLUResponse nluResponse = chatObj;
+        builder: (_) => Scaffold(
+            key: recordNoteScaffoldKey,
+            body: Column(children: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
+                child: Text(micObserver.messageInputText,
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500)),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      controller: _controller,
+                      itemCount: micObserver.systemUserMessage.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        dynamic chatObj = micObserver.systemUserMessage[index];
+                        //Display text at the top before moving it to the chat bubble
+                        if (chatObj is String) {
+                          return ChatMsgBubble(
+                              message: chatObj.toString(), isSender: true);
+                        } else if (chatObj is AppMessage) {
+                          AppMessage appfollowUp = chatObj;
+                          return ChatMsgBubble(
+                            message: appfollowUp.message,
+                            actionOption: appfollowUp.responsOptions,
+                            followUpType: appfollowUp.followupType,
+                          );
+                        } else {
+                          NLUResponse nluResponse = chatObj;
 
-                //NLU will send question with options of responses to chose from.
-                print( "nluResponse.resolvedValues ${nluResponse.resolvedValues}");
-                if(nluResponse.actionType ==ActionType.ANSWER && nluResponse.resolvedValues != null){
-                    return ChatMsgBubble(message:nluResponse.response,actionOption: nluResponse.resolvedValues);
-                }
+                          //NLU will send question with options of responses to chose from.
+                          print(
+                              "nluResponse.resolvedValues ${nluResponse.resolvedValues}");
+                          if (nluResponse.actionType == ActionType.ANSWER &&
+                              nluResponse.resolvedValues != null) {
+                            return ChatMsgBubble(
+                              message: nluResponse.response,
+                              actionOption: nluResponse.resolvedValues,
+                              followUpType: FollowUpTypes.NLU_FOLLOWUP,
+                            );
+                          }
 
-                return ChatMsgBubble(message:nluResponse.response);
-            }
-           )
-          ),
-        
-      ])
-    ));
+                          return ChatMsgBubble(message: nluResponse.response);
+                        }
+                      })),
+            ])));
   }
 }
 
