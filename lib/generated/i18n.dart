@@ -61,9 +61,9 @@ class I18n implements WidgetsLocalizations {
 	/// "Checklist"
 	String get checklistScreenName => "Checklist";
 	/// "Help"
-	String get helpScreen => "Help";
+	String get help => "Help";
 	/// "Trigger"
-	String get triggerScreen => "Trigger";
+	String get trigger => "Trigger";
 	/// "Sync to Cloud"
 	String get syncToCloudScreen => "Sync to Cloud";
 	/// "General Settings"
@@ -90,8 +90,10 @@ class I18n implements WidgetsLocalizations {
 	String get selectLanguage => "Please select your primary language.";
 	/// "Language"
 	String get language => "Language";
-	/// "Do we have permission to access your microphone?"
+	/// "Do we have permission to access your microphone and resources?"
 	String get promptPermission => "Do we have permission to access your microphone and resources?";
+	/// "Select App Theme"
+	String get promptTheme => "Select App Theme";
 	/// "Select Font Size for Notes"
 	String get promptNoteFontSize => "Select Font Size for Notes";
 	/// "Select Font Size for Menu"
@@ -120,6 +122,42 @@ class I18n implements WidgetsLocalizations {
 	String get noteFontSize => "Note Font Size";
 	/// "Menu Font Size"
 	String get menuFontSize => "Menu Font Size";
+	/// "Sync to Cloud"
+	String get syncToCloud => "Sync to Cloud";
+	/// "General Settings"
+	String get generalSetting => "General Settings";
+	/// "Loading"
+	String get loading => "Loading";
+	/// "Edit Note"
+	String get editNote => "Edit Note";
+	/// "Delete Note"
+	String get deleteNote => "Delete Note";
+	/// "Confirm Note Deletion"
+	String get confirmNoteDeletion => "Confirm Note Deletion";
+	/// "Are you sure you want to delete this note?"
+	String get areYouSureYouWantToDelete => "Are you sure you want to delete this note?";
+	/// "Note Saved"
+	String get noteSaved => "Note Saved";
+	/// "Enter your note's text"
+	String get enterNoteText => "Enter your note's text";
+	/// "Ok"
+	String get ok => "Ok";
+	/// "The note was save succeessfully."
+	String get noteSavedSuccess => "The note was save succeessfully.";
+	/// "Add Note"
+	String get addNote => "Add Note";
+	/// "Would you like to Speak or Write a note?"
+	String get speakOrWritePrompt => "Would you like to Speak or Write a note?";
+	/// "Theme"
+	String get theme => "Theme";
+	/// "Blue"
+	String get blue => "Blue";
+	/// "Pink"
+	String get pink => "Pink";
+	/// "Ayuda"
+	String get helpScreen => "Ayuda";
+	/// "Palabras Claves"
+	String get triggerScreen => "Palabras Claves";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -173,12 +211,6 @@ class _I18n_es_US extends I18n {
 	/// "Lista de Verificación"
 	@override
 	String get checklistScreenName => "Lista de Verificación";
-	/// "Ayuda"
-	@override
-	String get helpScreen => "Ayuda";
-	/// "Palabras Claves"
-	@override
-	String get triggerScreen => "Palabras Claves";
 	/// "Sincronizar con la nube"
 	@override
 	String get syncToCloudScreen => "Sincronizar con la nube";
@@ -263,6 +295,63 @@ class _I18n_es_US extends I18n {
 	/// "Tamaño de fuente del menú"
 	@override
 	String get menuFontSize => "Tamaño de fuente del menú";
+	/// "Ayudar"
+	@override
+	String get help => "Ayudar";
+	/// "Desencadenar"
+	@override
+	String get trigger => "Desencadenar";
+	/// "Sincronizar con la nube"
+	@override
+	String get syncToCloud => "Sincronizar con la nube";
+	/// "Configuración general"
+	@override
+	String get generalSetting => "Configuración general";
+	/// "Cargando"
+	@override
+	String get loading => "Cargando";
+	/// "Editar nota"
+	@override
+	String get editNote => "Editar nota";
+	/// "Borrar nota"
+	@override
+	String get deleteNote => "Borrar nota";
+	/// "Confirmar eliminación de nota"
+	@override
+	String get confirmNoteDeletion => "Confirmar eliminación de nota";
+	/// "¿Estás seguro que quieres eliminar esta nota?"
+	@override
+	String get areYouSureYouWantToDelete => "¿Estás seguro que quieres eliminar esta nota?";
+	/// "Nota guardada"
+	@override
+	String get noteSaved => "Nota guardada";
+	/// "Ingrese el texto de su nota"
+	@override
+	String get enterNoteText => "Ingrese el texto de su nota";
+	/// "OK"
+	@override
+	String get ok => "OK";
+	/// "La nota se guardó con éxito."
+	@override
+	String get noteSavedSuccess => "La nota se guardó con éxito.";
+	/// "Añadir la nota"
+	@override
+	String get addNote => "Añadir la nota";
+	/// "¿Le gustaría hablar o escribir una nota?"
+	@override
+	String get speakOrWritePrompt => "¿Le gustaría hablar o escribir una nota?";
+	/// "Seleccione el tema de la aplicación"
+	@override
+	String get promptTheme => "Seleccione el tema de la aplicación";
+	/// "Tema"
+	@override
+	String get theme => "Tema";
+	/// "Azul"
+	@override
+	String get blue => "Azul";
+	/// "Rosado"
+	@override
+	String get pink => "Rosado";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -403,6 +492,63 @@ class _I18n_pt_BR extends I18n {
 	/// "Tamanho da fonte do menu"
 	@override
 	String get menuFontSize => "Tamanho da fonte do menu";
+	/// "Ajuda"
+	@override
+	String get help => "Ajuda";
+	/// "Desencadear"
+	@override
+	String get trigger => "Desencadear";
+	/// "Sincronizar com a nuvem"
+	@override
+	String get syncToCloud => "Sincronizar com a nuvem";
+	/// "Configurações Gerais"
+	@override
+	String get generalSetting => "Configurações Gerais";
+	/// "Carregando"
+	@override
+	String get loading => "Carregando";
+	/// "Editar nota"
+	@override
+	String get editNote => "Editar nota";
+	/// "Apagar Nota"
+	@override
+	String get deleteNote => "Apagar Nota";
+	/// "Confirmar exclusão de nota"
+	@override
+	String get confirmNoteDeletion => "Confirmar exclusão de nota";
+	/// "Tem certeza de que deseja excluir esta anotação?"
+	@override
+	String get areYouSureYouWantToDelete => "Tem certeza de que deseja excluir esta anotação?";
+	/// "Nota salva"
+	@override
+	String get noteSaved => "Nota salva";
+	/// "Insira o texto da sua nota"
+	@override
+	String get enterNoteText => "Insira o texto da sua nota";
+	/// "OK"
+	@override
+	String get ok => "OK";
+	/// "A nota foi salva com sucesso."
+	@override
+	String get noteSavedSuccess => "A nota foi salva com sucesso.";
+	/// "Adicionar nota"
+	@override
+	String get addNote => "Adicionar nota";
+	/// "Você gostaria de falar ou escrever uma nota?"
+	@override
+	String get speakOrWritePrompt => "Você gostaria de falar ou escrever uma nota?";
+	/// "Selecione o tema do aplicativo"
+	@override
+	String get promptTheme => "Selecione o tema do aplicativo";
+	/// "Tema"
+	@override
+	String get theme => "Tema";
+	/// "Azul"
+	@override
+	String get blue => "Azul";
+	/// "Cor de rosa"
+	@override
+	String get pink => "Cor de rosa";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -543,6 +689,63 @@ class _I18n_zh_CN extends I18n {
 	/// "菜单字体大小"
 	@override
 	String get menuFontSize => "菜单字体大小";
+	/// "帮助"
+	@override
+	String get help => "帮助";
+	/// "扳机"
+	@override
+	String get trigger => "扳机";
+	/// "同步到云端"
+	@override
+	String get syncToCloud => "同步到云端";
+	/// "通用设置"
+	@override
+	String get generalSetting => "通用设置";
+	/// "加载中"
+	@override
+	String get loading => "加载中";
+	/// "编辑笔记"
+	@override
+	String get editNote => "编辑笔记";
+	/// "删除笔记"
+	@override
+	String get deleteNote => "删除笔记";
+	/// "确认笔记删除"
+	@override
+	String get confirmNoteDeletion => "确认笔记删除";
+	/// "你确定要删除这条笔记么？"
+	@override
+	String get areYouSureYouWantToDelete => "你确定要删除这条笔记么？";
+	/// "笔记已保存"
+	@override
+	String get noteSaved => "笔记已保存";
+	/// "输入笔记的文本"
+	@override
+	String get enterNoteText => "输入笔记的文本";
+	/// "好的"
+	@override
+	String get ok => "好的";
+	/// "笔记已成功保存。"
+	@override
+	String get noteSavedSuccess => "笔记已成功保存。";
+	/// "添加注释"
+	@override
+	String get addNote => "添加注释";
+	/// "您想发言还是写笔记？"
+	@override
+	String get speakOrWritePrompt => "您想发言还是写笔记？";
+	/// "选择应用主题"
+	@override
+	String get promptTheme => "选择应用主题";
+	/// "主题"
+	@override
+	String get theme => "主题";
+	/// "蓝色"
+	@override
+	String get blue => "蓝色";
+	/// "粉色的"
+	@override
+	String get pink => "粉色的";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -683,6 +886,63 @@ class _I18n_ar_SY extends I18n {
 	/// "حجم خط القائمة"
 	@override
 	String get menuFontSize => "حجم خط القائمة";
+	/// "يساعد"
+	@override
+	String get help => "يساعد";
+	/// "مشغل"
+	@override
+	String get trigger => "مشغل";
+	/// "مزامنة مع السحابة"
+	@override
+	String get syncToCloud => "مزامنة مع السحابة";
+	/// "الاعدادات العامة"
+	@override
+	String get generalSetting => "الاعدادات العامة";
+	/// "تحميل"
+	@override
+	String get loading => "تحميل";
+	/// "تحرير مذكرة"
+	@override
+	String get editNote => "تحرير مذكرة";
+	/// "حذف الملاحظة"
+	@override
+	String get deleteNote => "حذف الملاحظة";
+	/// "تأكيد حذف الملاحظة"
+	@override
+	String get confirmNoteDeletion => "تأكيد حذف الملاحظة";
+	/// "هل أنت متأكد أنك تريد حذف هذه الملاحظة؟"
+	@override
+	String get areYouSureYouWantToDelete => "هل أنت متأكد أنك تريد حذف هذه الملاحظة؟";
+	/// "تم حفظ الملاحظة"
+	@override
+	String get noteSaved => "تم حفظ الملاحظة";
+	/// "أدخل نص ملاحظتك"
+	@override
+	String get enterNoteText => "أدخل نص ملاحظتك";
+	/// "نعم"
+	@override
+	String get ok => "نعم";
+	/// "تم حفظ المذكرة بنجاح."
+	@override
+	String get noteSavedSuccess => "تم حفظ المذكرة بنجاح.";
+	/// "اضف ملاحظة"
+	@override
+	String get addNote => "اضف ملاحظة";
+	/// "هل ترغب في التحدث أو كتابة ملاحظة؟"
+	@override
+	String get speakOrWritePrompt => "هل ترغب في التحدث أو كتابة ملاحظة؟";
+	/// "حدد سمة التطبيق"
+	@override
+	String get promptTheme => "حدد سمة التطبيق";
+	/// "سمة"
+	@override
+	String get theme => "سمة";
+	/// "أزرق"
+	@override
+	String get blue => "أزرق";
+	/// "لون القرنفل"
+	@override
+	String get pink => "لون القرنفل";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

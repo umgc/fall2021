@@ -3,8 +3,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/Utility/FontUtil.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 class NoteDetails extends StatefulWidget {
@@ -41,109 +43,137 @@ class _NoteDetailssState extends State<NoteDetails> {
     editController.addListener(() =>
         noteObserver.currNoteForDetails!.text = ('${editController.text}'));
 
-    return Observer(
-        builder: (_) => Scaffold(
-              body: (noteObserver.currNoteForDetails == null)
-                  ? Text("Loading...")
-                  : ListView(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          child: IntrinsicHeight(
-                            //row with 3 spaced columns
-                            child: Row(
-                              children: <Widget>[
-                                //date column
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        top: 10,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          //passed date String should display here - Alec
-                                          dateFormat.format(noteObserver
-                                              .currNoteForDetails!
-                                              .recordedTime),
+    final settingObserver = Provider.of<SettingObserver>(context);
 
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(flex: 1),
-                                //edit icon
-                                Column(
-                                  children: <Widget>[
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        /*
-                                  TODO: Update function 
-                                  textNoteService.updateTextFile(new TextNote(
-                                      selectedNote.data.fileName,
-                                      selectedNote.data.dateTime,
-                                      edits,
-                                      false));*/
+    var fontSize =
+        fontSizeToPixelMap(settingObserver.userSettings.noteFontSize, false);
 
-                                        //Navigator.pushNamed(context, '/view-notes');
-                                      },
-                                      child: Icon(
-                                        Icons.save,
-                                        color: Colors.black,
-                                        size: 50.0,
-                                        semanticLabel: 'Edit Note',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(flex: 1),
-                                //delete icon
-                                Column(
-                                  children: <Widget>[
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        showAlertDialog(context, noteObserver);
-                                      },
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                        size: 50.0,
-                                        semanticLabel: 'Delete Note',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          //text field should enable when user selects edit icon
-                          padding: EdgeInsets.all(30.0),
-                          child: TextField(
-                            //this is where the note text displays see editController - Alec
-                            controller: editController,
-                            enabled: true,
-                            focusNode: FocusNode(),
-                            enableInteractiveSelection: true,
-                            maxLines: null,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-            ));
+    return Text("Coming");
+    // return Observer(
+    //          builder: (_) => Scaffold(
+
+    //         body:
+    //           (noteObserver.currNoteForDetails == null)?
+    //               Text(I18n.of(context)!.loading)
+    //           : ListView(
+    //             children: <Widget>[
+    //               Container(
+    //                 padding: EdgeInsets.all(8.0),
+    //                 decoration: BoxDecoration(
+    //                   border: Border.all(color: Colors.grey),
+    //                 ),
+    //                 child: IntrinsicHeight(
+    //                   //row with 3 spaced columns
+    //                   child: Row(
+    //                     children: <Widget>[
+    //                       //date column
+    //                       Column(
+    //                         children: <Widget>[
+    //                           Container(
+    //                             margin: const EdgeInsets.only(
+    //                               top: 10,
+    //                             ),
+    //                             child: Center(
+    //                               child: Text(
+    //                                 //passed date String should display here - Alec
+    //                                 dateFormat.format(noteObserver.currNoteForDetails!.recordedTime),
+
+    //                                       textAlign: TextAlign.center,
+    //                                       style: TextStyle(
+    //                                         fontWeight: FontWeight.bold,
+    //                                         fontSize: 20,
+    //                                       ),
+    //                                     ),
+    //                                   ),
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                           ),
+    //                         ],
+    //                       ),
+    //                       Spacer(flex: 1),
+    //                       //edit icon
+    //                       Column(
+    //                         children: <Widget>[
+    //                           ElevatedButton(
+    //                             onPressed: () async {
+
+    //                               /*
+    //                               TODO: Update function
+    //                               textNoteService.updateTextFile(new TextNote(
+    //                                   selectedNote.data.fileName,
+    //                                   selectedNote.data.dateTime,
+    //                                   edits,
+    //                                   false));*/
+
+    //                                     //Navigator.pushNamed(context, '/view-notes');
+    //                                   },
+    //                                   child: Icon(
+    //                                     Icons.save,
+    //                                     color: Colors.black,
+    //                                     size: 50.0,
+    //                                     semanticLabel: 'Edit Note',
+    //                                   ),
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Spacer(flex: 1),
+    //                             //delete icon
+    //                             Column(
+    //                               children: <Widget>[
+    //                                 ElevatedButton(
+    //                                   onPressed: () async {
+    //                                     showAlertDialog(context, noteObserver);
+    //                                   },
+    //                                   child: Icon(
+    //                                     Icons.delete,
+    //                                     color: Colors.red,
+    //                                     size: 50.0,
+    //                                     semanticLabel: 'Delete Note',
+    //                                   ),
+    //                                 ),
+    //                               ],
+    //                               //Navigator.pushNamed(context, '/view-notes');
+    //                             },
+    //                             child: Icon(
+    //                               Icons.save,
+    //                               color: Colors.black,
+    //                               size: 50.0,
+    //                               semanticLabel: I18n.of(context)!.editNote,
+    //                             ),
+    //                           ),
+    //                         ],
+    //                       ),
+    //                       Spacer(flex: 1),
+    //                       //delete icon
+    //                       Column(
+    //                         children: <Widget>[
+    //                           ElevatedButton(
+    //                             onPressed: () async {
+    //                               showAlertDialog(context, noteObserver);
+    //                             },
+    //                             child: Icon(
+    //                               Icons.delete,
+    //                               color: Colors.red,
+    //                               size: 50.0,
+    //                               semanticLabel: I18n.of(context)!.deleteNote,
+    //                             ),
+    //                           ],
+    //                         ),
+    //               Container(
+    //                 //text field should enable when user selects edit icon
+    //                 padding: EdgeInsets.all(30.0),
+    //                 child: TextField(
+    //                   //this is where the note text displays see editController - Alec
+    //                   controller: editController,
+    //                   enabled: true,
+    //                   focusNode: FocusNode(),
+    //                   enableInteractiveSelection: true,
+    //                   maxLines: null,
+    //                   style: TextStyle(
+    //                     fontSize: fontSize,
+    //                   ),
+    //                 ),
   }
 
 //This alert dialog runs when Delete buttion is selected
@@ -173,11 +203,11 @@ class _NoteDetailssState extends State<NoteDetails> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
-        "Confirm Note Deletion",
+        I18n.of(context)!.confirmNoteDeletion,
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
       content: Text(
-        "Are you sure you want to delete this note?",
+        I18n.of(context)!.areYouSureYouWantToDelete,
         style: TextStyle(fontSize: 20),
       ),
       actions: [

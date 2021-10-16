@@ -7,6 +7,11 @@ enum FontSize {
    LARGE,
 }
 
+enum AppTheme {
+  BLUE,
+  PINK
+}
+
 fontSizeStringToEnum (String fontSizeString) {
   switch (fontSizeString) {
     case 'FontSize.MEDIUM':
@@ -18,11 +23,24 @@ fontSizeStringToEnum (String fontSizeString) {
   }
 }
 
+appThemeStringToEnum (String appTheme) {
+  switch (appTheme) {
+    case 'BLUE':
+      return AppTheme.BLUE;
+    case 'PINK':
+      return AppTheme.PINK;
+    default:
+      return AppTheme.BLUE;
+  }
+}
+
 const DEFAULT_FONT_SIZE = FontSize.MEDIUM;
 
 const DEFAULT_DAYS_TO_KEEP_FILES = "7";
 
 const DEFAULT_LOCALE = const Locale("en", "US");
+
+const DEFAULT_APP_THEME = AppTheme.BLUE;
 
 /// Defines the settings object
 class Setting {
@@ -47,6 +65,8 @@ class Setting {
   FontSize noteFontSize = DEFAULT_FONT_SIZE;
   FontSize menuFontSize = DEFAULT_FONT_SIZE;
 
+  AppTheme appTheme = DEFAULT_APP_THEME;
+
   /// Constructor takes all properties as params
   Setting();
 
@@ -57,6 +77,7 @@ class Setting {
                         "locale": "${this.locale.toString()}",
                         "isFirstRun": ${this.isFirstRun},
                         "enableVoiceOverText": ${this.enableVoiceOverText},
+                        "appTheme": "${this.appTheme.toString()}",
                         "noteFontSize": "${this.noteFontSize.toString()}",
                         "menuFontSize": "${this.noteFontSize.toString()}" }
                         """;
@@ -78,6 +99,8 @@ class Setting {
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
       setting.noteFontSize = fontSizeStringToEnum(jsonObj['noteFontSize']);
       setting.menuFontSize = fontSizeStringToEnum(jsonObj['menuFontSize']);
+      setting.appTheme = appThemeStringToEnum(jsonObj['appTheme']);
+
     }
 
     return setting;

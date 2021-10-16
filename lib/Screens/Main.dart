@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Screens/Mic/Mic.dart';
 
 import 'package:untitled3/Screens/Note/Note.dart';
 import 'package:untitled3/Screens/NotificationScreen.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/Utility/ThemeUtil.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 import 'Settings/Setting.dart';
@@ -85,7 +87,7 @@ class _MainNavigatorState extends State<MainNavigator> {
       return SyncToCloud();
     }
     if (screen == MENU_SCREENS.TRIGGER) {
-      screenNav.setTitle(I18n.of(context)!.triggerScreen);
+      screenNav.setTitle(I18n.of(context)!.trigger);
       return Trigger();
     }
     if (screen == MENU_SCREENS.SETTING) {
@@ -149,7 +151,6 @@ class _MainNavigatorState extends State<MainNavigator> {
 
     return AppBar(
       toolbarHeight: 120,
-      backgroundColor: Color(0xFF33ACE3),
       centerTitle: true,
       title: Column(
         children: [
@@ -219,6 +220,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   Widget build(BuildContext context) {
     final micObserver = Provider.of<MicObserver>(context);
     final screenNav = Provider.of<MainNavObserver>(context);
+    final settingObserver = Provider.of<SettingObserver>(context);
 
     return Observer(
         builder: (_) => Scaffold(
@@ -250,7 +252,6 @@ class _MainNavigatorState extends State<MainNavigator> {
                     unselectedItemColor: Colors.black,
                     showUnselectedLabels: true,
                     showSelectedLabels: true,
-                    backgroundColor: Color(0xFF33ACE3),
                     items: [
                       BottomNavigationBarItem(
                         icon: Observer(
@@ -264,22 +265,24 @@ class _MainNavigatorState extends State<MainNavigator> {
                         label: I18n.of(context)!.menuScreenName,
                       ),
                       BottomNavigationBarItem(
-                          icon: Icon(
-                            Icons.mic,
-                            size: 46,
-                            color: (screenNav.focusedNavBtn == 1)
-                                ? Colors.white
-                                : Colors.black,
-                          ),
+                          icon: Observer(
+                              builder: (_) => Icon(
+                                    Icons.mic,
+                                    size: 46,
+                                    color: (screenNav.focusedNavBtn == 1)
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                           label: ''),
                       BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.notes,
-                          size: 46,
-                          color: (screenNav.focusedNavBtn == 2)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
+                        icon: Observer(
+                            builder: (_) => Icon(
+                                  Icons.notes,
+                                  size: 46,
+                                  color: (screenNav.focusedNavBtn == 2)
+                                      ? Colors.white
+                                      : Colors.black,
+                                )),
                         label: I18n.of(context)!.notesScreenName,
                       ),
                     ]),
@@ -306,7 +309,8 @@ class _MainNavigatorState extends State<MainNavigator> {
                       child: Column(children: [
                         Image(
                           image: AssetImage("assets/images/mic.png"),
-                          color: Color(0xFF33ACE3),
+                          color: themeToColor(
+                              settingObserver.userSettings.appTheme),
                           height: 80,
                           width: 80.82,
                         ),

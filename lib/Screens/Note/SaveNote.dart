@@ -38,7 +38,7 @@ class _SaveNoteState extends State<SaveNote> {
 
   void _showToast() {
     Fluttertoast.showToast(
-        msg: 'NOTE SAVED',
+        msg: I18n.of(context)!.noteSaved,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         backgroundColor: Colors.green,
@@ -125,14 +125,15 @@ class _SaveNoteState extends State<SaveNote> {
                 maxLines: 5,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Enter your note\'s text'),
+                    hintText: I18n.of(context)!.enterNoteText),
               ),
               SizedBox(height: verticalColSpace),
               _checkBox(),
               SizedBox(height: verticalColSpace),
               _selectDate(),
               SizedBox(height: verticalColSpace),
-              _button(Color(0xFF33ACE3), "SAVE", () => {_onSave(noteObserver)}),
+              _button(Color(0xFF33ACE3), I18n.of(context)!.save,
+                  () => {_onSave(noteObserver)}),
               _button(Colors.red.shade400, "CANCEL",
                   () => {noteObserver.changeScreen(NOTE_SCREENS.NOTE)}),
             ],
@@ -155,7 +156,7 @@ class _SaveNoteState extends State<SaveNote> {
   showConfirmDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: Text(I18n.of(context)!.ok),
       onPressed: () {
         //navScreenObs.changeScreen(SCREEN_NAMES.NOTE);
       },
@@ -163,7 +164,7 @@ class _SaveNoteState extends State<SaveNote> {
 
     // set up the dialog
     AlertDialog alert = AlertDialog(
-      content: Text("The text note was saved successfully."),
+      content: Text(I18n.of(context)!.noteSavedSuccess),
       actions: [
         okButton,
       ],

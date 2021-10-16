@@ -3,6 +3,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:provider/provider.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
 
 final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
@@ -89,7 +90,7 @@ class _ViewNotesState extends State<ViewNotes> {
       onPressed: () {
         noteObserver.changeScreen(NOTE_SCREENS.ADD_NOTE);
       },
-      tooltip: 'Add Note',
+      tooltip: I18n.of(context)!.addNote,
       child: Icon(Icons.add),
     );
   }
