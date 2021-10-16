@@ -1,3 +1,7 @@
+// Original idea from:
+// https://mamuseferha.medium.com/how-to-use-lottie-animation-in-your-flutter-splash-screen-788f1380641d
+// Mamus Eferha, May 26, Medium.com "How to use Lottie animation in your flutter splash"
+// Adapted for UMGC SWEN Capstone Project Fall 2021
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
