@@ -36,41 +36,49 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends State<MainNavigator> {
   int _currentIndex = 0;
- 
+  Note _note = Note();
+  Menu _menu = Menu();
+  SpeechScreen _speechScreen = SpeechScreen();
+  Calendar _calendar = Calendar();
+  Checklist _checklist = Checklist();
+  NotificationScreen _notificationScreen = NotificationScreen();
+  Help _help = Help();
+  Settings _settings = Settings();
+
   Widget _changeScreen(screen, index) {
     print("index $index");
-    final screenNav =Provider.of<MainNavObserver>(context);
+    final screenNav = Provider.of<MainNavObserver>(context);
 
     //main screen
-    if (screen == MAIN_SCREENS.NOTE ||index == 2) {
-        screenNav.setTitle(I18n.of(context)!.notesScreenName);
-        return Note();
+    if (screen == MAIN_SCREENS.NOTE || index == 2) {
+      screenNav.setTitle(I18n.of(context)!.notesScreenName);
+      return _note;
     }
-    if (screen == MAIN_SCREENS.MENU ||index == 0 ) {
-        screenNav.setTitle(I18n.of(context)!.menuScreenName);
-        return Menu();
+    if (screen == MAIN_SCREENS.MENU || index == 0) {
+      screenNav.setTitle(I18n.of(context)!.menuScreenName);
+      return _menu;
     }
     if (screen == MAIN_SCREENS.HOME) {
-        screenNav.setTitle(I18n.of(context)!.homeScreenName);
-        return SpeechScreen();
+      screenNav.setTitle(I18n.of(context)!.homeScreenName);
+      return _speechScreen;
     }
     if (screen == MAIN_SCREENS.CALENDAR) {
       screenNav.setTitle(I18n.of(context)!.calendarScreenName);
-      return Calendar();
+      return _calendar;
     }
     if (screen == MAIN_SCREENS.CHECKLIST) {
       screenNav.setTitle(I18n.of(context)!.checklistScreenName);
-      return Checklist();
+      return _checklist;
     }
     if (screen == MAIN_SCREENS.NOTIFICATION) {
       screenNav.setTitle(I18n.of(context)!.notificationsScreenName);
-      return NotificationScreen();
+      return _notificationScreen;
     }
 
     //menu screens
     if (screen == MENU_SCREENS.HELP) {
       screenNav.setTitle(I18n.of(context)!.menuScreenName);
-      return Help();
+      return _help;
     }
     if (screen == MENU_SCREENS.SYNC_TO_CLOUD) {
       screenNav.setTitle(I18n.of(context)!.syncToCloudScreen);
@@ -82,7 +90,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     }
     if (screen == MENU_SCREENS.SETTING) {
       screenNav.setTitle(I18n.of(context)!.settingScreenName);
-      return Settings();
+      return _settings;
     }
 
     return Text("Wrong Screen - fix it");
@@ -127,17 +135,17 @@ class _MainNavigatorState extends State<MainNavigator> {
         buildDefaultAppBar: buildAppBar);
   }
 
-  _onClickMic(MicObserver micObserver, MainNavObserver screenNav){
+  _onClickMic(MicObserver micObserver, MainNavObserver screenNav) {
     micObserver.toggleListeningMode();
-    
+
     print("${MAIN_SCREENS.HOME} and ${screenNav.currentScreen}");
-    if(screenNav.currentScreen != MAIN_SCREENS.HOME){
-        screenNav.changeScreen(MAIN_SCREENS.HOME);
+    if (screenNav.currentScreen != MAIN_SCREENS.HOME) {
+      screenNav.changeScreen(MAIN_SCREENS.HOME);
     }
   }
 
   AppBar buildAppBar(BuildContext context) {
-    final screenNav =Provider.of<MainNavObserver>(context);
+    final screenNav = Provider.of<MainNavObserver>(context);
 
     return AppBar(
       toolbarHeight: 120,
@@ -210,97 +218,100 @@ class _MainNavigatorState extends State<MainNavigator> {
   @override
   Widget build(BuildContext context) {
     final micObserver = Provider.of<MicObserver>(context);
-    final screenNav =Provider.of<MainNavObserver>(context);
+    final screenNav = Provider.of<MainNavObserver>(context);
 
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: Center(
-            child: Observer(
-                builder: (_) => _changeScreen(
-                    screenNav.currentScreen, screenNav.focusedNavBtn))),
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          notchMargin: 8.0,
-          clipBehavior: Clip.antiAlias,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
+    return Observer(
+        builder: (_) => Scaffold(
+            appBar: buildAppBar(context),
+            body: Container(
+                margin: const EdgeInsets.only(bottom: 30.0),
+                child: Center(
+                    child: _changeScreen(
+                        screenNav.currentScreen, screenNav.focusedNavBtn))),
+            bottomNavigationBar: BottomAppBar(
+              shape: CircularNotchedRectangle(),
+              notchMargin: 8.0,
+              clipBehavior: Clip.antiAlias,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.grey,
+                      width: 0.5,
+                    ),
+                  ),
                 ),
+                child: BottomNavigationBar(
+                    currentIndex: _currentIndex,
+                    onTap: screenNav.setFocusedBtn,
+                    selectedItemColor: Colors.black,
+                    type: BottomNavigationBarType.fixed,
+                    unselectedItemColor: Colors.black,
+                    showUnselectedLabels: true,
+                    showSelectedLabels: true,
+                    backgroundColor: Color(0xFF33ACE3),
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Observer(
+                            builder: (_) => Icon(
+                                  Icons.menu_book,
+                                  size: 46,
+                                  color: (screenNav.focusedNavBtn == 0)
+                                      ? Colors.white
+                                      : Colors.black,
+                                )),
+                        label: I18n.of(context)!.menuScreenName,
+                      ),
+                      BottomNavigationBarItem(
+                          icon: Icon(
+                            Icons.mic,
+                            size: 46,
+                            color: (screenNav.focusedNavBtn == 1)
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                          label: ''),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.notes,
+                          size: 46,
+                          color: (screenNav.focusedNavBtn == 2)
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                        label: I18n.of(context)!.notesScreenName,
+                      ),
+                    ]),
               ),
             ),
-            child: BottomNavigationBar(
-                currentIndex: _currentIndex,
-                onTap: screenNav.setFocusedBtn,
-                selectedItemColor: Colors.black,
-                type: BottomNavigationBarType.fixed,
-                unselectedItemColor: Colors.black,
-                showUnselectedLabels: true,
-                showSelectedLabels: true,
-                backgroundColor: Color(0xFF33ACE3),
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Observer(
-                        builder: (_) => Icon(
-                              Icons.menu_book,
-                              size: 46,
-                              color: (screenNav.focusedNavBtn == 0)
-                                  ? Colors.white
-                                  : Colors.black,
-                            )),
-                    label: I18n.of(context)!.menuScreenName,
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Observer(
-                          builder: (_) => Icon(
-                                Icons.mic,
-                                size: 46,
-                                color: (screenNav.focusedNavBtn == 1)
-                                    ? Colors.white
-                                    : Colors.black,
-                              )),
-                      label: ''),
-                  BottomNavigationBarItem(
-                    icon: Observer(
-                        builder: (_) => Icon(
-                              Icons.notes,
-                              size: 46,
-                              color: (screenNav.focusedNavBtn == 2)
-                                  ? Colors.white
-                                  : Colors.black,
-                            )),
-                    label: I18n.of(context)!.notesScreenName,
-                  ),
-                ]),
-          ),
-        ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
-        floatingActionButton: Observer( builder: (_) =>  AvatarGlow(
-            animate: micObserver.micIsExpectedToListen,
-            glowColor: Theme.of(context).primaryColor,
-            endRadius: 80,
-            duration: Duration(milliseconds: 2000),
-            repeatPauseDuration: const Duration(milliseconds: 100),
-            repeat: true,
-            child: Container(
-                width: 120.0,
-                height: 85.0,
-                child: new RawMaterialButton(
-                  shape: new CircleBorder(),
-                  elevation: 0.01,
-                  onPressed: () => { _onClickMic(micObserver, screenNav)},//{screenNav.changeScreen(MAIN_SCREENS.HOME)},
-                  child: Column(children: [
-                    Image(
-                      image: AssetImage("assets/images/mic.png"),
-                      color: Color(0xFF33ACE3),
-                      height: 80,
-                      width: 80.82,
-                    ),
-                  ]),
-                )))));
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniCenterDocked,
+            floatingActionButton: AvatarGlow(
+                animate: micObserver.micIsExpectedToListen,
+                glowColor: Theme.of(context).primaryColor,
+                endRadius: 80,
+                duration: Duration(milliseconds: 2000),
+                repeatPauseDuration: const Duration(milliseconds: 100),
+                repeat: true,
+                child: Container(
+                    width: 120.0,
+                    height: 85.0,
+                    child: new RawMaterialButton(
+                      shape: new CircleBorder(),
+                      elevation: 0.01,
+                      onPressed: () => {
+                        _onClickMic(micObserver, screenNav)
+                      }, //{screenNav.changeScreen(MAIN_SCREENS.HOME)},
+                      child: Column(children: [
+                        Image(
+                          image: AssetImage("assets/images/mic.png"),
+                          color: Color(0xFF33ACE3),
+                          height: 80,
+                          width: 80.82,
+                        ),
+                      ]),
+                    )))));
   }
 }
+//TODO User FittedBox to resize according to the phone's size

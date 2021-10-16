@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled3/Screens/Note/NoteDetail.dart';
+import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
-import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
-import 'SaveNote.dart';
-import '../../Model/Note.dart';
 
 final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -15,14 +11,10 @@ final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 class ViewNotes extends StatefulWidget {
   @override
   _ViewNotesState createState() => _ViewNotesState();
-
-
 }
 
 class _ViewNotesState extends State<ViewNotes> {
-
   _ViewNotesState();
-  
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +23,103 @@ class _ViewNotesState extends State<ViewNotes> {
     // String noteScreen =I18n.of(context)!.notesScreenName;
 
     final noteObserver = Provider.of<NoteObserver>(context);
+    final TEXT_STYLE = TextStyle(fontSize: 20);
+    const HEADER_TEXT_STYLE = const TextStyle(fontSize: 20);
+
+    var rowHeight = (MediaQuery.of(context).size.height - 56) / 5;
+    var noteWidth = MediaQuery.of(context).size.width * 0.35;
+    print("My width is $noteWidth");
+
     //noteObserver.changeScreen(NOTE_SCREENS.NOTE);
-    
-    return 
-        Scaffold(
+    return Scaffold(
+        body: SingleChildScrollView(
+            child: DataTable(
+                dataRowHeight: rowHeight,
+                headingRowHeight: 60,
+                columns: const <DataColumn>[
+                  DataColumn(
+                    label: Text(
+                      '',
+                      style: HEADER_TEXT_STYLE,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'NOTE',
+                      style: HEADER_TEXT_STYLE,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'CREATED',
+                      style: HEADER_TEXT_STYLE,
+                    ),
+                  ),
+                ],
+                rows: List<DataRow>.generate(
+                  noteObserver.usersNotes.length,
+                  (int index) => DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text("${(index + 1)}")),
+                      DataCell(
+                        Container(
+                            padding: EdgeInsets.all(10),
+                            width: noteWidth,
+                            child: Text(
+                              noteObserver.usersNotes[index].text,
+                              style: TEXT_STYLE,
+                            )),
+                        showEditIcon: true,
+                        onTap: () => {
+                          print(noteObserver.usersNotes[index].noteId)
+                          //noteObserver.changeScreen(NOTE_SCREENS.NOTE_DETAIL)
+                        },
+                      ),
+                      DataCell(Text(timeago.format(
+                          noteObserver.usersNotes[index].recordedTime))),
+                    ],
+                  ),
+                ))),
+        floatingActionButton: buildFloatingBtn(noteObserver));
+  }
+
+  //Funtion retuns Floating button
+  Widget buildFloatingBtn(noteObserver) {
+    return FloatingActionButton(
+      onPressed: () {
+        noteObserver.changeScreen(NOTE_SCREENS.ADD_NOTE);
+      },
+      tooltip: 'Add Note',
+      child: Icon(Icons.add),
+    );
+  }
+}
+
+/**
+ * 
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Text('Sarah')),
+            DataCell(Text('19')),
+            DataCell(Text('Student')),
+          ],
+        ),
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Text('Janine')),
+            DataCell(Text('43')),
+            DataCell(Text('Professor')),
+          ],
+        ),
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Text('William')),
+            DataCell(Text('27')),
+            DataCell(Text('Associate Professor')),
+          ],
+        ),
+      
+ *  Scaffold(
                 //appBar: buildAppBar(context),
                 key: viewNotesScaffoldKey,
                 body:SingleChildScrollView(
@@ -84,7 +169,7 @@ class _ViewNotesState extends State<ViewNotes> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20,
-                                              color: Colors.white))),
+                                              color: Colors.white)) ),
                                 ),
                               ]),
                           //not sure how to pass the correct element
@@ -142,19 +227,4 @@ class _ViewNotesState extends State<ViewNotes> {
 
                floatingActionButton: buildFloatingBtn(noteObserver)
             );
-  }
-  
-
-  //Funtion retuns Floating button
-  Widget buildFloatingBtn(noteObserver){
-    return FloatingActionButton(
-
-                    onPressed: () {
-                      noteObserver.changeScreen(NOTE_SCREENS.ADD_NOTE);
-                    },
-                    tooltip: 'Add Note',
-                    child: Icon(Icons.add),
-                );
-  }
- 
-}
+ */
