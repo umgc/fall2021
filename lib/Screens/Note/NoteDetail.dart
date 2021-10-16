@@ -7,6 +7,7 @@ import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/Utility/FontUtil.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 class NoteDetails extends StatefulWidget {
   NoteDetails({
