@@ -42,6 +42,23 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
+  final _$expectingUserFollowupResponseAtom =
+      Atom(name: '_AbstractMicObserver.expectingUserFollowupResponse');
+
+  @override
+  bool get expectingUserFollowupResponse {
+    _$expectingUserFollowupResponseAtom.reportRead();
+    return super.expectingUserFollowupResponse;
+  }
+
+  @override
+  set expectingUserFollowupResponse(bool value) {
+    _$expectingUserFollowupResponseAtom
+        .reportWrite(value, super.expectingUserFollowupResponse, () {
+      super.expectingUserFollowupResponse = value;
+    });
+  }
+
   final _$speechConfidenceAtom =
       Atom(name: '_AbstractMicObserver.speechConfidence');
 
@@ -105,19 +122,59 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
-  final _$_AbstractMicObserverActionController =
-      ActionController(name: '_AbstractMicObserver');
+  final _$lastNluMessageAtom =
+      Atom(name: '_AbstractMicObserver.lastNluMessage');
 
   @override
-  void toggleListeningMode() {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.toggleListeningMode');
-    try {
-      return super.toggleListeningMode();
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
+  NLUResponse? get lastNluMessage {
+    _$lastNluMessageAtom.reportRead();
+    return super.lastNluMessage;
   }
+
+  @override
+  set lastNluMessage(NLUResponse? value) {
+    _$lastNluMessageAtom.reportWrite(value, super.lastNluMessage, () {
+      super.lastNluMessage = value;
+    });
+  }
+
+  final _$followUpTypesForMsgSentAtom =
+      Atom(name: '_AbstractMicObserver.followUpTypesForMsgSent');
+
+  @override
+  FollowUpTypes? get followUpTypesForMsgSent {
+    _$followUpTypesForMsgSentAtom.reportRead();
+    return super.followUpTypesForMsgSent;
+  }
+
+  @override
+  set followUpTypesForMsgSent(FollowUpTypes? value) {
+    _$followUpTypesForMsgSentAtom
+        .reportWrite(value, super.followUpTypesForMsgSent, () {
+      super.followUpTypesForMsgSent = value;
+    });
+  }
+
+  final _$toggleListeningModeAsyncAction =
+      AsyncAction('_AbstractMicObserver.toggleListeningMode');
+
+  @override
+  Future<void> toggleListeningMode() {
+    return _$toggleListeningModeAsyncAction
+        .run(() => super.toggleListeningMode());
+  }
+
+  final _$fufillNLUTaskAsyncAction =
+      AsyncAction('_AbstractMicObserver.fufillNLUTask');
+
+  @override
+  Future<void> fufillNLUTask(NLUResponse nluResponse) {
+    return _$fufillNLUTaskAsyncAction
+        .run(() => super.fufillNLUTask(nluResponse));
+  }
+
+  final _$_AbstractMicObserverActionController =
+      ActionController(name: '_AbstractMicObserver');
 
   @override
   void _clearChatHistory() {
@@ -147,6 +204,18 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
         name: '_AbstractMicObserver.addSystemMessage');
     try {
       return super.addSystemMessage(nluResponse);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addFollowUpMessage(
+      String message, List<String> responsOptions, FollowUpTypes followupType) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.addFollowUpMessage');
+    try {
+      return super.addFollowUpMessage(message, responsOptions, followupType);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -197,25 +266,17 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   }
 
   @override
-  void fufillNLUTask(NLUResponse nluResponse) {
-    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
-        name: '_AbstractMicObserver.fufillNLUTask');
-    try {
-      return super.fufillNLUTask(nluResponse);
-    } finally {
-      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 messageInputText: ${messageInputText},
 micIsExpectedToListen: ${micIsExpectedToListen},
+expectingUserFollowupResponse: ${expectingUserFollowupResponse},
 speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
 mainNavObserver: ${mainNavObserver},
-noteObserver: ${noteObserver}
+noteObserver: ${noteObserver},
+lastNluMessage: ${lastNluMessage},
+followUpTypesForMsgSent: ${followUpTypesForMsgSent}
     ''';
   }
 }
