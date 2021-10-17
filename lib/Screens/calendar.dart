@@ -22,7 +22,7 @@ class CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
     final calendarObserver = Provider.of<CalendarObservable>(context);
-    //calendarObserver.setNoteObserver(noteObserver);
+    calendarObserver.setNoteObserver(noteObserver);
     return Observer(
         builder: (_) => Column(children: [
               TableCalendar(
@@ -48,14 +48,10 @@ class CalendarState extends State<Calendar> {
                 onDaySelected: (selectedDay, focusDay) {
                   //exctract the date portion
                   //if (!isSameDay(calendarObserver.selectedDay, selectedDay)) {
-                  WidgetsBinding.instance!.addPostFrameCallback((_) {
-                    // Add Your Code here.
-                    calendarObserver.setSelectedDay(selectedDay);
-                    String date = selectedDay.toString().split(" ")[0];
-                    calendarObserver.loadEventsOfSelectedDay(date);
-                  });
-
+                  calendarObserver.setSelectedDay(selectedDay);
                   //}
+                  String date = selectedDay.toString().split(" ")[0];
+                  calendarObserver.loadEventsOfSelectedDay(date);
                 },
                 onPageChanged: (focusedDay) {
                   print("onPageChanged: Day selected $focusedDay");
