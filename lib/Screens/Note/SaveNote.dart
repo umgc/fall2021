@@ -226,6 +226,7 @@ class _SaveNoteState extends State<SaveNote> {
       this._newNote.eventTime = noteObserver.newNoteEventTime;
       this._newNote.eventDate = noteObserver.newNoteEventDate;
       this._newNote.isCheckList = noteObserver.newNoteIsCheckList;
+      noteObserver.deleteNote(noteObserver.currNoteForDetails);
       noteObserver.addNote(_newNote);
       _showToast();
       noteObserver.changeScreen(NOTE_SCREENS.NOTE);
