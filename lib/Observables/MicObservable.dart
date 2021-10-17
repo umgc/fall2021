@@ -69,7 +69,7 @@ abstract class _AbstractMicObserver with Store {
   int index = 0;
 
   @action
-  void toggleListeningMode() async {
+  Future<void> toggleListeningMode() async {
     /**
      * User activates mic's listening mode
      *  -micIsExpectedToListen = true;
@@ -177,7 +177,7 @@ abstract class _AbstractMicObserver with Store {
    *  message object and process it based on its actionType
    */
   @action
-  void fufillNLUTask(NLUResponse nluResponse) async {
+  Future<void> fufillNLUTask(NLUResponse nluResponse) async {
     //final noteObserver = Provider.of<NoteObserver>(context);
     print("Processing NLU message with action type ${nluResponse.actionType}");
     MainNavObserver resolvedMainNav = (mainNavObserver as MainNavObserver);

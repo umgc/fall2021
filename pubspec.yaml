@@ -69,6 +69,8 @@ dependencies:
   chewie: ^1.1.0
   video_player: ^2.2.5
   lottie: ^1.2.1
+  expandable_text: ^2.2.0
+  date_time_picker: ^2.1.0
 
  
 
