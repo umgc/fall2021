@@ -52,6 +52,8 @@ class CalendarState extends State<Calendar> {
                   //}
                   String date = selectedDay.toString().split(" ")[0];
                   calendarObserver.loadEventsOfSelectedDay(date);
+
+                  (context as Element).reassemble();
                 },
                 onPageChanged: (focusedDay) {
                   print("onPageChanged: Day selected $focusedDay");

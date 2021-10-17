@@ -13,20 +13,27 @@ final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
 /// Save Note page
 class SaveNote extends StatefulWidget {
-  SaveNote() {}
+  bool isCheckListEvent;
+  bool viewExistingNote;
+
+  SaveNote({this.isCheckListEvent = false, this.viewExistingNote = false}) {}
 
   @override
-  State<SaveNote> createState() => _SaveNoteState();
+  State<SaveNote> createState() => _SaveNoteState(
+      isCheckListEvent: this.isCheckListEvent,
+      viewExistingNote: this.viewExistingNote);
 }
 
 class _SaveNoteState extends State<SaveNote> {
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
   bool isCheckListEvent;
+  bool viewExistingNote;
 
   var textController = TextEditingController();
   TextNote _newNote = TextNote();
-  _SaveNoteState({this.isCheckListEvent = false}) {
+  _SaveNoteState(
+      {this.isCheckListEvent = false, this.viewExistingNote = false}) {
     //this.navScreenObs = navScreenObs;
   }
 
@@ -71,15 +78,21 @@ class _SaveNoteState extends State<SaveNote> {
   }
 
   //ref: https://pub.dev/packages/date_time_picker
-  Widget _selectDate(bool noteHasDateInfo) {
+  Widget _selectDate() {
     final noteObserver = Provider.of<NoteObserver>(context);
-    if (noteHasDateInfo == false) {
+
+    if (this.viewExistingNote == true) {
       return DateTimePicker(
-        type: (isCheckListEvent)
+        type: (noteObserver.newNoteIsCheckList || this.isCheckListEvent == true)
             ? DateTimePickerType.time
             : DateTimePickerType.dateTimeSeparate,
         dateMask: 'd MMM, yyyy',
-        initialValue: DateTime.now().toString(),
+        initialValue: (noteObserver.newNoteIsCheckList == true ||
+                this.isCheckListEvent == true)
+            ? (noteObserver.currNoteForDetails!.eventTime)
+            : (noteObserver.currNoteForDetails!.eventDate +
+                " " +
+                noteObserver.currNoteForDetails!.eventTime),
         firstDate: DateTime.now(),
         lastDate: DateTime(2100),
         icon: Icon(Icons.event),
@@ -89,7 +102,9 @@ class _SaveNoteState extends State<SaveNote> {
           return true;
         },
         onChanged: (value) {
-          if (isCheckListEvent == true) {
+          print("_selectDate: Datetime $value");
+
+          if (noteObserver.newNoteIsCheckList == true) {
             noteObserver.setNewNoteEventTime(value);
           } else {
             String mDate = value.split(" ")[0];
@@ -106,19 +121,15 @@ class _SaveNoteState extends State<SaveNote> {
       );
     }
 
-    print(
-        "noteObserver.currNoteForDetails!.eventDate ${(noteObserver.currNoteForDetails!.eventDate + ' ' + noteObserver.currNoteForDetails!.eventTime)}");
+    //print(
+    //  "noteObserver.currNoteForDetails!.eventDate ${(noteObserver.currNoteForDetails!.eventDate + ' ' + noteObserver.currNoteForDetails!.eventTime)}");
 
     return DateTimePicker(
-      type: (noteObserver.newNoteIsCheckList)
+      type: (isCheckListEvent)
           ? DateTimePickerType.time
           : DateTimePickerType.dateTimeSeparate,
       dateMask: 'd MMM, yyyy',
-      initialValue: (noteObserver.currNoteForDetails!.isCheckList)
-          ? (noteObserver.currNoteForDetails!.eventTime)
-          : (noteObserver.currNoteForDetails!.eventDate +
-              " " +
-              noteObserver.currNoteForDetails!.eventTime),
+      initialValue: DateTime.now().toString(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
       icon: Icon(Icons.event),
@@ -128,9 +139,7 @@ class _SaveNoteState extends State<SaveNote> {
         return true;
       },
       onChanged: (value) {
-        print("_selectDate: Datetime $value");
-
-        if (noteObserver.newNoteIsCheckList == true) {
+        if (isCheckListEvent == true) {
           noteObserver.setNewNoteEventTime(value);
         } else {
           String mDate = value.split(" ")[0];
@@ -199,12 +208,8 @@ class _SaveNoteState extends State<SaveNote> {
                   SizedBox(height: verticalColSpace),
 
                   //do not show if user chose to add checkList or modify and existing not to be a checklist
-                  (!this.isCheckListEvent && !noteObserver.newNoteIsCheckList)
-                      ? _selectDate(noteId.isNotEmpty)
-                      : (this.isCheckListEvent == true ||
-                              noteObserver.newNoteIsCheckList == true)
-                          ? _selectDate(noteId.isNotEmpty)
-                          : SizedBox(height: verticalColSpace),
+                  _selectDate(),
+
                   SizedBox(height: verticalColSpace),
                   _button(
                       Color(0xFF33ACE3),

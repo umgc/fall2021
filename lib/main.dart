@@ -5,7 +5,6 @@ import 'package:untitled3/Observables/CalenderObservable.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Observables/OnboardObservable.dart';
 // Internal
-import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:untitled3/Screens/Onboarding/Boarding.dart';
 
@@ -119,7 +118,6 @@ class _MyAppState extends State<MyApp> {
                   supportedLocales: i18n.supportedLocales,
                   localeResolutionCallback:
                       i18n.resolution(fallback: new Locale("en", "US")),
-                  routes: {'/note-details': (context) => NoteDetails()},
                 ))));
   }
 }
