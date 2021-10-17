@@ -12,32 +12,17 @@ class Calendar extends StatefulWidget {
 }
 
 class CalendarState extends State<Calendar> {
-  List<Event> _getEventsForDay(DateTime day) {
-    return [
-      Event("Gold"),
-      Event("Alum"),
-      Event("Platinum"),
-      Event("Silver"),
-      Event("Silk"),
-      Event("Milk"),
-      Event("Silver"),
-      Event("Example"),
-      Event("Good"),
-      Event("Gold")
-    ];
-  }
-
-  @override
-  void dispose() {
-    //_selectedEvents.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   //_selectedEvents.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
     final calendarObserver = Provider.of<CalendarObservable>(context);
-    calendarObserver.setNoteObserver(noteObserver);
+    //calendarObserver.setNoteObserver(noteObserver);
     return Observer(
         builder: (_) => Column(children: [
               TableCalendar(
@@ -45,22 +30,52 @@ class CalendarState extends State<Calendar> {
                 firstDay: DateTime.parse(
                     "2012-02-27"), //Date of the oldest past event
                 lastDay: DateTime.parse("2022-02-27"), //Date of the last event
-                calendarFormat:
-                    CalendarFormat.week, //calendarObserver.calendarFormat,
-                eventLoader: _getEventsForDay,
+                selectedDayPredicate: (day) {
+                  print(
+                      "selectedDayPredicate: calendarObserver.selectedDay ${calendarObserver.selectedDay} $day");
+                  return isSameDay(calendarObserver.selectedDay, day);
+                },
+
+                calendarFormat: calendarObserver.calendarFormat,
+                eventLoader: (DateTime day) {
+                  return calendarObserver
+                      .loadEventsOfSelectedDay(day.toString().split(" ")[0]);
+                },
                 onFormatChanged: (format) {
                   print("onFormatChanged: changing format to $format");
                   calendarObserver.changeFormat(format);
                 },
                 onDaySelected: (selectedDay, focusDay) {
-                  print("onDaySelected: Day selected ${selectedDay.day}");
                   //exctract the date portion
-                  String date = selectedDay.toString().split(" ")[0];
-                  calendarObserver.loadEventsOfSelectedDay(date);
+                  //if (!isSameDay(calendarObserver.selectedDay, selectedDay)) {
+                  WidgetsBinding.instance!.addPostFrameCallback((_) {
+                    // Add Your Code here.
+                    calendarObserver.setSelectedDay(selectedDay);
+                    String date = selectedDay.toString().split(" ")[0];
+                    calendarObserver.loadEventsOfSelectedDay(date);
+                  });
+
+                  //}
                 },
                 onPageChanged: (focusedDay) {
                   print("onPageChanged: Day selected $focusedDay");
                 },
+                calendarStyle: CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                      color: Colors.pink,
+                      shape: BoxShape.circle,
+                    ),
+                    //selectedTextStyle: TextStyle(),
+                    //todayDecoration: Colors.orange,
+                    todayDecoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      shape: BoxShape.circle,
+                    ),
+                    //OnDaySelected: Theme.of(context).primaryColor,
+                    selectedTextStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.white)),
               ),
               ElevatedButton(
                 child: Text('Clear selection'),
@@ -96,5 +111,3 @@ class CalendarState extends State<Calendar> {
             ]));
   }
 }
-
-// based on https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/basics_example.dart

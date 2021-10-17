@@ -13,15 +13,30 @@ mixin _$CalendarObservable on _AbstractCalendarObserver, Store {
       Atom(name: '_AbstractCalendarObserver.noteObserver');
 
   @override
-  NoteObserver? get noteObserver {
+  NoteObserver get noteObserver {
     _$noteObserverAtom.reportRead();
     return super.noteObserver;
   }
 
   @override
-  set noteObserver(NoteObserver? value) {
+  set noteObserver(NoteObserver value) {
     _$noteObserverAtom.reportWrite(value, super.noteObserver, () {
       super.noteObserver = value;
+    });
+  }
+
+  final _$selectedDayAtom = Atom(name: '_AbstractCalendarObserver.selectedDay');
+
+  @override
+  DateTime? get selectedDay {
+    _$selectedDayAtom.reportRead();
+    return super.selectedDay;
+  }
+
+  @override
+  set selectedDay(DateTime? value) {
+    _$selectedDayAtom.reportWrite(value, super.selectedDay, () {
+      super.selectedDay = value;
     });
   }
 
@@ -83,9 +98,32 @@ mixin _$CalendarObservable on _AbstractCalendarObserver, Store {
   }
 
   @override
+  void setSelectedDay(DateTime day) {
+    final _$actionInfo = _$_AbstractCalendarObserverActionController
+        .startAction(name: '_AbstractCalendarObserver.setSelectedDay');
+    try {
+      return super.setSelectedDay(day);
+    } finally {
+      _$_AbstractCalendarObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  List<Event> loadEventsOfSelectedDay(String day) {
+    final _$actionInfo = _$_AbstractCalendarObserverActionController
+        .startAction(name: '_AbstractCalendarObserver.loadEventsOfSelectedDay');
+    try {
+      return super.loadEventsOfSelectedDay(day);
+    } finally {
+      _$_AbstractCalendarObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 noteObserver: ${noteObserver},
+selectedDay: ${selectedDay},
 calendarFormat: ${calendarFormat},
 selectedEvents: ${selectedEvents}
     ''';

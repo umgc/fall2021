@@ -15,6 +15,9 @@ abstract class _AbstractCalendarObserver with Store {
   NoteObserver? noteObserver;
 
   @observable
+  DateTime? selectedDay;
+
+  @observable
   CalendarFormat calendarFormat = CalendarFormat.week;
 
   @observable
@@ -30,7 +33,13 @@ abstract class _AbstractCalendarObserver with Store {
     noteObserver = observer;
   }
 
-  void loadEventsOfSelectedDay(String day) {
+  @action
+  void setSelectedDay(DateTime day) {
+    selectedDay = day;
+  }
+
+  @action
+  List<Event> loadEventsOfSelectedDay(String day) {
     List<Event> eventsOnDay = [];
     for (TextNote note in noteObserver!.usersNotes) {
       print("note.eventDate: ${note.eventDate} SelectDay $day");
@@ -38,6 +47,7 @@ abstract class _AbstractCalendarObserver with Store {
         eventsOnDay.add(Event(note.text));
       }
     }
-    if (eventsOnDay.isNotEmpty) selectedEvents.value = eventsOnDay;
+    selectedEvents.value = eventsOnDay;
+    return eventsOnDay;
   }
 }
