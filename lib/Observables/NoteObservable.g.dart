@@ -55,6 +55,54 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
+  final _$newNoteIsCheckListAtom =
+      Atom(name: '_AbstractNoteObserver.newNoteIsCheckList');
+
+  @override
+  bool get newNoteIsCheckList {
+    _$newNoteIsCheckListAtom.reportRead();
+    return super.newNoteIsCheckList;
+  }
+
+  @override
+  set newNoteIsCheckList(bool value) {
+    _$newNoteIsCheckListAtom.reportWrite(value, super.newNoteIsCheckList, () {
+      super.newNoteIsCheckList = value;
+    });
+  }
+
+  final _$newNoteEventDateAtom =
+      Atom(name: '_AbstractNoteObserver.newNoteEventDate');
+
+  @override
+  String get newNoteEventDate {
+    _$newNoteEventDateAtom.reportRead();
+    return super.newNoteEventDate;
+  }
+
+  @override
+  set newNoteEventDate(String value) {
+    _$newNoteEventDateAtom.reportWrite(value, super.newNoteEventDate, () {
+      super.newNoteEventDate = value;
+    });
+  }
+
+  final _$newNoteEventTimeAtom =
+      Atom(name: '_AbstractNoteObserver.newNoteEventTime');
+
+  @override
+  String get newNoteEventTime {
+    _$newNoteEventTimeAtom.reportRead();
+    return super.newNoteEventTime;
+  }
+
+  @override
+  set newNoteEventTime(String value) {
+    _$newNoteEventTimeAtom.reportWrite(value, super.newNoteEventTime, () {
+      super.newNoteEventTime = value;
+    });
+  }
+
   final _$_AbstractNoteObserverActionController =
       ActionController(name: '_AbstractNoteObserver');
 
@@ -114,11 +162,47 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   }
 
   @override
+  void setNewNoteAIsCheckList(bool value) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setNewNoteAIsCheckList');
+    try {
+      return super.setNewNoteAIsCheckList(value);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setNewNoteEventDate(String value) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setNewNoteEventDate');
+    try {
+      return super.setNewNoteEventDate(value);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setNewNoteEventTime(String value) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setNewNoteEventTime');
+    try {
+      return super.setNewNoteEventTime(value);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentScreen: ${currentScreen},
 currNoteForDetails: ${currNoteForDetails},
-usersNotes: ${usersNotes}
+usersNotes: ${usersNotes},
+newNoteIsCheckList: ${newNoteIsCheckList},
+newNoteEventDate: ${newNoteEventDate},
+newNoteEventTime: ${newNoteEventTime}
     ''';
   }
 }

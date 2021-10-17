@@ -10,7 +10,8 @@ class NLUResponse {
   String? response;
   NLUState state;
   String? eventType;
-  DateTime? eventTime;
+  String? eventDate;
+  String? eventTime;
   List<String>? resolvedValues;
   String? recurringType;
   TimeOfDay? timeOfDay;
@@ -20,6 +21,7 @@ class NLUResponse {
       this.response,
       this.state,
       this.eventType,
+      this.eventDate,
       this.eventTime,
       this.resolvedValues,
       this.recurringType,
@@ -31,6 +33,7 @@ class NLUResponse {
                         "response": "${this.response}",
                         "state": "${this.state}",
                         "eventType": "${this.eventType}",
+                        "eventDate": "${this.eventDate}", 
                         "eventTime": "${this.eventTime}", 
                         "resolvedValues": "${this.resolvedValues}",
                         "recurringType": "${this.recurringType}",

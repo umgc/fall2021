@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:untitled3/Screens/Main.dart';
-import 'package:untitled3/Screens/Mic/Mic.dart';
-
-
+import 'package:untitled3/generated/i18n.dart';
 
 class Home extends StatefulWidget {
 
@@ -26,7 +24,7 @@ class _HomeState extends State<Home> {
           margin: const EdgeInsets.only(left: 10.0,),
 
           child: Text(
-            "Would you like to Speak \n or write a note?",style: TextStyle(
+              I18n.of(context)!.speakOrWritePrompt,style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
               color: Colors.black,)

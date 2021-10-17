@@ -16,44 +16,35 @@ final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 class Note extends StatefulWidget {
   @override
   _NoteState createState() => _NoteState();
-
 }
 
 class _NoteState extends State<Note> {
-
   _NoteState();
-  
+
   @override
   Widget build(BuildContext context) {
-   
     final noteObserver = Provider.of<NoteObserver>(context);
-    
-    return Scaffold(
-                key: viewNotesScaffoldKey,
-                body:Observer(
-                  builder: (_) => 
-                      _changeScreen(noteObserver.currentScreen)
-                   ),
-                
-                ///floatingActionButton: buildFloatingBtn(noteObserver)
 
-            );
-         
+    return Scaffold(
+      key: viewNotesScaffoldKey,
+      body: Observer(builder: (_) => _changeScreen(noteObserver.currentScreen)),
+
+      ///floatingActionButton: buildFloatingBtn(noteObserver)
+    );
   }
 
- Widget _changeScreen( NOTE_SCREENS screen) {
+  Widget _changeScreen(NOTE_SCREENS screen) {
     print("Changing Note screen to $screen");
-    
-    switch (screen) {
 
-      case NOTE_SCREENS.ADD_NOTE: 
+    switch (screen) {
+      case NOTE_SCREENS.ADD_NOTE:
         return SaveNote();
-        
+
       case NOTE_SCREENS.NOTE_DETAIL:
         return NoteDetails();
 
-      default: return ViewNotes();
+      default:
+        return ViewNotes();
     }
- }
-  
+  }
 }

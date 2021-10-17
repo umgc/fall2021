@@ -8,16 +8,17 @@ import 'package:untitled3/Model/Note.dart';
 
 /// Example event class.
 class Event {
+  String title = "";
 
- String title ="";
-
-   Event(this.title);
+  Event(this.title);
 
   @override
   String toString() => title;
 }
+
 String textNote = TextNote().text;
-DateTime eventDate = TextNote().eventDate;
+DateTime eventDate = DateTime.parse(TextNote().eventDate);
+
 /// Example events.
 ///
 /// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
@@ -26,16 +27,14 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
-
 final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => eventDate,//DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
-    value: (item) => List.generate(
-        item % 4 + 1, (index) =>  Event(textNote)))
+    key: (item) =>
+        eventDate, //DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
+    value: (item) => List.generate(item % 4 + 1, (index) => Event(textNote)))
   ..addAll({
     kToday: [
-
       Event(textNote),
-   //   Event('Today\'s Event 2'),
+      //   Event('Today\'s Event 2'),
     ],
   });
 
@@ -48,7 +47,7 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
   final dayCount = last.difference(first).inDays + 1;
   return List.generate(
     dayCount,
-        (index) => DateTime.utc(first.year, first.month, first.day + index),
+    (index) => DateTime.utc(first.year, first.month, first.day + index),
   );
 }
 
