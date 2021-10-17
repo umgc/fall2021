@@ -233,7 +233,7 @@ class _SaveNoteState extends State<SaveNote> {
                         Share.share(noteObserver.currNoteForDetails!.text);
                       },
                       child: Text(
-                        'Share',
+                        I18n.of(context)!.cancel,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
