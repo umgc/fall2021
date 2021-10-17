@@ -13,13 +13,13 @@ mixin _$CalendarObservable on _AbstractCalendarObserver, Store {
       Atom(name: '_AbstractCalendarObserver.noteObserver');
 
   @override
-  NoteObserver get noteObserver {
+  NoteObserver? get noteObserver {
     _$noteObserverAtom.reportRead();
     return super.noteObserver;
   }
 
   @override
-  set noteObserver(NoteObserver value) {
+  set noteObserver(NoteObserver? value) {
     _$noteObserverAtom.reportWrite(value, super.noteObserver, () {
       super.noteObserver = value;
     });
