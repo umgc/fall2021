@@ -103,6 +103,24 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
+  final _$setCurrNoteIdForDetailsAsyncAction =
+      AsyncAction('_AbstractNoteObserver.setCurrNoteIdForDetails');
+
+  @override
+  Future<void> setCurrNoteIdForDetails(dynamic noteId) {
+    return _$setCurrNoteIdForDetailsAsyncAction
+        .run(() => super.setCurrNoteIdForDetails(noteId));
+  }
+
+  final _$resetCurrNoteIdForDetailsAsyncAction =
+      AsyncAction('_AbstractNoteObserver.resetCurrNoteIdForDetails');
+
+  @override
+  Future resetCurrNoteIdForDetails() {
+    return _$resetCurrNoteIdForDetailsAsyncAction
+        .run(() => super.resetCurrNoteIdForDetails());
+  }
+
   final _$_AbstractNoteObserverActionController =
       ActionController(name: '_AbstractNoteObserver');
 
@@ -123,17 +141,6 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
         name: '_AbstractNoteObserver.deleteNote');
     try {
       return super.deleteNote(note);
-    } finally {
-      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCurrNoteIdForDetails(dynamic noteId) {
-    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
-        name: '_AbstractNoteObserver.setCurrNoteIdForDetails');
-    try {
-      return super.setCurrNoteIdForDetails(noteId);
     } finally {
       _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
     }

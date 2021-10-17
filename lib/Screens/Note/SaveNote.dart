@@ -13,19 +13,27 @@ final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
 /// Save Note page
 class SaveNote extends StatefulWidget {
-  SaveNote() {}
+  bool isCheckListEvent;
+  bool viewExistingNote;
+
+  SaveNote({this.isCheckListEvent = false, this.viewExistingNote = false}) {}
 
   @override
-  State<SaveNote> createState() => _SaveNoteState();
+  State<SaveNote> createState() => _SaveNoteState(
+      isCheckListEvent: this.isCheckListEvent,
+      viewExistingNote: this.viewExistingNote);
 }
 
 class _SaveNoteState extends State<SaveNote> {
   /// Text note service to use for I/O operations against local system
   final TextNoteService textNoteService = new TextNoteService();
+  bool isCheckListEvent;
+  bool viewExistingNote;
 
-  final textController = TextEditingController();
+  var textController = TextEditingController();
   TextNote _newNote = TextNote();
-  _SaveNoteState() {
+  _SaveNoteState(
+      {this.isCheckListEvent = false, this.viewExistingNote = false}) {
     //this.navScreenObs = navScreenObs;
   }
 
@@ -55,7 +63,7 @@ class _SaveNoteState extends State<SaveNote> {
 
     return Row(
       children: [
-        Text("Is a Daily Checklist item"),
+        Text("Make this a daily activity"),
         Checkbox(
           checkColor: Colors.white,
           fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -73,24 +81,72 @@ class _SaveNoteState extends State<SaveNote> {
   Widget _selectDate() {
     final noteObserver = Provider.of<NoteObserver>(context);
 
+    if (this.viewExistingNote == true) {
+      return DateTimePicker(
+        type: (noteObserver.newNoteIsCheckList || this.isCheckListEvent == true)
+            ? DateTimePickerType.time
+            : DateTimePickerType.dateTimeSeparate,
+        dateMask: 'd MMM, yyyy',
+        initialValue: (noteObserver.newNoteIsCheckList == true ||
+                this.isCheckListEvent == true)
+            ? (noteObserver.currNoteForDetails!.eventTime)
+            : (noteObserver.currNoteForDetails!.eventDate +
+                " " +
+                noteObserver.currNoteForDetails!.eventTime),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100),
+        icon: Icon(Icons.event),
+        dateLabelText: 'DATE',
+        timeLabelText: "TIME",
+        selectableDayPredicate: (date) {
+          return true;
+        },
+        onChanged: (value) {
+          print("_selectDate: Datetime $value");
+
+          if (noteObserver.newNoteIsCheckList == true) {
+            noteObserver.setNewNoteEventTime(value);
+          } else {
+            String mDate = value.split(" ")[0];
+            String mTime = value.split(" ")[1];
+            noteObserver.setNewNoteEventDate(mDate);
+            noteObserver.setNewNoteEventTime(mTime);
+          }
+        },
+        validator: (val) {
+          print(val);
+          return null;
+        },
+        onSaved: (val) => print("onSaved $val"),
+      );
+    }
+
+    //print(
+    //  "noteObserver.currNoteForDetails!.eventDate ${(noteObserver.currNoteForDetails!.eventDate + ' ' + noteObserver.currNoteForDetails!.eventTime)}");
+
     return DateTimePicker(
-      type: DateTimePickerType.dateTimeSeparate,
+      type: (isCheckListEvent)
+          ? DateTimePickerType.time
+          : DateTimePickerType.dateTimeSeparate,
       dateMask: 'd MMM, yyyy',
       initialValue: DateTime.now().toString(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
       icon: Icon(Icons.event),
-      dateLabelText: 'Date',
-      timeLabelText: "Hour",
+      dateLabelText: 'DATE',
+      timeLabelText: "TIME",
       selectableDayPredicate: (date) {
         return true;
       },
       onChanged: (value) {
-        String mDate = value.split(" ")[0];
-        String mTime = value.split(" ")[1];
-        noteObserver.setNewNoteEventDate(mDate);
-        noteObserver.setNewNoteEventTime(mTime);
-        print("onChanged $value");
+        if (isCheckListEvent == true) {
+          noteObserver.setNewNoteEventTime(value);
+        } else {
+          String mDate = value.split(" ")[0];
+          String mTime = value.split(" ")[1];
+          noteObserver.setNewNoteEventDate(mDate);
+          noteObserver.setNewNoteEventTime(mTime);
+        }
       },
       validator: (val) {
         print(val);
@@ -116,6 +172,14 @@ class _SaveNoteState extends State<SaveNote> {
   @override
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
+    String noteId = "";
+    //VIEW_NOTE MODE: Populated the details of the targeted notes into the UI
+    if (noteObserver.currNoteForDetails != null) {
+      noteId = noteObserver.currNoteForDetails!.noteId;
+
+      textController =
+          TextEditingController(text: noteObserver.currNoteForDetails!.text);
+    }
 
     var padding = MediaQuery.of(context).size.width * 0.02;
     var spaceBetweenBtn = MediaQuery.of(context).size.width * 0.5;
@@ -137,15 +201,23 @@ class _SaveNoteState extends State<SaveNote> {
                         hintText: I18n.of(context)!.enterNoteText),
                   ),
                   SizedBox(height: verticalColSpace),
-                  _checkBox(),
+
+                  //only show check box if the user is edititing not
+                  if (noteId.isEmpty) _checkBox(),
+
                   SizedBox(height: verticalColSpace),
+
+                  //do not show if user chose to add checkList or modify and existing not to be a checklist
                   _selectDate(),
+
                   SizedBox(height: verticalColSpace),
                   _button(
                       Color(0xFF33ACE3),
                       I18n.of(context)!.save.toUpperCase(),
                       () => {_onSave(noteObserver)}),
-                  _button(Colors.red.shade400, "CANCEL",
+                  _button(
+                      Colors.red.shade400,
+                      I18n.of(context)!.cancel.toUpperCase(),
                       () => {noteObserver.changeScreen(NOTE_SCREENS.NOTE)}),
                 ],
               )),
@@ -159,6 +231,7 @@ class _SaveNoteState extends State<SaveNote> {
       this._newNote.eventTime = noteObserver.newNoteEventTime;
       this._newNote.eventDate = noteObserver.newNoteEventDate;
       this._newNote.isCheckList = noteObserver.newNoteIsCheckList;
+      noteObserver.deleteNote(noteObserver.currNoteForDetails);
       noteObserver.addNote(_newNote);
       _showToast();
       noteObserver.changeScreen(NOTE_SCREENS.NOTE);
