@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:untitled3/Model/CalendarEvent.dart';
 import 'package:untitled3/Observables/CalenderObservable.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
@@ -81,7 +82,7 @@ class CalendarState extends State<Calendar> {
               ),
               const SizedBox(height: 8.0),
               Expanded(
-                child: ValueListenableBuilder<List<Event>>(
+                child: ValueListenableBuilder<List<CalenderEvent>>(
                     valueListenable: calendarObserver.selectedEvents,
                     builder: (context, value, _) {
                       print("Initialized Value Notifier: ");
@@ -99,7 +100,9 @@ class CalendarState extends State<Calendar> {
                             ),
                             child: ListTile(
                               onTap: () => print('${value[index]}'),
-                              title: Text('${value[index]}'),
+                              title: Text(
+                                  '${value[index]} \t at \t ${value[index].time}',
+                                  textAlign: TextAlign.center),
                             ),
                           );
                         },

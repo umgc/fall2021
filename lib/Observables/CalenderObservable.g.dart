@@ -60,13 +60,13 @@ mixin _$CalendarObservable on _AbstractCalendarObserver, Store {
       Atom(name: '_AbstractCalendarObserver.selectedEvents');
 
   @override
-  ValueNotifier<List<Event>> get selectedEvents {
+  ValueNotifier<List<CalenderEvent>> get selectedEvents {
     _$selectedEventsAtom.reportRead();
     return super.selectedEvents;
   }
 
   @override
-  set selectedEvents(ValueNotifier<List<Event>> value) {
+  set selectedEvents(ValueNotifier<List<CalenderEvent>> value) {
     _$selectedEventsAtom.reportWrite(value, super.selectedEvents, () {
       super.selectedEvents = value;
     });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Model/Note.dart';
+import 'package:untitled3/Model/CalendarEvent.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
@@ -21,7 +22,7 @@ abstract class _AbstractCalendarObserver with Store {
   CalendarFormat calendarFormat = CalendarFormat.week;
 
   @observable
-  ValueNotifier<List<Event>> selectedEvents = ValueNotifier([]);
+  ValueNotifier<List<CalenderEvent>> selectedEvents = ValueNotifier([]);
 
   @action
   void changeFormat(CalendarFormat format) {
@@ -40,11 +41,11 @@ abstract class _AbstractCalendarObserver with Store {
 
   @action
   List<Event> loadEventsOfSelectedDay(String day) {
-    List<Event> eventsOnDay = [];
+    List<CalenderEvent> eventsOnDay = [];
     for (TextNote note in noteObserver!.usersNotes) {
       print("note.eventDate: ${note.eventDate} SelectDay $day");
       if (note.eventDate == day) {
-        eventsOnDay.add(Event(note.text));
+        eventsOnDay.add(CalenderEvent(title: note.text, time: note.eventTime));
       }
     }
     selectedEvents.value = eventsOnDay;
