@@ -1,5 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
@@ -23,7 +24,7 @@ class _SaveNoteState extends State<SaveNote> {
   final TextNoteService textNoteService = new TextNoteService();
 
   final textController = TextEditingController();
-
+  TextNote _newNote = TextNote();
   _SaveNoteState() {
     //this.navScreenObs = navScreenObs;
   }
@@ -33,8 +34,6 @@ class _SaveNoteState extends State<SaveNote> {
     textController.dispose();
     super.dispose();
   }
-
-  bool isChecked = false;
 
   void _showToast() {
     Fluttertoast.showToast(
@@ -48,6 +47,8 @@ class _SaveNoteState extends State<SaveNote> {
 
   //ref: https://api.flutter.dev/flutter/material/Checkbox-class.html
   Widget _checkBox() {
+    final noteObserver = Provider.of<NoteObserver>(context);
+
     Color getColor(Set<MaterialState> states) {
       return Colors.blue;
     }
@@ -58,11 +59,10 @@ class _SaveNoteState extends State<SaveNote> {
         Checkbox(
           checkColor: Colors.white,
           fillColor: MaterialStateProperty.resolveWith(getColor),
-          value: isChecked,
+          value: noteObserver.newNoteIsCheckList,
           onChanged: (bool? value) {
-            setState(() {
-              isChecked = value!;
-            });
+            print("Checkbox onChanged $value");
+            noteObserver.setNewNoteAIsCheckList(value!);
           },
         )
       ],
@@ -71,6 +71,8 @@ class _SaveNoteState extends State<SaveNote> {
 
   //ref: https://pub.dev/packages/date_time_picker
   Widget _selectDate() {
+    final noteObserver = Provider.of<NoteObserver>(context);
+
     return DateTimePicker(
       type: DateTimePickerType.dateTimeSeparate,
       dateMask: 'd MMM, yyyy',
@@ -83,12 +85,18 @@ class _SaveNoteState extends State<SaveNote> {
       selectableDayPredicate: (date) {
         return true;
       },
-      onChanged: (val) => print(val),
+      onChanged: (value) {
+        String mDate = value.split(" ")[0];
+        String mTime = value.split(" ")[1];
+        noteObserver.setNewNoteEventDate(mDate);
+        noteObserver.setNewNoteEventTime(mTime);
+        print("onChanged $value");
+      },
       validator: (val) {
         print(val);
         return null;
       },
-      onSaved: (val) => print(val),
+      onSaved: (val) => print("onSaved $val"),
     );
   }
 
@@ -115,38 +123,43 @@ class _SaveNoteState extends State<SaveNote> {
     var verticalColSpace = MediaQuery.of(context).size.width * 0.1;
 
     return Scaffold(
-      key: saveNoteScaffoldKey,
-      body: Container(
-          padding: EdgeInsets.all(padding),
-          child: Column(
-            children: [
-              TextField(
-                controller: textController,
-                maxLines: 5,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: I18n.of(context)!.enterNoteText),
-              ),
-              SizedBox(height: verticalColSpace),
-              _checkBox(),
-              SizedBox(height: verticalColSpace),
-              _selectDate(),
-              SizedBox(height: verticalColSpace),
-              _button(Color(0xFF33ACE3), I18n.of(context)!.save,
-                  () => {_onSave(noteObserver)}),
-              _button(Colors.red.shade400, "CANCEL",
-                  () => {noteObserver.changeScreen(NOTE_SCREENS.NOTE)}),
-            ],
-          )),
-      //bottomNavigationBar: BottomBar(3),
-    );
+        key: saveNoteScaffoldKey,
+        body: Observer(
+          builder: (context) => Container(
+              padding: EdgeInsets.all(padding),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: textController,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: I18n.of(context)!.enterNoteText),
+                  ),
+                  SizedBox(height: verticalColSpace),
+                  _checkBox(),
+                  SizedBox(height: verticalColSpace),
+                  _selectDate(),
+                  SizedBox(height: verticalColSpace),
+                  _button(
+                      Color(0xFF33ACE3),
+                      I18n.of(context)!.save.toUpperCase(),
+                      () => {_onSave(noteObserver)}),
+                  _button(Colors.red.shade400, "CANCEL",
+                      () => {noteObserver.changeScreen(NOTE_SCREENS.NOTE)}),
+                ],
+              )),
+          //bottomNavigationBar: BottomBar(3),
+        ));
   }
 
-  _onSave(noteObserver) {
+  _onSave(NoteObserver noteObserver) {
     if (textController.text.length > 0) {
-      TextNote note = TextNote();
-      note.text = textController.text;
-      noteObserver.addNote(note);
+      this._newNote.text = textController.text;
+      this._newNote.eventTime = noteObserver.newNoteEventTime;
+      this._newNote.eventDate = noteObserver.newNoteEventDate;
+      this._newNote.isCheckList = noteObserver.newNoteIsCheckList;
+      noteObserver.addNote(_newNote);
       _showToast();
       noteObserver.changeScreen(NOTE_SCREENS.NOTE);
     }

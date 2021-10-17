@@ -21,6 +21,16 @@ abstract class _AbstractNoteObserver with Store {
   @observable
   List<TextNote> usersNotes = [];
 
+  //used when creating new note
+  @observable
+  bool newNoteIsCheckList = false;
+
+  @observable
+  String newNoteEventDate = "";
+
+  @observable
+  String newNoteEventTime = "";
+
   @action
   void addNote(TextNote note) {
     print("Adding note to: ${note.noteId}");
@@ -61,5 +71,25 @@ abstract class _AbstractNoteObserver with Store {
   void changeScreen(NOTE_SCREENS name) {
     print("Note Screen changed to: $name");
     currentScreen = name;
+  }
+
+  /*
+  * Actions for creating new notes
+  */
+  @action
+  void setNewNoteAIsCheckList(bool value) {
+    newNoteIsCheckList = value;
+  }
+
+  @action
+  void setNewNoteEventDate(String value) {
+    print("setNewNoteEventDate: setting new Note date '${value}'");
+    newNoteEventDate = value;
+  }
+
+  @action
+  void setNewNoteEventTime(String value) {
+    print("setNewNoteEventTime: setting new Note time '${value}'");
+    newNoteEventTime = value;
   }
 }
