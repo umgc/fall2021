@@ -1,4 +1,3 @@
-// Official
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:untitled3/Observables/CalenderObservable.dart';
@@ -6,18 +5,18 @@ import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Observables/OnboardObservable.dart';
 // Internal
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:untitled3/Screens/NotificationScreen.dart';
 import 'package:untitled3/Screens/Onboarding/Boarding.dart';
-
+import 'Screens/Splash/SplashScreen.dart';
 import 'Utility/FontUtil.dart';
 import 'Utility/ThemeUtil.dart';
 import 'generated/i18n.dart';
-import 'Screens/Main.dart';
 import 'package:provider/provider.dart';
-
 import 'package:untitled3/Observables/MenuObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Observables/NotificationObservable.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,21 +53,11 @@ class _MyAppState extends State<MyApp> {
             backgroundColor:
                 themeToColor(settingObserver.userSettings.appTheme));
 
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return themeToColor(settingObserver.userSettings.appTheme);
-      }
-      return Colors.black;
-    }
-
     return Observer(
         builder: (_) => MultiProvider(
                 providers: [
+                  Provider<NotificationObserver>(
+                      create: (_) => NotificationObserver()),
                   Provider<OnboardObserver>(create: (_) => OnboardObserver()),
                   Provider<MenuObserver>(create: (_) => MenuObserver()),
                   Provider<NoteObserver>(create: (_) => NoteObserver()),
@@ -80,11 +69,7 @@ class _MyAppState extends State<MyApp> {
                 ],
                 child: (MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  home: Observer(
-                      builder: (_) =>
-                          (settingObserver.userSettings.isFirstRun == false)
-                              ? MainNavigator()
-                              : (OnBoardingScreen())),
+                  home: SplashScreen(),
                   localizationsDelegates: [
                     i18n,
                     GlobalMaterialLocalizations.delegate,
