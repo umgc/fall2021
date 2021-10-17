@@ -51,14 +51,25 @@ abstract class _AbstractNoteObserver with Store {
   }
 
   @action
-  void setCurrNoteIdForDetails(noteId) {
+  Future<void> setCurrNoteIdForDetails(noteId) async {
     print("Find Noteid: $noteId");
 
     for (TextNote note in usersNotes) {
       if (note.noteId == noteId) {
         currNoteForDetails = note;
+        newNoteEventDate = note.eventDate;
+        newNoteEventTime = note.eventTime;
+        newNoteIsCheckList = note.isCheckList;
       }
     }
+  }
+
+  @action
+  resetCurrNoteIdForDetails() async {
+    currNoteForDetails = null;
+    setNewNoteAIsCheckList(false);
+    setNewNoteEventDate("");
+    setNewNoteEventTime("");
   }
 
   @action
@@ -83,13 +94,13 @@ abstract class _AbstractNoteObserver with Store {
 
   @action
   void setNewNoteEventDate(String value) {
-    print("setNewNoteEventDate: setting new Note date '${value}'");
+    print("setNewNoteEventDate: setting new Note date $value");
     newNoteEventDate = value;
   }
 
   @action
   void setNewNoteEventTime(String value) {
-    print("setNewNoteEventTime: setting new Note time '${value}'");
+    print("setNewNoteEventTime: setting new Note time $value");
     newNoteEventTime = value;
   }
 }

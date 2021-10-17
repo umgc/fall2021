@@ -24,6 +24,8 @@ class _ViewNotesState extends State<ViewNotes> {
     // String noteScreen =I18n.of(context)!.notesScreenName;
 
     final noteObserver = Provider.of<NoteObserver>(context);
+    noteObserver.resetCurrNoteIdForDetails();
+
     final TEXT_STYLE = TextStyle(fontSize: 20);
     const HEADER_TEXT_STYLE = const TextStyle(fontSize: 20);
 
@@ -72,8 +74,12 @@ class _ViewNotesState extends State<ViewNotes> {
                             )),
                         showEditIcon: true,
                         onTap: () => {
-                          print(noteObserver.usersNotes[index].noteId)
-                          //noteObserver.changeScreen(NOTE_SCREENS.NOTE_DETAIL)
+                          print(noteObserver.usersNotes[index].noteId),
+                          noteObserver
+                              .setCurrNoteIdForDetails(
+                                  noteObserver.usersNotes[index].noteId)
+                              .then((value) => noteObserver
+                                  .changeScreen(NOTE_SCREENS.ADD_NOTE))
                         },
                       ),
                       DataCell(Text(timeago.format(
