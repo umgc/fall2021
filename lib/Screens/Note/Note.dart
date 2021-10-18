@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled3/Screens/Note/NoteDetail.dart';
 import 'package:untitled3/Screens/Note/ViewNote.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/generated/i18n.dart';
@@ -41,7 +40,9 @@ class _NoteState extends State<Note> {
         return SaveNote();
 
       case NOTE_SCREENS.NOTE_DETAIL:
-        return NoteDetails();
+        return SaveNote(
+          viewExistingNote: true,
+        );
 
       default:
         return ViewNotes();

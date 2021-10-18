@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/Components/CancelButton.dart';
 
 class Help extends StatefulWidget {
   @override
@@ -362,9 +363,11 @@ class HelpState extends State<Help> {
                   ),
                 ),
               ),
+              cancelButton(context)
 
             ],
           ),
+
         )
     );
   }

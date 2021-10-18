@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/Components/CancelButton.dart';
 import 'package:untitled3/Model/Setting.dart';
 import 'package:untitled3/Observables/MenuObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
@@ -355,23 +356,7 @@ class _SettingState extends State<Settings> {
             ),
 
             //CANCEL BUTTON
-            Container(
-              padding:
-                  const EdgeInsets.only(left: 0, top: 2, right: 0, bottom: 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  final screenNav =
-                      Provider.of<MenuObserver>(context, listen: false);
-                  screenNav.changeScreen(MENU_SCREENS.MENU);
-                },
-                child: Text(
-                  I18n.of(context)!.cancel,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(30, 40), primary: Colors.grey),
-              ),
-            )
+            cancelButton(context)
           ]),
         ),
       ),
