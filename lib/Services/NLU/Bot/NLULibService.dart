@@ -195,7 +195,7 @@ import '../BertQA/BertQaService.dart';
     Future<String> searchNotesByInput(String message) async {
       String answer = "";
       String notes = await getNotes();
-      List<TextNote> notesObs = noteObserver.usersNotes;
+      // List<TextNote> notesObs = noteObserver.usersNotes;
 
       if (notes != null && notes != "") {
         answer = bertQAService
