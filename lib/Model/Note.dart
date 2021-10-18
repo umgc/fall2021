@@ -30,7 +30,7 @@ class TextNote {
   bool isFavorite = false;
 
   /// Date and time of event
-  DateTime eventDate = DateTime.now() ;
+  DateTime? eventDate = DateTime.now() ;
 
   String toJson() {
     String jsonStr = """{"noteId": "${this.noteId}",

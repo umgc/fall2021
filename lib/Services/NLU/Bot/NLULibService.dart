@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Model/NLUState.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
 import 'LexService.dart';
 import 'package:untitled3/Model/Note.dart';
 import '../../NoteService.dart';
@@ -12,6 +14,7 @@ import '../BertQA/BertQaService.dart';
 
     late final BertQAService bertQAService;
     late final LexService lexService;
+    late final noteObserver;
     static const String FallbackResponse = "Sorry not able to understand.";
     static const String AppHelp = "AppHelp";
     static const String AppNav = "AppNav";
@@ -39,6 +42,7 @@ import '../BertQA/BertQaService.dart';
     NLULibService() {
       lexService = LexService();
       bertQAService = BertQAService();
+      noteObserver = Provider<NoteObserver>(create: (_) => NoteObserver());
     }
 
     Future<String> getNLUResponseUITest(String text) async {
@@ -191,6 +195,8 @@ import '../BertQA/BertQaService.dart';
     Future<String> searchNotesByInput(String message) async {
       String answer = "";
       String notes = await getNotes();
+      List<TextNote> notesObs = noteObserver.usersNotes;
+
       if (notes != null && notes != "") {
         answer = bertQAService
             .answer(notes,
@@ -212,6 +218,9 @@ import '../BertQA/BertQaService.dart';
               && textNote.noteId != "" && textNote.text != null
               && textNote.text != "") {
             strBufffer.write(textNote.text);
+            if (textNote.eventDate != null) {
+
+            }
             strBufffer.write(". ");
           }
         }
