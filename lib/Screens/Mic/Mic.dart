@@ -8,8 +8,10 @@ import 'package:untitled3/Model/NLUState.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Screens/Mic/ChatBubble.dart';
 import 'package:untitled3/Services/NoteService.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -28,9 +30,11 @@ class _SpeechScreenState extends State<SpeechScreen> {
     final micObserver = Provider.of<MicObserver>(context);
     final noteObserver = Provider.of<NoteObserver>(context);
     final mainNavObserver = Provider.of<MainNavObserver>(context);
+    final settingObserver = Provider.of<SettingObserver>(context);
     micObserver.setMainNavObserver(mainNavObserver);
     micObserver.setNoteObserver(noteObserver);
-
+    micObserver.setSettingObserver(settingObserver);
+    micObserver.setHowCanIHelpYouText(I18n.of(context)?.howCanIHelpYou);
     return Observer(
         builder: (_) => Scaffold(
             key: recordNoteScaffoldKey,

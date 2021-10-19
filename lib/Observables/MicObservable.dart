@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:mobx/mobx.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:translator/translator.dart';
 //import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
@@ -10,13 +12,16 @@ import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
+import 'package:untitled3/Services/TranslationService.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/generated/i18n.dart';
+
+import 'SettingObservable.dart';
 part 'MicObservable.g.dart';
 
 /**
  * TODO: 
- *   - Enable multi languages.
  *   - Bubble buttons are responsive.
  * 
  */
@@ -48,6 +53,10 @@ abstract class _AbstractMicObserver with Store {
   @observable
   ObservableList<dynamic> systemUserMessage = ObservableList();
 
+  //Instance of SettingObserver to be passed in from Mic.dart
+  @observable
+  dynamic settingObserver;
+
   //Instance of MainNavObserver to be passed in from Mic.dart
   @observable
   dynamic mainNavObserver;
@@ -61,6 +70,8 @@ abstract class _AbstractMicObserver with Store {
 
   @observable
   FollowUpTypes? followUpTypesForMsgSent;
+
+  String howCanIHelpYouText = '';
 
   //Speech library user for interfacing with the device's mic resource.
   SpeechToText _speech = SpeechToText();
@@ -149,6 +160,16 @@ abstract class _AbstractMicObserver with Store {
     micIsExpectedToListen = true;
 
     _listen(micIsExpectedToListen);
+  }
+
+  @action
+  void setSettingObserver(observer) {
+    settingObserver = observer;
+  }
+
+  @action
+  void setHowCanIHelpYouText(text) {
+    howCanIHelpYouText = text;
   }
 
   @action
@@ -269,6 +290,14 @@ abstract class _AbstractMicObserver with Store {
         //display the text from NLU
         //and follow up with
         print("Case ActionType.ANSWER: ${nluResponse.state}");
+        if (settingObserver.userSettings.locale != Locale("en", "US")) {
+          // This will allow us to debug the translation as it will update the top banner FROM the user's native text TO english
+          // On the fly. So we can see what is exactly being sent to the NLU on the screen. but it's not necessary to use this line.
+          // Give it a try and see what you think.
+          GoogleTranslator translator = GoogleTranslator();
+          var translatedResponse = await TranslationService.translate(textToTranslate: nluResponse.response ?? '', translator: translator, toLocale: settingObserver.userSettings.locale);
+          nluResponse.response = translatedResponse;
+        }
         addSystemMessage(nluResponse);
 
         if (nluResponse.state == NLUState.IN_PROGRESS) {
@@ -281,7 +310,7 @@ abstract class _AbstractMicObserver with Store {
           Timer(
               Duration(seconds: 2),
               () => addFollowUpMessage(
-                  "how can I help you?", [], FollowUpTypes.NO_ACTION));
+                howCanIHelpYouText, [], FollowUpTypes.NO_ACTION));
 
           micIsExpectedToListen = true;
 
@@ -378,12 +407,14 @@ abstract class _AbstractMicObserver with Store {
   /*
    * Function creates and save notes.
    */
-  void _createNote(NLUResponse nluResponse) {
+  Future<void> _createNote(NLUResponse nluResponse) async {
     //get the last message from the user.
 
     //call the create event service
     TextNote note = TextNote();
-    note.text = nluResponse.eventType!;
+    GoogleTranslator translator = GoogleTranslator();
+    note.text = await TranslationService.translate(textToTranslate: nluResponse.eventType!, translator: translator, fromLocale: settingObserver.userSettings.locale);
+    note.localText = nluResponse.eventType!;
     note.eventDate =
         ((nluResponse.eventDate != null) ? nluResponse.eventDate : "")!;
 
@@ -392,6 +423,7 @@ abstract class _AbstractMicObserver with Store {
     note.isCheckList = (nluResponse.recurringType != null);
     //note.recordLocale = (nluResponse.recurringType != null);
     note.recordedTime = DateTime.now();
+    note.language = settingObserver.userSettings.locale.languageCode;
     (noteObserver as NoteObserver).addNote(note);
 
     //Note has been created.
@@ -421,6 +453,10 @@ abstract class _AbstractMicObserver with Store {
         //if messageInputText is populated (user's voice was captured), call the NLU
         if (messageInputText.isNotEmpty) {
           addUserMessage(messageInputText);
+          if (settingObserver.userSettings.locale != Locale("en", "US")) {
+            GoogleTranslator translator = GoogleTranslator();
+            messageInputText = await TranslationService.translate(textToTranslate: messageInputText, translator: translator, fromLocale: settingObserver.userSettings.locale);
+          }
           await nluLibService
               .getNLUResponse(messageInputText, "en-US")
               .then((value) => {
@@ -472,6 +508,17 @@ abstract class _AbstractMicObserver with Store {
     _speech.stop().then((value) => _listen(micIsExpectedToListen));
   }
 
+  _getLocaleId() async {
+    var locales = await _speech.locales();
+    if (settingObserver.userSettings.locale == Locale("zh", "CN")) {
+      return locales.firstWhere((element) => element.localeId == 'cmn_CN').localeId;
+    }
+    if (settingObserver.userSettings.locale == Locale("ar", "SY")) {
+      return locales.firstWhere((element) => element.localeId == 'ar_EG').localeId;
+    }
+    return locales.firstWhere((element) => element.localeId == settingObserver.userSettings.locale.toString()).localeId;
+  }
+
   /*
    * This function initialized the speech interface and turns on listening mode 
    * It has two call back functions:
@@ -483,11 +530,14 @@ abstract class _AbstractMicObserver with Store {
     bool available = await _speech.initialize(
       onStatus: (val) => _onDone(val),
       onError: (val) => _onError(val),
+
     );
 
     print("available $available");
     if (available) {
+      final selectedLocaleId = await _getLocaleId();
       _speech.listen(
+        localeId: selectedLocaleId,
         //listenFor: Duration(minutes: 15),
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),

@@ -154,6 +154,8 @@ class I18n implements WidgetsLocalizations {
 	String get blue => "Blue";
 	/// "Pink"
 	String get pink => "Pink";
+	/// "How Can I Help You?"
+	String get howCanIHelpYou => "How Can I Help You?";
 	/// "Ayuda"
 	String get helpScreen => "Ayuda";
 	/// "Palabras Claves"
@@ -352,6 +354,9 @@ class _I18n_es_US extends I18n {
 	/// "Rosado"
 	@override
 	String get pink => "Rosado";
+	/// "¿Le puedo ayudar en algo?"
+	@override
+	String get howCanIHelpYou => "¿Le puedo ayudar en algo?";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -549,6 +554,9 @@ class _I18n_pt_BR extends I18n {
 	/// "Cor de rosa"
 	@override
 	String get pink => "Cor de rosa";
+	/// "Como posso ajudá-lo?"
+	@override
+	String get howCanIHelpYou => "Como posso ajudá-lo?";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -746,6 +754,9 @@ class _I18n_zh_CN extends I18n {
 	/// "粉色的"
 	@override
 	String get pink => "粉色的";
+	/// "我怎么帮你？"
+	@override
+	String get howCanIHelpYou => "我怎么帮你？";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -943,6 +954,9 @@ class _I18n_ar_SY extends I18n {
 	/// "لون القرنفل"
 	@override
 	String get pink => "لون القرنفل";
+	/// "كيف يمكنني مساعدك؟"
+	@override
+	String get howCanIHelpYou => "كيف يمكنني مساعدك؟";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
