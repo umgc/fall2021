@@ -246,10 +246,17 @@ class _SaveNoteState extends State<SaveNote> {
 
   _onSave(NoteObserver noteObserver) {
     if (textController.text.length > 0) {
+      this._newNote.noteId = (noteObserver.currNoteForDetails != null)
+          ? noteObserver.currNoteForDetails!.noteId
+          : TextNote().noteId;
       this._newNote.text = textController.text;
       this._newNote.eventTime = noteObserver.newNoteEventTime;
       this._newNote.eventDate = noteObserver.newNoteEventDate;
       this._newNote.isCheckList = noteObserver.newNoteIsCheckList;
+      if (noteObserver.newNoteIsCheckList == true) {
+        this._newNote.recurrentType = "daily";
+      }
+
       noteObserver.deleteNote(noteObserver.currNoteForDetails);
       noteObserver.addNote(_newNote);
       _showToast();

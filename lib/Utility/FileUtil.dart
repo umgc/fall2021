@@ -4,8 +4,6 @@ import 'package:file/local.dart';
 import 'dart:convert';
 
 class FileUtil {
-
-
   /// The file system to use for all I/O operations. Generally LocalFileSystem()
   /// but MemoryFileSystem() is used when running unit tests.
   static FileSystem fileSystem = const LocalFileSystem();
@@ -21,7 +19,7 @@ class FileUtil {
         docsDirectory = fileSystem.directory(docsPath);
 
         final notesDirectory =
-        fileSystem.directory('${docsDirectory.path}/Memory_Magic');
+            fileSystem.directory('${docsDirectory.path}/Memory_Magic');
         notesDirectory.createSync();
         return notesDirectory;
       }
@@ -30,32 +28,46 @@ class FileUtil {
     return docsDirectory;
   }
 
-   static Future<dynamic> readJson(String fileName) async {
-
-     dynamic data = "";
-     try {
-        var textNotesDirectory = await _getTextNotesDirectory();
-        final File file =
-        fileSystem.file('${textNotesDirectory.path}/$fileName');
-        String fileContent = file.readAsStringSync().trim();
-        print("FileUtlity.readJson: fileContent $fileContent");
-        data = await json.decode(fileContent);
-      } catch (e) {
+  static Future<dynamic> readJson(String fileName) async {
+    dynamic data = "";
+    try {
+      String fileContent = await readFile(fileName);
+      if (fileContent.trim().isEmpty) {
+        fileContent = "{}";
+      }
+      data = await json.decode(fileContent);
+    } catch (e) {
       print("ERROR-Couldn't read file: ${e.toString()}");
     }
     return data;
   }
 
-  static Future<void> writeJson(String fileName, String data) async {
-     try {
-        var textNotesDirectory = await _getTextNotesDirectory();
-        final File file =
-        fileSystem.file('${textNotesDirectory.path}/$fileName');
-        file.writeAsString(data);
-        print("data has been written to file ${file.path}");
-      } catch (e) {
+  static Future<String> readFile(String fileName) async {
+    String data = "";
+    try {
+      var textNotesDirectory = await _getTextNotesDirectory();
+      final File file = fileSystem.file('${textNotesDirectory.path}/$fileName');
+
+      //create file if it does not exist
+      if (await file.exists() == false) {
+        file.createSync(recursive: true);
+      } else {
+        data = file.readAsStringSync().trim();
+      }
+    } catch (e) {
+      print("ERROR-Couldn't read file: ${e.toString()}");
+    }
+    return data;
+  }
+
+  static Future<void> writeFile(String fileName, String data) async {
+    try {
+      var textNotesDirectory = await _getTextNotesDirectory();
+      final File file = fileSystem.file('${textNotesDirectory.path}/$fileName');
+      file.writeAsString(data);
+      print("data has been written to file ${file.path}");
+    } catch (e) {
       print("ERROR-Couldn't write to file: ${e.toString()}");
     }
   }
-
 }

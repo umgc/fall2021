@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:untitled3/Observables/CalenderObservable.dart';
+import 'package:untitled3/Observables/CheckListObservable.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Observables/OnboardObservable.dart';
 // Internal
@@ -66,6 +67,8 @@ class _MyAppState extends State<MyApp> {
                   Provider<MicObserver>(create: (_) => MicObserver()),
                   Provider<CalendarObservable>(
                       create: (_) => CalendarObservable()),
+                  Provider<CheckListObserver>(
+                      create: (_) => CheckListObserver()),
                 ],
                 child: (MaterialApp(
                   debugShowCheckedModeBanner: false,
