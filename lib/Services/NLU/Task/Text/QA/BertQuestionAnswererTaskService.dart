@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:quiver/check.dart';
 
 import '../../../Common/FileUtilService.dart';
-import '../../../Task/Bindings/Text/QA/BertQAService.dart';
+import '../../../Task/Bindings/Text/QA/BertQaService.dart';
 import '../../../Task/Bindings/Text/QA/TypesService.dart';
 import 'package:ffi/ffi.dart';
 import 'QuestionAnswererService.dart';
