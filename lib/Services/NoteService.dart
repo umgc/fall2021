@@ -20,7 +20,7 @@ class TextNoteService {
       print("Loading notes from file $note");
       userTextNotes.add(TextNote.fromJson(note));        
     }
-    return  userTextNotes;
+    return userTextNotes;
   }
 
   /// Save a text note file to local storage
@@ -28,7 +28,6 @@ class TextNoteService {
     print("Saving notes: "+ notes.toString());
     FileUtil.writeJson(FILE_NAME, "${notes.toString()}" );
   }
-
 
 
  static String generateUUID() {
