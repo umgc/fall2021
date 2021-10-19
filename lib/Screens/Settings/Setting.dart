@@ -78,7 +78,7 @@ class _SettingState extends State<Settings> {
 
     return Observer(
       builder: (context) => Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
           padding: EdgeInsets.all(15.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <

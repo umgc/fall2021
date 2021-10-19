@@ -176,7 +176,7 @@ class _SaveNoteState extends State<SaveNote> {
     return Scaffold(
         key: saveNoteScaffoldKey,
         body: Observer(
-          builder: (context) => Container(
+          builder: (context) => SingleChildScrollView(
               padding: EdgeInsets.all(padding),
               child: Column(
                 children: [
