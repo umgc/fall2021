@@ -23,6 +23,7 @@ jobs:
         
       # Add formating standards
       - run: |
+          cd ./memory_enhancer_app
           flutter pub add --dev effective_dart
           flutter pub get
       # Analyze
@@ -43,10 +44,12 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
       - run: |
+          cd ./memory_enhancer_app
           flutter pub get
         
       - name: Build APK
         run: |
+          cd ./memory_enhancer_app
           flutter build apk
      
       - name: 'Upload APK Artifact'
@@ -65,8 +68,10 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
       - run: |
+          cd ./memory_enhancer_app
           flutter pub get
       
       - name: Run tests
         run: |
+          cd ./memory_enhancer_app
           flutter test
