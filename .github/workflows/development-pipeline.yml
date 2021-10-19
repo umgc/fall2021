@@ -23,7 +23,7 @@ jobs:
         
       # Add formating standards
       - run: |
-          cd ./memory_enhancer_app
+          cd ./
           flutter pub add --dev effective_dart
           flutter pub get
       # Analyze
