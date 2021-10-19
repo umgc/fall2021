@@ -121,7 +121,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         NotificationDetails(
           android: AndroidNotificationDetails(
-              'channel id', 'channel name'),
+              'channel id', 'channel name', 'channel description'),
         ),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
@@ -139,6 +139,7 @@ repeatNotificationWater() async {
   var androidChannelSpecifics = AndroidNotificationDetails(
     'CHANNEL_ID 1',
     'CHANNEL_NAME 1',
+    "CHANNEL_DESCRIPTION 1",
     importance: Importance.max,
     priority: Priority.high,
     styleInformation: DefaultStyleInformation(true, true),
@@ -160,6 +161,7 @@ repeatNotificationWalk() async {
   var androidChannelSpecifics = AndroidNotificationDetails(
     'CHANNEL_ID 2',
     'CHANNEL_NAME 2',
+    "CHANNEL_DESCRIPTION 2",
     importance: Importance.max,
     priority: Priority.high,
     styleInformation: DefaultStyleInformation(true, true),
@@ -180,6 +182,7 @@ repeatNotificationBathroom() async {
   var androidChannelSpecifics = AndroidNotificationDetails(
     'CHANNEL_ID 3',
     'CHANNEL_NAME 3',
+    "CHANNEL_DESCRIPTION 3",
     importance: Importance.max,
     priority: Priority.high,
     styleInformation: DefaultStyleInformation(true, true),
