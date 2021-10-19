@@ -225,19 +225,27 @@ class _SaveNoteState extends State<SaveNote> {
                       style: ElevatedButton.styleFrom(primary: Colors.grey),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 0, top: 50, right: 0, bottom: 0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Share.share(noteObserver.currNoteForDetails!.text);
-                      },
-                      child: Text(
-                        I18n.of(context)!.share,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                  ),
+                  // Implement This Button Below to share note content
+                  // You should change the onPressed to create a local function
+                  // That will share the note contents as well as any other details
+                  // There was also a feature request to add and share pictures
+                  // For which this will be useful.
+                  // Discuss with the Project Manager whether or not this button
+                  // Should be visible only upon edit or also before the note is
+                  // Saved (aka upon creation)
+                  // Container(
+                  //   padding: const EdgeInsets.only(
+                  //       left: 0, top: 50, right: 0, bottom: 0),
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       Share.share(noteObserver.currNoteForDetails!.text);
+                  //     },
+                  //     child: Text(
+                  //       I18n.of(context)!.share,
+                  //       style: Theme.of(context).textTheme.bodyText1,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               )),
           //bottomNavigationBar: BottomBar(3),
