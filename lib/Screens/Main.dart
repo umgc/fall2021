@@ -224,9 +224,10 @@ class _MainNavigatorState extends State<MainNavigator> {
 
     return Observer(
         builder: (_) => Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: buildAppBar(context),
             body: Container(
-                margin: const EdgeInsets.only(bottom: 30.0),
+                //margin: const EdgeInsets.only(bottom: 30.0),
                 child: Center(
                     child: _changeScreen(
                         screenNav.currentScreen, screenNav.focusedNavBtn))),
