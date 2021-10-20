@@ -11,8 +11,8 @@ class NoteObserver = _AbstractNoteObserver with _$NoteObserver;
 
 abstract class _AbstractNoteObserver with Store {
   _AbstractNoteObserver() {
-    TextNoteService.loadNotes()
-        .then((value) => {setNotes(value), setCheckList(value)});
+    TextNoteService.loadNotes().then((notes) =>
+        {setNotes(notes), setCheckList(notes), setEventNotes(notes)});
   }
 
   @observable
@@ -26,6 +26,9 @@ abstract class _AbstractNoteObserver with Store {
 
   @observable
   Set<TextNote> checkListNotes = LinkedHashSet<TextNote>();
+
+  @observable
+  Set<TextNote> eventNotes = LinkedHashSet<TextNote>();
 
   //used when creating new note
   @observable
@@ -52,6 +55,7 @@ abstract class _AbstractNoteObserver with Store {
     }
     //remove from state
     usersNotes.remove(note);
+    checkListNotes.remove(note);
     //remove from storage by over-writing content
     TextNoteService.persistNotes(usersNotes);
   }
@@ -85,8 +89,17 @@ abstract class _AbstractNoteObserver with Store {
   }
 
   @action
-  void setCheckList(notes) {
-    for (TextNote item in notes) {
+  void setEventNotes(listOfNotes) {
+    for (TextNote item in listOfNotes) {
+      if (item.isCheckList == false || item.recurrentType == "none") {
+        eventNotes.add(item);
+      }
+    }
+  }
+
+  @action
+  void setCheckList(listOfNotes) {
+    for (TextNote item in listOfNotes) {
       if (item.isCheckList == true || item.recurrentType == "daily") {
         checkListNotes.add(item);
       }

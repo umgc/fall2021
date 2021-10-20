@@ -227,6 +227,8 @@ class _SaveNoteState extends State<SaveNote> {
 
   _onSave(NoteObserver noteObserver) {
     if (textController.text.length > 0) {
+      print(
+          "noteObserver.currNoteForDetails: ${noteObserver.currNoteForDetails}");
       this._newNote.noteId = (noteObserver.currNoteForDetails != null)
           ? noteObserver.currNoteForDetails!.noteId
           : TextNote().noteId;
