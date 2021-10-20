@@ -15,10 +15,10 @@ abstract class _AbstractCheckListObserver with Store {
   NoteObserver noteObserver = NoteObserver();
 
   @observable
-  LinkedHashMap<TextNote, bool> dailyCheckList =
-      LinkedHashMap<TextNote, bool>();
+  List<TextNote> dailyCheckList = [];
 
-  String checkedNoteIDs = "";
+  @observable
+  List<String> checkedNoteIDs = [];
 
   @action
   void setNotObserver(NoteObserver observer) {
@@ -30,7 +30,8 @@ abstract class _AbstractCheckListObserver with Store {
   void getDailyCheckList(String date) {
     print("Getting checklist");
     TextNoteService.getDailyCheckedNote(date)
-        .then((value) => checkedNoteIDs = value);
+        .then((value) => checkedNoteIDs = value.split(","));
+    print("getDailyCheckList $checkedNoteIDs");
     if (noteObserver == null) {
       print("getDailyCheckList(): noteObserver is $noteObserver");
       return;
@@ -39,11 +40,7 @@ abstract class _AbstractCheckListObserver with Store {
 
     for (TextNote note in noteObserver.usersNotes) {
       if (note.isCheckList == true) {
-        if (checkedNoteIDs.contains(note.noteId)) {
-          dailyCheckList.addAll({note: true});
-        }
-        dailyCheckList.addAll({note: false});
-
+        dailyCheckList.add(note);
         print("getDailyCheckList(): dailyCheckList is $dailyCheckList");
       }
     }
@@ -51,11 +48,17 @@ abstract class _AbstractCheckListObserver with Store {
 
   @action
   void addToCheckedItems(TextNote note) {
-    dailyCheckList[note] = true;
-    if (checkedNoteIDs.contains(note.noteId)) {
-      return;
-    }
-    checkedNoteIDs = checkedNoteIDs + "," + note.noteId;
-    TextNoteService.persistDailyCheckedNotes(checkedNoteIDs);
+    print("addToCheckedItems: checkedNoteIDs ${checkedNoteIDs.length}");
+    print("addToCheckedItems: note.noteId ${note.noteId}");
+    checkedNoteIDs.add(note.noteId);
+
+    TextNoteService.persistDailyCheckedNotes(checkedNoteIDs.join(","));
+  }
+
+  @action
+  void addUnCheckItem(TextNote note) {
+    checkedNoteIDs.add(note.noteId);
+
+    TextNoteService.persistDailyCheckedNotes(checkedNoteIDs.join(","));
   }
 }
