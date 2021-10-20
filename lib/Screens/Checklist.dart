@@ -22,10 +22,6 @@ class ChecklistState extends State<Checklist> {
     checkListObserver
         .getCheckedList(checkListObserver.selectedDay.toString().split(" ")[0]);
 
-    Color getColor(Set<MaterialState> states) {
-      return Colors.blue;
-    }
-
     return Observer(
         builder: (_) => Column(children: <Widget>[
               TableCalendar(
@@ -74,29 +70,26 @@ class ChecklistState extends State<Checklist> {
                     return Container(
                         padding: const EdgeInsets.all(20.0),
                         //constraints: BoxConstraints(),
-                        child: Row(children: [
-                          Text("${key.text}"),
-                          Checkbox(
-                            checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
-                            value: (checkListObserver.checkedNoteIDs
-                                .contains(key.noteId)),
-                            onChanged: (bool? value) {
-                              print(
-                                  "Onchange: checkListObserver.selectedDay ${checkListObserver.selectedDay}");
-                              if (checkListObserver.selectedDay
-                                      .toString()
-                                      .split(" ")[0] !=
-                                  DateTime.now().toString().split(" ")[0]) {
-                                return;
-                              }
-                              print("Checkbox onChanged $value");
-                              checkListObserver.checkItem(key);
-                              (context as Element).reassemble();
-                            },
-                          )
-                        ]));
+                        child: CheckboxListTile(
+                          title: Text("${key.text}"),
+                          checkColor: Colors.white,
+                          activeColor: Colors.blue,
+                          value: (checkListObserver.checkedNoteIDs
+                              .contains(key.noteId)),
+                          onChanged: (bool? value) {
+                            print(
+                                "Onchange: checkListObserver.selectedDay ${checkListObserver.selectedDay}");
+                            if (checkListObserver.selectedDay
+                                    .toString()
+                                    .split(" ")[0] !=
+                                DateTime.now().toString().split(" ")[0]) {
+                              return;
+                            }
+                            print("Checkbox onChanged $value");
+                            checkListObserver.checkItem(key);
+                            (context as Element).reassemble();
+                          },
+                        ));
                   }).toList(),
                 ),
               ),

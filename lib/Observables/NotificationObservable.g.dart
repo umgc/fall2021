@@ -39,6 +39,21 @@ mixin _$NotificationObserver on _AbstractNotificationObserver, Store {
     });
   }
 
+  final _$reminderAtom = Atom(name: '_AbstractNotificationObserver.reminder');
+
+  @override
+  bool get reminder {
+    _$reminderAtom.reportRead();
+    return super.reminder;
+  }
+
+  @override
+  set reminder(bool value) {
+    _$reminderAtom.reportWrite(value, super.reminder, () {
+      super.reminder = value;
+    });
+  }
+
   final _$BathroomAtom = Atom(name: '_AbstractNotificationObserver.Bathroom');
 
   @override
@@ -54,8 +69,35 @@ mixin _$NotificationObserver on _AbstractNotificationObserver, Store {
     });
   }
 
+  final _$noteNotificationAtom =
+      Atom(name: '_AbstractNotificationObserver.noteNotification');
+
+  @override
+  bool get noteNotification {
+    _$noteNotificationAtom.reportRead();
+    return super.noteNotification;
+  }
+
+  @override
+  set noteNotification(bool value) {
+    _$noteNotificationAtom.reportWrite(value, super.noteNotification, () {
+      super.noteNotification = value;
+    });
+  }
+
   final _$_AbstractNotificationObserverActionController =
       ActionController(name: '_AbstractNotificationObserver');
+
+  @override
+  void NoteNotification(dynamic value) {
+    final _$actionInfo = _$_AbstractNotificationObserverActionController
+        .startAction(name: '_AbstractNotificationObserver.NoteNotification');
+    try {
+      return super.NoteNotification(value);
+    } finally {
+      _$_AbstractNotificationObserverActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void NotificationWalk(dynamic value) {
@@ -80,6 +122,18 @@ mixin _$NotificationObserver on _AbstractNotificationObserver, Store {
   }
 
   @override
+  void NotificationReminder(dynamic value) {
+    final _$actionInfo =
+        _$_AbstractNotificationObserverActionController.startAction(
+            name: '_AbstractNotificationObserver.NotificationReminder');
+    try {
+      return super.NotificationReminder(value);
+    } finally {
+      _$_AbstractNotificationObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void NotificationBathroom(dynamic value) {
     final _$actionInfo =
         _$_AbstractNotificationObserverActionController.startAction(
@@ -96,7 +150,9 @@ mixin _$NotificationObserver on _AbstractNotificationObserver, Store {
     return '''
 onWalking: ${onWalking},
 onWater: ${onWater},
-Bathroom: ${Bathroom}
+reminder: ${reminder},
+Bathroom: ${Bathroom},
+noteNotification: ${noteNotification}
     ''';
   }
 }
