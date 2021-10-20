@@ -15,29 +15,43 @@ abstract class _AbstractNotificationObserver with Store {
   bool onWater = false;
 
   @observable
+  bool reminder = false;
+
+  @observable
   bool Bathroom = false;
+
+  @observable
+  bool noteNotification = false;
+
+  @action
+  void NoteNotification(value) {
+    this.noteNotification = value;
+  }
 
   @action
   void NotificationWalk(value) {
     this.onWalking = value;
-    if(this.onWalking){
+    if (this.onWalking) {
       repeatNotificationWalk();
     }
+  }
 
-    }
   @action
   void NotificationWater(value) {
     this.onWater = value;
   }
 
-@action
-  void NotificationBathroom(value){
+  @action
+  void NotificationReminder(value) {
+    this.reminder = value;
+  }
+
+  @action
+  void NotificationBathroom(value) {
     this.Bathroom = value;
-    if(this.Bathroom){
+    if (this.Bathroom) {
       repeatNotificationBathroom();
     }
+  }
 }
 
-
-
-}
