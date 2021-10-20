@@ -32,18 +32,16 @@ class CalendarState extends State<Calendar> {
                     "2012-02-27"), //Date of the oldest past event
                 lastDay: DateTime.parse("2022-02-27"), //Date of the last event
                 selectedDayPredicate: (day) {
-                  print(
-                      "selectedDayPredicate: calendarObserver.selectedDay ${calendarObserver.selectedDay} $day");
                   return isSameDay(calendarObserver.selectedDay, day);
                 },
 
                 calendarFormat: calendarObserver.calendarFormat,
                 eventLoader: (DateTime day) {
-                  return calendarObserver
-                      .loadEventsOfSelectedDay(day.toString().split(" ")[0]);
+                  print(
+                      "calendarObserver.selectedEvents.value: ${calendarObserver.selectedEvents.value}");
+                  return calendarObserver.selectedEvents.value;
                 },
                 onFormatChanged: (format) {
-                  print("onFormatChanged: changing format to $format");
                   calendarObserver.changeFormat(format);
                 },
                 onDaySelected: (selectedDay, focusDay) {

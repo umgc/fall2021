@@ -5,6 +5,7 @@ import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
+import 'NoteTable.dart';
 
 final viewNotesScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -26,68 +27,10 @@ class _ViewNotesState extends State<ViewNotes> {
     final noteObserver = Provider.of<NoteObserver>(context);
     noteObserver.resetCurrNoteIdForDetails();
 
-    final TEXT_STYLE = TextStyle(fontSize: 20);
-    const HEADER_TEXT_STYLE = const TextStyle(fontSize: 20);
-
-    var rowHeight = (MediaQuery.of(context).size.height - 56) / 5;
-    var noteWidth = MediaQuery.of(context).size.width * 0.35;
-    print("My width is $noteWidth");
-
     //noteObserver.changeScreen(NOTE_SCREENS.NOTE);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-            child: DataTable(
-                dataRowHeight: rowHeight,
-                headingRowHeight: 60,
-                columns: const <DataColumn>[
-                  DataColumn(
-                    label: Text(
-                      '',
-                      style: HEADER_TEXT_STYLE,
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'NOTE',
-                      style: HEADER_TEXT_STYLE,
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'CREATED',
-                      style: HEADER_TEXT_STYLE,
-                    ),
-                  ),
-                ],
-                rows: List<DataRow>.generate(
-                  noteObserver.usersNotes.length,
-                  (int index) => DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text("${(index + 1)}")),
-                      DataCell(
-                        Container(
-                            padding: EdgeInsets.all(10),
-                            width: noteWidth,
-                            child: Text(
-                              noteObserver.usersNotes[index].text,
-                              style: TEXT_STYLE,
-                            )),
-                        showEditIcon: true,
-                        onTap: () => {
-                          print(noteObserver.usersNotes[index].noteId),
-                          noteObserver
-                              .setCurrNoteIdForDetails(
-                                  noteObserver.usersNotes[index].noteId)
-                              .then((value) => noteObserver
-                                  .changeScreen(NOTE_SCREENS.NOTE_DETAIL))
-                        },
-                      ),
-                      DataCell(Text(timeago.format(
-                          noteObserver.usersNotes[index].recordedTime))),
-                    ],
-                  ),
-                ))),
+        body: NoteTable(noteObserver.usersNotes),
         floatingActionButton: buildFloatingBtn(noteObserver));
   }
 

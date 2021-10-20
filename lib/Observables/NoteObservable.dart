@@ -98,6 +98,16 @@ abstract class _AbstractNoteObserver with Store {
   }
 
   @action
+  List<TextNote> onSearchNote(String searchQuery) {
+    List<TextNote> filteredResult = usersNotes
+        .where((element) =>
+            element.text.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+
+    return filteredResult;
+  }
+
+  @action
   void setCheckList(listOfNotes) {
     for (TextNote item in listOfNotes) {
       if (item.isCheckList == true || item.recurrentType == "daily") {

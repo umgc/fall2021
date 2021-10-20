@@ -200,6 +200,17 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   }
 
   @override
+  List<TextNote> onSearchNote(String searchQuery) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.onSearchNote');
+    try {
+      return super.onSearchNote(searchQuery);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCheckList(dynamic listOfNotes) {
     final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.setCheckList');

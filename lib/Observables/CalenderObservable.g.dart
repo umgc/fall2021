@@ -109,7 +109,7 @@ mixin _$CalendarObservable on _AbstractCalendarObserver, Store {
   }
 
   @override
-  List<Event> loadEventsOfSelectedDay(String day) {
+  void loadEventsOfSelectedDay(String day) {
     final _$actionInfo = _$_AbstractCalendarObserverActionController
         .startAction(name: '_AbstractCalendarObserver.loadEventsOfSelectedDay');
     try {
