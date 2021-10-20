@@ -9,38 +9,6 @@ part of 'CheckListObservable.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CheckListObserver on _AbstractCheckListObserver, Store {
-  final _$noteObserverAtom =
-      Atom(name: '_AbstractCheckListObserver.noteObserver');
-
-  @override
-  NoteObserver get noteObserver {
-    _$noteObserverAtom.reportRead();
-    return super.noteObserver;
-  }
-
-  @override
-  set noteObserver(NoteObserver value) {
-    _$noteObserverAtom.reportWrite(value, super.noteObserver, () {
-      super.noteObserver = value;
-    });
-  }
-
-  final _$dailyCheckListAtom =
-      Atom(name: '_AbstractCheckListObserver.dailyCheckList');
-
-  @override
-  List<TextNote> get dailyCheckList {
-    _$dailyCheckListAtom.reportRead();
-    return super.dailyCheckList;
-  }
-
-  @override
-  set dailyCheckList(List<TextNote> value) {
-    _$dailyCheckListAtom.reportWrite(value, super.dailyCheckList, () {
-      super.dailyCheckList = value;
-    });
-  }
-
   final _$checkedNoteIDsAtom =
       Atom(name: '_AbstractCheckListObserver.checkedNoteIDs');
 
@@ -57,48 +25,53 @@ mixin _$CheckListObserver on _AbstractCheckListObserver, Store {
     });
   }
 
+  final _$selectedDayAtom =
+      Atom(name: '_AbstractCheckListObserver.selectedDay');
+
+  @override
+  DateTime get selectedDay {
+    _$selectedDayAtom.reportRead();
+    return super.selectedDay;
+  }
+
+  @override
+  set selectedDay(DateTime value) {
+    _$selectedDayAtom.reportWrite(value, super.selectedDay, () {
+      super.selectedDay = value;
+    });
+  }
+
   final _$_AbstractCheckListObserverActionController =
       ActionController(name: '_AbstractCheckListObserver');
 
   @override
-  void setNotObserver(NoteObserver observer) {
+  void setSelectedDay(DateTime day) {
     final _$actionInfo = _$_AbstractCheckListObserverActionController
-        .startAction(name: '_AbstractCheckListObserver.setNotObserver');
+        .startAction(name: '_AbstractCheckListObserver.setSelectedDay');
     try {
-      return super.setNotObserver(observer);
+      return super.setSelectedDay(day);
     } finally {
       _$_AbstractCheckListObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void getDailyCheckList(String date) {
+  void getCheckedList(String date) {
     final _$actionInfo = _$_AbstractCheckListObserverActionController
-        .startAction(name: '_AbstractCheckListObserver.getDailyCheckList');
+        .startAction(name: '_AbstractCheckListObserver.getCheckedList');
     try {
-      return super.getDailyCheckList(date);
+      return super.getCheckedList(date);
     } finally {
       _$_AbstractCheckListObserverActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addToCheckedItems(TextNote note) {
+  void checkItem(TextNote note) {
     final _$actionInfo = _$_AbstractCheckListObserverActionController
-        .startAction(name: '_AbstractCheckListObserver.addToCheckedItems');
+        .startAction(name: '_AbstractCheckListObserver.checkItem');
     try {
-      return super.addToCheckedItems(note);
-    } finally {
-      _$_AbstractCheckListObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addUnCheckItem(TextNote note) {
-    final _$actionInfo = _$_AbstractCheckListObserverActionController
-        .startAction(name: '_AbstractCheckListObserver.addUnCheckItem');
-    try {
-      return super.addUnCheckItem(note);
+      return super.checkItem(note);
     } finally {
       _$_AbstractCheckListObserverActionController.endAction(_$actionInfo);
     }
@@ -107,9 +80,8 @@ mixin _$CheckListObserver on _AbstractCheckListObserver, Store {
   @override
   String toString() {
     return '''
-noteObserver: ${noteObserver},
-dailyCheckList: ${dailyCheckList},
-checkedNoteIDs: ${checkedNoteIDs}
+checkedNoteIDs: ${checkedNoteIDs},
+selectedDay: ${selectedDay}
     ''';
   }
 }

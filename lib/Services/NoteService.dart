@@ -45,7 +45,7 @@ class TextNoteService {
   static Future<String> getDailyCheckedNote(String date) async {
     String data = "";
     String fileName = "${date}_checkeditems.txt";
-    await FileUtil.readFile(fileName).then((value) => data);
+    await FileUtil.readFile(fileName).then((value) => data = value);
     return data;
   }
 }

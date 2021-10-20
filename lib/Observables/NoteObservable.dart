@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import '../Model/Note.dart';
@@ -9,7 +11,8 @@ class NoteObserver = _AbstractNoteObserver with _$NoteObserver;
 
 abstract class _AbstractNoteObserver with Store {
   _AbstractNoteObserver() {
-    TextNoteService.loadNotes().then((value) => setNotes(value));
+    TextNoteService.loadNotes()
+        .then((value) => {setNotes(value), setCheckList(value)});
   }
 
   @observable
@@ -20,6 +23,9 @@ abstract class _AbstractNoteObserver with Store {
 
   @observable
   List<TextNote> usersNotes = [];
+
+  @observable
+  Set<TextNote> checkListNotes = LinkedHashSet<TextNote>();
 
   //used when creating new note
   @observable
@@ -76,6 +82,20 @@ abstract class _AbstractNoteObserver with Store {
   void setNotes(notes) {
     print("set note to: ${notes}");
     usersNotes = notes;
+  }
+
+  @action
+  void setCheckList(notes) {
+    for (TextNote item in notes) {
+      if (item.isCheckList == true || item.recurrentType == "daily") {
+        checkListNotes.add(item);
+      }
+    }
+  }
+
+  @action
+  void clearCheckList() {
+    checkListNotes.clear();
   }
 
   @action
