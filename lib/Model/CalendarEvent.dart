@@ -4,6 +4,8 @@ import 'package:untitled3/Utility/CalendarUtility.dart';
 
 class CalenderEvent extends Event {
   String title;
+  String date;
   String time;
-  CalenderEvent({this.title = "", this.time = ""}) : super(title);
+  CalenderEvent({this.title = "", this.time = "", this.date = ""})
+      : super(title);
 }
