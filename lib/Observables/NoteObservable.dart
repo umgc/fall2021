@@ -11,8 +11,8 @@ class NoteObserver = _AbstractNoteObserver with _$NoteObserver;
 
 abstract class _AbstractNoteObserver with Store {
   _AbstractNoteObserver() {
-    TextNoteService.loadNotes().then((notes) =>
-        {setNotes(notes), setCheckList(notes), setEventNotes(notes)});
+    TextNoteService.loadNotes()
+        .then((notes) => {setNotes(notes), setCheckList(notes)});
   }
 
   @observable
@@ -26,9 +26,6 @@ abstract class _AbstractNoteObserver with Store {
 
   @observable
   Set<TextNote> checkListNotes = LinkedHashSet<TextNote>();
-
-  @observable
-  Set<TextNote> eventNotes = LinkedHashSet<TextNote>();
 
   //used when creating new note
   @observable
@@ -89,12 +86,13 @@ abstract class _AbstractNoteObserver with Store {
   }
 
   @action
-  void setEventNotes(listOfNotes) {
-    for (TextNote item in listOfNotes) {
-      if (item.isCheckList == false || item.recurrentType == "none") {
-        eventNotes.add(item);
-      }
-    }
+  List<TextNote> onSearchNote(String searchQuery) {
+    List<TextNote> filteredResult = usersNotes
+        .where((element) =>
+            element.text.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+
+    return filteredResult;
   }
 
   @action
