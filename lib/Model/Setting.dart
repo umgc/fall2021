@@ -1,17 +1,14 @@
 import 'dart:ui';
 
 enum FontSize {
-   SMALL,
-   MEDIUM,
-   LARGE,
+  SMALL,
+  MEDIUM,
+  LARGE,
 }
 
-enum AppTheme {
-  BLUE,
-  PINK
-}
+enum AppTheme { BLUE, PINK }
 
-fontSizeStringToEnum (String fontSizeString) {
+fontSizeStringToEnum(String fontSizeString) {
   switch (fontSizeString) {
     case 'FontSize.MEDIUM':
       return FontSize.MEDIUM;
@@ -22,7 +19,7 @@ fontSizeStringToEnum (String fontSizeString) {
   }
 }
 
-appThemeStringToEnum (String appTheme) {
+appThemeStringToEnum(String appTheme) {
   switch (appTheme) {
     case 'AppTheme.BLUE':
       return AppTheme.BLUE;
@@ -78,26 +75,28 @@ class Setting {
                         "noteFontSize": "${this.noteFontSize.toString()}",
                         "menuFontSize": "${this.noteFontSize.toString()}" }
                         """;
-    
-    return jsonStr;
 
+    return jsonStr;
   }
 
   factory Setting.fromJson(dynamic jsonObj) {
     Setting setting = Setting();
     print("extracting jsonObj $jsonObj");
     if (jsonObj != "") {
-      setting.daysToKeepFiles =
-          jsonObj['daysToKeepFiles'].toString();
+      if (jsonObj['locale'] != null) {
+        var localeParts = jsonObj['locale'].split('_');
+        setting.locale = Locale(localeParts[0], localeParts[1]);
+      } else {
+        setting.locale = DEFAULT_LOCALE;
+      }
+      setting.daysToKeepFiles = jsonObj['daysToKeepFiles'].toString();
       setting.secondsSilence = jsonObj['secondsSilence'];
       setting.pathToWakeWord = jsonObj['pathToWakeWord'];
-      setting.locale = Locale(jsonObj['locale']);
       setting.isFirstRun = jsonObj['isFirstRun'];
       setting.enableVoiceOverText = jsonObj['enableVoiceOverText'];
       setting.noteFontSize = fontSizeStringToEnum(jsonObj['noteFontSize']);
       setting.menuFontSize = fontSizeStringToEnum(jsonObj['menuFontSize']);
       setting.appTheme = appThemeStringToEnum(jsonObj['appTheme']);
-
     }
 
     return setting;
