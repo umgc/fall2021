@@ -32,8 +32,6 @@ class CalendarState extends State<Calendar> {
                     "2012-02-27"), //Date of the oldest past event
                 lastDay: DateTime.parse("2022-02-27"), //Date of the last event
                 selectedDayPredicate: (day) {
-                  print(
-                      "selectedDayPredicate: calendarObserver.selectedDay ${calendarObserver.selectedDay} $day");
                   return isSameDay(calendarObserver.selectedDay, day);
                 },
 
@@ -43,22 +41,18 @@ class CalendarState extends State<Calendar> {
                       .loadEventsOfSelectedDay(day.toString().split(" ")[0]);
                 },
                 onFormatChanged: (format) {
-                  print("onFormatChanged: changing format to $format");
                   calendarObserver.changeFormat(format);
                 },
                 onDaySelected: (selectedDay, focusDay) {
+                  print("onDaySelected selectedDay: $selectedDay");
                   //exctract the date portion
-                  //if (!isSameDay(calendarObserver.selectedDay, selectedDay)) {
                   calendarObserver.setSelectedDay(selectedDay);
-                  //}
-                  String date = selectedDay.toString().split(" ")[0];
-                  calendarObserver.loadEventsOfSelectedDay(date);
+                  calendarObserver.loadEventsOfSelectedDay(
+                      selectedDay.toString().split(" ")[0]);
 
                   (context as Element).reassemble();
                 },
-                onPageChanged: (focusedDay) {
-                  print("onPageChanged: Day selected $focusedDay");
-                },
+                onPageChanged: (focusedDay) {},
                 calendarStyle: CalendarStyle(
                     selectedDecoration: BoxDecoration(
                       color: Colors.pink,
