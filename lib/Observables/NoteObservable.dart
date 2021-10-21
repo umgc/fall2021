@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import '../Model/Note.dart';
@@ -9,7 +11,8 @@ class NoteObserver = _AbstractNoteObserver with _$NoteObserver;
 
 abstract class _AbstractNoteObserver with Store {
   _AbstractNoteObserver() {
-    TextNoteService.loadNotes().then((value) => setNotes(value));
+    TextNoteService.loadNotes()
+        .then((notes) => {setNotes(notes), setCheckList(notes)});
   }
 
   @observable
@@ -20,6 +23,9 @@ abstract class _AbstractNoteObserver with Store {
 
   @observable
   List<TextNote> usersNotes = [];
+
+  @observable
+  Set<TextNote> checkListNotes = LinkedHashSet<TextNote>();
 
   //used when creating new note
   @observable
@@ -46,6 +52,7 @@ abstract class _AbstractNoteObserver with Store {
     }
     //remove from state
     usersNotes.remove(note);
+    checkListNotes.remove(note);
     //remove from storage by over-writing content
     TextNoteService.persistNotes(usersNotes);
   }
@@ -76,6 +83,30 @@ abstract class _AbstractNoteObserver with Store {
   void setNotes(notes) {
     print("set note to: ${notes}");
     usersNotes = notes;
+  }
+
+  @action
+  List<TextNote> onSearchNote(String searchQuery) {
+    List<TextNote> filteredResult = usersNotes
+        .where((element) =>
+            element.text.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+
+    return filteredResult;
+  }
+
+  @action
+  void setCheckList(listOfNotes) {
+    for (TextNote item in listOfNotes) {
+      if (item.isCheckList == true || item.recurrentType == "daily") {
+        checkListNotes.add(item);
+      }
+    }
+  }
+
+  @action
+  void clearCheckList() {
+    checkListNotes.clear();
   }
 
   @action

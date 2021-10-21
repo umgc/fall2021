@@ -55,6 +55,22 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
+  final _$checkListNotesAtom =
+      Atom(name: '_AbstractNoteObserver.checkListNotes');
+
+  @override
+  Set<TextNote> get checkListNotes {
+    _$checkListNotesAtom.reportRead();
+    return super.checkListNotes;
+  }
+
+  @override
+  set checkListNotes(Set<TextNote> value) {
+    _$checkListNotesAtom.reportWrite(value, super.checkListNotes, () {
+      super.checkListNotes = value;
+    });
+  }
+
   final _$newNoteIsCheckListAtom =
       Atom(name: '_AbstractNoteObserver.newNoteIsCheckList');
 
@@ -158,6 +174,39 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   }
 
   @override
+  List<TextNote> onSearchNote(String searchQuery) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.onSearchNote');
+    try {
+      return super.onSearchNote(searchQuery);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCheckList(dynamic listOfNotes) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setCheckList');
+    try {
+      return super.setCheckList(listOfNotes);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearCheckList() {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.clearCheckList');
+    try {
+      return super.clearCheckList();
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changeScreen(NOTE_SCREENS name) {
     final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.changeScreen');
@@ -207,6 +256,7 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
 currentScreen: ${currentScreen},
 currNoteForDetails: ${currNoteForDetails},
 usersNotes: ${usersNotes},
+checkListNotes: ${checkListNotes},
 newNoteIsCheckList: ${newNoteIsCheckList},
 newNoteEventDate: ${newNoteEventDate},
 newNoteEventTime: ${newNoteEventTime}

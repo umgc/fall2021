@@ -8,7 +8,6 @@ import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
-import 'package:share_plus/share_plus.dart';
 
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -157,6 +156,19 @@ class _SaveNoteState extends State<SaveNote> {
     );
   }
 
+  Widget _button(Color background, String text, Function callbackFn) {
+    var btnSize = MediaQuery.of(context).size.width * 0.9;
+    return TextButton(
+      style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          backgroundColor: MaterialStateProperty.all<Color>(background),
+          overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade300),
+          fixedSize: MaterialStateProperty.all<Size>(Size.fromWidth(btnSize))),
+      onPressed: () => {callbackFn.call()},
+      child: Text(text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
@@ -170,13 +182,14 @@ class _SaveNoteState extends State<SaveNote> {
     }
 
     var padding = MediaQuery.of(context).size.width * 0.02;
+    var spaceBetweenBtn = MediaQuery.of(context).size.width * 0.5;
 
     var verticalColSpace = MediaQuery.of(context).size.width * 0.1;
 
     return Scaffold(
         key: saveNoteScaffoldKey,
         body: Observer(
-          builder: (context) => Container(
+          builder: (context) => SingleChildScrollView(
               padding: EdgeInsets.all(padding),
               child: Column(
                 children: [
@@ -198,46 +211,14 @@ class _SaveNoteState extends State<SaveNote> {
                   _selectDate(),
 
                   SizedBox(height: verticalColSpace),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 0, top: 4, right: 0, bottom: 0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _onSave(noteObserver);
-                      },
-                      child: Text(
-                        I18n.of(context)!.save,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 0, top: 2, right: 0, bottom: 0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        noteObserver.changeScreen(NOTE_SCREENS.NOTE);
-                      },
-                      child: Text(
-                        I18n.of(context)!.cancel,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      style: ElevatedButton.styleFrom(primary: Colors.grey),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 0, top: 50, right: 0, bottom: 0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Share.share(noteObserver.currNoteForDetails!.text);
-                      },
-                      child: Text(
-                        I18n.of(context)!.share,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                  ),
+                  _button(
+                      Color(0xFF33ACE3),
+                      I18n.of(context)!.save.toUpperCase(),
+                      () => {_onSave(noteObserver)}),
+                  _button(
+                      Colors.red.shade400,
+                      I18n.of(context)!.cancel.toUpperCase(),
+                      () => {noteObserver.changeScreen(NOTE_SCREENS.NOTE)}),
                 ],
               )),
           //bottomNavigationBar: BottomBar(3),
@@ -246,10 +227,19 @@ class _SaveNoteState extends State<SaveNote> {
 
   _onSave(NoteObserver noteObserver) {
     if (textController.text.length > 0) {
+      print(
+          "noteObserver.currNoteForDetails: ${noteObserver.currNoteForDetails}");
+      this._newNote.noteId = (noteObserver.currNoteForDetails != null)
+          ? noteObserver.currNoteForDetails!.noteId
+          : TextNote().noteId;
       this._newNote.text = textController.text;
       this._newNote.eventTime = noteObserver.newNoteEventTime;
       this._newNote.eventDate = noteObserver.newNoteEventDate;
       this._newNote.isCheckList = noteObserver.newNoteIsCheckList;
+      if (noteObserver.newNoteIsCheckList == true) {
+        this._newNote.recurrentType = "daily";
+      }
+
       noteObserver.deleteNote(noteObserver.currNoteForDetails);
       noteObserver.addNote(_newNote);
       _showToast();
