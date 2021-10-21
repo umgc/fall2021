@@ -62,5 +62,12 @@
     "promptTheme": "Selecione o tema do aplicativo",
     "theme": "Tema",
     "blue": "Azul",
-    "pink": "Cor de rosa"
+    "pink": "Cor de rosa",
+    "turnOnNotesNotification": "Ativar notificações para notas",
+    "turnOnEventReminder": "Ativar lembrete antes de um evento",
+    "reminderStartTime": "Nota: o lembrete começa 15 minutos antes do evento.",
+    "activitiesNotifications": "Notificações de atividades",
+    "turnOnHourlyWalkNotification": "Ativar notificação para caminhada de hora em hora",
+    "turnOnHourlyWaterNotification": "Ativar notificação para água de hora em hora",
+    "turnOnBathroomNotification": "Ativar notificação para banheiro"
 }

@@ -154,6 +154,20 @@ class I18n implements WidgetsLocalizations {
 	String get blue => "Blue";
 	/// "Pink"
 	String get pink => "Pink";
+	/// "Turn on Notifications for Notes"
+	String get turnOnNotesNotification => "Turn on Notifications for Notes";
+	/// "Turn on Reminder before an Event"
+	String get turnOnEventReminder => "Turn on Reminder before an Event";
+	/// "Note: The reminder starts 15 minutes before the event."
+	String get reminderStartTime => "Note: The reminder starts 15 minutes before the event.";
+	/// "Activities Notifications"
+	String get activitiesNotifications => "Activities Notifications";
+	/// "Turn on Notification for hourly Walk"
+	String get turnOnHourlyWalkNotification => "Turn on Notification for hourly Walk";
+	/// "Turn on Notification for hourly Water"
+	String get turnOnHourlyWaterNotification => "Turn on Notification for hourly Water";
+	/// "Turn on Notification for Bathroom"
+	String get turnOnBathroomNotification => "Turn on Notification for Bathroom";
 	/// "Ayuda"
 	String get helpScreen => "Ayuda";
 	/// "Palabras Claves"
@@ -352,6 +366,27 @@ class _I18n_es_US extends I18n {
 	/// "Rosado"
 	@override
 	String get pink => "Rosado";
+	/// "Activar notificaciones para notas"
+	@override
+	String get turnOnNotesNotification => "Activar notificaciones para notas";
+	/// "Activar recordatorio antes de un evento"
+	@override
+	String get turnOnEventReminder => "Activar recordatorio antes de un evento";
+	/// "Nota: el recordatorio comienza 15 minutos antes del evento."
+	@override
+	String get reminderStartTime => "Nota: el recordatorio comienza 15 minutos antes del evento.";
+	/// "Notificaciones de actividades"
+	@override
+	String get activitiesNotifications => "Notificaciones de actividades";
+	/// "Activar Notificación para Caminata por horas"
+	@override
+	String get turnOnHourlyWalkNotification => "Activar Notificación para Caminata por horas";
+	/// "Activar la notificación de agua por hora"
+	@override
+	String get turnOnHourlyWaterNotification => "Activar la notificación de agua por hora";
+	/// "Activar la notificación para el baño"
+	@override
+	String get turnOnBathroomNotification => "Activar la notificación para el baño";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -549,6 +584,27 @@ class _I18n_pt_BR extends I18n {
 	/// "Cor de rosa"
 	@override
 	String get pink => "Cor de rosa";
+	/// "Ativar notificações para notas"
+	@override
+	String get turnOnNotesNotification => "Ativar notificações para notas";
+	/// "Ativar lembrete antes de um evento"
+	@override
+	String get turnOnEventReminder => "Ativar lembrete antes de um evento";
+	/// "Nota: o lembrete começa 15 minutos antes do evento."
+	@override
+	String get reminderStartTime => "Nota: o lembrete começa 15 minutos antes do evento.";
+	/// "Notificações de atividades"
+	@override
+	String get activitiesNotifications => "Notificações de atividades";
+	/// "Ativar notificação para caminhada de hora em hora"
+	@override
+	String get turnOnHourlyWalkNotification => "Ativar notificação para caminhada de hora em hora";
+	/// "Ativar notificação para água de hora em hora"
+	@override
+	String get turnOnHourlyWaterNotification => "Ativar notificação para água de hora em hora";
+	/// "Ativar notificação para banheiro"
+	@override
+	String get turnOnBathroomNotification => "Ativar notificação para banheiro";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -746,6 +802,27 @@ class _I18n_zh_CN extends I18n {
 	/// "粉色的"
 	@override
 	String get pink => "粉色的";
+	/// "打开笔记通知"
+	@override
+	String get turnOnNotesNotification => "打开笔记通知";
+	/// "开启活动前提醒"
+	@override
+	String get turnOnEventReminder => "开启活动前提醒";
+	/// "注意：提醒在活动开始前 15 分钟开始。"
+	@override
+	String get reminderStartTime => "注意：提醒在活动开始前 15 分钟开始。";
+	/// "活动通知"
+	@override
+	String get activitiesNotifications => "活动通知";
+	/// "打开每小时步行的通知"
+	@override
+	String get turnOnHourlyWalkNotification => "打开每小时步行的通知";
+	/// "打开每小时水的通知"
+	@override
+	String get turnOnHourlyWaterNotification => "打开每小时水的通知";
+	/// "打开浴室通知"
+	@override
+	String get turnOnBathroomNotification => "打开浴室通知";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -943,6 +1020,27 @@ class _I18n_ar_SY extends I18n {
 	/// "لون القرنفل"
 	@override
 	String get pink => "لون القرنفل";
+	/// "قم بتشغيل الإخطارات للملاحظات"
+	@override
+	String get turnOnNotesNotification => "قم بتشغيل الإخطارات للملاحظات";
+	/// "قم بتشغيل التذكير قبل الحدث"
+	@override
+	String get turnOnEventReminder => "قم بتشغيل التذكير قبل الحدث";
+	/// "ملاحظة: يبدأ التذكير قبل 15 دقيقة من الحدث."
+	@override
+	String get reminderStartTime => "ملاحظة: يبدأ التذكير قبل 15 دقيقة من الحدث.";
+	/// "إخطارات الأنشطة"
+	@override
+	String get activitiesNotifications => "إخطارات الأنشطة";
+	/// "قم بتشغيل الإعلام للمشي كل ساعة"
+	@override
+	String get turnOnHourlyWalkNotification => "قم بتشغيل الإعلام للمشي كل ساعة";
+	/// "قم بتشغيل الإخطار للحصول على المياه كل ساعة"
+	@override
+	String get turnOnHourlyWaterNotification => "قم بتشغيل الإخطار للحصول على المياه كل ساعة";
+	/// "قم بتشغيل الإعلام للحمام"
+	@override
+	String get turnOnBathroomNotification => "قم بتشغيل الإعلام للحمام";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

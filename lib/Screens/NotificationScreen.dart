@@ -9,6 +9,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:untitled3/Observables/NotificationObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 FlutterLocalNotificationsPlugin notificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -75,7 +76,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for Notes",
+                          I18n.of(context)!.turnOnNotesNotification,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -107,19 +108,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Reminder before an Event ",
+                            I18n.of(context)!.turnOnEventReminder,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
                       Text(
-                        "NOTE : The reminder starts 15 minutes before the event.",
+                        I18n.of(context)!.reminderStartTime,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Activities Notifications",
+                         I18n.of(context)!.activitiesNotifications,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -141,7 +142,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for hourly Walk",
+                          I18n.of(context)!.turnOnHourlyWalkNotification,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -157,7 +158,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for hourly Water",
+                          I18n.of(context)!.turnOnHourlyWaterNotification,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -173,7 +174,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for Bathroom",
+                          I18n.of(context)!.turnOnBathroomNotification,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),

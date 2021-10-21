@@ -62,5 +62,12 @@
     "promptTheme": "选择应用主题",
     "theme": "主题",
     "blue": "蓝色",
-    "pink": "粉色的"
+    "pink": "粉色的",
+    "turnOnNotesNotification": "打开笔记通知",
+    "turnOnEventReminder": "开启活动前提醒",
+    "reminderStartTime": "注意：提醒在活动开始前 15 分钟开始。",
+    "activitiesNotifications": "活动通知",
+    "turnOnHourlyWalkNotification": "打开每小时步行的通知",
+    "turnOnHourlyWaterNotification": "打开每小时水的通知",
+    "turnOnBathroomNotification": "打开浴室通知"
 }
