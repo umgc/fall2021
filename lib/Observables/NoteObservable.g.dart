@@ -71,21 +71,6 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
-  final _$eventNotesAtom = Atom(name: '_AbstractNoteObserver.eventNotes');
-
-  @override
-  Set<TextNote> get eventNotes {
-    _$eventNotesAtom.reportRead();
-    return super.eventNotes;
-  }
-
-  @override
-  set eventNotes(Set<TextNote> value) {
-    _$eventNotesAtom.reportWrite(value, super.eventNotes, () {
-      super.eventNotes = value;
-    });
-  }
-
   final _$newNoteIsCheckListAtom =
       Atom(name: '_AbstractNoteObserver.newNoteIsCheckList');
 
@@ -189,17 +174,6 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   }
 
   @override
-  void setEventNotes(dynamic listOfNotes) {
-    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
-        name: '_AbstractNoteObserver.setEventNotes');
-    try {
-      return super.setEventNotes(listOfNotes);
-    } finally {
-      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   List<TextNote> onSearchNote(String searchQuery) {
     final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.onSearchNote');
@@ -283,7 +257,6 @@ currentScreen: ${currentScreen},
 currNoteForDetails: ${currNoteForDetails},
 usersNotes: ${usersNotes},
 checkListNotes: ${checkListNotes},
-eventNotes: ${eventNotes},
 newNoteIsCheckList: ${newNoteIsCheckList},
 newNoteEventDate: ${newNoteEventDate},
 newNoteEventTime: ${newNoteEventTime}

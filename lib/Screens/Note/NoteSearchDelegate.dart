@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
 
-import 'Note/NoteTable.dart';
+import 'NoteTable.dart';
 
 class NoteSearchDelegate extends SearchDelegate {
   @override
@@ -37,7 +38,7 @@ class NoteSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
     List<TextNote> filteredResult = noteObserver.onSearchNote(query);
-    return NoteTable(filteredResult);
+    return NoteTable(filteredResult, () => {close(context, null)});
   }
 
   @override
@@ -45,7 +46,7 @@ class NoteSearchDelegate extends SearchDelegate {
     print("Do something with the search $query");
     final noteObserver = Provider.of<NoteObserver>(context);
     List<TextNote> filteredResult = noteObserver.onSearchNote(query);
-    return NoteTable(filteredResult);
+    return NoteTable(filteredResult, () => {close(context, null)});
   }
 }
 /**

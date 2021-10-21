@@ -37,26 +37,22 @@ class CalendarState extends State<Calendar> {
 
                 calendarFormat: calendarObserver.calendarFormat,
                 eventLoader: (DateTime day) {
-                  print(
-                      "calendarObserver.selectedEvents.value: ${calendarObserver.selectedEvents.value}");
-                  return calendarObserver.selectedEvents.value;
+                  return calendarObserver
+                      .loadEventsOfSelectedDay(day.toString().split(" ")[0]);
                 },
                 onFormatChanged: (format) {
                   calendarObserver.changeFormat(format);
                 },
                 onDaySelected: (selectedDay, focusDay) {
+                  print("onDaySelected selectedDay: $selectedDay");
                   //exctract the date portion
-                  //if (!isSameDay(calendarObserver.selectedDay, selectedDay)) {
                   calendarObserver.setSelectedDay(selectedDay);
-                  //}
-                  String date = selectedDay.toString().split(" ")[0];
-                  calendarObserver.loadEventsOfSelectedDay(date);
+                  calendarObserver.loadEventsOfSelectedDay(
+                      selectedDay.toString().split(" ")[0]);
 
                   (context as Element).reassemble();
                 },
-                onPageChanged: (focusedDay) {
-                  print("onPageChanged: Day selected $focusedDay");
-                },
+                onPageChanged: (focusedDay) {},
                 calendarStyle: CalendarStyle(
                     selectedDecoration: BoxDecoration(
                       color: Colors.pink,

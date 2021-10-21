@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Screens/Mic/Mic.dart';
 
 import 'package:untitled3/Screens/Note/Note.dart';
-import 'package:untitled3/Screens/NoteSearchDelegate.dart';
+import 'package:untitled3/Screens/Note/NoteSearchDelegate.dart';
 import 'package:untitled3/Screens/NotificationScreen.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/Utility/ThemeUtil.dart';
@@ -149,6 +150,7 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   AppBar buildAppBar(BuildContext context) {
     final screenNav = Provider.of<MainNavObserver>(context);
+    final noteObserver = Provider.of<NoteObserver>(context);
 
     return AppBar(
       toolbarHeight: 120,

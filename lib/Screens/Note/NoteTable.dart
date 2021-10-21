@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import '../../Observables/NoteObservable.dart';
 
 /// View Notes page
 class NoteTable extends StatelessWidget {
   final List<TextNote> usersNotes;
-
+  final Function? onListItemClickCallBackFn;
   //Flutter will autto assign this param to usersNotes
-  NoteTable(this.usersNotes);
+  NoteTable(this.usersNotes, this.onListItemClickCallBackFn);
 
   @override
   Widget build(BuildContext context) {
     // String noteDetailScreen =I18n.of(context)!.notesDetailScreenName;
     // String addNoteScreen =I18n.of(context)!.addNotesScreenName;
     // String noteScreen =I18n.of(context)!.notesScreenName;
+    final screenNav = Provider.of<MainNavObserver>(context);
 
     final noteObserver = Provider.of<NoteObserver>(context);
     noteObserver.resetCurrNoteIdForDetails();
@@ -68,10 +70,13 @@ class NoteTable extends StatelessWidget {
                       )),
                   showEditIcon: true,
                   onTap: () => {
+                    screenNav.changeScreen(MAIN_SCREENS.NOTE),
                     noteObserver
                         .setCurrNoteIdForDetails(usersNotes[index].noteId)
-                        .then((value) =>
-                            noteObserver.changeScreen(NOTE_SCREENS.NOTE_DETAIL))
+                        .then((value) => noteObserver
+                            .changeScreen(NOTE_SCREENS.NOTE_DETAIL)),
+                    if (onListItemClickCallBackFn != null)
+                      {onListItemClickCallBackFn!.call()}
                   },
                 ),
                 DataCell(Text(timeago.format(usersNotes[index].recordedTime))),
