@@ -61,26 +61,44 @@ class _SettingState extends State<Settings> {
       }
     }
 
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(15.0),
-        child:
-        Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
-            Widget>[
-          Text(I18n.of(context)!.daysToKeepNotes,
-              style: Theme.of(context).textTheme.bodyText2),
-          Padding(
-            padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
-            child: Container(
-              width: 60,
-              height: 40,
-              padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1),
-              ),
-              child: DropdownButton(
-                hint: Text(
-                  I18n.of(context)!.promptNoteDeletionTimeline,
+    return Observer(
+      builder: (context) => Scaffold(
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(15.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
+                  Widget>[
+            Text(I18n.of(context)!.daysToKeepNotes,
+                style: Theme.of(context).textTheme.bodyText2),
+            Padding(
+              padding: EdgeInsets.fromLTRB(1.0, 2.0, 3.0, 4.0),
+              child: Container(
+                width: 60,
+                height: 40,
+                padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                ),
+                child: DropdownButton(
+                  hint: Text(
+                    I18n.of(context)!.promptNoteDeletionTimeline,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  icon: Icon(
+                    // Add this
+                    Icons.edit_sharp, // Add this
+                    color: Colors.blue, // Add this
+                  ),
+                  value: settingObserver.userSettings.daysToKeepFiles,
+                  onChanged: (newValue) {
+                    setState(() {
+                      daysToKeepFiles = newValue;
+                    });
+                    settingObserver.userSettings.daysToKeepFiles =
+                        daysToKeepFiles;
+                  },
+                  isExpanded: true,
+                  underline: SizedBox(),
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 icon: Icon(

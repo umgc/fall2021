@@ -17,6 +17,10 @@ class TextNote {
   //true for check list Item
   bool isCheckList = false;
 
+  //Event might occur daily, weekl, monthly or yearly
+  //Default is 'none' for singly occurrence events
+  String recurrentType = "none";
+
   //true for check list Item
   bool isEvent = false;
 
@@ -39,6 +43,7 @@ class TextNote {
     String jsonStr = """ {"noteId": "${this.noteId}",
                         "recordedTime": "${this.recordedTime}",
                         "language": "${this.language}",
+                        "recurrentType": "${this.recurrentType}",
                         "isCheckList": ${this.isCheckList},
                         "isEvent": ${this.isEvent},
                         "text": "${this.text}",
@@ -56,6 +61,7 @@ class TextNote {
     note.recordedTime = DateTime.parse(jsonObj['recordedTime']);
     note.language = jsonObj['language'];
     note.isCheckList = jsonObj['isCheckList'];
+    note.recurrentType = jsonObj['recurrentType'];
     note.isEvent = jsonObj['isEvent'];
     note.text = jsonObj['text'];
     note.isFavorite = jsonObj['isFavorite'];

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
@@ -199,7 +200,8 @@ import '../BertQA/BertQaService.dart';
 
     Future<String> getNotes() async {
       List<TextNote> lstTextNote = await TextNoteService.loadNotes();
-      var strBufffer = new StringBuffer();
+      
+      var strBuffer = new StringBuffer();
       String notes = "";
       if (lstTextNote != null && lstTextNote.length > 0) {
         for (int i = 0; i < lstTextNote.length; i++) {
@@ -207,14 +209,21 @@ import '../BertQA/BertQaService.dart';
           if (textNote != null && textNote.noteId != null
               && textNote.noteId != "" && textNote.text != null
               && textNote.text != "") {
-            strBufffer.write(textNote.text);
-            strBufffer.write(". ");
+
+            if (textNote.text.substring(textNote.text.length - 1) == ".") {
+              strBuffer.write(textNote.text.substring(0, textNote.text.length - 1));
+            } else {
+              strBuffer.write(textNote.text);
+            }
+            strBuffer.write(formatDate(textNote.eventDate));
+            strBuffer.write(formatTime(textNote.eventTime));
+            strBuffer.write(". ");
           }
         }
       }
-      if (strBufffer != null && strBufffer.toString() != null &&
-          strBufffer.toString() != "") {
-        notes = strBufffer.toString();
+      if (strBuffer != null && strBuffer.toString() != null &&
+          strBuffer.toString() != "") {
+        notes = strBuffer.toString();
       }
       return notes;
     }
@@ -310,6 +319,8 @@ import '../BertQA/BertQaService.dart';
       NLUState state = NLUState.COMPLETE;
       lastValidInput = inputText;
       String outputText = await searchNotesByInput(inputText);
+      outputText = firstToSecond(outputText);
+      outputText = capitalizeAndPunctuate(outputText);
       return new NLUResponse(
           actionType,
           inputText,
@@ -681,13 +692,216 @@ import '../BertQA/BertQaService.dart';
     }
 
     String formatDate(String date) {
-
-      return "";
+      try {
+        DateTime dt = DateTime.parse(date);
+        return " on "+DateFormat.EEEE().format(dt)+", "+DateFormat.yMMMMd().format(dt);
+      } catch (e) {
+        return date;
+      }
     }
 
-    String formatTime(String Time) {
+    String formatTime(String time) {
+      try {
+        int hour = int.parse(time.substring(0, 2));
+        int minute = int.parse(time.substring(3));
+        if (hour > 12) {
+          hour -= 12;
+          return " at "+hour.toString() +":"+minute.toString()+" PM";
+        } else {
+          return " at "+hour.toString() +":"+minute.toString()+" AM";
+        }
+      } catch (e) {
+        return time;
+      }
+    }
 
-      return "";
+    String firstToSecond(String text) {
+      String invertedText = "";
+      var words = text.split(" ");
+      for (var i = 0; i < words.length; i++) {
+        words[i] = " "+words[i]+" ";
+        words[i] = words[i]
+            .replaceAll(" i ", " you ")
+            .replaceAll(" I ", " you ")
+            .replaceAll(" i'm ", " you're ")
+            .replaceAll(" I'm ", " you're ")
+            .replaceAll(" am ", " are ")
+            .replaceAll(" Am ", " are ")
+            .replaceAll(" was ", " were ")
+            .replaceAll(" Was ", " were ")
+            .replaceAll(" me ", " you ")
+            .replaceAll(" Me ", " you ")
+            .replaceAll(" we ", " you ")
+            .replaceAll(" We ", " you ")
+            .replaceAll(" we're ", " you're ")
+            .replaceAll(" We're ", " you're ")
+            .replaceAll(" us ", " you ")
+            .replaceAll(" Us ", " you ")
+            .replaceAll(" my ", " your ")
+            .replaceAll(" My ", " your ")
+            .replaceAll(" mine ", " yours ")
+            .replaceAll(" Mine ", " yours ")
+            .replaceAll(" our ", " your ")
+            .replaceAll(" Our ", " your ")
+            .replaceAll(" ours ", " yours ")
+            .replaceAll(" Ours ", " yours ")
+            .replaceAll(" myself ", " yourself ")
+            .replaceAll(" Myself ", " yourself ")
+            .replaceAll(" ourselves ", " yourselves ")
+            .replaceAll(" Ourselves ", " yourselves ")
+            .replaceAll(" i. ", " you. ")
+            .replaceAll(" I. ", " you. ")
+            .replaceAll(" i'm. ", " you're. ")
+            .replaceAll(" I'm. ", " you're. ")
+            .replaceAll(" am. ", " are. ")
+            .replaceAll(" Am. ", " are. ")
+            .replaceAll(" was. ", " were. ")
+            .replaceAll(" Was. ", " were. ")
+            .replaceAll(" me. ", " you. ")
+            .replaceAll(" Me. ", " you. ")
+            .replaceAll(" we. ", " you. ")
+            .replaceAll(" We. ", " you. ")
+            .replaceAll(" we're. ", " you're. ")
+            .replaceAll(" We're. ", " you're. ")
+            .replaceAll(" us. ", " you. ")
+            .replaceAll(" Us. ", " you. ")
+            .replaceAll(" my. ", " your. ")
+            .replaceAll(" My. ", " your. ")
+            .replaceAll(" mine. ", " yours. ")
+            .replaceAll(" Mine. ", " yours. ")
+            .replaceAll(" our. ", " your. ")
+            .replaceAll(" Our. ", " your. ")
+            .replaceAll(" ours. ", " yours. ")
+            .replaceAll(" Ours. ", " yours. ")
+            .replaceAll(" myself. ", " yourself. ")
+            .replaceAll(" Myself. ", " yourself. ")
+            .replaceAll(" ourselves. ", " yourselves. ")
+            .replaceAll(" Ourselves. ", " yourselves. ")
+            .replaceAll(" i, ", " you, ")
+            .replaceAll(" I, ", " you, ")
+            .replaceAll(" i'm, ", " you're, ")
+            .replaceAll(" I'm, ", " you're, ")
+            .replaceAll(" am, ", " are, ")
+            .replaceAll(" Am, ", " are, ")
+            .replaceAll(" was, ", " were, ")
+            .replaceAll(" Was, ", " were, ")
+            .replaceAll(" me, ", " you, ")
+            .replaceAll(" Me, ", " you, ")
+            .replaceAll(" we, ", " you, ")
+            .replaceAll(" We, ", " you, ")
+            .replaceAll(" we're, ", " you're, ")
+            .replaceAll(" We're, ", " you're, ")
+            .replaceAll(" us, ", " you, ")
+            .replaceAll(" Us, ", " you, ")
+            .replaceAll(" my, ", " your, ")
+            .replaceAll(" My, ", " your, ")
+            .replaceAll(" mine, ", " yours, ")
+            .replaceAll(" Mine, ", " yours, ")
+            .replaceAll(" our, ", " your, ")
+            .replaceAll(" Our, ", " your, ")
+            .replaceAll(" ours, ", " yours, ")
+            .replaceAll(" Ours, ", " yours, ")
+            .replaceAll(" myself, ", " yourself, ")
+            .replaceAll(" Myself, ", " yourself, ")
+            .replaceAll(" ourselves, ", " yourselves, ")
+            .replaceAll(" Ourselves, ", " yourselves, ")
+            .replaceAll(" i; ", " you; ")
+            .replaceAll(" I; ", " you; ")
+            .replaceAll(" i'm; ", " you're; ")
+            .replaceAll(" I'm; ", " you're; ")
+            .replaceAll(" am; ", " are; ")
+            .replaceAll(" Am; ", " are; ")
+            .replaceAll(" was; ", " were; ")
+            .replaceAll(" Was; ", " were; ")
+            .replaceAll(" me; ", " you; ")
+            .replaceAll(" Me; ", " you; ")
+            .replaceAll(" we; ", " you; ")
+            .replaceAll(" We; ", " you; ")
+            .replaceAll(" we're; ", " you're; ")
+            .replaceAll(" We're; ", " you're; ")
+            .replaceAll(" us; ", " you; ")
+            .replaceAll(" Us; ", " you; ")
+            .replaceAll(" my; ", " your; ")
+            .replaceAll(" My; ", " your; ")
+            .replaceAll(" mine; ", " yours; ")
+            .replaceAll(" Mine; ", " yours; ")
+            .replaceAll(" our; ", " your; ")
+            .replaceAll(" Our; ", " your; ")
+            .replaceAll(" ours; ", " yours; ")
+            .replaceAll(" Ours; ", " yours; ")
+            .replaceAll(" myself; ", " yourself; ")
+            .replaceAll(" Myself; ", " yourself; ")
+            .replaceAll(" ourselves; ", " yourselves; ")
+            .replaceAll(" Ourselves; ", " yourselves; ")
+            .replaceAll(" i? ", " you? ")
+            .replaceAll(" I? ", " you? ")
+            .replaceAll(" i'm? ", " you're? ")
+            .replaceAll(" I'm? ", " you're? ")
+            .replaceAll(" am? ", " are? ")
+            .replaceAll(" Am? ", " are? ")
+            .replaceAll(" was? ", " were? ")
+            .replaceAll(" Was? ", " were? ")
+            .replaceAll(" me? ", " you? ")
+            .replaceAll(" Me? ", " you? ")
+            .replaceAll(" we? ", " you? ")
+            .replaceAll(" We? ", " you? ")
+            .replaceAll(" we're? ", " you're? ")
+            .replaceAll(" We're? ", " you're? ")
+            .replaceAll(" us? ", " you? ")
+            .replaceAll(" Us? ", " you? ")
+            .replaceAll(" my? ", " your? ")
+            .replaceAll(" My? ", " your? ")
+            .replaceAll(" mine? ", " yours? ")
+            .replaceAll(" Mine? ", " yours? ")
+            .replaceAll(" our? ", " your? ")
+            .replaceAll(" Our? ", " your? ")
+            .replaceAll(" ours? ", " yours? ")
+            .replaceAll(" Ours? ", " yours? ")
+            .replaceAll(" myself? ", " yourself? ")
+            .replaceAll(" Myself? ", " yourself? ")
+            .replaceAll(" ourselves? ", " yourselves? ")
+            .replaceAll(" Ourselves? ", " yourselves? ")
+            .replaceAll(" i! ", " you! ")
+            .replaceAll(" I! ", " you! ")
+            .replaceAll(" i'm! ", " you're! ")
+            .replaceAll(" I'm! ", " you're! ")
+            .replaceAll(" am! ", " are! ")
+            .replaceAll(" Am! ", " are! ")
+            .replaceAll(" was! ", " were! ")
+            .replaceAll(" Was! ", " were! ")
+            .replaceAll(" me! ", " you! ")
+            .replaceAll(" Me! ", " you! ")
+            .replaceAll(" we! ", " you! ")
+            .replaceAll(" We! ", " you! ")
+            .replaceAll(" we're! ", " you're! ")
+            .replaceAll(" We're! ", " you're! ")
+            .replaceAll(" us! ", " you! ")
+            .replaceAll(" Us! ", " you! ")
+            .replaceAll(" my! ", " your! ")
+            .replaceAll(" My! ", " your! ")
+            .replaceAll(" mine! ", " yours! ")
+            .replaceAll(" Mine! ", " yours! ")
+            .replaceAll(" our! ", " your! ")
+            .replaceAll(" Our! ", " your! ")
+            .replaceAll(" ours! ", " yours! ")
+            .replaceAll(" Ours! ", " yours! ")
+            .replaceAll(" myself! ", " yourself! ")
+            .replaceAll(" Myself! ", " yourself! ")
+            .replaceAll(" ourselves! ", " yourselves! ")
+            .replaceAll(" Ourselves! ", " yourselves! ");
+        if (i > 0) {
+          invertedText += " ";
+        }
+        invertedText += words[i].trim();
+      }
+      return invertedText;
+    }
+
+    String capitalizeAndPunctuate(String text) {
+      text = text.substring(0, 1).toUpperCase() + text.substring(1);
+      if (text.substring(text.length - 1) != ".") {
+        text += ".";
+      }
+      return text;
     }
   }
-

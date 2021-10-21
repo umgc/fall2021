@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:untitled3/Observables/NotificationObservable.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Utility/Constant.dart';
 
 FlutterLocalNotificationsPlugin notificationsPlugin =
     FlutterLocalNotificationsPlugin();
+final IOSInitializationSettings initializationSettingsIOS =
+    IOSInitializationSettings(
+  requestSoundPermission: false,
+  requestBadgePermission: false,
+  requestAlertPermission: false,
+);
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -16,13 +25,18 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  @override
+  void initState() {
+    initializeSetting();
+    tz.initializeTimeZones();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final noteObserver = Provider.of<NoteObserver>(context);
     final notificationObserver = Provider.of<NotificationObserver>(context);
+    final noteObserver = Provider.of<NoteObserver>(context);
 
-    bool id;
     return Observer(
         builder: (_) => Scaffold(
               body: Padding(
@@ -45,11 +59,61 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         thickness: 2,
                       ),
                       SwitchListTile(
-                        value:id = false,
-                        onChanged: (value) {
-
+                        value: notificationObserver.noteNotification,
+                        onChanged: (value) async {
+                          notificationObserver.NoteNotification(value);
+                          for (TextNote note in noteObserver.usersNotes) {
+                            String dateTimeStr =
+                                note.eventDate + " " + note.eventTime;
+                            if (dateTimeStr.trim().isEmpty == false) {
+                              DateTime dateTime = DateTime.parse(dateTimeStr);
+                              DateTime now = DateTime.now();
+                              if (!dateTime.isBefore(now)) {
+                                displayNotification(note.text, dateTime);
+                              }
+                            }
+                          }
                         },
-                        title: Text("Turn on Notification for Notes",style: TextStyle(fontSize: 16),),
+                        title: Text(
+                          "Turn on Notification for Notes",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      SwitchListTile(
+                        value: notificationObserver.reminder,
+                        onChanged: (value) async {
+                          notificationObserver.NotificationReminder(value);
+                          if (!notificationObserver.reminder) {
+                            await cancelNotificationReminder();
+                          } else {
+                          for (TextNote note in noteObserver.usersNotes) {
+                            String dateTimeStr =
+                                note.eventDate + " " + note.eventTime;
+                            if (dateTimeStr
+                                .trim()
+                                .isEmpty == false) {
+                              DateTime dateTime = DateTime.parse(dateTimeStr);
+                              DateTime now = DateTime.now();
+                              DateTime scheduleTime =
+                              dateTime.subtract(Duration(minutes: 15));
+                              if (scheduleTime ==
+                                  dateTime.subtract(Duration(minutes: 15)) &&
+                                  !scheduleTime.isBefore(now)) {
+                                repeatNotificationNote(
+                                    note.text, scheduleTime);
+                              }
+                            }
+                          }
+                          }
+                        },
+                        title: Text(
+                          "Turn on Reminder before an Event ",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      Text(
+                        "NOTE : The reminder starts 15 minutes before the event.",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                       Align(
@@ -70,39 +134,48 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         onChanged: (value) async {
                           notificationObserver.NotificationWalk(value);
                           print(notificationObserver.onWalking);
-                          if(!notificationObserver.onWalking) {
+                          if (!notificationObserver.onWalking) {
                             await cancelWalkNotification();
-                          }else{
+                          } else {
                             repeatNotificationWalk();
                           }
                         },
-                        title: Text("Turn on Notification for hourly Walk",style: TextStyle(fontSize: 16),),
+                        title: Text(
+                          "Turn on Notification for hourly Walk",
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                       SwitchListTile(
                         value: notificationObserver.onWater,
                         onChanged: (value1) async {
                           notificationObserver.NotificationWater(value1);
                           print(notificationObserver.onWater);
-                          if(!notificationObserver.onWater) {
+                          if (!notificationObserver.onWater) {
                             await cancelWaterNotification();
-                          }else{
+                          } else {
                             repeatNotificationWater();
                           }
                         },
-                        title: Text("Turn on Notification for hourly Water",style: TextStyle(fontSize: 16),),
+                        title: Text(
+                          "Turn on Notification for hourly Water",
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                       SwitchListTile(
                         value: notificationObserver.Bathroom,
                         onChanged: (value2) async {
                           notificationObserver.NotificationBathroom(value2);
                           print(notificationObserver.Bathroom);
-                          if(!notificationObserver.Bathroom) {
+                          if (!notificationObserver.Bathroom) {
                             await cancelbathNotification();
-                          }else{
+                          } else {
                             repeatNotificationBathroom();
                           }
                         },
-                        title: Text("Turn on Notification for Bathroom",style: TextStyle(fontSize: 16),),
+                        title: Text(
+                          "Turn on Notification for Bathroom",
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ],
                   ),
@@ -110,32 +183,35 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ));
   }
-
-  displayNotification(String match) async {
-    notificationsPlugin.zonedSchedule(
-        0,
-        'Remember',
-        match,
-        tz.TZDateTime.now(tz.local).add(
-          Duration(seconds: 5),
-        ),
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-              'channel id',  'channel description'),
-        ),
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidAllowWhileIdle: true);
-  }
 }
 
-void initializeSetting() async {
+Future<void> displayNotification(String note, DateTime day) async {
+  notificationsPlugin.zonedSchedule(
+      0,
+      'Note',
+      note,
+      tz.TZDateTime.from(day, tz.local),
+      NotificationDetails(
+        android:
+            AndroidNotificationDetails('channel id', 'channel description'),
+      ),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      payload: 'Note load');
+}
+
+Future<void> initializeSetting() async {
   var initializeAndroid = AndroidInitializationSettings('my_logo');
-  var initializeSetting = InitializationSettings(android: initializeAndroid);
-  await notificationsPlugin.initialize(initializeSetting);
+  var initializeSetting = InitializationSettings(
+      android: initializeAndroid, iOS: initializationSettingsIOS);
+  await notificationsPlugin.initialize(initializeSetting,
+      onSelectNotification: (payload) async {
+    onSelectNotification('Note load');
+  });
 }
 
-repeatNotificationWater() async {
+Future<void> repeatNotificationWater() async {
   var androidChannelSpecifics = AndroidNotificationDetails(
     'CHANNEL_ID 1',
     "CHANNEL_DESCRIPTION 1",
@@ -169,13 +245,14 @@ repeatNotificationWalk() async {
       android: androidChannelSpecifics, iOS: iosChannelSpecifics);
   await notificationsPlugin.periodicallyShow(
     2,
-    'Walk',
+    'WALK',
     'Please take a walk',
     RepeatInterval.everyMinute,
     platformChannelSpecifics,
     payload: 'Test Payload',
   );
 }
+
 repeatNotificationBathroom() async {
   var androidChannelSpecifics = AndroidNotificationDetails(
     'CHANNEL_ID 3',
@@ -189,21 +266,55 @@ repeatNotificationBathroom() async {
       android: androidChannelSpecifics, iOS: iosChannelSpecifics);
   await notificationsPlugin.periodicallyShow(
     3,
-    'Bathroom',
-    'Please Go to the bathroom',
+    'BATHROOM',
+    'Please go to the bathroom',
     RepeatInterval.everyMinute,
     platformChannelSpecifics,
     payload: 'Test Payload',
   );
 }
+
+Future<void> repeatNotificationNote(String note, DateTime day) async {
+  var androidChannelSpecifics = AndroidNotificationDetails(
+    'CHANNEL_ID 1',
+    "CHANNEL_DESCRIPTION 1",
+    importance: Importance.max,
+    priority: Priority.high,
+    styleInformation: DefaultStyleInformation(true, true),
+  );
+  var iosChannelSpecifics = IOSNotificationDetails();
+  var platformChannelSpecifics = NotificationDetails(
+      android: androidChannelSpecifics, iOS: iosChannelSpecifics);
+  await notificationsPlugin.periodicallyShow(
+    4,
+    "Reminder",
+    note,
+    RepeatInterval.everyMinute,
+    platformChannelSpecifics,
+    payload: 'Test Payload',
+  );
+}
+
 Future<void> cancelWaterNotification() async {
   await notificationsPlugin.cancel(1);
 }
 
+
 Future<void> cancelWalkNotification() async {
   await notificationsPlugin.cancel(2);
 }
+
 Future<void> cancelbathNotification() async {
   await notificationsPlugin.cancel(3);
 }
+Future<void> cancelNotificationReminder() async {
+  await notificationsPlugin.cancel(4);
+}
 
+Future<void> onSelectNotification(String payload) async {
+  NoteObserver noteObserver = NoteObserver();
+  print("$payload");
+  if (payload == 'Note load') {
+    noteObserver.changeScreen(NOTE_SCREENS.NOTE);
+  }
+}

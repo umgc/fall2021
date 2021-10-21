@@ -421,6 +421,10 @@ abstract class _AbstractMicObserver with Store {
     note.eventTime =
         ((nluResponse.eventTime != null) ? nluResponse.eventTime : "")!;
     note.isCheckList = (nluResponse.recurringType != null);
+
+    if ((nluResponse.recurringType != null)) {
+      note.recurrentType = nluResponse.recurringType!;
+    }
     //note.recordLocale = (nluResponse.recurringType != null);
     note.recordedTime = DateTime.now();
     note.language = settingObserver.userSettings.locale.languageCode;

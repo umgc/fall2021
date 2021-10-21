@@ -55,6 +55,37 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
     });
   }
 
+  final _$checkListNotesAtom =
+      Atom(name: '_AbstractNoteObserver.checkListNotes');
+
+  @override
+  Set<TextNote> get checkListNotes {
+    _$checkListNotesAtom.reportRead();
+    return super.checkListNotes;
+  }
+
+  @override
+  set checkListNotes(Set<TextNote> value) {
+    _$checkListNotesAtom.reportWrite(value, super.checkListNotes, () {
+      super.checkListNotes = value;
+    });
+  }
+
+  final _$eventNotesAtom = Atom(name: '_AbstractNoteObserver.eventNotes');
+
+  @override
+  Set<TextNote> get eventNotes {
+    _$eventNotesAtom.reportRead();
+    return super.eventNotes;
+  }
+
+  @override
+  set eventNotes(Set<TextNote> value) {
+    _$eventNotesAtom.reportWrite(value, super.eventNotes, () {
+      super.eventNotes = value;
+    });
+  }
+
   final _$newNoteIsCheckListAtom =
       Atom(name: '_AbstractNoteObserver.newNoteIsCheckList');
 
@@ -158,6 +189,39 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
   }
 
   @override
+  void setEventNotes(dynamic listOfNotes) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setEventNotes');
+    try {
+      return super.setEventNotes(listOfNotes);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCheckList(dynamic listOfNotes) {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.setCheckList');
+    try {
+      return super.setCheckList(listOfNotes);
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearCheckList() {
+    final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
+        name: '_AbstractNoteObserver.clearCheckList');
+    try {
+      return super.clearCheckList();
+    } finally {
+      _$_AbstractNoteObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changeScreen(NOTE_SCREENS name) {
     final _$actionInfo = _$_AbstractNoteObserverActionController.startAction(
         name: '_AbstractNoteObserver.changeScreen');
@@ -207,6 +271,8 @@ mixin _$NoteObserver on _AbstractNoteObserver, Store {
 currentScreen: ${currentScreen},
 currNoteForDetails: ${currNoteForDetails},
 usersNotes: ${usersNotes},
+checkListNotes: ${checkListNotes},
+eventNotes: ${eventNotes},
 newNoteIsCheckList: ${newNoteIsCheckList},
 newNoteEventDate: ${newNoteEventDate},
 newNoteEventTime: ${newNoteEventTime}

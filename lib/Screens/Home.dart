@@ -5,7 +5,6 @@ import 'package:untitled3/Screens/Main.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 class Home extends StatefulWidget {
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -14,27 +13,26 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Column(
-
-      children: <Widget>[
-      Align(
-      alignment: Alignment.centerLeft,
-        child: Container(
-          margin: const EdgeInsets.only(left: 10.0,),
-
-          child: Text(
-              I18n.of(context)!.speakOrWritePrompt,style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Colors.black,)
-
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(
+                left: 10.0,
+              ),
+              child: Text(I18n.of(context)!.speakOrWritePrompt,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.black,
+                  )),
+            ),
           ),
-        ),
-      ),
           Row(
             children: [
-              Container(
+              Expanded(
+                  child: Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 70),
                 height: 301,
                 width: 174,
@@ -63,13 +61,12 @@ class _HomeState extends State<Home> {
                       width: 100.82,
                     ),
                     Text('Speak',
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.black))
+                        style: TextStyle(fontSize: 25, color: Colors.black))
                   ]),
                 ),
-              ),
-              Container(
+              )),
+              Expanded(
+                  child: Container(
                 margin: const EdgeInsets.only(left: 0, right: 20.0, top: 70),
                 height: 301,
                 width: 174,
@@ -87,7 +84,7 @@ class _HomeState extends State<Home> {
                       MaterialPageRoute(builder: (context) => MainNavigator()),
                     );
                   },
-                    child: Column(children: [
+                  child: Column(children: [
                     Padding(
                       padding: new EdgeInsets.all(20.0),
                     ),
@@ -98,14 +95,13 @@ class _HomeState extends State<Home> {
                       width: 155,
                     ),
                     Text('Text',
-
                         style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                            ))
+                          fontSize: 25,
+                          color: Colors.black,
+                        ))
                   ]),
                 ),
-              )
+              ))
             ],
           ),
         ],
