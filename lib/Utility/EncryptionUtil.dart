@@ -16,12 +16,16 @@ class EncryptUtil{
 
   /// Decrypt an encrypted text note serialized as a base-64 string
   static String decryptNote(base64Note) {
-    final key = Key.fromUtf8(_ENCRYPTION_KEY);
-    final iv = IV.fromLength(16);
-    final encrypter = Encrypter(AES(key));
-    final encryptedNote = Encrypted.fromBase64(base64Note);
-    final decryptedNote = encrypter.decrypt(encryptedNote, iv: iv);
-    return decryptedNote;
+    try {
+      final key = Key.fromUtf8(_ENCRYPTION_KEY);
+      final iv = IV.fromLength(16);
+      final encrypter = Encrypter(AES(key));
+      final encryptedNote = Encrypted.fromBase64(base64Note);
+      final decryptedNote = encrypter.decrypt(encryptedNote, iv: iv);
+      return decryptedNote;
+    } catch (e) {
+      return base64Note;
+    }
   }
 
 }
