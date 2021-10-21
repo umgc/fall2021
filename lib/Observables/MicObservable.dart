@@ -62,6 +62,8 @@ abstract class _AbstractMicObserver with Store {
   @observable
   FollowUpTypes? followUpTypesForMsgSent;
 
+  late NLUResponse nluCreateNote;
+
   //Speech library user for interfacing with the device's mic resource.
   SpeechToText _speech = SpeechToText();
 
@@ -238,6 +240,8 @@ abstract class _AbstractMicObserver with Store {
           //send followup message.
           print(
               "case ActionType.CREATE_NOTE: ask user if note should be created");
+          //temporarily hold the note tobe created
+          nluCreateNote = nluResponse;
 
           addFollowUpMessage("Should I create a note?", ["yes", "no"],
               FollowUpTypes.CREATE_NOTE);
@@ -313,19 +317,13 @@ abstract class _AbstractMicObserver with Store {
 
         if (userSelection == 'yes') {
           //get the last message from the user.
-          late NLUResponse nluCreateNote;
-          for (int i = systemUserMessage.length - 1; i > 0; i--) {
-            if (systemUserMessage[i] is NLUResponse) {
-              nluCreateNote = systemUserMessage[i];
-              print(
-                  "Processing NLU message with action type ${nluCreateNote.actionType}");
 
-              print(
-                  "processFollowups(): creating note ${nluCreateNote.toJson()} ");
+          print(
+              "Processing NLU message with action type ${nluCreateNote.actionType}");
 
-              _createNote(nluCreateNote);
-            }
-          }
+          print("processFollowups(): creating note ${nluCreateNote.toJson()} ");
+
+          _createNote(nluCreateNote);
         } else {
           //reply with a no action followup "Ok I will not create note"
           //addFollowUpMessage(
@@ -407,7 +405,7 @@ abstract class _AbstractMicObserver with Store {
             .getNLUResponse(messageInputText, "en-US")
             .then((value) => {
                   print(
-                      "_onDone: response from NLU ${(value as NLUResponse).response}"),
+                      "_onDone: response from NLU ${(value as NLUResponse).toJson()}"),
                   fufillNLUTask(value),
                 });
         micIsExpectedToListen = false;
