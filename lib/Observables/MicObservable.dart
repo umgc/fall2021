@@ -84,15 +84,11 @@ abstract class _AbstractMicObserver with Store {
      *  -Send message collected to the NLU []
      *  -Recieve NLU Response and call fulfill response 
      */
-    print("MicObserver: Starting listening mode ");
-    (!micIsExpectedToListen)
-        ? micIsExpectedToListen = true
-        : micIsExpectedToListen = false;
-
     print("toggleListeningMode: micIsExpectedToListen  $micIsExpectedToListen");
 
-    if (micIsExpectedToListen) {
-      _restartListening();
+    if (micIsExpectedToListen == false) {
+      micIsExpectedToListen = true;
+      _listen(micIsExpectedToListen);
     } else {
       micIsExpectedToListen = false;
       _speech.stop();
@@ -168,6 +164,7 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void setVoiceMsgTextInput(value) {
+    print("setVoiceMsgTextInput: $value");
     messageInputText = value;
   }
 
@@ -274,8 +271,8 @@ abstract class _AbstractMicObserver with Store {
         if (nluResponse.state == NLUState.IN_PROGRESS) {
           //get user input and send to the NLU
           //use a flag, expectingUserInput, to know when the user is expected to speak
-          micIsExpectedToListen = true;
-          _restartListening();
+          //micIsExpectedToListen = true;
+          //_restartListening();
         } else {
           print("case ActionType.ANSWER: following up");
           Timer(
@@ -283,9 +280,9 @@ abstract class _AbstractMicObserver with Store {
               () => addFollowUpMessage(
                   "how can I help you?", [], FollowUpTypes.NO_ACTION));
 
-          micIsExpectedToListen = true;
+          //micIsExpectedToListen = true;
 
-          _restartListening();
+          //_restartListening();
         }
 
         break;
@@ -429,8 +426,6 @@ abstract class _AbstractMicObserver with Store {
               .getNLUResponse(messageInputText, "en-US")
               .then((value) => {
                     print(
-                        "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
-                    print(
                         "_onDone: response from NLU ${(value as NLUResponse).response}"),
                     fufillNLUTask(value),
                   });
@@ -445,13 +440,13 @@ abstract class _AbstractMicObserver with Store {
           if (expectingUserFollowupResponse == false) {
             addFollowUpMessage(
                 "What can I help you with?", [], FollowUpTypes.NO_ACTION);
-            _restartListening();
+            _listen(micIsExpectedToListen);
           } else {
             //read out the last followup mesage
 
             //call listener to get user response
             //_speech.stop();
-            _restartListening();
+            // _listen(micIsExpectedToListen);
           }
         }
       }
@@ -467,13 +462,9 @@ abstract class _AbstractMicObserver with Store {
   void _onError(status) async {
     print('_onError: onStatus: $status');
     //Re-initiate speech service on error
-    micIsExpectedToListen = true;
+    micIsExpectedToListen = false;
 
     //_restartListening();
-  }
-
-  _restartListening() {
-    _speech.stop().then((value) => _listen(micIsExpectedToListen));
   }
 
   /*
