@@ -77,7 +77,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnNotesNotification,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       SwitchListTile(
@@ -109,7 +109,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                             I18n.of(context)!.turnOnEventReminder,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       Text(
@@ -143,7 +143,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnHourlyWalkNotification,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       SwitchListTile(
@@ -159,7 +159,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnHourlyWaterNotification,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       SwitchListTile(
@@ -175,7 +175,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnBathroomNotification,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                     ],
