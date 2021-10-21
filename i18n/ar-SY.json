@@ -71,5 +71,6 @@
     "turnOnHourlyWaterNotification": "قم بتشغيل الإخطار للحصول على المياه كل ساعة",
     "turnOnBathroomNotification": "قم بتشغيل الإعلام للحمام",
     "walkthroughVideoLine": "إليك مقطع فيديو لتوضيح موجز حول كيفية استخدام تطبيق Memory Magic",
-    "micLimitedAccess": "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك."
+    "micLimitedAccess": "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك.",
+    "notesNotificiations": "ملاحظات الإخطارات"
 }

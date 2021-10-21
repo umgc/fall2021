@@ -162,6 +162,8 @@ class I18n implements WidgetsLocalizations {
 	String get reminderStartTime => "Note: The reminder starts 15 minutes before the event.";
 	/// "Activities Notifications"
 	String get activitiesNotifications => "Activities Notifications";
+	/// "Notes Notifications"
+	String get notesNotificiations => "Notes Notifications";
 	/// "Turn on Notification for hourly Walk"
 	String get turnOnHourlyWalkNotification => "Turn on Notification for hourly Walk";
 	/// "Turn on Notification for hourly Water"
@@ -397,6 +399,9 @@ class _I18n_es_US extends I18n {
 	/// "Las funciones serán limitadas sin permitir el acceso a su micrófono."
 	@override
 	String get micLimitedAccess => "Las funciones serán limitadas sin permitir el acceso a su micrófono.";
+	/// "Notificaciones de notas"
+	@override
+	String get notesNotificiations => "Notificaciones de notas";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -621,6 +626,9 @@ class _I18n_pt_BR extends I18n {
 	/// "Os recursos serão limitados sem permitir o acesso ao seu microfone."
 	@override
 	String get micLimitedAccess => "Os recursos serão limitados sem permitir o acesso ao seu microfone.";
+	/// "Notificações de notas"
+	@override
+	String get notesNotificiations => "Notificações de notas";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -845,6 +853,9 @@ class _I18n_zh_CN extends I18n {
 	/// "功能将受到限制，不允许访问您的麦克风。"
 	@override
 	String get micLimitedAccess => "功能将受到限制，不允许访问您的麦克风。";
+	/// "笔记通知"
+	@override
+	String get notesNotificiations => "笔记通知";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -1069,6 +1080,9 @@ class _I18n_ar_SY extends I18n {
 	/// "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك."
 	@override
 	String get micLimitedAccess => "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك.";
+	/// "ملاحظات الإخطارات"
+	@override
+	String get notesNotificiations => "ملاحظات الإخطارات";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

@@ -49,9 +49,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Notes Notifications",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          I18n.of(context)!.notesNotification,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       Divider(
@@ -77,7 +76,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnNotesNotification,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       SwitchListTile(
@@ -109,7 +108,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                             I18n.of(context)!.turnOnEventReminder,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       Text(
@@ -121,8 +120,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         alignment: Alignment.topLeft,
                         child: Text(
                          I18n.of(context)!.activitiesNotifications,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       Divider(
@@ -143,7 +141,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnHourlyWalkNotification,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       SwitchListTile(
@@ -159,7 +157,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnHourlyWaterNotification,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       SwitchListTile(
@@ -175,7 +173,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         },
                         title: Text(
                           I18n.of(context)!.turnOnBathroomNotification,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                     ],
