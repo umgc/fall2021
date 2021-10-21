@@ -69,5 +69,7 @@
     "activitiesNotifications": "Notificaciones de actividades",
     "turnOnHourlyWalkNotification": "Activar Notificación para Caminata por horas",
     "turnOnHourlyWaterNotification": "Activar la notificación de agua por hora",
-    "turnOnBathroomNotification": "Activar la notificación para el baño"
+    "turnOnBathroomNotification": "Activar la notificación para el baño",
+    "walkthroughVideoLine": "Aquí hay un video de un breve tutorial sobre cómo usar la aplicación Memory Magic",
+    "micLimitedAccess": "Las funciones serán limitadas sin permitir el acceso a su micrófono."
 }

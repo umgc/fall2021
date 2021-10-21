@@ -168,6 +168,10 @@ class I18n implements WidgetsLocalizations {
 	String get turnOnHourlyWaterNotification => "Turn on Notification for hourly Water";
 	/// "Turn on Notification for Bathroom"
 	String get turnOnBathroomNotification => "Turn on Notification for Bathroom";
+	/// "Here is a video to a brief walkthrough of how to use Memory Magic App"
+	String get walkthroughVideoLine => "Here is a video to a brief walkthrough of how to use Memory Magic App";
+	/// "Features will be limited without allowing access to your microphone."
+	String get micLimitedAccess => "Features will be limited without allowing access to your microphone.";
 	/// "Ayuda"
 	String get helpScreen => "Ayuda";
 	/// "Palabras Claves"
@@ -387,6 +391,12 @@ class _I18n_es_US extends I18n {
 	/// "Activar la notificación para el baño"
 	@override
 	String get turnOnBathroomNotification => "Activar la notificación para el baño";
+	/// "Aquí hay un video de un breve tutorial sobre cómo usar la aplicación Memory Magic"
+	@override
+	String get walkthroughVideoLine => "Aquí hay un video de un breve tutorial sobre cómo usar la aplicación Memory Magic";
+	/// "Las funciones serán limitadas sin permitir el acceso a su micrófono."
+	@override
+	String get micLimitedAccess => "Las funciones serán limitadas sin permitir el acceso a su micrófono.";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -605,6 +615,12 @@ class _I18n_pt_BR extends I18n {
 	/// "Ativar notificação para banheiro"
 	@override
 	String get turnOnBathroomNotification => "Ativar notificação para banheiro";
+	/// "Aqui está um vídeo com um breve passo a passo de como usar o aplicativo Memory Magic"
+	@override
+	String get walkthroughVideoLine => "Aqui está um vídeo com um breve passo a passo de como usar o aplicativo Memory Magic";
+	/// "Os recursos serão limitados sem permitir o acesso ao seu microfone."
+	@override
+	String get micLimitedAccess => "Os recursos serão limitados sem permitir o acesso ao seu microfone.";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -823,6 +839,12 @@ class _I18n_zh_CN extends I18n {
 	/// "打开浴室通知"
 	@override
 	String get turnOnBathroomNotification => "打开浴室通知";
+	/// "以下视频简要介绍了如何使用 Memory Magic App"
+	@override
+	String get walkthroughVideoLine => "以下视频简要介绍了如何使用 Memory Magic App";
+	/// "功能将受到限制，不允许访问您的麦克风。"
+	@override
+	String get micLimitedAccess => "功能将受到限制，不允许访问您的麦克风。";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -1041,6 +1063,12 @@ class _I18n_ar_SY extends I18n {
 	/// "قم بتشغيل الإعلام للحمام"
 	@override
 	String get turnOnBathroomNotification => "قم بتشغيل الإعلام للحمام";
+	/// "إليك مقطع فيديو لتوضيح موجز حول كيفية استخدام تطبيق Memory Magic"
+	@override
+	String get walkthroughVideoLine => "إليك مقطع فيديو لتوضيح موجز حول كيفية استخدام تطبيق Memory Magic";
+	/// "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك."
+	@override
+	String get micLimitedAccess => "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك.";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
