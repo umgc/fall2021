@@ -122,7 +122,6 @@ class _SettingState extends State<Settings> {
                 }).toList(),
               ),
             ),
-          ),
           Text(I18n.of(context)!.noteFontSize,
               style: Theme.of(context).textTheme.bodyText2),
           Padding(
