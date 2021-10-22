@@ -46,7 +46,7 @@ abstract class _AbstractCalendarObserver with Store {
       //   "loadEventsOfSelectedDay: note.eventDate: ${note.eventDate} SelectDay $day");
       if (note.eventDate == day) {
         eventsOnDay.add(CalenderEvent(
-            title: note.text, time: note.eventTime, date: note.eventDate));
+            title: note.localText, time: note.eventTime, date: note.eventDate));
       }
     }
     selectedEvents.value = eventsOnDay;
