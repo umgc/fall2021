@@ -302,7 +302,7 @@ class _SettingState extends State<Settings> {
                               )),
                           Text(
                             I18n.of(context)!.cancel,
-                            //style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyText1,
                           )
                         ],
                       )),
@@ -322,7 +322,7 @@ class _SettingState extends State<Settings> {
                           ),
                           Text(
                             I18n.of(context)!.save,
-                            //style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyText1,
                           )
                         ],
                       )),
@@ -343,9 +343,12 @@ class _SettingState extends State<Settings> {
                           Icon(
                             Icons.restore,
                             size: ICON_SIZE,
-                            color: Colors.red,
+                            color: Colors.blueAccent,
                           ),
-                          Text(I18n.of(context)!.resetSettings),
+                          Text(
+                            I18n.of(context)!.resetSettings,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
                         ],
                       ))
                 ],

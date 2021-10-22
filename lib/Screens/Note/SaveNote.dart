@@ -233,7 +233,10 @@ class _SaveNoteState extends State<SaveNote> {
                                     size: ICON_SIZE,
                                     color: Colors.amber,
                                   )),
-                              Text(I18n.of(context)!.cancel),
+                              Text(
+                                I18n.of(context)!.cancel,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                             ],
                           )),
                       GestureDetector(
@@ -247,7 +250,10 @@ class _SaveNoteState extends State<SaveNote> {
                                 size: ICON_SIZE,
                                 color: Colors.green,
                               ),
-                              Text(I18n.of(context)!.saveNote),
+                              Text(
+                                I18n.of(context)!.saveNote,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                             ],
                           )),
                       if (noteObserver.currNoteForDetails != null)
@@ -265,7 +271,10 @@ class _SaveNoteState extends State<SaveNote> {
                                   size: ICON_SIZE,
                                   color: Colors.red,
                                 ),
-                                Text(I18n.of(context)!.deleteNote),
+                                Text(
+                                  I18n.of(context)!.deleteNote,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
                               ],
                             ))
                     ],
