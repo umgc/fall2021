@@ -81,5 +81,6 @@
     "createdTheFollowingNote": "أنشأ الملاحظة التالية:",
     "startDate": "تاريخ البدء",
     "selectDate": "حدد تاريخ",
-    "enterTime": "أدخل الوقت"
+    "enterTime": "أدخل الوقت",
+    "clearSelection": "التحديد الواضح"
 }

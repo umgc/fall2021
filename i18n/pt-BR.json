@@ -81,5 +81,6 @@
     "createdTheFollowingNote": "Criou a seguinte nota:",
     "startDate": "Data de início",
     "selectDate": "Selecione a data",
-    "enterTime": "Digite o tempo"
+    "enterTime": "Digite o tempo",
+    "clearSelection": "Seleção clara"
 }

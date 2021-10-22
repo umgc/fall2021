@@ -79,5 +79,6 @@
     "createdTheFollowingNote": "Created the following note:",
     "startDate": "Start Date",
     "selectDate": "Select Date",
-    "enterTime": "Enter Time"
+    "enterTime": "Enter Time",
+    "clearSelection": "Clear Selection"
 }

@@ -81,5 +81,6 @@
     "createdTheFollowingNote": "创建了以下注释：",
     "startDate": "开始日期",
     "selectDate": "选择日期",
-    "enterTime": "输入时间"
+    "enterTime": "输入时间",
+    "clearSelection": "清空选项"
 }
