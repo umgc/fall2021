@@ -11,6 +11,7 @@ import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Screens/Mic/ChatBubble.dart';
 import 'package:untitled3/Services/NoteService.dart';
+import 'package:untitled3/Utility/FontUtil.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 final recordNoteScaffoldKey = GlobalKey<ScaffoldState>();
@@ -35,6 +36,12 @@ class _SpeechScreenState extends State<SpeechScreen> {
     micObserver.setNoteObserver(noteObserver);
     micObserver.setLocale(settingObserver.userSettings.locale);
     micObserver.setI18n(I18n.of(context));
+
+    double bubbleFontSize =
+        fontSizeToPixelMap(settingObserver.userSettings.noteFontSize, false);
+
+    TextStyle bubbleTextStyle = TextStyle(fontSize: bubbleFontSize);
+
     return Observer(
         builder: (_) => Scaffold(
             key: recordNoteScaffoldKey,
@@ -65,6 +72,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                             message: appfollowUp.message,
                             actionOption: appfollowUp.responsOptions,
                             followUpType: appfollowUp.followupType,
+                            textStyle: bubbleTextStyle,
                           );
                         } else {
                           NLUResponse nluResponse = chatObj;
@@ -76,6 +84,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                               nluResponse.resolvedValues != null) {
                             return ChatMsgBubble(
                               message: nluResponse.response,
+                              textStyle: bubbleTextStyle,
                               actionOption: nluResponse.resolvedValues,
                               followUpType: FollowUpTypes.NLU_FOLLOWUP,
                             );
