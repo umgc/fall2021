@@ -8,6 +8,7 @@ import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
+import 'dart:math' as math;
 
 final saveNoteScaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -78,12 +79,17 @@ class _SaveNoteState extends State<SaveNote> {
   }
 
   //ref: https://pub.dev/packages/date_time_picker
-  Widget _selectDate() {
+  Widget _selectDate(bool isCheckList) {
     final noteObserver = Provider.of<NoteObserver>(context);
+    print(
+        "_selectDate noteObserver.currNoteForDetails: ${noteObserver.currNoteForDetails}");
+    String dateLabelText =
+        (isCheckListEvent || isCheckList) ? 'START DATE' : 'SELECT DATE';
+    String timeLabelText = "ENTER TIME";
 
     if (this.viewExistingNote == true) {
       return DateTimePicker(
-        type: (noteObserver.newNoteIsCheckList || this.isCheckListEvent == true)
+        type: (isCheckList || this.isCheckListEvent == true)
             ? DateTimePickerType.time
             : DateTimePickerType.dateTimeSeparate,
         dateMask: 'd MMM, yyyy',
@@ -96,21 +102,20 @@ class _SaveNoteState extends State<SaveNote> {
         firstDate: DateTime.now(),
         lastDate: DateTime(2100),
         icon: Icon(Icons.event),
-        dateLabelText: 'DATE',
-        timeLabelText: "TIME",
+        dateLabelText: dateLabelText,
+        timeLabelText: timeLabelText,
         selectableDayPredicate: (date) {
           return true;
         },
         onChanged: (value) {
           print("_selectDate: Datetime $value");
-
-          if (noteObserver.newNoteIsCheckList == true) {
+          if (noteObserver.newNoteIsCheckList == true ||
+              this.isCheckListEvent == true) {
             noteObserver.setNewNoteEventTime(value);
           } else {
             String mDate = value.split(" ")[0];
             String mTime = value.split(" ")[1];
             noteObserver.setNewNoteEventDate(mDate);
-            noteObserver.setNewNoteEventTime(mTime);
           }
         },
         validator: (val) {
@@ -121,31 +126,26 @@ class _SaveNoteState extends State<SaveNote> {
       );
     }
 
-    //print(
-    //  "noteObserver.currNoteForDetails!.eventDate ${(noteObserver.currNoteForDetails!.eventDate + ' ' + noteObserver.currNoteForDetails!.eventTime)}");
-
     return DateTimePicker(
-      type: (isCheckListEvent)
-          ? DateTimePickerType.time
-          : DateTimePickerType.dateTimeSeparate,
+      type: DateTimePickerType.dateTimeSeparate,
       dateMask: 'd MMM, yyyy',
-      initialValue: DateTime.now().toString(),
+      //initialValue: DateTime.now().toString(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
       icon: Icon(Icons.event),
-      dateLabelText: 'DATE',
-      timeLabelText: "TIME",
+      dateLabelText: dateLabelText,
+      timeLabelText: timeLabelText,
       selectableDayPredicate: (date) {
         return true;
       },
       onChanged: (value) {
-        if (isCheckListEvent == true) {
+        if (noteObserver.newNoteIsCheckList == true ||
+            this.isCheckListEvent == true) {
           noteObserver.setNewNoteEventTime(value);
         } else {
           String mDate = value.split(" ")[0];
           String mTime = value.split(" ")[1];
           noteObserver.setNewNoteEventDate(mDate);
-          noteObserver.setNewNoteEventTime(mTime);
         }
       },
       validator: (val) {
@@ -171,7 +171,7 @@ class _SaveNoteState extends State<SaveNote> {
 
   @override
   Widget build(BuildContext context) {
-    final noteObserver = Provider.of<NoteObserver>(context);
+    final noteObserver = Provider.of<NoteObserver>(context, listen: false);
     String noteId = "";
     //VIEW_NOTE MODE: Populated the details of the targeted notes into the UI
     if (noteObserver.currNoteForDetails != null) {
@@ -182,10 +182,14 @@ class _SaveNoteState extends State<SaveNote> {
     }
 
     var padding = MediaQuery.of(context).size.width * 0.02;
-    var spaceBetweenBtn = MediaQuery.of(context).size.width * 0.5;
 
     var verticalColSpace = MediaQuery.of(context).size.width * 0.1;
 
+    final buttonRowAlignment = (noteObserver.currNoteForDetails != null)
+        ? MainAxisAlignment.spaceBetween
+        : MainAxisAlignment.spaceEvenly;
+
+    const ICON_SIZE = 80.00;
     return Scaffold(
         key: saveNoteScaffoldKey,
         body: Observer(
@@ -208,17 +212,73 @@ class _SaveNoteState extends State<SaveNote> {
                   SizedBox(height: verticalColSpace),
 
                   //do not show if user chose to add checkList or modify and existing not to be a checklist
-                  _selectDate(),
+                  _selectDate(noteObserver.newNoteIsCheckList),
 
                   SizedBox(height: verticalColSpace),
-                  _button(
-                      Color(0xFF33ACE3),
-                      I18n.of(context)!.save.toUpperCase(),
-                      () => {_onSave(noteObserver)}),
-                  _button(
-                      Colors.red.shade400,
-                      I18n.of(context)!.cancel.toUpperCase(),
-                      () => {noteObserver.changeScreen(NOTE_SCREENS.NOTE)}),
+
+                  Row(
+                    mainAxisAlignment: buttonRowAlignment,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            noteObserver.changeScreen(NOTE_SCREENS.NOTE);
+                            noteObserver.setCurrNoteIdForDetails(null);
+                          },
+                          child: Column(
+                            children: [
+                              Transform.rotate(
+                                  angle: 180 * math.pi / 180,
+                                  child: Icon(
+                                    Icons.exit_to_app_rounded,
+                                    size: ICON_SIZE,
+                                    color: Colors.amber,
+                                  )),
+                              Text(
+                                I18n.of(context)!.cancel,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
+                          )),
+                      GestureDetector(
+                          onTap: () {
+                            _onSave(noteObserver);
+                          },
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.save,
+                                size: ICON_SIZE,
+                                color: Colors.green,
+                              ),
+                              Text(
+                                I18n.of(context)!.saveNote,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
+                          )),
+                      if (noteObserver.currNoteForDetails != null)
+                        GestureDetector(
+                            onTap: () {
+                              //popup confirmation view
+                              noteObserver
+                                  .deleteNote(noteObserver.currNoteForDetails);
+                              noteObserver.changeScreen(NOTE_SCREENS.NOTE);
+                            },
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.delete_forever,
+                                  size: ICON_SIZE,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  I18n.of(context)!.deleteNote,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                            ))
+                    ],
+                  )
                 ],
               )),
           //bottomNavigationBar: BottomBar(3),
