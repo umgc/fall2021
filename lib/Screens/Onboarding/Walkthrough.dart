@@ -17,9 +17,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       Container(
         padding: EdgeInsets.fromLTRB(15, 20, 20, 40),
         child: Text(
-          "Here is a video to a brief "
-          "walk-through of how to use "
-          "the Memory Magic App.",
+          I18n.of(context)!.walkthroughVideoLine,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,

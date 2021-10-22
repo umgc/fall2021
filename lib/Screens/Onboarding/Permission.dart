@@ -117,9 +117,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
                         padding: const EdgeInsets.fromLTRB(15, 200, 15, 0),
                         child: Container(
                           child: Text(
-                            "You will have a limited features "
-                            "without allowing permission to "
-                            "access the microphone.",
+                            I18n.of(context)!.micLimitedAccess,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

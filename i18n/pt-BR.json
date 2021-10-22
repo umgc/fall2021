@@ -63,5 +63,15 @@
     "theme": "Tema",
     "blue": "Azul",
     "pink": "Cor de rosa",
-    "howCanIHelpYou": "Como posso ajudá-lo?"
+    "howCanIHelpYou": "Como posso ajudá-lo?",
+    "turnOnNotesNotification": "Ativar notificações para notas",
+    "turnOnEventReminder": "Ativar lembrete antes de um evento",
+    "reminderStartTime": "Nota: o lembrete começa 15 minutos antes do evento.",
+    "activitiesNotifications": "Notificações de atividades",
+    "turnOnHourlyWalkNotification": "Ativar notificação para caminhada de hora em hora",
+    "turnOnHourlyWaterNotification": "Ativar notificação para água de hora em hora",
+    "turnOnBathroomNotification": "Ativar notificação para banheiro",
+    "walkthroughVideoLine": "Aqui está um vídeo com um breve passo a passo de como usar o aplicativo Memory Magic",
+    "micLimitedAccess": "Os recursos serão limitados sem permitir o acesso ao seu microfone.",
+    "notesNotificiations": "Notificações de notas"
 }
