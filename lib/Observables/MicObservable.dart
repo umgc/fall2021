@@ -62,10 +62,11 @@ abstract class _AbstractMicObserver with Store {
   @observable
   FollowUpTypes? followUpTypesForMsgSent;
 
+  late NLUResponse nluCreateNote;
+
   //Speech library user for interfacing with the device's mic resource.
   SpeechToText _speech = SpeechToText();
 
-  List<String> resolveVals = ["Remind me to buy eggs", "on Friday", "at 12pm"];
   int index = 0;
 
   @action
@@ -84,15 +85,11 @@ abstract class _AbstractMicObserver with Store {
      *  -Send message collected to the NLU []
      *  -Recieve NLU Response and call fulfill response 
      */
-    print("MicObserver: Starting listening mode ");
-    (!micIsExpectedToListen)
-        ? micIsExpectedToListen = true
-        : micIsExpectedToListen = false;
-
     print("toggleListeningMode: micIsExpectedToListen  $micIsExpectedToListen");
 
-    if (micIsExpectedToListen) {
-      _restartListening();
+    if (micIsExpectedToListen == false) {
+      micIsExpectedToListen = true;
+      _listen(micIsExpectedToListen);
     } else {
       micIsExpectedToListen = false;
       _speech.stop();
@@ -111,15 +108,12 @@ abstract class _AbstractMicObserver with Store {
   void addUserMessage(String userMsg) {
     expectingUserFollowupResponse = false;
     print("added user message");
-    systemUserMessage.add(userMsg);
+    systemUserMessage.insert(0, userMsg);
   }
 
   @action
   void addSystemMessage(NLUResponse nluResponse) {
-    if (nluResponse.resolvedValues == null)
-      expectingUserFollowupResponse = false;
-
-    systemUserMessage.add(nluResponse);
+    systemUserMessage.insert(0, nluResponse);
   }
 
   @action
@@ -143,12 +137,12 @@ abstract class _AbstractMicObserver with Store {
         message: message,
         responsOptions: responsOptions,
         followupType: followupType);
-    systemUserMessage.add(appMessage);
+    systemUserMessage.insert(0, appMessage);
 
     //call _listener to wait for user's input
-    micIsExpectedToListen = true;
+    micIsExpectedToListen = false;
 
-    _listen(micIsExpectedToListen);
+    //_listen(micIsExpectedToListen);
   }
 
   @action
@@ -168,6 +162,7 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void setVoiceMsgTextInput(value) {
+    print("setVoiceMsgTextInput: $value");
     messageInputText = value;
   }
 
@@ -245,6 +240,8 @@ abstract class _AbstractMicObserver with Store {
           //send followup message.
           print(
               "case ActionType.CREATE_NOTE: ask user if note should be created");
+          //temporarily hold the note tobe created
+          nluCreateNote = nluResponse;
 
           addFollowUpMessage("Should I create a note?", ["yes", "no"],
               FollowUpTypes.CREATE_NOTE);
@@ -269,23 +266,23 @@ abstract class _AbstractMicObserver with Store {
         //display the text from NLU
         //and follow up with
         print("Case ActionType.ANSWER: ${nluResponse.state}");
-        addSystemMessage(nluResponse);
 
         if (nluResponse.state == NLUState.IN_PROGRESS) {
+          expectingUserFollowupResponse = true;
           //get user input and send to the NLU
           //use a flag, expectingUserInput, to know when the user is expected to speak
-          micIsExpectedToListen = true;
-          _restartListening();
+          //micIsExpectedToListen = true;
+          addSystemMessage(nluResponse);
+          //_restartListening();
         } else {
-          print("case ActionType.ANSWER: following up");
-          Timer(
-              Duration(seconds: 2),
-              () => addFollowUpMessage(
-                  "how can I help you?", [], FollowUpTypes.NO_ACTION));
+          expectingUserFollowupResponse = false;
 
-          micIsExpectedToListen = true;
+          //display message to the SCREEN
+          addSystemMessage(nluResponse);
 
-          _restartListening();
+          micIsExpectedToListen = false;
+
+          //_restartListening();
         }
 
         break;
@@ -320,18 +317,13 @@ abstract class _AbstractMicObserver with Store {
 
         if (userSelection == 'yes') {
           //get the last message from the user.
-          late NLUResponse nluCreateNote;
-          for (int i = systemUserMessage.length - 1; i > 0; i--) {
-            if (systemUserMessage[i] is NLUResponse) {
-              nluCreateNote = systemUserMessage[i];
-              print(
-                  "Processing NLU message with action type ${nluCreateNote.actionType}");
 
-              print("processFollowups(): creating note ");
+          print(
+              "Processing NLU message with action type ${nluCreateNote.actionType}");
 
-              _createNote(nluCreateNote);
-            }
-          }
+          print("processFollowups(): creating note ${nluCreateNote.toJson()} ");
+
+          _createNote(nluCreateNote);
         } else {
           //reply with a no action followup "Ok I will not create note"
           //addFollowUpMessage(
@@ -364,14 +356,7 @@ abstract class _AbstractMicObserver with Store {
         break;
 
       default:
-        print("Sending user selection to NLU: $userSelection");
-        await nluLibService
-            .getNLUResponse(userSelection, "en-US")
-            .then((value) => {
-                  print(
-                      "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
-                  fufillNLUTask(value),
-                });
+        print("processFollowups: Do nothing");
     } //switch (followUpType)
   } //processFollowups Ends
 
@@ -413,47 +398,18 @@ abstract class _AbstractMicObserver with Store {
     print('_onDone: micIsExpectedToListen $micIsExpectedToListen');
 
     if (status == "done") {
-      print(
-          '_onDone: Calling the NLU  with text : "$messageInputText  expectingUserFollowupResponse $expectingUserFollowupResponse" ');
-
-      //if incoming message is a voice response from a followup
-      if (expectingUserFollowupResponse == true &&
-          messageInputText.isNotEmpty) {
-        String yesNo = (messageInputText.contains("yes")) ? "yes" : "no";
-        processFollowups(yesNo, followUpTypesForMsgSent!);
-      } else {
-        //if messageInputText is populated (user's voice was captured), call the NLU
-        if (messageInputText.isNotEmpty) {
-          addUserMessage(messageInputText);
-          await nluLibService
-              .getNLUResponse(messageInputText, "en-US")
-              .then((value) => {
-                    print(
-                        "_onDone: response from NLU ${(value as NLUResponse).actionType}"),
-                    print(
-                        "_onDone: response from NLU ${(value as NLUResponse).response}"),
-                    fufillNLUTask(value),
-                  });
-          messageInputText = "";
-        }
-
-        //Else messageInputText is empty (user's voice was NOT captured)
-        // -Follow up if user needs help
-        // - reiniated the listening; to get user's response.
-        else {
-          //if message last sent was FollowUpTypes.NO_ACTION
-          if (expectingUserFollowupResponse == false) {
-            addFollowUpMessage(
-                "What can I help you with?", [], FollowUpTypes.NO_ACTION);
-            _restartListening();
-          } else {
-            //read out the last followup mesage
-
-            //call listener to get user response
-            //_speech.stop();
-            _restartListening();
-          }
-        }
+      //if messageInputText is populated (user's voice was captured), call the NLU
+      if (messageInputText.isNotEmpty) {
+        addUserMessage(messageInputText);
+        await nluLibService
+            .getNLUResponse(messageInputText, "en-US")
+            .then((value) => {
+                  print(
+                      "_onDone: response from NLU ${(value as NLUResponse).toJson()}"),
+                  fufillNLUTask(value),
+                });
+        micIsExpectedToListen = false;
+        messageInputText = "";
       }
     }
   }
@@ -467,13 +423,9 @@ abstract class _AbstractMicObserver with Store {
   void _onError(status) async {
     print('_onError: onStatus: $status');
     //Re-initiate speech service on error
-    micIsExpectedToListen = true;
+    micIsExpectedToListen = false;
 
     //_restartListening();
-  }
-
-  _restartListening() {
-    _speech.stop().then((value) => _listen(micIsExpectedToListen));
   }
 
   /*
