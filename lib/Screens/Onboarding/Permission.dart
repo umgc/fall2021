@@ -54,7 +54,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
     var noText = toBeginningOfSentenceCase(I18n.of(context)!.no) ??
         I18n.of(context)!.yes;
 
-    VoiceOverTextService.speakOutLoud(I18n.of(context)!.selectLanguage,
+    VoiceOverTextService.speakOutLoud(I18n.of(context)!.promptPermission,
         (language as Locale).languageCode.toString());
 
     return Observer(

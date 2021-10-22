@@ -24,7 +24,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   OnboardObserver onboardObserver = OnboardObserver();
   Setting onbaordSetting = Setting();
 
-  static const int NUM_OF_ONBOARDING_SCREEN = 4;
+  //count of boardingScreens
+  static const int NUM_OF_ONBOARDING_SCREEN = 3;
 
   String _screenName(index) {
     List<String> boardingScreens = [

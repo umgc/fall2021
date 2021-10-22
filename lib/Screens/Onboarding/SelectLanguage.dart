@@ -29,10 +29,11 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(15, 20, 20, 20),
-          child: Text(
-            I18n.of(context)!.selectLanguage,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
+          child: Text(I18n.of(context)!.selectLanguage,
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              )),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(0.0, 22.0, 275.0, 8.0),
