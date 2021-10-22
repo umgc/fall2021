@@ -71,5 +71,10 @@
     "turnOnHourlyWaterNotification": "Turn on Notification for hourly Water",
     "turnOnBathroomNotification": "Turn on Notification for Bathroom",
     "walkthroughVideoLine": "Here is a video to a brief walkthrough of how to use Memory Magic App",
-    "micLimitedAccess": "Features will be limited without allowing access to your microphone."
+    "micLimitedAccess": "Features will be limited without allowing access to your microphone.",
+    "shouldICreateANote": "Should I create a note?",
+    "willNotCreateNote": "Ok, I will not create a note.",
+    "sureHowCanIHelp": "Sure! How can I help you?",
+    "thxBye": "Ok, thank you! Bye Bye.",
+    "createdTheFollowingNote": "Created the following note:"
 }

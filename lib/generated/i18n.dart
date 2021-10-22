@@ -176,6 +176,16 @@ class I18n implements WidgetsLocalizations {
 	String get walkthroughVideoLine => "Here is a video to a brief walkthrough of how to use Memory Magic App";
 	/// "Features will be limited without allowing access to your microphone."
 	String get micLimitedAccess => "Features will be limited without allowing access to your microphone.";
+	/// "Should I create a note?"
+	String get shouldICreateANote => "Should I create a note?";
+	/// "Ok, I will not create a note."
+	String get willNotCreateNote => "Ok, I will not create a note.";
+	/// "Sure! How can I help you?"
+	String get sureHowCanIHelp => "Sure! How can I help you?";
+	/// "Ok, thank you! Bye Bye."
+	String get thxBye => "Ok, thank you! Bye Bye.";
+	/// "Created the following note:"
+	String get createdTheFollowingNote => "Created the following note:";
 	/// "Ayuda"
 	String get helpScreen => "Ayuda";
 	/// "Palabras Claves"
@@ -407,6 +417,21 @@ class _I18n_es_US extends I18n {
 	/// "Ajustes"
 	@override
 	String get generalSetting => "Ajustes";
+	/// "¿Debería crear una nota?"
+	@override
+	String get shouldICreateANote => "¿Debería crear una nota?";
+	/// "Ok, no crearé una nota."
+	@override
+	String get willNotCreateNote => "Ok, no crearé una nota.";
+	/// "¡Seguro! ¿Le puedo ayudar en algo?"
+	@override
+	String get sureHowCanIHelp => "¡Seguro! ¿Le puedo ayudar en algo?";
+	/// "¡Está bien, gracias! Adiós."
+	@override
+	String get thxBye => "¡Está bien, gracias! Adiós.";
+	/// "Creó la siguiente nota:"
+	@override
+	String get createdTheFollowingNote => "Creó la siguiente nota:";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -637,6 +662,21 @@ class _I18n_pt_BR extends I18n {
 	/// "Definições"
 	@override
 	String get generalSetting => "Definições";
+	/// "Devo criar uma nota?"
+	@override
+	String get shouldICreateANote => "Devo criar uma nota?";
+	/// "Ok, não vou criar uma nota."
+	@override
+	String get willNotCreateNote => "Ok, não vou criar uma nota.";
+	/// "Certo! Como posso ajudá-lo?"
+	@override
+	String get sureHowCanIHelp => "Certo! Como posso ajudá-lo?";
+	/// "Ok, obrigado! Bye Bye."
+	@override
+	String get thxBye => "Ok, obrigado! Bye Bye.";
+	/// "Criou a seguinte nota:"
+	@override
+	String get createdTheFollowingNote => "Criou a seguinte nota:";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -867,6 +907,21 @@ class _I18n_zh_CN extends I18n {
 	/// "设置"
 	@override
 	String get generalSetting => "设置";
+	/// "我应该创建一个笔记吗？"
+	@override
+	String get shouldICreateANote => "我应该创建一个笔记吗？";
+	/// "好的，我不会创建笔记。"
+	@override
+	String get willNotCreateNote => "好的，我不会创建笔记。";
+	/// "当然！我怎么帮你？"
+	@override
+	String get sureHowCanIHelp => "当然！我怎么帮你？";
+	/// "好的谢谢！再见。"
+	@override
+	String get thxBye => "好的谢谢！再见。";
+	/// "创建了以下注释："
+	@override
+	String get createdTheFollowingNote => "创建了以下注释：";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -1097,6 +1152,21 @@ class _I18n_ar_SY extends I18n {
 	/// "إعدادات"
 	@override
 	String get generalSetting => "إعدادات";
+	/// "هل يجب علي إنشاء ملاحظة؟"
+	@override
+	String get shouldICreateANote => "هل يجب علي إنشاء ملاحظة؟";
+	/// "حسنًا ، لن أقوم بإنشاء ملاحظة."
+	@override
+	String get willNotCreateNote => "حسنًا ، لن أقوم بإنشاء ملاحظة.";
+	/// "بالتأكيد! كيف يمكنني مساعدك؟"
+	@override
+	String get sureHowCanIHelp => "بالتأكيد! كيف يمكنني مساعدك؟";
+	/// "حسنا شكرا لك! مع السلامة."
+	@override
+	String get thxBye => "حسنا شكرا لك! مع السلامة.";
+	/// "أنشأ الملاحظة التالية:"
+	@override
+	String get createdTheFollowingNote => "أنشأ الملاحظة التالية:";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

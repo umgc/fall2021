@@ -73,5 +73,10 @@
     "notesNotificiations": "Notificações de notas",
     "generalSettingsScreen": "Definições",
     "resetSettings": "Redefinir",
-    "generalSetting": "Definições"
+    "generalSetting": "Definições",
+    "shouldICreateANote": "Devo criar uma nota?",
+    "willNotCreateNote": "Ok, não vou criar uma nota.",
+    "sureHowCanIHelp": "Certo! Como posso ajudá-lo?",
+    "thxBye": "Ok, obrigado! Bye Bye.",
+    "createdTheFollowingNote": "Criou a seguinte nota:"
 }

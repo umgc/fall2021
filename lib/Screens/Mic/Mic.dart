@@ -34,6 +34,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
     micObserver.setMainNavObserver(mainNavObserver);
     micObserver.setNoteObserver(noteObserver);
     micObserver.setLocale(settingObserver.userSettings.locale);
+    micObserver.setI18n(I18n.of(context));
     return Observer(
         builder: (_) => Scaffold(
             key: recordNoteScaffoldKey,
