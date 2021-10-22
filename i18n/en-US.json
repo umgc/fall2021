@@ -61,6 +61,7 @@
     "theme": "Theme",
     "blue": "Blue",
     "pink": "Pink",
+    "howCanIHelpYou": "How Can I Help You?",
     "turnOnNotesNotification": "Turn on Notifications for Notes",
     "turnOnEventReminder": "Turn on Reminder before an Event",
     "reminderStartTime": "Note: The reminder starts 15 minutes before the event.",

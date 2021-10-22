@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:mobx/mobx.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:translator/translator.dart';
 //import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
@@ -10,14 +12,14 @@ import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
-import 'package:untitled3/Services/VoiceOverTextService.dart';
+import 'package:untitled3/Services/TranslationService.dart';
 import 'package:untitled3/Utility/Constant.dart';
+
 part 'MicObservable.g.dart';
 
 /**
  * TODO: 
- *   - Enable multi languages.
- *   - Bubble buttons are responsive.
+ * - Bubble buttons are responsive.
  * 
  */
 class MicObserver = _AbstractMicObserver with _$MicObserver;
@@ -55,6 +57,10 @@ abstract class _AbstractMicObserver with Store {
   //Instance of Notebservable to be passed in from Mic.dart
   @observable
   dynamic noteObserver;
+
+  //Instance of Notebservable to be passed in from Mic.dart
+  @observable
+  dynamic locale;
 
   @observable
   NLUResponse? lastNluMessage;
@@ -97,6 +103,11 @@ abstract class _AbstractMicObserver with Store {
       clearMsgTextInput();
       //Reset all values on stopping
     }
+  }
+
+  @action
+  void setLocale(mlocale) {
+    locale = mlocale;
   }
 
   @action
@@ -163,6 +174,7 @@ abstract class _AbstractMicObserver with Store {
   @action
   void setVoiceMsgTextInput(value) {
     print("setVoiceMsgTextInput: $value");
+
     messageInputText = value;
   }
 
@@ -266,6 +278,14 @@ abstract class _AbstractMicObserver with Store {
         //display the text from NLU
         //and follow up with
         print("Case ActionType.ANSWER: ${nluResponse.state}");
+        if (locale != Locale("en", "US")) {
+          GoogleTranslator translator = GoogleTranslator();
+          var translatedResponse = await TranslationService.translate(
+              textToTranslate: nluResponse.response ?? '',
+              translator: translator,
+              toLocale: locale);
+          nluResponse.response = translatedResponse;
+        }
 
         if (nluResponse.state == NLUState.IN_PROGRESS) {
           expectingUserFollowupResponse = true;
@@ -363,12 +383,17 @@ abstract class _AbstractMicObserver with Store {
   /*
    * Function creates and save notes.
    */
-  void _createNote(NLUResponse nluResponse) {
+  Future<void> _createNote(NLUResponse nluResponse) async {
     //get the last message from the user.
 
     //call the create event service
     TextNote note = TextNote();
-    note.text = nluResponse.eventType!;
+    GoogleTranslator translator = GoogleTranslator();
+    note.text = await TranslationService.translate(
+        textToTranslate: nluResponse.eventType!,
+        translator: translator,
+        fromLocale: locale);
+    note.localText = nluResponse.eventType!;
     note.eventDate =
         ((nluResponse.eventDate != null) ? nluResponse.eventDate : "")!;
 
@@ -381,6 +406,7 @@ abstract class _AbstractMicObserver with Store {
     }
     //note.recordLocale = (nluResponse.recurringType != null);
     note.recordedTime = DateTime.now();
+    note.language = locale.languageCode;
     (noteObserver as NoteObserver).addNote(note);
 
     //Note has been created.
@@ -401,6 +427,13 @@ abstract class _AbstractMicObserver with Store {
       //if messageInputText is populated (user's voice was captured), call the NLU
       if (messageInputText.isNotEmpty) {
         addUserMessage(messageInputText);
+        if (locale != Locale("en", "US")) {
+          GoogleTranslator translator = GoogleTranslator();
+          messageInputText = await TranslationService.translate(
+              textToTranslate: messageInputText,
+              translator: translator,
+              fromLocale: locale);
+        }
         await nluLibService
             .getNLUResponse(messageInputText, "en-US")
             .then((value) => {
@@ -428,6 +461,23 @@ abstract class _AbstractMicObserver with Store {
     //_restartListening();
   }
 
+  _getLocaleId() async {
+    var locales = await _speech.locales();
+    if (locale == Locale("zh", "CN")) {
+      return locales
+          .firstWhere((element) => element.localeId == 'cmn_CN')
+          .localeId;
+    }
+    if (locale == Locale("ar", "SY")) {
+      return locales
+          .firstWhere((element) => element.localeId == 'ar_EG')
+          .localeId;
+    }
+    return locales
+        .firstWhere((element) => element.localeId == locale.toString())
+        .localeId;
+  }
+
   /*
    * This function initialized the speech interface and turns on listening mode 
    * It has two call back functions:
@@ -443,7 +493,9 @@ abstract class _AbstractMicObserver with Store {
 
     print("available $available");
     if (available) {
+      final selectedLocaleId = await _getLocaleId();
       _speech.listen(
+        localeId: selectedLocaleId,
         //listenFor: Duration(minutes: 15),
         onResult: (val) => {
           setVoiceMsgTextInput(val.recognizedWords),

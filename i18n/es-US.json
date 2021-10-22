@@ -63,6 +63,7 @@
     "theme": "Tema",
     "blue": "Azul",
     "pink": "Rosado",
+    "howCanIHelpYou": "¿Le puedo ayudar en algo?",
     "turnOnNotesNotification": "Activar notificaciones para notas",
     "turnOnEventReminder": "Activar recordatorio antes de un evento",
     "reminderStartTime": "Nota: el recordatorio comienza 15 minutos antes del evento.",

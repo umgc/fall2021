@@ -11,11 +11,8 @@ class TextNote {
   /// Date and time when the text note was recorded
   DateTime recordedTime = DateTime.now();
 
-  //locale
-  String recordLocale = "us";
-
-  //locale
-  String preferredLocale = "us";
+  //language
+  String language = "en";
 
   //true for check list Item
   bool isCheckList = false;
@@ -30,6 +27,9 @@ class TextNote {
   /// Actual text of the text note
   String text = "";
 
+  /// Local text of the note stored at creation
+  String localText = "";
+
   /// Whether or not this text file is flagged as a favorite
   bool isFavorite = false;
 
@@ -42,8 +42,7 @@ class TextNote {
   String toJson() {
     String jsonStr = """ {"noteId": "${this.noteId}",
                         "recordedTime": "${this.recordedTime}",
-                        "recordLocale": "${this.recordLocale}",
-                        "preferredLocale": "${this.preferredLocale}",
+                        "language": "${this.language}",
                         "recurrentType": "${this.recurrentType}",
                         "isCheckList": ${this.isCheckList},
                         "isEvent": ${this.isEvent},
@@ -60,8 +59,7 @@ class TextNote {
     print("extracting jsonObj $jsonObj");
     note.noteId = jsonObj['noteId'];
     note.recordedTime = DateTime.parse(jsonObj['recordedTime']);
-    note.recordLocale = jsonObj['recordLocale'];
-    note.preferredLocale = jsonObj['preferredLocale'];
+    note.language = jsonObj['language'];
     note.isCheckList = jsonObj['isCheckList'];
     note.recurrentType = jsonObj['recurrentType'];
     note.isEvent = jsonObj['isEvent'];

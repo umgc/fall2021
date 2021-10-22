@@ -122,6 +122,21 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
+  final _$localeAtom = Atom(name: '_AbstractMicObserver.locale');
+
+  @override
+  dynamic get locale {
+    _$localeAtom.reportRead();
+    return super.locale;
+  }
+
+  @override
+  set locale(dynamic value) {
+    _$localeAtom.reportWrite(value, super.locale, () {
+      super.locale = value;
+    });
+  }
+
   final _$lastNluMessageAtom =
       Atom(name: '_AbstractMicObserver.lastNluMessage');
 
@@ -175,6 +190,17 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
 
   final _$_AbstractMicObserverActionController =
       ActionController(name: '_AbstractMicObserver');
+
+  @override
+  void setLocale(dynamic mlocale) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.setLocale');
+    try {
+      return super.setLocale(mlocale);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void _clearChatHistory() {
@@ -275,6 +301,7 @@ speechConfidence: ${speechConfidence},
 systemUserMessage: ${systemUserMessage},
 mainNavObserver: ${mainNavObserver},
 noteObserver: ${noteObserver},
+locale: ${locale},
 lastNluMessage: ${lastNluMessage},
 followUpTypesForMsgSent: ${followUpTypesForMsgSent}
     ''';
