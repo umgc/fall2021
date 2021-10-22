@@ -86,40 +86,40 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           if (!notificationObserver.reminder) {
                             await cancelNotificationReminder();
                           } else {
-                          for (TextNote note in noteObserver.usersNotes) {
-                            String dateTimeStr =
-                                note.eventDate + " " + note.eventTime;
-                            if (dateTimeStr
-                                .trim()
-                                .isEmpty == false) {
-                              DateTime dateTime = DateTime.parse(dateTimeStr);
-                              DateTime now = DateTime.now();
-                              DateTime scheduleTime =
-                              dateTime.subtract(Duration(minutes: 15));
-                              if (scheduleTime ==
-                                  dateTime.subtract(Duration(minutes: 15)) &&
-                                  !scheduleTime.isBefore(now)) {
-                                repeatNotificationNote(
-                                    note.text, scheduleTime);
+                            for (TextNote note in noteObserver.usersNotes) {
+                              String dateTimeStr =
+                                  note.eventDate + " " + note.eventTime;
+                              if (dateTimeStr.trim().isEmpty == false) {
+                                DateTime dateTime = DateTime.parse(dateTimeStr);
+                                DateTime now = DateTime.now();
+                                DateTime scheduleTime =
+                                    dateTime.subtract(Duration(minutes: 15));
+                                if (scheduleTime ==
+                                        dateTime
+                                            .subtract(Duration(minutes: 15)) &&
+                                    !scheduleTime.isBefore(now)) {
+                                  repeatNotificationNote(
+                                      note.text, scheduleTime);
+                                }
                               }
                             }
                           }
-                          }
                         },
                         title: Text(
-                            I18n.of(context)!.turnOnEventReminder,
+                          I18n.of(context)!.turnOnEventReminder,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       Text(
                         I18n.of(context)!.reminderStartTime,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                         I18n.of(context)!.activitiesNotifications,
+                          I18n.of(context)!.activitiesNotifications,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -298,7 +298,6 @@ Future<void> cancelWaterNotification() async {
   await notificationsPlugin.cancel(1);
 }
 
-
 Future<void> cancelWalkNotification() async {
   await notificationsPlugin.cancel(2);
 }
@@ -306,6 +305,7 @@ Future<void> cancelWalkNotification() async {
 Future<void> cancelbathNotification() async {
   await notificationsPlugin.cancel(3);
 }
+
 Future<void> cancelNotificationReminder() async {
   await notificationsPlugin.cancel(4);
 }
