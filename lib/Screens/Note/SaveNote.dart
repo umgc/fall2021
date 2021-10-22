@@ -57,27 +57,38 @@ class _SaveNoteState extends State<SaveNote> {
   }
 
   //ref: https://api.flutter.dev/flutter/material/Checkbox-class.html
-  Widget _checkBox() {
+  Widget _checkBox(fontSize) {
     final noteObserver = Provider.of<NoteObserver>(context);
 
     Color getColor(Set<MaterialState> states) {
       return Colors.blue;
     }
 
-    return Row(
-      children: [
-        Text("Make this a daily activity"),
-        Checkbox(
-          checkColor: Colors.white,
-          fillColor: MaterialStateProperty.resolveWith(getColor),
-          value: noteObserver.newNoteIsCheckList,
-          onChanged: (bool? value) {
-            print("Checkbox onChanged $value");
-            noteObserver.setNewNoteAIsCheckList(value!);
-          },
-        )
-      ],
+    return CheckboxListTile(
+      title: Text("Make this a daily activity",
+          style: TextStyle(fontSize: fontSize)),
+      checkColor: Colors.white,
+      activeColor: Colors.blue,
+      value: (noteObserver.newNoteIsCheckList),
+      onChanged: (bool? value) {
+        print("Checkbox onChanged $value");
+        noteObserver.setNewNoteAIsCheckList(value!);
+      },
     );
+    //Row(
+    //   children: [
+    //     Text("Make this a daily activity"),
+    //     Checkbox(
+    //       checkColor: Colors.white,
+    //       fillColor: MaterialStateProperty.resolveWith(getColor),
+    //       value: noteObserver.newNoteIsCheckList,
+    //       onChanged: (bool? value) {
+    //         print("Checkbox onChanged $value");
+    //         noteObserver.setNewNoteAIsCheckList(value!);
+    //       },
+    //     )
+    //   ],
+    // );
   }
 
   //ref: https://pub.dev/packages/date_time_picker
@@ -210,7 +221,7 @@ class _SaveNoteState extends State<SaveNote> {
                   SizedBox(height: verticalColSpace),
 
                   //only show check box if the user is edititing not
-                  if (noteId.isEmpty) _checkBox(),
+                  if (noteId.isEmpty) _checkBox(fontSize),
 
                   SizedBox(height: verticalColSpace),
 
