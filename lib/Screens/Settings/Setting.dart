@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Components/CancelButton.dart';
 import 'package:untitled3/Model/Setting.dart';
+import 'package:untitled3/Observables/MenuObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Services/LocaleService.dart';
+import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/generated/i18n.dart';
+import 'dart:math' as math;
 
 List<FontSize> fontSizes = [FontSize.SMALL, FontSize.MEDIUM, FontSize.LARGE];
 
@@ -57,6 +60,8 @@ class _SettingState extends State<Settings> {
           throw new UnimplementedError('not implemented');
       }
     }
+
+    final ICON_SIZE = 80.00;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -277,60 +282,74 @@ class _SettingState extends State<Settings> {
                   ),
                 ),
               ),
-              //SAVE BUTTON
-              Container(
-                padding:
-                    const EdgeInsets.only(left: 0, top: 4, right: 0, bottom: 0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    settingObserver.saveSetting();
-                    I18n.onLocaleChanged!(settingObserver.userSettings.locale);
-                  },
-                  child: Text(
-                    I18n.of(context)!.save,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        final screenNav =
+                            Provider.of<MenuObserver>(context, listen: false);
+                        screenNav.changeScreen(MENU_SCREENS.MENU);
+                      },
+                      child: Column(
+                        children: [
+                          Transform.rotate(
+                              angle: 180 * math.pi / 180,
+                              child: Icon(
+                                Icons.exit_to_app_rounded,
+                                size: ICON_SIZE,
+                                color: Colors.amber,
+                              )),
+                          Text(
+                            I18n.of(context)!.cancel,
+                            //style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ],
+                      )),
+                  //SAVE BUTTON
+                  GestureDetector(
+                      onTap: () {
+                        settingObserver.saveSetting();
+                        I18n.onLocaleChanged!(
+                            settingObserver.userSettings.locale);
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.save,
+                            size: ICON_SIZE,
+                            color: Colors.green,
+                          ),
+                          Text(
+                            I18n.of(context)!.save,
+                            //style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ],
+                      )),
+                  GestureDetector(
+                      onTap: () {
+                        Setting setting = settingObserver.userSettings;
+                        setting.menuFontSize = DEFAULT_FONT_SIZE;
+                        setting.noteFontSize = DEFAULT_FONT_SIZE;
+                        setting.daysToKeepFiles = DEFAULT_DAYS_TO_KEEP_FILES;
+                        setting.locale = DEFAULT_LOCALE;
+                        setting.appTheme = DEFAULT_APP_THEME;
+                        settingObserver.saveSetting();
+
+                        I18n.onLocaleChanged!(DEFAULT_LOCALE);
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.restore,
+                            size: ICON_SIZE,
+                            color: Colors.red,
+                          ),
+                          Text(I18n.of(context)!.resetSettings),
+                        ],
+                      ))
+                ],
               ),
-
-              //RESET BUTTON//
-              Container(
-                padding:
-                    const EdgeInsets.only(left: 0, top: 2, right: 0, bottom: 0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Setting setting = settingObserver.userSettings;
-                    setting.menuFontSize = DEFAULT_FONT_SIZE;
-                    setting.noteFontSize = DEFAULT_FONT_SIZE;
-                    setting.daysToKeepFiles = DEFAULT_DAYS_TO_KEEP_FILES;
-                    setting.locale = DEFAULT_LOCALE;
-                    setting.appTheme = DEFAULT_APP_THEME;
-                    settingObserver.saveSetting();
-
-                    I18n.onLocaleChanged!(DEFAULT_LOCALE);
-                  },
-                  child: Text(
-                    I18n.of(context)!.resetSettings,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-              ),
-
-              //SECURITY BUTTON
-              Container(
-                padding:
-                    const EdgeInsets.only(left: 0, top: 2, right: 0, bottom: 0),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    I18n.of(context)!.securitySettings,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-              ),
-
-              //CANCEL BUTTON
-              cancelButton(context)
             ]),
       ),
     );
