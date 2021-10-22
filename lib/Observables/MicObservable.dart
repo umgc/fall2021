@@ -339,6 +339,8 @@ abstract class _AbstractMicObserver with Store {
       case FollowUpTypes.CREATE_NOTE:
         //call the create event service
 
+        addUserMessage(userSelection);
+
         if (userSelection == 'yes') {
           //get the last message from the user.
 
@@ -414,8 +416,9 @@ abstract class _AbstractMicObserver with Store {
     (noteObserver as NoteObserver).addNote(note);
 
     //Note has been created.
-    addSystemMessage(nluResponse);
-
+    //addSystemMessage(nluResponse);
+    addFollowUpMessage("Created the following note '${nluResponse.response}' ",
+        [], FollowUpTypes.NO_ACTION);
     //FollowUpMessage
     //addSystemMessage("Is there anything I can help you with?");
   }
