@@ -4,8 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Services/NoteService.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/Utility/FontUtil.dart';
 import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/NoteObservable.dart';
 import 'dart:math' as math;
@@ -172,6 +174,7 @@ class _SaveNoteState extends State<SaveNote> {
   @override
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context, listen: false);
+    final settingObserver = Provider.of<SettingObserver>(context);
     String noteId = "";
     //VIEW_NOTE MODE: Populated the details of the targeted notes into the UI
     if (noteObserver.currNoteForDetails != null) {
@@ -185,6 +188,9 @@ class _SaveNoteState extends State<SaveNote> {
 
     var verticalColSpace = MediaQuery.of(context).size.width * 0.1;
 
+    var fontSize =
+        fontSizeToPixelMap(settingObserver.userSettings.noteFontSize, false);
+
     const ICON_SIZE = 80.00;
     return Scaffold(
         key: saveNoteScaffoldKey,
@@ -196,6 +202,7 @@ class _SaveNoteState extends State<SaveNote> {
                   TextField(
                     controller: textController,
                     maxLines: 5,
+                    style: TextStyle(fontSize: fontSize),
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: I18n.of(context)!.enterNoteText),
