@@ -7,6 +7,7 @@ import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -75,7 +76,7 @@ class CalendarState extends State<Calendar> {
                         color: Colors.white)),
               ),
               ElevatedButton(
-                child: Text('Clear selection'),
+                child: Text(I18n.of(context)!.clearSelection),
                 onPressed: () {},
               ),
               const SizedBox(height: 8.0),
