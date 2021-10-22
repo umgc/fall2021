@@ -185,10 +185,6 @@ class _SaveNoteState extends State<SaveNote> {
 
     var verticalColSpace = MediaQuery.of(context).size.width * 0.1;
 
-    final buttonRowAlignment = (noteObserver.currNoteForDetails != null)
-        ? MainAxisAlignment.spaceBetween
-        : MainAxisAlignment.spaceEvenly;
-
     const ICON_SIZE = 80.00;
     return Scaffold(
         key: saveNoteScaffoldKey,
@@ -217,7 +213,7 @@ class _SaveNoteState extends State<SaveNote> {
                   SizedBox(height: verticalColSpace),
 
                   Row(
-                    mainAxisAlignment: buttonRowAlignment,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                           onTap: () {
