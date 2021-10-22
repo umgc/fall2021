@@ -66,8 +66,8 @@ class I18n implements WidgetsLocalizations {
 	String get trigger => "Trigger";
 	/// "Sync to Cloud"
 	String get syncToCloudScreen => "Sync to Cloud";
-	/// "General Settings"
-	String get generalSettingsScreen => "General Settings";
+	/// "Settings"
+	String get generalSettingsScreen => "Settings";
 	/// "Cloud Setup"
 	String get onboardCloudSetup => "Cloud Setup";
 	/// "Permission"
@@ -112,8 +112,8 @@ class I18n implements WidgetsLocalizations {
 	String get save => "Save";
 	/// "Security Settings"
 	String get securitySettings => "Security Settings";
-	/// "Reset Settings"
-	String get resetSettings => "Reset Settings";
+	/// "Reset"
+	String get resetSettings => "Reset";
 	/// "NOTE: This permission will allow all types of voice interaction."
 	String get permissionNote => "NOTE: This permission will allow all types of voice interaction.";
 	/// "Days to Keep Notes"
@@ -236,9 +236,6 @@ class _I18n_es_US extends I18n {
 	/// "Sincronizar con la nube"
 	@override
 	String get syncToCloudScreen => "Sincronizar con la nube";
-	/// "Configuración general"
-	@override
-	String get generalSettingsScreen => "Configuración general";
 	/// "Configuración de la nube"
 	@override
 	String get onboardCloudSetup => "Configuración de la nube";
@@ -302,9 +299,6 @@ class _I18n_es_US extends I18n {
 	/// "Configuraciones de seguridad"
 	@override
 	String get securitySettings => "Configuraciones de seguridad";
-	/// "Reiniciar ajustes"
-	@override
-	String get resetSettings => "Reiniciar ajustes";
 	/// "NOTA: Este permiso permitirá todo tipo de interacción de voz."
 	@override
 	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz.";
@@ -407,6 +401,12 @@ class _I18n_es_US extends I18n {
 	/// "Notificaciones de notas"
 	@override
 	String get notesNotificiations => "Notificaciones de notas";
+	/// "Ajustes"
+	@override
+	String get generalSettingsScreen => "Ajustes";
+	/// "Reiniciar"
+	@override
+	String get resetSettings => "Reiniciar";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -466,9 +466,6 @@ class _I18n_pt_BR extends I18n {
 	/// "Sincronizar com a nuvem"
 	@override
 	String get syncToCloudScreen => "Sincronizar com a nuvem";
-	/// "Configurações Gerais"
-	@override
-	String get generalSettingsScreen => "Configurações Gerais";
 	/// "Configuração da nuvem"
 	@override
 	String get onboardCloudSetup => "Configuração da nuvem";
@@ -532,9 +529,6 @@ class _I18n_pt_BR extends I18n {
 	/// "Configurações de segurança"
 	@override
 	String get securitySettings => "Configurações de segurança";
-	/// "Redefinir as configurações"
-	@override
-	String get resetSettings => "Redefinir as configurações";
 	/// "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
 	@override
 	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação por voz.";
@@ -637,6 +631,12 @@ class _I18n_pt_BR extends I18n {
 	/// "Notificações de notas"
 	@override
 	String get notesNotificiations => "Notificações de notas";
+	/// "Definições"
+	@override
+	String get generalSettingsScreen => "Definições";
+	/// "Redefinir"
+	@override
+	String get resetSettings => "Redefinir";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -696,9 +696,6 @@ class _I18n_zh_CN extends I18n {
 	/// "同步到云端"
 	@override
 	String get syncToCloudScreen => "同步到云端";
-	/// "通用设置"
-	@override
-	String get generalSettingsScreen => "通用设置";
 	/// "云设置"
 	@override
 	String get onboardCloudSetup => "云设置";
@@ -762,9 +759,6 @@ class _I18n_zh_CN extends I18n {
 	/// "安全设定"
 	@override
 	String get securitySettings => "安全设定";
-	/// "重新设置"
-	@override
-	String get resetSettings => "重新设置";
 	/// "注意：此权限将允许所有类型的语音交互。"
 	@override
 	String get permissionNote => "注意：此权限将允许所有类型的语音交互。";
@@ -867,6 +861,12 @@ class _I18n_zh_CN extends I18n {
 	/// "笔记通知"
 	@override
 	String get notesNotificiations => "笔记通知";
+	/// "设置"
+	@override
+	String get generalSettingsScreen => "设置";
+	/// "重启"
+	@override
+	String get resetSettings => "重启";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -926,9 +926,6 @@ class _I18n_ar_SY extends I18n {
 	/// "مزامنة مع السحابة"
 	@override
 	String get syncToCloudScreen => "مزامنة مع السحابة";
-	/// "الاعدادات العامة"
-	@override
-	String get generalSettingsScreen => "الاعدادات العامة";
 	/// "إعداد السحابة"
 	@override
 	String get onboardCloudSetup => "إعداد السحابة";
@@ -992,9 +989,6 @@ class _I18n_ar_SY extends I18n {
 	/// "اعدادات الامان"
 	@override
 	String get securitySettings => "اعدادات الامان";
-	/// "اعادة الضبط"
-	@override
-	String get resetSettings => "اعادة الضبط";
 	/// "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي."
 	@override
 	String get permissionNote => "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
@@ -1097,6 +1091,12 @@ class _I18n_ar_SY extends I18n {
 	/// "ملاحظات الإخطارات"
 	@override
 	String get notesNotificiations => "ملاحظات الإخطارات";
+	/// "إعدادات"
+	@override
+	String get generalSettingsScreen => "إعدادات";
+	/// "إعادة ضبط"
+	@override
+	String get resetSettings => "إعادة ضبط";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
