@@ -428,7 +428,7 @@ abstract class _AbstractMicObserver with Store {
 
     //Note has been created.
     //addSystemMessage(nluResponse);
-    addFollowUpMessage('${i18n!.createdTheFollowingNote} ${note.localText}', [],
+    addFollowUpMessage('${i18n!.createdTheFollowingNote} "${note.localText}"', [],
         FollowUpTypes.NO_ACTION);
     //FollowUpMessage
     //addSystemMessage("Is there anything I can help you with?");
