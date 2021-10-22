@@ -108,6 +108,8 @@ import '../BertQA/BertQaService.dart';
       } else {
         previousSessionId = "";
       }
+      String response = nluResponse.toJson().toString();
+      print(response);
       return nluResponse;
     }
 
@@ -189,11 +191,12 @@ import '../BertQA/BertQaService.dart';
       String answer = "";
       String notes = await getNotes();
       if (notes != null && notes != "") {
-        answer = bertQAService
-            .answer(notes,
-            message)
-            .first
-            .text;
+        try {
+          answer = bertQAService
+              .answer(notes,
+              message).first.text;
+        } catch(Exception) {
+        }
       }
       return answer;
     }
@@ -209,9 +212,9 @@ import '../BertQA/BertQaService.dart';
           if (textNote != null && textNote.noteId != null
               && textNote.noteId != "" && textNote.text != null
               && textNote.text != "") {
-
             if (textNote.text.substring(textNote.text.length - 1) == ".") {
-              strBuffer.write(textNote.text.substring(0, textNote.text.length - 1));
+              strBuffer.write(
+                  textNote.text.substring(0, textNote.text.length - 1));
             } else {
               strBuffer.write(textNote.text);
             }
@@ -319,8 +322,12 @@ import '../BertQA/BertQaService.dart';
       NLUState state = NLUState.COMPLETE;
       lastValidInput = inputText;
       String outputText = await searchNotesByInput(inputText);
-      outputText = firstToSecond(outputText);
-      outputText = capitalizeAndPunctuate(outputText);
+      if (outputText.isNotEmpty) {
+        outputText = firstToSecond(outputText);
+        outputText = capitalizeAndPunctuate(outputText);
+      } else {
+        outputText = "Sorry I could not understand";
+      }
       return new NLUResponse(
           actionType,
           inputText,
