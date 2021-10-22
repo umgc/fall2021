@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled3/Model/LexResponse.dart';
 import 'package:untitled3/Model/NLUAction.dart';
@@ -8,6 +9,8 @@ import 'LexService.dart';
 import 'package:untitled3/Model/Note.dart';
 import '../../NoteService.dart';
 import '../BertQA/BertQaService.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:location/location.dart' as Location;
 
   class NLULibService {
 
@@ -86,7 +89,7 @@ import '../BertQA/BertQaService.dart';
               nluResponse = getLastThingSaidResponse(lexResponseObj,
                   currentState, inputText, outputText);
             } else if (intentName == UserLocation) {
-              nluResponse = getUserLocationResponse(lexResponseObj,
+              nluResponse = await getUserLocationResponse(lexResponseObj,
                   currentState, inputText, outputText);
             } else if (intentName == HowAreYou || intentName == Hello ||
                 intentName == WhatIsYourName || intentName == ThankYou ||
@@ -367,14 +370,20 @@ import '../BertQA/BertQaService.dart';
           null);
     }
 
-    NLUResponse getUserLocationResponse(LexResponse lexResponseObj,
+    Future<NLUResponse?> getUserLocationResponse(LexResponse lexResponseObj,
         String currentState,
         String inputText,
-        String outputText) {
-      ActionType actionType = ActionType.USER_LOCATION;
+        String outputText) async {
+      ActionType actionType = ActionType.ANSWER;
       NLUState state = NLUState.COMPLETE;
-      outputText = "";
-      lastValidInput = inputText;
+      String place = await getUserLocation();
+      String outputText = await searchNotesByInput(place);
+      if (outputText.isNotEmpty) {
+        outputText = firstToSecond(outputText);
+        outputText = capitalizeAndPunctuate(outputText);
+      } else {
+        outputText = "Sorry I could not understand";
+      }
       return new NLUResponse(
           actionType,
           inputText,
@@ -910,5 +919,41 @@ import '../BertQA/BertQaService.dart';
         text += ".";
       }
       return text;
+    }
+
+    getUserLocation() async {
+      //call this async method from whereever you need
+      Location.LocationData? myLocation;
+      String error;
+      Location.Location location = new Location.Location();
+      try {
+        myLocation = await location.getLocation();
+      } on PlatformException catch (e) {
+        if (e.code == 'PERMISSION_DENIED') {
+          error = 'please grant permission';
+          print(error);
+        }
+        if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
+          error = 'permission denied- please enable it from app settings';
+          print(error);
+        }
+        myLocation = null;
+      }
+      if (myLocation != null && myLocation.latitude != null && myLocation.longitude != null) {
+        List<Placemark> placemarks = await placemarkFromCoordinates(
+            myLocation.latitude!, myLocation.longitude!);
+        Placemark placeMark  = placemarks[0];
+        String? name = placeMark.name;
+        String? subLocality = placeMark.subLocality;
+        String? locality = placeMark.locality;
+        String? administrativeArea = placeMark.administrativeArea;
+        String? postalCode = placeMark.postalCode;
+        String? country = placeMark.country;
+        String? address = "${locality}";
+
+        print(address);
+        return address;
+      }
+      return "";
     }
   }
