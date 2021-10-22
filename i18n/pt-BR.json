@@ -17,7 +17,6 @@
     "helpScreen": "Ajuda",
     "triggerScreen": "Desencadear",
     "syncToCloudScreen": "Sincronizar com a nuvem",
-    "generalSettingsScreen": "Configurações Gerais",
     "onboardCloudSetup": "Configuração da nuvem",
     "onboardPermissionSetup": "Permissão",
     "onboardLangSetup": "Selecione o idioma",
@@ -39,7 +38,6 @@
     "cancel": "Cancelar",
     "save": "Salve ",
     "securitySettings": "Configurações de segurança",
-    "resetSettings": "Redefinir as configurações",
     "permissionNote": "NOTA: Esta permissão permitirá todos os tipos de interação por voz.",
     "daysToKeepNotes": "Dias para fazer anotações",
     "noteFontSize": "Tamanho da fonte da nota",
@@ -47,7 +45,6 @@
     "help": "Ajuda",
     "trigger": "Desencadear",
     "syncToCloud": "Sincronizar com a nuvem",
-    "generalSetting": "Configurações Gerais",
     "loading": "Carregando",
     "editNote": "Editar nota",
     "deleteNote": "Apagar Nota",
@@ -73,5 +70,8 @@
     "turnOnBathroomNotification": "Ativar notificação para banheiro",
     "walkthroughVideoLine": "Aqui está um vídeo com um breve passo a passo de como usar o aplicativo Memory Magic",
     "micLimitedAccess": "Os recursos serão limitados sem permitir o acesso ao seu microfone.",
-    "notesNotificiations": "Notificações de notas"
+    "notesNotificiations": "Notificações de notas",
+    "generalSettingsScreen": "Definições",
+    "resetSettings": "Redefinir",
+    "generalSetting": "Definições"
 }
