@@ -78,5 +78,8 @@
     "willNotCreateNote": "حسنًا ، لن أقوم بإنشاء ملاحظة.",
     "sureHowCanIHelp": "بالتأكيد! كيف يمكنني مساعدك؟",
     "thxBye": "حسنا شكرا لك! مع السلامة.",
-    "createdTheFollowingNote": "أنشأ الملاحظة التالية:"
+    "createdTheFollowingNote": "أنشأ الملاحظة التالية:",
+    "startDate": "تاريخ البدء",
+    "selectDate": "حدد تاريخ",
+    "enterTime": "أدخل الوقت"
 }

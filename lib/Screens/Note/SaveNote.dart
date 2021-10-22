@@ -92,13 +92,13 @@ class _SaveNoteState extends State<SaveNote> {
   }
 
   //ref: https://pub.dev/packages/date_time_picker
-  Widget _selectDate(bool isCheckList) {
+  Widget _selectDate(bool isCheckList, I18n? i18n, Locale locale) {
     final noteObserver = Provider.of<NoteObserver>(context);
     print(
         "_selectDate noteObserver.currNoteForDetails: ${noteObserver.currNoteForDetails}");
     String dateLabelText =
-        (isCheckListEvent || isCheckList) ? 'START DATE' : 'SELECT DATE';
-    String timeLabelText = "ENTER TIME";
+        (isCheckListEvent || isCheckList) ? i18n!.startDate : i18n!.selectDate;
+    String timeLabelText = i18n.enterTime;
 
     if (this.viewExistingNote == true) {
       return DateTimePicker(
@@ -141,6 +141,7 @@ class _SaveNoteState extends State<SaveNote> {
 
     return DateTimePicker(
       type: DateTimePickerType.dateTimeSeparate,
+      locale: locale,
       dateMask: 'd MMM, yyyy',
       //initialValue: DateTime.now().toString(),
       firstDate: DateTime.now(),
@@ -213,7 +214,7 @@ class _SaveNoteState extends State<SaveNote> {
                   SizedBox(height: verticalColSpace),
 
                   //do not show if user chose to add checkList or modify and existing not to be a checklist
-                  _selectDate(noteObserver.newNoteIsCheckList),
+                  _selectDate(noteObserver.newNoteIsCheckList, I18n.of(context), settingObserver.userSettings.locale),
 
                   SizedBox(height: verticalColSpace),
 
