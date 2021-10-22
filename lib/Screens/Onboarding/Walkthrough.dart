@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:untitled3/Utility/Video_Player.dart';
@@ -10,8 +11,17 @@ class WalkthroughScreen extends StatefulWidget {
 }
 
 class _WalkthroughScreenState extends State<WalkthroughScreen> {
+  var language = (I18n.locale?.countryCode != null &&
+          I18n.locale?.languageCode != null)
+      ? I18n.locale
+      // its simply not supported unless it has a language code and a country code
+      : Locale("en", "US");
+
   @override
   Widget build(BuildContext context) {
+    VoiceOverTextService.speakOutLoud(I18n.of(context)!.walkthroughVideoLine,
+        (language as Locale).languageCode.toString());
+
     return Scaffold(
         body: Column(children: [
       Container(

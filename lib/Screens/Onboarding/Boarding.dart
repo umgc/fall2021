@@ -30,13 +30,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     List<String> boardingScreens = [
       I18n.of(context)!.onboardLangSetup,
       I18n.of(context)!.onboardPermissionSetup,
-      I18n.of(context)!.onboardCloudSetup,
+      //I18n.of(context)!.onboardCloudSetup,
       I18n.of(context)!.walkthroughScreen,
       I18n.of(context)!.homeScreenName,
     ];
 
-    if(index > boardingScreens.length-1)
-      return "";
+    if (index > boardingScreens.length - 1) return "";
 
     return boardingScreens[index];
   }
@@ -99,28 +98,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Observer(
-              builder: (_) =>
-                  Scaffold(
-      appBar: buildAppBar(context),
-      body: Center(
-          child: _changeScreen(onboardObserver.currentScreenIndex)),
-
-      persistentFooterButtons: [
-       (onboardObserver.currentScreenIndex < NUM_OF_ONBOARDING_SCREEN)?
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          ElevatedButton(
-            child: Text(I18n.of(context)!.back.toUpperCase()),
-            onPressed: () => {onboardObserver.moveToPrevScreen()},
-          ),
-          ElevatedButton(
-            child: Text(I18n.of(context)!.next.toUpperCase()),
-            onPressed: () => {onboardObserver.moveToNextScreen()},
-          ),
-        ])
-        : Text("")
-      ],
-    ));
+        builder: (_) => Scaffold(
+              appBar: buildAppBar(context),
+              body: Center(
+                  child: _changeScreen(onboardObserver.currentScreenIndex)),
+              persistentFooterButtons: [
+                (onboardObserver.currentScreenIndex < NUM_OF_ONBOARDING_SCREEN)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            ElevatedButton(
+                              child: Text(I18n.of(context)!.back.toUpperCase()),
+                              onPressed: () =>
+                                  {onboardObserver.moveToPrevScreen()},
+                            ),
+                            ElevatedButton(
+                              child: Text(I18n.of(context)!.next.toUpperCase()),
+                              onPressed: () =>
+                                  {onboardObserver.moveToNextScreen()},
+                            ),
+                          ])
+                    : Text("")
+              ],
+            ));
   }
 }

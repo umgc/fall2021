@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/Services/LocaleService.dart';
+import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:untitled3/generated/i18n.dart';
 import 'package:untitled3/Observables/OnboardObservable.dart';
 import 'package:provider/provider.dart';
-
 
 class SelectLanguageScreen extends StatefulWidget {
   @override
@@ -20,6 +20,9 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    VoiceOverTextService.speakOutLoud(I18n.of(context)!.selectLanguage,
+        (language as Locale).languageCode.toString());
+
     final onboardingObserver = Provider.of<OnboardObserver>(context);
     return Scaffold(
         body: Column(
@@ -66,7 +69,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
               ),
               value: language,
 
-              onChanged: (Locale? locale){
+              onChanged: (Locale? locale) {
                 language = locale;
                 onboardingObserver.languageChange(language);
               },
