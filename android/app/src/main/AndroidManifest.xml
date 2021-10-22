@@ -24,7 +24,7 @@
     </queries>
    <application
 
-        android:label="untitled3"
+        android:label="MemoryMagic"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
