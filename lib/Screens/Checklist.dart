@@ -73,7 +73,7 @@ class ChecklistState extends State<Checklist> {
                         padding: const EdgeInsets.all(20.0),
                         //constraints: BoxConstraints(),
                         child: CheckboxListTile(
-                          title: Text("${key.text}"),
+                          title: Text("${key.localText}"),
                           checkColor: Colors.white,
                           activeColor: Colors.blue,
                           value: (checkListObserver.checkedNoteIDs
