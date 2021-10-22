@@ -35,6 +35,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
     micObserver.setMainNavObserver(mainNavObserver);
     micObserver.setNoteObserver(noteObserver);
     micObserver.setLocale(settingObserver.userSettings.locale);
+    micObserver.setI18n(I18n.of(context));
 
     double bubbleFontSize =
         fontSizeToPixelMap(settingObserver.userSettings.noteFontSize, false);

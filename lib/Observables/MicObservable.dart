@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:mobx/mobx.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:translator/translator.dart';
-//import 'package:reading_time/reading_time.dart';
 import 'package:untitled3/Model/NLUAction.dart';
 import 'package:untitled3/Model/NLUResponse.dart';
 import 'package:untitled3/Model/NLUState.dart';
@@ -15,6 +13,7 @@ import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
 import 'package:untitled3/Services/TranslationService.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 part 'MicObservable.g.dart';
 
@@ -69,6 +68,9 @@ abstract class _AbstractMicObserver with Store {
   @observable
   FollowUpTypes? followUpTypesForMsgSent;
 
+  @observable
+  I18n? i18n;
+
   late NLUResponse nluCreateNote;
 
   //Speech library user for interfacing with the device's mic resource.
@@ -109,6 +111,11 @@ abstract class _AbstractMicObserver with Store {
   @action
   void setLocale(mlocale) {
     locale = mlocale;
+  }
+
+  @action
+  void setI18n(mi18n) {
+    i18n = mi18n;
   }
 
   @action
@@ -259,11 +266,11 @@ abstract class _AbstractMicObserver with Store {
           //temporarily hold the note tobe created
           nluCreateNote = nluResponse;
 
-          addFollowUpMessage("Should I create a note?", ["yes", "no"],
+          addFollowUpMessage(i18n!.shouldICreateANote, [i18n!.yes, i18n!.no],
               FollowUpTypes.CREATE_NOTE);
         } else {
           //recieve follow up response
-          if (messageInputText.contains("yes")) {
+          if (messageInputText.contains(i18n!.yes)) {
             //create note
             _createNote(nluResponse);
             //FollowUpMessage
@@ -341,7 +348,7 @@ abstract class _AbstractMicObserver with Store {
 
         addUserMessage(userSelection);
 
-        if (userSelection == 'yes') {
+        if (userSelection == i18n!.yes) {
           //get the last message from the user.
 
           print(
@@ -360,8 +367,8 @@ abstract class _AbstractMicObserver with Store {
           Timer(
               Duration(seconds: 3),
               () => {
-                    addFollowUpMessage("Ok I will not create note", [],
-                        FollowUpTypes.NEED_HELP)
+                    addFollowUpMessage(
+                        i18n!.willNotCreateNote, [], FollowUpTypes.NEED_HELP)
                   });
         }
         break;
@@ -370,11 +377,10 @@ abstract class _AbstractMicObserver with Store {
           print("processFollowups(): user needs more asistance ");
           //reply: "Sure! how can I help you?"
           addFollowUpMessage(
-              "Sure! how can I help you?", [], FollowUpTypes.NO_ACTION);
+              i18n!.sureHowCanIHelp, [], FollowUpTypes.NO_ACTION);
         } else {
           //reply with "Ok thank you! Bye bye"
-          addFollowUpMessage(
-              "Ok thank you! Bye bye", [], FollowUpTypes.NO_ACTION);
+          addFollowUpMessage(i18n!.thxBye, [], FollowUpTypes.NO_ACTION);
           if (micIsExpectedToListen == true) {
             toggleListeningMode();
           }
@@ -417,8 +423,10 @@ abstract class _AbstractMicObserver with Store {
 
     //Note has been created.
     //addSystemMessage(nluResponse);
-    addFollowUpMessage("Created the following note '${nluResponse.response}' ",
-        [], FollowUpTypes.NO_ACTION);
+    addFollowUpMessage(
+        '${i18n!.createdTheFollowingNote} "${nluResponse.response}"',
+        [],
+        FollowUpTypes.NO_ACTION);
     //FollowUpMessage
     //addSystemMessage("Is there anything I can help you with?");
   }

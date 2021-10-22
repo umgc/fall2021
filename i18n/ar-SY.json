@@ -73,5 +73,10 @@
     "notesNotificiations": "ملاحظات الإخطارات",
     "generalSettingsScreen": "إعدادات",
     "resetSettings": "إعادة ضبط",
-    "generalSetting": "إعدادات"
+    "generalSetting": "إعدادات",
+    "shouldICreateANote": "هل يجب علي إنشاء ملاحظة؟",
+    "willNotCreateNote": "حسنًا ، لن أقوم بإنشاء ملاحظة.",
+    "sureHowCanIHelp": "بالتأكيد! كيف يمكنني مساعدك؟",
+    "thxBye": "حسنا شكرا لك! مع السلامة.",
+    "createdTheFollowingNote": "أنشأ الملاحظة التالية:"
 }
