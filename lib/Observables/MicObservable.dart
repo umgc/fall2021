@@ -141,6 +141,7 @@ abstract class _AbstractMicObserver with Store {
       //_listen(micIsExpectedToListen);
       return;
     }
+    VoiceOverTextService.speakOutLoud(message, locale!.languageCode.toString());
 
     expectingUserFollowupResponse = true;
 
