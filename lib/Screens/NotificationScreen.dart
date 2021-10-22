@@ -9,6 +9,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:untitled3/Observables/NotificationObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 FlutterLocalNotificationsPlugin notificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -48,9 +49,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Notes Notifications",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          I18n.of(context)!.notesNotification,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       Divider(
@@ -75,8 +75,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for Notes",
-                          style: TextStyle(fontSize: 16),
+                          I18n.of(context)!.turnOnNotesNotification,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       SwitchListTile(
@@ -107,21 +107,20 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Reminder before an Event ",
-                          style: TextStyle(fontSize: 16),
+                            I18n.of(context)!.turnOnEventReminder,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       Text(
-                        "NOTE : The reminder starts 15 minutes before the event.",
+                        I18n.of(context)!.reminderStartTime,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Activities Notifications",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                         I18n.of(context)!.activitiesNotifications,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       Divider(
@@ -141,8 +140,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for hourly Walk",
-                          style: TextStyle(fontSize: 16),
+                          I18n.of(context)!.turnOnHourlyWalkNotification,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       SwitchListTile(
@@ -157,8 +156,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for hourly Water",
-                          style: TextStyle(fontSize: 16),
+                          I18n.of(context)!.turnOnHourlyWaterNotification,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                       SwitchListTile(
@@ -173,8 +172,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           }
                         },
                         title: Text(
-                          "Turn on Notification for Bathroom",
-                          style: TextStyle(fontSize: 16),
+                          I18n.of(context)!.turnOnBathroomNotification,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                     ],

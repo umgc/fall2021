@@ -62,5 +62,15 @@
     "promptTheme": "Seleccione el tema de la aplicación",
     "theme": "Tema",
     "blue": "Azul",
-    "pink": "Rosado"
+    "pink": "Rosado",
+    "turnOnNotesNotification": "Activar notificaciones para notas",
+    "turnOnEventReminder": "Activar recordatorio antes de un evento",
+    "reminderStartTime": "Nota: el recordatorio comienza 15 minutos antes del evento.",
+    "activitiesNotifications": "Notificaciones de actividades",
+    "turnOnHourlyWalkNotification": "Activar Notificación para Caminata por horas",
+    "turnOnHourlyWaterNotification": "Activar la notificación de agua por hora",
+    "turnOnBathroomNotification": "Activar la notificación para el baño",
+    "walkthroughVideoLine": "Aquí hay un video de un breve tutorial sobre cómo usar la aplicación Memory Magic",
+    "micLimitedAccess": "Las funciones serán limitadas sin permitir el acceso a su micrófono.",
+    "notesNotificiations": "Notificaciones de notas"
 }

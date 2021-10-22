@@ -60,5 +60,15 @@
     "speakOrWritePrompt": "Would you like to Speak or Write a note?",
     "theme": "Theme",
     "blue": "Blue",
-    "pink": "Pink"
+    "pink": "Pink",
+    "turnOnNotesNotification": "Turn on Notifications for Notes",
+    "turnOnEventReminder": "Turn on Reminder before an Event",
+    "reminderStartTime": "Note: The reminder starts 15 minutes before the event.",
+    "activitiesNotifications": "Activities Notifications",
+    "notesNotificiations": "Notes Notifications",
+    "turnOnHourlyWalkNotification": "Turn on Notification for hourly Walk",
+    "turnOnHourlyWaterNotification": "Turn on Notification for hourly Water",
+    "turnOnBathroomNotification": "Turn on Notification for Bathroom",
+    "walkthroughVideoLine": "Here is a video to a brief walkthrough of how to use Memory Magic App",
+    "micLimitedAccess": "Features will be limited without allowing access to your microphone."
 }
