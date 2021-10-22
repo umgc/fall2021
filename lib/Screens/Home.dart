@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Screens/Main.dart';
+import 'package:untitled3/Utility/Constant.dart';
 import 'package:untitled3/generated/i18n.dart';
 
 class Home extends StatefulWidget {
@@ -12,6 +16,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final screenNav = Provider.of<MainNavObserver>(context);
+    final noteObserver = Provider.of<NoteObserver>(context);
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -45,6 +52,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(30.0)),
                       minimumSize: Size(40, 40)),
                   onPressed: () {
+                    screenNav.changeScreen(MAIN_SCREENS.HOME);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => MainNavigator()),
@@ -79,6 +87,8 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(30.0)),
                       minimumSize: Size(10, 10)),
                   onPressed: () {
+                    screenNav.changeScreen(MAIN_SCREENS.NOTE);
+                    noteObserver.changeScreen(NOTE_SCREENS.ADD_NOTE);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => MainNavigator()),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:untitled3/generated/i18n.dart';
 import '../../Observables/OnboardObservable.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,6 +14,12 @@ class PermissionScreen extends StatefulWidget {
 }
 
 class _PermissionScreenState extends State<PermissionScreen> {
+  var language = (I18n.locale?.countryCode != null &&
+          I18n.locale?.languageCode != null)
+      ? I18n.locale
+      // its simply not supported unless it has a language code and a country code
+      : Locale("en", "US");
+
   Future<void> requestPermissionNO() async {
     var status = await Permission.microphone.status;
     if (status.isGranted) {
@@ -46,6 +53,10 @@ class _PermissionScreenState extends State<PermissionScreen> {
         I18n.of(context)!.yes;
     var noText = toBeginningOfSentenceCase(I18n.of(context)!.no) ??
         I18n.of(context)!.yes;
+
+    VoiceOverTextService.speakOutLoud(I18n.of(context)!.promptPermission,
+        (language as Locale).languageCode.toString());
+
     return Observer(
         builder: (_) => Scaffold(
                 body: Column(

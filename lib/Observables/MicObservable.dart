@@ -13,6 +13,7 @@ import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
 import 'package:untitled3/Services/NLU/Bot/NLULibService.dart';
 import 'package:untitled3/Services/TranslationService.dart';
+import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:untitled3/Utility/Constant.dart';
 
 part 'MicObservable.g.dart';
@@ -60,7 +61,7 @@ abstract class _AbstractMicObserver with Store {
 
   //Instance of Notebservable to be passed in from Mic.dart
   @observable
-  dynamic locale;
+  Locale? locale;
 
   @observable
   NLUResponse? lastNluMessage;
@@ -124,6 +125,8 @@ abstract class _AbstractMicObserver with Store {
 
   @action
   void addSystemMessage(NLUResponse nluResponse) {
+    VoiceOverTextService.speakOutLoud(
+        nluResponse.response!, locale!.languageCode.toString());
     systemUserMessage.insert(0, nluResponse);
   }
 
@@ -138,6 +141,7 @@ abstract class _AbstractMicObserver with Store {
       //_listen(micIsExpectedToListen);
       return;
     }
+    VoiceOverTextService.speakOutLoud(message, locale!.languageCode.toString());
 
     expectingUserFollowupResponse = true;
 
@@ -283,7 +287,7 @@ abstract class _AbstractMicObserver with Store {
           var translatedResponse = await TranslationService.translate(
               textToTranslate: nluResponse.response ?? '',
               translator: translator,
-              toLocale: locale);
+              toLocale: locale!);
           nluResponse.response = translatedResponse;
         }
 
@@ -334,6 +338,8 @@ abstract class _AbstractMicObserver with Store {
 
       case FollowUpTypes.CREATE_NOTE:
         //call the create event service
+
+        addUserMessage(userSelection);
 
         if (userSelection == 'yes') {
           //get the last message from the user.
@@ -392,7 +398,7 @@ abstract class _AbstractMicObserver with Store {
     note.text = await TranslationService.translate(
         textToTranslate: nluResponse.eventType!,
         translator: translator,
-        fromLocale: locale);
+        fromLocale: locale!);
     note.localText = nluResponse.eventType!;
     note.eventDate =
         ((nluResponse.eventDate != null) ? nluResponse.eventDate : "")!;
@@ -406,12 +412,13 @@ abstract class _AbstractMicObserver with Store {
     }
     //note.recordLocale = (nluResponse.recurringType != null);
     note.recordedTime = DateTime.now();
-    note.language = locale.languageCode;
+    note.language = locale!.languageCode;
     (noteObserver as NoteObserver).addNote(note);
 
     //Note has been created.
-    addSystemMessage(nluResponse);
-
+    //addSystemMessage(nluResponse);
+    addFollowUpMessage("Created the following note '${nluResponse.response}' ",
+        [], FollowUpTypes.NO_ACTION);
     //FollowUpMessage
     //addSystemMessage("Is there anything I can help you with?");
   }
@@ -432,7 +439,7 @@ abstract class _AbstractMicObserver with Store {
           messageInputText = await TranslationService.translate(
               textToTranslate: messageInputText,
               translator: translator,
-              fromLocale: locale);
+              fromLocale: locale!);
         }
         await nluLibService
             .getNLUResponse(messageInputText, "en-US")

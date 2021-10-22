@@ -125,13 +125,13 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
   final _$localeAtom = Atom(name: '_AbstractMicObserver.locale');
 
   @override
-  dynamic get locale {
+  Locale? get locale {
     _$localeAtom.reportRead();
     return super.locale;
   }
 
   @override
-  set locale(dynamic value) {
+  set locale(Locale? value) {
     _$localeAtom.reportWrite(value, super.locale, () {
       super.locale = value;
     });
