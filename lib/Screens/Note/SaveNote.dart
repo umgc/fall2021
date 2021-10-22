@@ -169,19 +169,6 @@ class _SaveNoteState extends State<SaveNote> {
     );
   }
 
-  Widget _button(Color background, String text, Function callbackFn) {
-    var btnSize = MediaQuery.of(context).size.width * 0.9;
-    return TextButton(
-      style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          backgroundColor: MaterialStateProperty.all<Color>(background),
-          overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade300),
-          fixedSize: MaterialStateProperty.all<Size>(Size.fromWidth(btnSize))),
-      onPressed: () => {callbackFn.call()},
-      child: Text(text),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context, listen: false);
@@ -192,7 +179,7 @@ class _SaveNoteState extends State<SaveNote> {
       noteId = noteObserver.currNoteForDetails!.noteId;
 
       textController =
-          TextEditingController(text: noteObserver.currNoteForDetails!.text);
+          TextEditingController(text: noteObserver.currNoteForDetails!.localText);
     }
 
     var padding = MediaQuery.of(context).size.width * 0.02;
@@ -307,6 +294,7 @@ class _SaveNoteState extends State<SaveNote> {
           ? noteObserver.currNoteForDetails!.noteId
           : TextNote().noteId;
       this._newNote.text = textController.text;
+      this._newNote.localText = textController.text;
       this._newNote.eventTime = noteObserver.newNoteEventTime;
       this._newNote.eventDate = noteObserver.newNoteEventDate;
       this._newNote.isCheckList = noteObserver.newNoteIsCheckList;
