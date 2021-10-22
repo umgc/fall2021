@@ -367,8 +367,8 @@ abstract class _AbstractMicObserver with Store {
           Timer(
               Duration(seconds: 3),
               () => {
-                    addFollowUpMessage(i18n!.willNotCreateNote, [],
-                        FollowUpTypes.NEED_HELP)
+                    addFollowUpMessage(
+                        i18n!.willNotCreateNote, [], FollowUpTypes.NEED_HELP)
                   });
         }
         break;
@@ -380,8 +380,7 @@ abstract class _AbstractMicObserver with Store {
               i18n!.sureHowCanIHelp, [], FollowUpTypes.NO_ACTION);
         } else {
           //reply with "Ok thank you! Bye bye"
-          addFollowUpMessage(
-              i18n!.thxBye, [], FollowUpTypes.NO_ACTION);
+          addFollowUpMessage(i18n!.thxBye, [], FollowUpTypes.NO_ACTION);
           if (micIsExpectedToListen == true) {
             toggleListeningMode();
           }
@@ -424,8 +423,10 @@ abstract class _AbstractMicObserver with Store {
 
     //Note has been created.
     //addSystemMessage(nluResponse);
-    addFollowUpMessage('${i18n!.createdTheFollowingNote} ${nluResponse.response}',
-        [], FollowUpTypes.NO_ACTION);
+    addFollowUpMessage(
+        '${i18n!.createdTheFollowingNote} "${nluResponse.response}"',
+        [],
+        FollowUpTypes.NO_ACTION);
     //FollowUpMessage
     //addSystemMessage("Is there anything I can help you with?");
   }
