@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled3/Components/CancelButton.dart';
 import 'package:untitled3/Model/Setting.dart';
 import 'package:untitled3/Observables/MenuObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
