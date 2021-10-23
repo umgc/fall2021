@@ -401,14 +401,14 @@ abstract class _AbstractMicObserver with Store {
     //call the create event service
     TextNote note = TextNote();
     GoogleTranslator translator = GoogleTranslator();
-    note.text = nluResponse.eventType!;
+    note.text = nluResponse.response!;
     if (locale != Locale("en", "US")) {
       note.localText = await TranslationService.translate(
-          textToTranslate: nluResponse.eventType!,
+          textToTranslate: nluResponse.response!,
           translator: translator,
           toLocale: locale!);
     } else {
-      note.localText = nluResponse.eventType!;
+      note.localText = nluResponse.response!;
     }
 
     note.eventDate =
