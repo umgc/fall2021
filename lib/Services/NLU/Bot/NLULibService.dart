@@ -438,12 +438,10 @@ import 'package:location/location.dart' as Location;
       if (currentState == "InProgress") {
         actionType = ActionType.ANSWER;
         state = NLUState.IN_PROGRESS;
-        if (eventDateResolved != null &&
-            eventDateResolved.length > 1) {
-          resolvedValues = eventDateResolved;
-        } else if (eventTimeResolved != null &&
+        if (eventTimeResolved != null &&
             eventTimeResolved.length > 1) {
-          resolvedValues = eventTimeResolved;
+
+          resolvedValues = formatResolvedTimes(eventTimeResolved);
         }
       } else {
         actionType = ActionType.CREATE_NOTE;
@@ -672,20 +670,16 @@ import 'package:location/location.dart' as Location;
     }
 
     List<String>? getEventTime(Slots? slots, recurringType) {
-      if (recurringType != null) {
-        if (slots != null
-            && slots.time != null
-            && slots.time!.value != null
-            && slots.time!.value!.originalValue.isNotEmpty) {
-          return new List.from([slots.time!.value!.originalValue]);
-        }
-      } else {
-        if (slots != null
-            && slots.time != null
-            && slots.time!.value != null
-            && slots.time!.value!.resolvedValues.length > 0) {
-          return slots.time!.value!.resolvedValues;
-        }
+      if (slots != null
+          && slots.time != null
+          && slots.time!.value != null
+          && slots.time!.value!.resolvedValues.length > 0) {
+        return slots.time!.value!.resolvedValues;
+      } else if (slots != null
+          && slots.time != null
+          && slots.time!.value != null
+          && slots.time!.value!.interpretedValue.isNotEmpty) {
+        return new List.from([slots.time!.value!.interpretedValue]);
       }
       return null;
     }
@@ -919,6 +913,27 @@ import 'package:location/location.dart' as Location;
         text += ".";
       }
       return text;
+    }
+
+    List<String> formatResolvedTimes(List resolvedValues) {
+
+      // NumberFormat formatter = new NumberFormat("00");
+
+      List<String> formattedResolvedValues = [];
+      for (String resolvedValue in resolvedValues) {
+        try {
+          int hour = int.parse(resolvedValue.substring(0, 2));
+          String minute = resolvedValue.substring(3);
+          if (hour > 12) {
+            hour -= 12;
+            formattedResolvedValues.add("$hour:$minute PM");
+          } else {
+            formattedResolvedValues.add("$hour:$minute AM");
+          }
+        } catch (e) {
+        }
+      }
+      return formattedResolvedValues;
     }
 
     getUserLocation() async {
