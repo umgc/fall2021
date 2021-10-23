@@ -78,5 +78,9 @@
     "willNotCreateNote": "Ok, não vou criar uma nota.",
     "sureHowCanIHelp": "Certo! Como posso ajudá-lo?",
     "thxBye": "Ok, obrigado! Bye Bye.",
-    "createdTheFollowingNote": "Criou a seguinte nota:"
+    "createdTheFollowingNote": "Criou a seguinte nota:",
+    "startDate": "Data de início",
+    "selectDate": "Selecione a data",
+    "enterTime": "Digite o tempo",
+    "clearSelection": "Seleção clara"
 }

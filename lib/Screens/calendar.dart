@@ -3,9 +3,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Model/CalendarEvent.dart';
 import 'package:untitled3/Observables/CalenderObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Utility/CalendarUtility.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -23,11 +25,14 @@ class CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     final noteObserver = Provider.of<NoteObserver>(context);
     final calendarObserver = Provider.of<CalendarObservable>(context);
+    final settingObserver = Provider.of<SettingObserver>(context);
+
     calendarObserver.setNoteObserver(noteObserver);
     return Observer(
         builder: (_) => Column(children: [
               TableCalendar(
                 focusedDay: DateTime.now(),
+                locale: settingObserver.userSettings.locale.languageCode,
                 firstDay: DateTime.parse(
                     "2012-02-27"), //Date of the oldest past event
                 lastDay: DateTime.parse("2022-02-27"), //Date of the last event
@@ -71,7 +76,7 @@ class CalendarState extends State<Calendar> {
                         color: Colors.white)),
               ),
               ElevatedButton(
-                child: Text('Clear selection'),
+                child: Text(I18n.of(context)!.clearSelection),
                 onPressed: () {},
               ),
               const SizedBox(height: 8.0),

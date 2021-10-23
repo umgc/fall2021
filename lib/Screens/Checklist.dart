@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled3/Observables/CheckListObservable.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 
 class Checklist extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class ChecklistState extends State<Checklist> {
   Widget build(BuildContext context) {
     final checkListObserver = Provider.of<CheckListObserver>(context);
     final noteObserver = Provider.of<NoteObserver>(context);
-
+    final settingObserver = Provider.of<SettingObserver>(context);
     //noteObserver.clearCheckList();
     noteObserver.setCheckList(noteObserver.usersNotes);
     checkListObserver
@@ -26,6 +27,7 @@ class ChecklistState extends State<Checklist> {
         builder: (_) => Column(children: <Widget>[
               TableCalendar(
                 focusedDay: DateTime.now(),
+                locale: settingObserver.userSettings.locale.languageCode,
                 firstDay: DateTime.parse(
                     "2012-02-27"), //Date of the oldest past event
                 lastDay: DateTime.now(), //Date of the last event
@@ -71,7 +73,7 @@ class ChecklistState extends State<Checklist> {
                         padding: const EdgeInsets.all(20.0),
                         //constraints: BoxConstraints(),
                         child: CheckboxListTile(
-                          title: Text("${key.text}"),
+                          title: Text("${key.localText}"),
                           checkColor: Colors.white,
                           activeColor: Colors.blue,
                           value: (checkListObserver.checkedNoteIDs

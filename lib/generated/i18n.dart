@@ -186,6 +186,14 @@ class I18n implements WidgetsLocalizations {
 	String get thxBye => "Ok, thank you! Bye Bye.";
 	/// "Created the following note:"
 	String get createdTheFollowingNote => "Created the following note:";
+	/// "Start Date"
+	String get startDate => "Start Date";
+	/// "Select Date"
+	String get selectDate => "Select Date";
+	/// "Enter Time"
+	String get enterTime => "Enter Time";
+	/// "Clear Selection"
+	String get clearSelection => "Clear Selection";
 	/// "Ayuda"
 	String get helpScreen => "Ayuda";
 	/// "Palabras Claves"
@@ -432,6 +440,18 @@ class _I18n_es_US extends I18n {
 	/// "Creó la siguiente nota:"
 	@override
 	String get createdTheFollowingNote => "Creó la siguiente nota:";
+	/// "Fecha de inicio"
+	@override
+	String get startDate => "Fecha de inicio";
+	/// "Seleccione fecha"
+	@override
+	String get selectDate => "Seleccione fecha";
+	/// "Ingrese la hora"
+	@override
+	String get enterTime => "Ingrese la hora";
+	/// "Selección clara"
+	@override
+	String get clearSelection => "Selección clara";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -548,9 +568,9 @@ class _I18n_pt_BR extends I18n {
 	/// "Cancelar"
 	@override
 	String get cancel => "Cancelar";
-	/// "Salve "
+	/// "Salve"
 	@override
-	String get save => "Salve ";
+	String get save => "Salve";
 	/// "Configurações de segurança"
 	@override
 	String get securitySettings => "Configurações de segurança";
@@ -677,6 +697,18 @@ class _I18n_pt_BR extends I18n {
 	/// "Criou a seguinte nota:"
 	@override
 	String get createdTheFollowingNote => "Criou a seguinte nota:";
+	/// "Data de início"
+	@override
+	String get startDate => "Data de início";
+	/// "Selecione a data"
+	@override
+	String get selectDate => "Selecione a data";
+	/// "Digite o tempo"
+	@override
+	String get enterTime => "Digite o tempo";
+	/// "Seleção clara"
+	@override
+	String get clearSelection => "Seleção clara";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -922,6 +954,18 @@ class _I18n_zh_CN extends I18n {
 	/// "创建了以下注释："
 	@override
 	String get createdTheFollowingNote => "创建了以下注释：";
+	/// "开始日期"
+	@override
+	String get startDate => "开始日期";
+	/// "选择日期"
+	@override
+	String get selectDate => "选择日期";
+	/// "输入时间"
+	@override
+	String get enterTime => "输入时间";
+	/// "清空选项"
+	@override
+	String get clearSelection => "清空选项";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -1167,6 +1211,18 @@ class _I18n_ar_SY extends I18n {
 	/// "أنشأ الملاحظة التالية:"
 	@override
 	String get createdTheFollowingNote => "أنشأ الملاحظة التالية:";
+	/// "تاريخ البدء"
+	@override
+	String get startDate => "تاريخ البدء";
+	/// "حدد تاريخ"
+	@override
+	String get selectDate => "حدد تاريخ";
+	/// "أدخل الوقت"
+	@override
+	String get enterTime => "أدخل الوقت";
+	/// "التحديد الواضح"
+	@override
+	String get clearSelection => "التحديد الواضح";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

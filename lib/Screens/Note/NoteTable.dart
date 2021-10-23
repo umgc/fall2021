@@ -3,6 +3,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import '../../Observables/NoteObservable.dart';
 
@@ -22,6 +23,8 @@ class NoteTable extends StatelessWidget {
 
     final noteObserver = Provider.of<NoteObserver>(context);
     noteObserver.resetCurrNoteIdForDetails();
+
+    final settingObserver = Provider.of<SettingObserver>(context);
 
     const TEXT_STYLE = TextStyle(fontSize: 20);
     const HEADER_TEXT_STYLE = const TextStyle(fontSize: 20);
@@ -65,7 +68,7 @@ class NoteTable extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       width: noteWidth,
                       child: Text(
-                        usersNotes[index].text,
+                        usersNotes[index].localText,
                         style: TEXT_STYLE,
                       )),
                   showEditIcon: true,
@@ -79,7 +82,8 @@ class NoteTable extends StatelessWidget {
                       {onListItemClickCallBackFn!.call()}
                   },
                 ),
-                DataCell(Text(timeago.format(usersNotes[index].recordedTime))),
+                DataCell(Text(timeago.format(usersNotes[index].recordedTime,
+                    locale: settingObserver.userSettings.locale.languageCode))),
               ],
             ),
           )),

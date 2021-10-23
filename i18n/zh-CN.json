@@ -78,5 +78,9 @@
     "willNotCreateNote": "好的，我不会创建笔记。",
     "sureHowCanIHelp": "当然！我怎么帮你？",
     "thxBye": "好的谢谢！再见。",
-    "createdTheFollowingNote": "创建了以下注释："
+    "createdTheFollowingNote": "创建了以下注释：",
+    "startDate": "开始日期",
+    "selectDate": "选择日期",
+    "enterTime": "输入时间",
+    "clearSelection": "清空选项"
 }

@@ -47,6 +47,7 @@ class TextNote {
                         "isCheckList": ${this.isCheckList},
                         "isEvent": ${this.isEvent},
                         "text": "${this.text}",
+                        "localText": "${this.localText}",
                         "isFavorite": ${this.isFavorite},
                         "eventDate": "${this.eventDate}",
                         "eventTime": "${this.eventTime}"
@@ -64,6 +65,7 @@ class TextNote {
     note.recurrentType = jsonObj['recurrentType'];
     note.isEvent = jsonObj['isEvent'];
     note.text = jsonObj['text'];
+    note.localText = jsonObj['localText'];
     note.isFavorite = jsonObj['isFavorite'];
     note.eventDate = jsonObj['eventDate'] ?? "";
     note.eventTime = jsonObj['eventTime'] ?? "";

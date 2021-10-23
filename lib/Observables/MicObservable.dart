@@ -18,9 +18,9 @@ import 'package:untitled3/generated/i18n.dart';
 part 'MicObservable.g.dart';
 
 /**
- * TODO: 
+ * TODO:
  * - Bubble buttons are responsive.
- * 
+ *
  */
 class MicObserver = _AbstractMicObserver with _$MicObserver;
 
@@ -84,15 +84,15 @@ abstract class _AbstractMicObserver with Store {
      * User activates mic's listening mode
      *  -micIsExpectedToListen = true;
      * Call listen()
-     *  -Begin idle time count down (reset time each time the user speaks) 
-     *  -Gets user voice input stream 
-     *  -Stop listening 
+     *  -Begin idle time count down (reset time each time the user speaks)
+     *  -Gets user voice input stream
+     *  -Stop listening
      *      * on mic button click [x]
      *      * on timeout [x]
      *      * on sleep word []
      *  -update the UI message diplay.
      *  -Send message collected to the NLU []
-     *  -Recieve NLU Response and call fulfill response 
+     *  -Recieve NLU Response and call fulfill response
      */
     print("toggleListeningMode: micIsExpectedToListen  $micIsExpectedToListen");
 
@@ -373,7 +373,7 @@ abstract class _AbstractMicObserver with Store {
         }
         break;
       case FollowUpTypes.NEED_HELP:
-        if (userSelection == 'yes') {
+        if (userSelection == i18n!.yes) {
           print("processFollowups(): user needs more asistance ");
           //reply: "Sure! how can I help you?"
           addFollowUpMessage(
@@ -401,11 +401,16 @@ abstract class _AbstractMicObserver with Store {
     //call the create event service
     TextNote note = TextNote();
     GoogleTranslator translator = GoogleTranslator();
-    note.text = await TranslationService.translate(
-        textToTranslate: nluResponse.eventType!,
-        translator: translator,
-        fromLocale: locale!);
-    note.localText = nluResponse.eventType!;
+    note.text = nluResponse.eventType!;
+    if (locale != Locale("en", "US")) {
+      note.localText = await TranslationService.translate(
+          textToTranslate: nluResponse.eventType!,
+          translator: translator,
+          toLocale: locale!);
+    } else {
+      note.localText = nluResponse.eventType!;
+    }
+
     note.eventDate =
         ((nluResponse.eventDate != null) ? nluResponse.eventDate : "")!;
 
@@ -423,9 +428,7 @@ abstract class _AbstractMicObserver with Store {
 
     //Note has been created.
     //addSystemMessage(nluResponse);
-    addFollowUpMessage(
-        '${i18n!.createdTheFollowingNote} "${nluResponse.response}"',
-        [],
+    addFollowUpMessage('${i18n!.createdTheFollowingNote} "${note.localText}"', [],
         FollowUpTypes.NO_ACTION);
     //FollowUpMessage
     //addSystemMessage("Is there anything I can help you with?");
@@ -494,11 +497,11 @@ abstract class _AbstractMicObserver with Store {
   }
 
   /*
-   * This function initialized the speech interface and turns on listening mode 
+   * This function initialized the speech interface and turns on listening mode
    * It has two call back functions:
    * _onDone - called when app is done listening.
-   * _onErro - called if an error occurs during the listening process. 
-   * 
+   * _onErro - called if an error occurs during the listening process.
+   *
    */
   Future<void> _listen(micIsExpectedToListen) async {
     bool available = await _speech.initialize(
