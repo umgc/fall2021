@@ -48,7 +48,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.delegate;
-
     BottomNavigationBarThemeData bottomNavigationBarThemeData =
         BottomNavigationBarThemeData(
             backgroundColor:
@@ -105,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   supportedLocales: i18n.supportedLocales,
                   localeResolutionCallback:
-                      i18n.resolution(fallback: new Locale("en", "US")),
+                      i18n.resolution(fallback: settingObserver.userSettings.locale),
                 ))));
   }
 }

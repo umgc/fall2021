@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Model/Setting.dart';
 import 'package:untitled3/Services/SettingService.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 part 'SettingObservable.g.dart';
 
@@ -10,7 +11,6 @@ abstract class _AbstractSettingObserver with Store {
 
   _AbstractSettingObserver(){
     SettingService.loadSetting().then((value) => initSettings(value));
-
   }
 
   @observable
@@ -30,6 +30,7 @@ abstract class _AbstractSettingObserver with Store {
   void initSettings(settings){
     print("Initialize settings : ${settings}");
     userSettings = settings;
+    I18n.onLocaleChanged!(settings.locale ?? DEFAULT_LOCALE);
   }
 
   @action

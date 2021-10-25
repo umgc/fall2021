@@ -26,7 +26,7 @@ class ChatMsgBubble extends StatelessWidget {
     final messageTextGroup = Column(
       children: [
         BubbleSpecialOne(
-          text: '${(this.isSender) ? 'Me' : 'System'}\n${this.message!}',
+          text: '${(this.isSender) ? 'Me:' : 'System:'}\n${this.message!}',
           isSender: this.isSender,
           color: (this.isSender)
               ? const Color(0xAFdbf2d5)

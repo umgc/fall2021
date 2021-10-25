@@ -11,8 +11,16 @@ class TranslationService {
     Locale fromLocale = const Locale("en", "US"),
     Locale toLocale = const Locale("en", "US"),
   }) async {
+    var fromLocaleLangCode = fromLocale.languageCode;
+    var toLocaleLangCode = toLocale.languageCode;
+    if (fromLocale.languageCode == 'zh') {
+      fromLocaleLangCode = 'zh-cn';
+    }
+    if (toLocale.languageCode == 'zh') {
+      toLocaleLangCode = 'zh-cn';
+    }
     var translation = await translator.translate(textToTranslate,
-        from: fromLocale.languageCode, to: toLocale.languageCode);
+        from: fromLocaleLangCode, to: toLocaleLangCode);
     return translation.toString();
     // return new TranslatedTextNote();
     // const TranslatedNote = new TranslatedNote();

@@ -66,8 +66,8 @@ class I18n implements WidgetsLocalizations {
 	String get trigger => "Trigger";
 	/// "Sync to Cloud"
 	String get syncToCloudScreen => "Sync to Cloud";
-	/// "General Settings"
-	String get generalSettingsScreen => "General Settings";
+	/// "Settings"
+	String get generalSettingsScreen => "Settings";
 	/// "Cloud Setup"
 	String get onboardCloudSetup => "Cloud Setup";
 	/// "Permission"
@@ -112,8 +112,8 @@ class I18n implements WidgetsLocalizations {
 	String get save => "Save";
 	/// "Security Settings"
 	String get securitySettings => "Security Settings";
-	/// "Reset Settings"
-	String get resetSettings => "Reset Settings";
+	/// "Reset"
+	String get resetSettings => "Reset";
 	/// "NOTE: This permission will allow all types of voice interaction."
 	String get permissionNote => "NOTE: This permission will allow all types of voice interaction.";
 	/// "Days to Keep Notes"
@@ -124,8 +124,8 @@ class I18n implements WidgetsLocalizations {
 	String get menuFontSize => "Menu Font Size";
 	/// "Sync to Cloud"
 	String get syncToCloud => "Sync to Cloud";
-	/// "General Settings"
-	String get generalSetting => "General Settings";
+	/// "Settings"
+	String get generalSetting => "Settings";
 	/// "Loading"
 	String get loading => "Loading";
 	/// "Edit Note"
@@ -154,6 +154,46 @@ class I18n implements WidgetsLocalizations {
 	String get blue => "Blue";
 	/// "Pink"
 	String get pink => "Pink";
+	/// "How Can I Help You?"
+	String get howCanIHelpYou => "How Can I Help You?";
+	/// "Turn on Notifications for Notes"
+	String get turnOnNotesNotification => "Turn on Notifications for Notes";
+	/// "Turn on Reminder before an Event"
+	String get turnOnEventReminder => "Turn on Reminder before an Event";
+	/// "Note: The reminder starts 15 minutes before the event."
+	String get reminderStartTime => "Note: The reminder starts 15 minutes before the event.";
+	/// "Activities Notifications"
+	String get activitiesNotifications => "Activities Notifications";
+	/// "Notes Notifications"
+	String get notesNotificiations => "Notes Notifications";
+	/// "Turn on Notification for hourly Walk"
+	String get turnOnHourlyWalkNotification => "Turn on Notification for hourly Walk";
+	/// "Turn on Notification for hourly Water"
+	String get turnOnHourlyWaterNotification => "Turn on Notification for hourly Water";
+	/// "Turn on Notification for Bathroom"
+	String get turnOnBathroomNotification => "Turn on Notification for Bathroom";
+	/// "Here is a video to a brief walkthrough of how to use Memory Magic App"
+	String get walkthroughVideoLine => "Here is a video to a brief walkthrough of how to use Memory Magic App";
+	/// "Features will be limited without allowing access to your microphone."
+	String get micLimitedAccess => "Features will be limited without allowing access to your microphone.";
+	/// "Should I create a note?"
+	String get shouldICreateANote => "Should I create a note?";
+	/// "Ok, I will not create a note."
+	String get willNotCreateNote => "Ok, I will not create a note.";
+	/// "Sure! How can I help you?"
+	String get sureHowCanIHelp => "Sure! How can I help you?";
+	/// "Ok, thank you! Bye Bye."
+	String get thxBye => "Ok, thank you! Bye Bye.";
+	/// "Created the following note:"
+	String get createdTheFollowingNote => "Created the following note:";
+	/// "Start Date"
+	String get startDate => "Start Date";
+	/// "Select Date"
+	String get selectDate => "Select Date";
+	/// "Enter Time"
+	String get enterTime => "Enter Time";
+	/// "Clear Selection"
+	String get clearSelection => "Clear Selection";
 	/// "Ayuda"
 	String get helpScreen => "Ayuda";
 	/// "Palabras Claves"
@@ -214,9 +254,6 @@ class _I18n_es_US extends I18n {
 	/// "Sincronizar con la nube"
 	@override
 	String get syncToCloudScreen => "Sincronizar con la nube";
-	/// "Configuración general"
-	@override
-	String get generalSettingsScreen => "Configuración general";
 	/// "Configuración de la nube"
 	@override
 	String get onboardCloudSetup => "Configuración de la nube";
@@ -280,9 +317,6 @@ class _I18n_es_US extends I18n {
 	/// "Configuraciones de seguridad"
 	@override
 	String get securitySettings => "Configuraciones de seguridad";
-	/// "Reiniciar ajustes"
-	@override
-	String get resetSettings => "Reiniciar ajustes";
 	/// "NOTA: Este permiso permitirá todo tipo de interacción de voz."
 	@override
 	String get permissionNote => "NOTA: Este permiso permitirá todo tipo de interacción de voz.";
@@ -304,9 +338,6 @@ class _I18n_es_US extends I18n {
 	/// "Sincronizar con la nube"
 	@override
 	String get syncToCloud => "Sincronizar con la nube";
-	/// "Configuración general"
-	@override
-	String get generalSetting => "Configuración general";
 	/// "Cargando"
 	@override
 	String get loading => "Cargando";
@@ -352,6 +383,75 @@ class _I18n_es_US extends I18n {
 	/// "Rosado"
 	@override
 	String get pink => "Rosado";
+	/// "¿Le puedo ayudar en algo?"
+	@override
+	String get howCanIHelpYou => "¿Le puedo ayudar en algo?";
+	/// "Activar notificaciones para notas"
+	@override
+	String get turnOnNotesNotification => "Activar notificaciones para notas";
+	/// "Activar recordatorio antes de un evento"
+	@override
+	String get turnOnEventReminder => "Activar recordatorio antes de un evento";
+	/// "Nota: el recordatorio comienza 15 minutos antes del evento."
+	@override
+	String get reminderStartTime => "Nota: el recordatorio comienza 15 minutos antes del evento.";
+	/// "Notificaciones de actividades"
+	@override
+	String get activitiesNotifications => "Notificaciones de actividades";
+	/// "Activar Notificación para Caminata por horas"
+	@override
+	String get turnOnHourlyWalkNotification => "Activar Notificación para Caminata por horas";
+	/// "Activar la notificación de agua por hora"
+	@override
+	String get turnOnHourlyWaterNotification => "Activar la notificación de agua por hora";
+	/// "Activar la notificación para el baño"
+	@override
+	String get turnOnBathroomNotification => "Activar la notificación para el baño";
+	/// "Aquí hay un video de un breve tutorial sobre cómo usar la aplicación Memory Magic"
+	@override
+	String get walkthroughVideoLine => "Aquí hay un video de un breve tutorial sobre cómo usar la aplicación Memory Magic";
+	/// "Las funciones serán limitadas sin permitir el acceso a su micrófono."
+	@override
+	String get micLimitedAccess => "Las funciones serán limitadas sin permitir el acceso a su micrófono.";
+	/// "Notificaciones de notas"
+	@override
+	String get notesNotificiations => "Notificaciones de notas";
+	/// "Ajustes"
+	@override
+	String get generalSettingsScreen => "Ajustes";
+	/// "Reiniciar"
+	@override
+	String get resetSettings => "Reiniciar";
+	/// "Ajustes"
+	@override
+	String get generalSetting => "Ajustes";
+	/// "¿Debería crear una nota?"
+	@override
+	String get shouldICreateANote => "¿Debería crear una nota?";
+	/// "Ok, no crearé una nota."
+	@override
+	String get willNotCreateNote => "Ok, no crearé una nota.";
+	/// "¡Seguro! ¿Le puedo ayudar en algo?"
+	@override
+	String get sureHowCanIHelp => "¡Seguro! ¿Le puedo ayudar en algo?";
+	/// "¡Está bien, gracias! Adiós."
+	@override
+	String get thxBye => "¡Está bien, gracias! Adiós.";
+	/// "Creó la siguiente nota:"
+	@override
+	String get createdTheFollowingNote => "Creó la siguiente nota:";
+	/// "Fecha de inicio"
+	@override
+	String get startDate => "Fecha de inicio";
+	/// "Seleccione fecha"
+	@override
+	String get selectDate => "Seleccione fecha";
+	/// "Ingrese la hora"
+	@override
+	String get enterTime => "Ingrese la hora";
+	/// "Selección clara"
+	@override
+	String get clearSelection => "Selección clara";
 }
 class _I18n_pt_BR extends I18n {
   const _I18n_pt_BR();
@@ -411,9 +511,6 @@ class _I18n_pt_BR extends I18n {
 	/// "Sincronizar com a nuvem"
 	@override
 	String get syncToCloudScreen => "Sincronizar com a nuvem";
-	/// "Configurações Gerais"
-	@override
-	String get generalSettingsScreen => "Configurações Gerais";
 	/// "Configuração da nuvem"
 	@override
 	String get onboardCloudSetup => "Configuração da nuvem";
@@ -471,15 +568,12 @@ class _I18n_pt_BR extends I18n {
 	/// "Cancelar"
 	@override
 	String get cancel => "Cancelar";
-	/// "Salve "
+	/// "Salve"
 	@override
-	String get save => "Salve ";
+	String get save => "Salve";
 	/// "Configurações de segurança"
 	@override
 	String get securitySettings => "Configurações de segurança";
-	/// "Redefinir as configurações"
-	@override
-	String get resetSettings => "Redefinir as configurações";
 	/// "NOTA: Esta permissão permitirá todos os tipos de interação por voz."
 	@override
 	String get permissionNote => "NOTA: Esta permissão permitirá todos os tipos de interação por voz.";
@@ -501,9 +595,6 @@ class _I18n_pt_BR extends I18n {
 	/// "Sincronizar com a nuvem"
 	@override
 	String get syncToCloud => "Sincronizar com a nuvem";
-	/// "Configurações Gerais"
-	@override
-	String get generalSetting => "Configurações Gerais";
 	/// "Carregando"
 	@override
 	String get loading => "Carregando";
@@ -549,6 +640,75 @@ class _I18n_pt_BR extends I18n {
 	/// "Cor de rosa"
 	@override
 	String get pink => "Cor de rosa";
+	/// "Como posso ajudá-lo?"
+	@override
+	String get howCanIHelpYou => "Como posso ajudá-lo?";
+	/// "Ativar notificações para notas"
+	@override
+	String get turnOnNotesNotification => "Ativar notificações para notas";
+	/// "Ativar lembrete antes de um evento"
+	@override
+	String get turnOnEventReminder => "Ativar lembrete antes de um evento";
+	/// "Nota: o lembrete começa 15 minutos antes do evento."
+	@override
+	String get reminderStartTime => "Nota: o lembrete começa 15 minutos antes do evento.";
+	/// "Notificações de atividades"
+	@override
+	String get activitiesNotifications => "Notificações de atividades";
+	/// "Ativar notificação para caminhada de hora em hora"
+	@override
+	String get turnOnHourlyWalkNotification => "Ativar notificação para caminhada de hora em hora";
+	/// "Ativar notificação para água de hora em hora"
+	@override
+	String get turnOnHourlyWaterNotification => "Ativar notificação para água de hora em hora";
+	/// "Ativar notificação para banheiro"
+	@override
+	String get turnOnBathroomNotification => "Ativar notificação para banheiro";
+	/// "Aqui está um vídeo com um breve passo a passo de como usar o aplicativo Memory Magic"
+	@override
+	String get walkthroughVideoLine => "Aqui está um vídeo com um breve passo a passo de como usar o aplicativo Memory Magic";
+	/// "Os recursos serão limitados sem permitir o acesso ao seu microfone."
+	@override
+	String get micLimitedAccess => "Os recursos serão limitados sem permitir o acesso ao seu microfone.";
+	/// "Notificações de notas"
+	@override
+	String get notesNotificiations => "Notificações de notas";
+	/// "Definições"
+	@override
+	String get generalSettingsScreen => "Definições";
+	/// "Redefinir"
+	@override
+	String get resetSettings => "Redefinir";
+	/// "Definições"
+	@override
+	String get generalSetting => "Definições";
+	/// "Devo criar uma nota?"
+	@override
+	String get shouldICreateANote => "Devo criar uma nota?";
+	/// "Ok, não vou criar uma nota."
+	@override
+	String get willNotCreateNote => "Ok, não vou criar uma nota.";
+	/// "Certo! Como posso ajudá-lo?"
+	@override
+	String get sureHowCanIHelp => "Certo! Como posso ajudá-lo?";
+	/// "Ok, obrigado! Bye Bye."
+	@override
+	String get thxBye => "Ok, obrigado! Bye Bye.";
+	/// "Criou a seguinte nota:"
+	@override
+	String get createdTheFollowingNote => "Criou a seguinte nota:";
+	/// "Data de início"
+	@override
+	String get startDate => "Data de início";
+	/// "Selecione a data"
+	@override
+	String get selectDate => "Selecione a data";
+	/// "Digite o tempo"
+	@override
+	String get enterTime => "Digite o tempo";
+	/// "Seleção clara"
+	@override
+	String get clearSelection => "Seleção clara";
 }
 class _I18n_zh_CN extends I18n {
   const _I18n_zh_CN();
@@ -608,9 +768,6 @@ class _I18n_zh_CN extends I18n {
 	/// "同步到云端"
 	@override
 	String get syncToCloudScreen => "同步到云端";
-	/// "通用设置"
-	@override
-	String get generalSettingsScreen => "通用设置";
 	/// "云设置"
 	@override
 	String get onboardCloudSetup => "云设置";
@@ -674,9 +831,6 @@ class _I18n_zh_CN extends I18n {
 	/// "安全设定"
 	@override
 	String get securitySettings => "安全设定";
-	/// "重新设置"
-	@override
-	String get resetSettings => "重新设置";
 	/// "注意：此权限将允许所有类型的语音交互。"
 	@override
 	String get permissionNote => "注意：此权限将允许所有类型的语音交互。";
@@ -698,9 +852,6 @@ class _I18n_zh_CN extends I18n {
 	/// "同步到云端"
 	@override
 	String get syncToCloud => "同步到云端";
-	/// "通用设置"
-	@override
-	String get generalSetting => "通用设置";
 	/// "加载中"
 	@override
 	String get loading => "加载中";
@@ -746,6 +897,75 @@ class _I18n_zh_CN extends I18n {
 	/// "粉色的"
 	@override
 	String get pink => "粉色的";
+	/// "我怎么帮你"
+	@override
+	String get howCanIHelpYou => "我怎么帮你";
+	/// "打开笔记通知"
+	@override
+	String get turnOnNotesNotification => "打开笔记通知";
+	/// "开启活动前提醒"
+	@override
+	String get turnOnEventReminder => "开启活动前提醒";
+	/// "注意：提醒在活动开始前 15 分钟开始。"
+	@override
+	String get reminderStartTime => "注意：提醒在活动开始前 15 分钟开始。";
+	/// "活动通知"
+	@override
+	String get activitiesNotifications => "活动通知";
+	/// "打开每小时步行的通知"
+	@override
+	String get turnOnHourlyWalkNotification => "打开每小时步行的通知";
+	/// "打开每小时水的通知"
+	@override
+	String get turnOnHourlyWaterNotification => "打开每小时水的通知";
+	/// "打开浴室通知"
+	@override
+	String get turnOnBathroomNotification => "打开浴室通知";
+	/// "以下视频简要介绍了如何使用 Memory Magic App"
+	@override
+	String get walkthroughVideoLine => "以下视频简要介绍了如何使用 Memory Magic App";
+	/// "功能将受到限制，不允许访问您的麦克风。"
+	@override
+	String get micLimitedAccess => "功能将受到限制，不允许访问您的麦克风。";
+	/// "笔记通知"
+	@override
+	String get notesNotificiations => "笔记通知";
+	/// "设置"
+	@override
+	String get generalSettingsScreen => "设置";
+	/// "重启"
+	@override
+	String get resetSettings => "重启";
+	/// "设置"
+	@override
+	String get generalSetting => "设置";
+	/// "我应该创建一个笔记吗？"
+	@override
+	String get shouldICreateANote => "我应该创建一个笔记吗？";
+	/// "好的，我不会创建笔记。"
+	@override
+	String get willNotCreateNote => "好的，我不会创建笔记。";
+	/// "当然！我怎么帮你？"
+	@override
+	String get sureHowCanIHelp => "当然！我怎么帮你？";
+	/// "好的谢谢！再见。"
+	@override
+	String get thxBye => "好的谢谢！再见。";
+	/// "创建了以下注释："
+	@override
+	String get createdTheFollowingNote => "创建了以下注释：";
+	/// "开始日期"
+	@override
+	String get startDate => "开始日期";
+	/// "选择日期"
+	@override
+	String get selectDate => "选择日期";
+	/// "输入时间"
+	@override
+	String get enterTime => "输入时间";
+	/// "清空选项"
+	@override
+	String get clearSelection => "清空选项";
 }
 class _I18n_ar_SY extends I18n {
   const _I18n_ar_SY();
@@ -805,9 +1025,6 @@ class _I18n_ar_SY extends I18n {
 	/// "مزامنة مع السحابة"
 	@override
 	String get syncToCloudScreen => "مزامنة مع السحابة";
-	/// "الاعدادات العامة"
-	@override
-	String get generalSettingsScreen => "الاعدادات العامة";
 	/// "إعداد السحابة"
 	@override
 	String get onboardCloudSetup => "إعداد السحابة";
@@ -871,9 +1088,6 @@ class _I18n_ar_SY extends I18n {
 	/// "اعدادات الامان"
 	@override
 	String get securitySettings => "اعدادات الامان";
-	/// "اعادة الضبط"
-	@override
-	String get resetSettings => "اعادة الضبط";
 	/// "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي."
 	@override
 	String get permissionNote => "ملاحظة: سيسمح هذا الإذن بجميع أنواع التفاعل الصوتي.";
@@ -895,9 +1109,6 @@ class _I18n_ar_SY extends I18n {
 	/// "مزامنة مع السحابة"
 	@override
 	String get syncToCloud => "مزامنة مع السحابة";
-	/// "الاعدادات العامة"
-	@override
-	String get generalSetting => "الاعدادات العامة";
 	/// "تحميل"
 	@override
 	String get loading => "تحميل";
@@ -943,6 +1154,75 @@ class _I18n_ar_SY extends I18n {
 	/// "لون القرنفل"
 	@override
 	String get pink => "لون القرنفل";
+	/// "كيف يمكنني مساعدك؟"
+	@override
+	String get howCanIHelpYou => "كيف يمكنني مساعدك؟";
+	/// "قم بتشغيل الإخطارات للملاحظات"
+	@override
+	String get turnOnNotesNotification => "قم بتشغيل الإخطارات للملاحظات";
+	/// "قم بتشغيل التذكير قبل الحدث"
+	@override
+	String get turnOnEventReminder => "قم بتشغيل التذكير قبل الحدث";
+	/// "ملاحظة: يبدأ التذكير قبل 15 دقيقة من الحدث."
+	@override
+	String get reminderStartTime => "ملاحظة: يبدأ التذكير قبل 15 دقيقة من الحدث.";
+	/// "إخطارات الأنشطة"
+	@override
+	String get activitiesNotifications => "إخطارات الأنشطة";
+	/// "قم بتشغيل الإعلام للمشي كل ساعة"
+	@override
+	String get turnOnHourlyWalkNotification => "قم بتشغيل الإعلام للمشي كل ساعة";
+	/// "قم بتشغيل الإخطار للحصول على المياه كل ساعة"
+	@override
+	String get turnOnHourlyWaterNotification => "قم بتشغيل الإخطار للحصول على المياه كل ساعة";
+	/// "قم بتشغيل الإعلام للحمام"
+	@override
+	String get turnOnBathroomNotification => "قم بتشغيل الإعلام للحمام";
+	/// "إليك مقطع فيديو لتوضيح موجز حول كيفية استخدام تطبيق Memory Magic"
+	@override
+	String get walkthroughVideoLine => "إليك مقطع فيديو لتوضيح موجز حول كيفية استخدام تطبيق Memory Magic";
+	/// "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك."
+	@override
+	String get micLimitedAccess => "سيتم تقييد الميزات دون السماح بالوصول إلى الميكروفون الخاص بك.";
+	/// "ملاحظات الإخطارات"
+	@override
+	String get notesNotificiations => "ملاحظات الإخطارات";
+	/// "إعدادات"
+	@override
+	String get generalSettingsScreen => "إعدادات";
+	/// "إعادة ضبط"
+	@override
+	String get resetSettings => "إعادة ضبط";
+	/// "إعدادات"
+	@override
+	String get generalSetting => "إعدادات";
+	/// "هل يجب علي إنشاء ملاحظة؟"
+	@override
+	String get shouldICreateANote => "هل يجب علي إنشاء ملاحظة؟";
+	/// "حسنًا ، لن أقوم بإنشاء ملاحظة."
+	@override
+	String get willNotCreateNote => "حسنًا ، لن أقوم بإنشاء ملاحظة.";
+	/// "بالتأكيد! كيف يمكنني مساعدك؟"
+	@override
+	String get sureHowCanIHelp => "بالتأكيد! كيف يمكنني مساعدك؟";
+	/// "حسنا شكرا لك! مع السلامة."
+	@override
+	String get thxBye => "حسنا شكرا لك! مع السلامة.";
+	/// "أنشأ الملاحظة التالية:"
+	@override
+	String get createdTheFollowingNote => "أنشأ الملاحظة التالية:";
+	/// "تاريخ البدء"
+	@override
+	String get startDate => "تاريخ البدء";
+	/// "حدد تاريخ"
+	@override
+	String get selectDate => "حدد تاريخ";
+	/// "أدخل الوقت"
+	@override
+	String get enterTime => "أدخل الوقت";
+	/// "التحديد الواضح"
+	@override
+	String get clearSelection => "التحديد الواضح";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

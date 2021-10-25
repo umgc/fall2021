@@ -44,8 +44,8 @@ class MenuState extends State<Menu> {
                                           BorderRadius.circular(30.0)),
                                   minimumSize: Size(40, 40)),
                               onPressed: () {
-                                menuObserver
-                                    .changeScreen(MENU_SCREENS.SYNC_TO_CLOUD);
+                                //menuObserver
+                                //  .changeScreen(MENU_SCREENS.SYNC_TO_CLOUD);
                               },
                               child: Column(children: [
                                 Image(

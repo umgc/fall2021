@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
@@ -22,7 +24,7 @@
     </queries>
    <application
 
-        android:label="untitled3"
+        android:label="MemoryMagic"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
