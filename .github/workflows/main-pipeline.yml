@@ -45,10 +45,11 @@ jobs:
         uses: subosito/flutter-action@v1
       - run: flutter pub get
         
-      - name: Build APK
-        run: flutter build apk
+#      - name: Build APK
+#        run: flutter build apk
+        
       - name: Build IOS
-        run: flutter build ios
+        run: flutter build io
      
       - name: 'Upload APK Artifact'
         uses: 'actions/upload-artifact@v2'
