@@ -32,7 +32,7 @@ jobs:
         with:
           fail-on: "analyze"
 
-  build:
+  build-ios:
     name: Build Project IOS
     runs-on: macos-latest
     steps:
@@ -44,8 +44,8 @@ jobs:
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
 
-  build:
-    name: Build Project
+  build-apk:
+    name: Build Project APK
     runs-on: ubuntu-latest
 
     steps:
@@ -59,7 +59,7 @@ jobs:
         
       - name: Build APK
         run: flutter build apk
-
+        
       - name: Build IOS
         run: flutter build io
      
