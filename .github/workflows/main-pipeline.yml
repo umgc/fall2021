@@ -48,7 +48,7 @@ jobs:
       - name: Build APK
         run: flutter build apk
       - name: Build IOS
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios
      
       - name: 'Upload APK Artifact'
         uses: 'actions/upload-artifact@v2'
