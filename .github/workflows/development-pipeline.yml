@@ -14,10 +14,10 @@ jobs:
     name: Build Project IOS
     runs-on: macos-latest
     steps:
-        - uses: actions/checkout@v2
-            with:
-              fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     
-        - uses: subosito/flutter-action@v1
-        - run: flutter pub get
-        - run: flutter build ios --release --no-codesign
+      - uses: subosito/flutter-action@v1
+      - run: flutter pub get
+      - run: flutter build ios --release --no-codesign
