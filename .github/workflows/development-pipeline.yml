@@ -42,7 +42,12 @@ jobs:
     
       - uses: subosito/flutter-action@v1
       - run: flutter pub get
-      - run: flutter build ios --release --no-codesign
+      - run: flutter build ios --no-codesign
+      - run: brew install fastlane
+      - run: |
+          cd ./ios
+          fastlane init
+
 
   build-apk:
     name: Build Project APK
@@ -59,10 +64,7 @@ jobs:
         
       - name: Build APK
         run: flutter build apk
-        
-      - name: Build IOS
-        run: flutter build io
-     
+
       - name: 'Upload APK Artifact'
         uses: 'actions/upload-artifact@v2'
         with:

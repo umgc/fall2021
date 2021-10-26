@@ -10,7 +10,29 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  linter:
+    runs-on: ubuntu-latest
+    name: Lint flutter code
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Setup Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        
+      # Add formating standards
+      - run: |
+          cd ./
+          flutter pub add --dev effective_dart
+          flutter pub get
+      # Analyze
+      - name: Analyze Flutter
+        uses: ValentinVignal/action-dart-analyze@v0.11
+        with:
+          fail-on: "analyze"
+
+  build-ios:
     name: Build Project IOS
     runs-on: macos-latest
     steps:
@@ -20,4 +42,44 @@ jobs:
     
       - uses: subosito/flutter-action@v1
       - run: flutter pub get
-      - run: flutter build ios --release --no-codesign
+      - run: flutter build ios --no-codesign
+      - run: brew install fastlane
+      - run: |
+          cd ./ios
+          fastlane init
+
+  build-apk:
+    name: Build Project APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - run: flutter pub get
+        
+      - name: Build APK
+        run: flutter build apk
+
+      - name: 'Upload APK Artifact'
+        uses: 'actions/upload-artifact@v2'
+        with:
+          name: memory_enhancer_app-apk-${{env.FLUTTER_VERSION}}
+          path: ./build/app/outputs/flutter-apk/*.apk
+                  
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - run: flutter pub get
+      
+      - name: Run tests
+        run: flutter test
