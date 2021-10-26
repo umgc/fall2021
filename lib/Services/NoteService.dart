@@ -1,3 +1,5 @@
+import 'package:untitled3/Utility/EncryptionUtil.dart';
+
 import '../Model/Note.dart';
 import '../Utility/FileUtil.dart';
 import 'package:uuid/uuid.dart';
@@ -27,8 +29,8 @@ class TextNoteService {
 
   /// Save a text note file to local storage
   static Future<void> persistNotes(List<TextNote> notes) async {
-    print("Saving notes: " + notes.toString());
-    FileUtil.writeFile(FILE_NAME, "${notes.toString()}");
+    final encryptedNote = EncryptUtil.encryptNote(notes.toString());
+    FileUtil.writeFile(FILE_NAME, encryptedNote);
   }
 
   static String generateUUID() {
