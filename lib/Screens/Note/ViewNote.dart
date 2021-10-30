@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:provider/provider.dart';
@@ -31,7 +32,15 @@ class _ViewNotesState extends State<ViewNotes> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: NoteTable(noteObserver.usersNotes, () => print("done")),
-        floatingActionButton: buildFloatingBtn(noteObserver));
+        floatingActionButton:
+          Padding(padding: EdgeInsets.fromLTRB(15, 400, 20, 40), child:Column(children: [
+            buildFloatingBtnCamera(noteObserver),
+            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5)),
+            buildFloatingBtn(noteObserver)
+          ] ,)
+         )
+
+    );
   }
 
   //Funtion retuns Floating button
@@ -42,6 +51,14 @@ class _ViewNotesState extends State<ViewNotes> {
       },
       tooltip: I18n.of(context)!.addNote,
       child: Icon(Icons.add),
+    );
+  }
+  Widget buildFloatingBtnCamera(NoteObserver noteObserver) {
+    return FloatingActionButton(
+      onPressed:
+        noteObserver.getImage,
+
+      child: Icon(Icons.camera_enhance),
     );
   }
 }

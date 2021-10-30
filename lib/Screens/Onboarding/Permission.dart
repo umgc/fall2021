@@ -36,6 +36,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
 
     if (status.isDenied) {
       await Permission.microphone.request();
+      await Permission.camera.request();
       await Permission.storage.request();
       await Permission.manageExternalStorage.request();
     } else if (status.isPermanentlyDenied) {
