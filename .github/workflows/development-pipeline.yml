@@ -40,7 +40,6 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           
-      - uses: subosito/flutter-action@v1
       - name: Install gpg
         run: brew install gnupg
 
@@ -50,6 +49,7 @@ jobs:
           IOS_KEYS: ${{ secrets.IOS_KEYS }}
         run: ./.github/secrets/decrypt_secrets.sh
 
+      - uses: subosito/flutter-action@v1
       - run: flutter pub get
       - name: Archiving project
         run: flutter build ipa
