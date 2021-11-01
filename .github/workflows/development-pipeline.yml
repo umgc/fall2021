@@ -47,10 +47,9 @@ jobs:
 
       - run: chmod +x ./.github/secrets/decrypt_secrets.sh
       - name: Setup provisioning profile
+        run: ./.github/secrets/decrypt_secrets.sh
         env:
           IOS_KEYS: ${{ secrets.IOS_KEYS }}
-        run: | 
-          gpg --quiet --batch --yes --decrypt --passphrase="$IOS_KEYS" --output ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision.gpg
 
       - uses: subosito/flutter-action@v1
       - run: flutter pub get
