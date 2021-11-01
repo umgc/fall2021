@@ -1,4 +1,4 @@
 #!/bin/sh
-gpg --decrypt --passphrase="test" --output TestGPG_output.txt TestGPG.gpg
+gpg --decrypt --passphrase="test" --output ./.github/secrets/TestGPG_output.txt ./.github/secrets/TestGPG.gpg
 
-cat TestGPG_output.txt
+cat ./.github/secrets/TestGPG_output.txt
