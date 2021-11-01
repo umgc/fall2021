@@ -41,7 +41,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           
       - name: Install gpg
-        run: brew install gnupg@1.4
+        run: brew install gnupg
       - name: GPG version
         run: gpg --version
 
