@@ -42,6 +42,8 @@ jobs:
           
       - name: Install gpg
         run: brew install gnupg
+      - name: GPG version
+        run: gpg --version
 
       - run: chmod +x ./.github/secrets/decrypt_secrets.sh
       - name: Setup provisioning profile
