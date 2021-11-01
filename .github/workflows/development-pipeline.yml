@@ -10,27 +10,27 @@ on:
     branches: [ developer ]
 
 jobs:
-  linter:
-    runs-on: ubuntu-latest
-    name: Lint flutter code
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  #linter:
+  #  runs-on: ubuntu-latest
+  #  name: Lint flutter code
+  #  steps:
+  #    - name: Checkout code
+  #      uses: actions/checkout@v2
 
-      # Setup Flutter
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+  #    # Setup Flutter
+  #    - name: Set up Flutter
+  #      uses: subosito/flutter-action@v1
         
-      # Add formating standards
-      - run: |
-          cd ./
-          flutter pub add --dev effective_dart
-          flutter pub get
-      # Analyze
-      - name: Analyze Flutter
-        uses: ValentinVignal/action-dart-analyze@v0.11
-        with:
-          fail-on: "analyze"
+  #    # Add formating standards
+  #    - run: |
+  #        cd ./
+  #        flutter pub add --dev effective_dart
+  #        flutter pub get
+  #    # Analyze
+  #    - name: Analyze Flutter
+  #      uses: ValentinVignal/action-dart-analyze@v0.11
+  #      with:
+  #        fail-on: "analyze"
 
   build-ios:
     name: Build Project IOS
@@ -53,38 +53,38 @@ jobs:
       - name: Archiving project
         run: flutter build ipa
 
-  build-apk:
-    name: Build Project APK
-    runs-on: ubuntu-latest
+  #build-apk:
+  #  name: Build Project APK
+  #  runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #      with:
+  #        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-      - run: flutter pub get
+  #    - name: Set up Flutter
+  #      uses: subosito/flutter-action@v1
+  #    - run: flutter pub get
         
-      - name: Build APK
-        run: flutter build apk
+  #    - name: Build APK
+  #      run: flutter build apk
 
-      - name: 'Upload APK Artifact'
-        uses: 'actions/upload-artifact@v2'
-        with:
-          name: memory_enhancer_app-apk-${{env.FLUTTER_VERSION}}
-          path: ./build/app/outputs/flutter-apk/*.apk
+  #    - name: 'Upload APK Artifact'
+  #      uses: 'actions/upload-artifact@v2'
+  #      with:
+  #        name: memory_enhancer_app-apk-${{env.FLUTTER_VERSION}}
+  #        path: ./build/app/outputs/flutter-apk/*.apk
                   
-  test:
-    name: Run Unit Tests
-    runs-on: ubuntu-latest
+  #test:
+  #  name: Run Unit Tests
+  #  runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  #  steps:
+  #    - uses: actions/checkout@v2
       
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-      - run: flutter pub get
+  #    - name: Set up Flutter
+  #      uses: subosito/flutter-action@v1
+  #    - run: flutter pub get
       
-      - name: Run tests
-        run: flutter test
+  #    - name: Run tests
+  #      run: flutter test
