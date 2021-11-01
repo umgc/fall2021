@@ -44,10 +44,8 @@ jobs:
       - name: Install gpg
         run: brew install gnupg
         
-      - name: Setup provisioning profile
-        env:
-          IOS_KEYS: ${{ secrets.IOS_KEYS }}
-        run: ./.github/secrets/decrypt_secrets.sh
+      - run: |
+          exec .github/scripts/set-env-from-xcodeproj.sh
           
       - run: flutter pub get
       - name: Archiving project
