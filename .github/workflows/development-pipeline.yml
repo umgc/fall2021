@@ -40,8 +40,7 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - run: |
-          exec .github/scripts/set-env-from-xcodeproj.sh
+      - run: sudo .github/scripts/set-env-from-xcodeproj.sh
     
       - uses: subosito/flutter-action@v1
       - name: Install gpg
