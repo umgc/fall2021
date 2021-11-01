@@ -43,7 +43,7 @@ jobs:
       - name: Install gpg
         run: brew install gnupg
       - name: Install Pin Entry
-        run: brew install pinentry
+        run: brew install pinentry-mac
 
       - run: chmod +x ./.github/secrets/decrypt_secrets.sh
       - name: Setup provisioning profile
@@ -52,9 +52,10 @@ jobs:
           IOS_KEYS: ${{ secrets.TEST }}
 
       - uses: subosito/flutter-action@v1
-      - run: flutter pub get
-      - name: Archiving project
-        run: flutter build ipa
+      - name: Restore packages
+        run: flutter pub get
+      - name: Build Flutter
+        run: flutter build ios --release -no-codesign
 
   #build-apk:
   #  name: Build Project APK
