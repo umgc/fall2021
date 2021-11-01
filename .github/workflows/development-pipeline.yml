@@ -39,13 +39,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - run: |
+          exec sudo .github/scripts/set-env-from-xcodeproj.sh
     
       - uses: subosito/flutter-action@v1
       - name: Install gpg
         run: brew install gnupg
-        
-      - run: |
-          exec .github/scripts/set-env-from-xcodeproj.sh
           
       - run: flutter pub get
       - name: Archiving project
