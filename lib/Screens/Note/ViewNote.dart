@@ -39,7 +39,6 @@ class _ViewNotesState extends State<ViewNotes> {
             buildFloatingBtn(noteObserver)
           ] ,)
          )
-
     );
   }
 
