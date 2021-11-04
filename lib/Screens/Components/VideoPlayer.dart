@@ -3,25 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({Key? key}) : super(key: key);
+  String title;
+  String videoUrl;
+  VideoPlayerScreen({Key? key, this.title="Memory Magic Preview", this.videoUrl=""}) : super(key: key);
 
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState(this.title, this.videoUrl);
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
   late ChewieController chewieController;
-  _VideoPlayerScreenState();
+  late String title;
+  late String videoUrlpath;
+  _VideoPlayerScreenState(this.title, this.videoUrlpath);
+
   @override
   void initState() {
     // Create and store the VideoPlayerController. The VideoPlayerController
     // offers several different constructors to play videos from assets, files,
     // or the internet.
-    //_controller = VideoPlayerController.network(
+    //_controller = VideoPlayerController.network( 
     //                  'https://assets.mixkit.co/videos/preview/mixkit-daytime-city-traffic-aerial-view-56-large.mp4');
-    _controller = VideoPlayerController.asset("assets/help/exmple_help.mp4");
+    _controller = VideoPlayerController.asset(this.videoUrlpath);
 
     // Initialize the controller and store the Future for later use.
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -45,27 +50,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.dispose();
   }
 
-  // an arbitrary value, this can be whatever you need it to be
-  double videoContainerRatio = 0.1;
-
-  double getScale() {
-    double videoRatio = _controller.value.aspectRatio;
-
-    if (videoRatio < videoContainerRatio) {
-      ///for tall videos, we just return the inverse of the controller aspect ratio
-      return videoContainerRatio / videoRatio;
-    } else {
-      ///for wide videos, divide the video AR by the fixed container AR
-      ///so that the video does not over scale
-
-      return videoRatio / videoContainerRatio;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    
+   
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text("${this.title}"),
+      ),
       // Use a FutureBuilder to display a loading spinner while waiting for the
       // VideoPlayerController to finish initializing.
       body: FutureBuilder(

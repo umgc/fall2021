@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/HelpObservable.dart';
 import 'package:untitled3/Observables/MicObservable.dart';
 import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/SettingObservable.dart';
@@ -60,7 +61,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     }
     if (screen == MAIN_SCREENS.MENU || index == 0) {
       screenNav.setTitle(I18n.of(context)!.menuScreenName);
-      return _menu;
+      return Menu();
     }
     if (screen == MAIN_SCREENS.HOME) {
       screenNav.setTitle(I18n.of(context)!.homeScreenName);
@@ -150,8 +151,6 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   AppBar buildAppBar(BuildContext context) {
     final screenNav = Provider.of<MainNavObserver>(context);
-    final noteObserver = Provider.of<NoteObserver>(context);
-
     return AppBar(
       toolbarHeight: 120,
       centerTitle: true,
@@ -241,6 +240,8 @@ class _MainNavigatorState extends State<MainNavigator> {
     final micObserver = Provider.of<MicObserver>(context);
     final screenNav = Provider.of<MainNavObserver>(context);
     final settingObserver = Provider.of<SettingObserver>(context);
+    HelpObserver helpObserver = Provider.of<HelpObserver>(context);
+    helpObserver.loadHelpCotent();
 
     return Observer(
         builder: (_) => Scaffold(

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled3/Model/Help.dart';
-import 'package:untitled3/Model/Note.dart';
 import 'package:untitled3/Observables/HelpObservable.dart';
+import 'package:untitled3/Observables/MenuObservable.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
 import 'package:untitled3/Observables/ScreenNavigator.dart';
-import 'package:untitled3/Observables/SettingObservable.dart';
-import 'package:untitled3/Screens/Settings/VideoPlayer.dart';
+import 'package:untitled3/Screens/Components/VideoPlayer.dart';
 import 'package:untitled3/Utility/Constant.dart';
-import 'package:untitled3/Utility/Video_Player.dart';
-import 'package:video_player/video_player.dart';
+import 'package:untitled3/generated/i18n.dart';
 
 class Help extends StatefulWidget {
   @override
@@ -19,17 +18,28 @@ class HelpState extends State<Help> {
   @override
   Widget build(BuildContext context) {
     final helpObserver = Provider.of<HelpObserver>(context);
-
+    final MenuObserver menuObserver = Provider.of<MenuObserver>(context);
+    final MainNavObserver navObserver = Provider.of<MainNavObserver>(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body:HelpTable(helpObserver.helpItems, () => {"Displayed Help Content"})
-        
+        body:HelpTable(helpObserver.helpItems, () => {"Displayed Help Content"}),
+        floatingActionButtonLocation:
+                FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  menuObserver.changeScreen(MENU_SCREENS.MENU);
+                },
+                tooltip: I18n.of(context)!.back,
+                child: Icon(Icons.arrow_back),
+              )
         );
   }
 }
 
+
 /// View Notes page
 class HelpTable extends StatelessWidget {
+
   final List<HelpContent> helpItems;
   final Function? onListItemClickCallBackFn;
   //Flutter will autto assign this param to usersNotes
@@ -37,16 +47,7 @@ class HelpTable extends StatelessWidget {
   static const ICON_SIZE = 40.00;
   @override
   Widget build(BuildContext context) {
-    final screenNav = Provider.of<MainNavObserver>(context);
-
-    final settingObserver = Provider.of<SettingObserver>(context);
-
-    const TEXT_STYLE = TextStyle(fontSize: 20);
-    const HEADER_TEXT_STYLE = const TextStyle(fontSize: 20);
-
-    var rowHeight = (MediaQuery.of(context).size.height - 56) / 5;
-    var noteWidth = MediaQuery.of(context).size.width * 0.35;
-
+    
     //noteObserver.changeScreen(NOTE_SCREENS.NOTE);
     return ListView.builder(
        shrinkWrap: true,
@@ -65,7 +66,8 @@ class HelpTable extends StatelessWidget {
             onTap: () => {
               Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => (VideoPlayerScreen())),
+                      MaterialPageRoute(builder: (context) => (VideoPlayerScreen(title: helpItems[index].title, 
+                      videoUrl: "assets/help/example_help.mp4"))),
                     )
             },
             title: Text(
