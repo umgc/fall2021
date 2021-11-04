@@ -42,25 +42,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   Widget _changeScreen(index) {
-    //when onboarding is completed
-    if (index > NUM_OF_ONBOARDING_SCREEN - 1) {
-      final settingObserver = Provider.of<SettingObserver>(context);
-      settingObserver.userSettings.isFirstRun = false;
-
-      print("OnBoardingScreen. Saving onboarding settings");
-
-      settingObserver.saveSetting();
-
-      //move to the Main screen
-      // Navigator.pushReplacement<void, void>(
-      //     context,
-      //     MaterialPageRoute<void>(
-      //       builder: (BuildContext context) => MainNavigator(),
-      //     ));
-
-      return Home();
-    }
-
+  
     switch (index) {
       case 0:
         return SelectLanguageScreen();

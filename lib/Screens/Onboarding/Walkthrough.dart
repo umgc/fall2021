@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
 import 'package:untitled3/Screens/Components/VideoPlayer.dart';
 import 'package:untitled3/Screens/Main.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
@@ -23,7 +25,8 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
   Widget build(BuildContext context) {
     VoiceOverTextService.speakOutLoud(I18n.of(context)!.walkthroughVideoLine,
         (language as Locale).languageCode.toString());
-
+    final settingObserver = Provider.of<SettingObserver>(context);
+    
     return Scaffold(
         body: VideoPlayerScreen(title: "App Walk-through", videoUrl: "assets/help/example_help.mp4"),
         persistentFooterButtons: [
@@ -33,6 +36,8 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                             ElevatedButton(
                               child: Text(I18n.of(context)!.next.toUpperCase()),
                               onPressed: () {
+                                  settingObserver.userSettings.isFirstRun = false;
+                                  settingObserver.saveSetting();
                                    Navigator.pushReplacement<void, void>(
                                       context,
                                       MaterialPageRoute<void>(
