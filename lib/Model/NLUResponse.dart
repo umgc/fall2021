@@ -14,7 +14,7 @@ class NLUResponse {
   String? eventTime;
   List<String>? resolvedValues;
   String? recurringType;
-  TimeOfDay? timeOfDay;
+  String? timeOfDay;
 
   NLUResponse(this.actionType,
       this.inputMessage,

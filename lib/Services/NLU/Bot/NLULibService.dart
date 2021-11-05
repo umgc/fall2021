@@ -46,6 +46,11 @@ class NLULibService {
     bertQAService = BertQAService();
   }
 
+  NLULibService.fromtest(LexService _lexService, BertQAService _bertQAService) {
+    lexService = _lexService;
+    bertQAService = _bertQAService;
+  }
+
   Future<String> getNLUResponseUITest(String text) async {
     NLUResponse nluResponse = (await getNLUResponse(text, DefaultLocale));
     String response = nluResponse.toJson().toString();
