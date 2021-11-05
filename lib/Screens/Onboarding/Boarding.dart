@@ -42,42 +42,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   Widget _changeScreen(index) {
-    //when onboarding is completed
-    if (index > NUM_OF_ONBOARDING_SCREEN - 1) {
-      final settingObserver = Provider.of<SettingObserver>(context);
-      settingObserver.userSettings.isFirstRun = false;
-
-      print("OnBoardingScreen. Saving onboarding settings");
-
-      settingObserver.saveSetting();
-
-      //move to the Main screen
-      // Navigator.pushReplacement<void, void>(
-      //     context,
-      //     MaterialPageRoute<void>(
-      //       builder: (BuildContext context) => MainNavigator(),
-      //     ));
-
-      return Home();
+  
+    switch (index) {
+      case 0:
+        return SelectLanguageScreen();
+      case 1:
+        return PermissionScreen();
+      case 2:
+        return CloudSetupScreen();
+      default:
+        return WalkthroughScreen();
     }
-
-    String name = _screenName(index);
-
-    print("Oboarding screen: name $name  indext $index ");
-
-    if (name == I18n.of(context)!.onboardLangSetup) {
-      return SelectLanguageScreen();
-    }
-    if (name == I18n.of(context)!.onboardPermissionSetup) {
-      print("Return " + name);
-      return PermissionScreen();
-    }
-    if (name == I18n.of(context)!.onboardCloudSetup) {
-      print("Return " + name);
-      return CloudSetupScreen();
-    }
-
-    return WalkthroughScreen();
   }
 
   AppBar buildAppBar(BuildContext context) {
@@ -115,8 +90,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             ),
                             ElevatedButton(
                               child: Text(I18n.of(context)!.next.toUpperCase()),
-                              onPressed: () =>
-                                  {onboardObserver.moveToNextScreen()},
+                              onPressed: () {
+                                  if(onboardObserver.currentScreenIndex < 2){
+                                    onboardObserver.moveToNextScreen();
+                                  }else{
+                                    Navigator.pushReplacement<void, void>(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                        builder: (BuildContext context) => WalkthroughScreen(),
+                                      ));
+                                  }
+                                },
                             ),
                           ])
                     : Text("")

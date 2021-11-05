@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
+import 'package:untitled3/Screens/Components/VideoPlayer.dart';
+import 'package:untitled3/Screens/Main.dart';
 import 'package:untitled3/Services/VoiceOverTextService.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -21,41 +25,29 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
   Widget build(BuildContext context) {
     VoiceOverTextService.speakOutLoud(I18n.of(context)!.walkthroughVideoLine,
         (language as Locale).languageCode.toString());
-
+    final settingObserver = Provider.of<SettingObserver>(context);
+    
     return Scaffold(
-        body: Column(children: [
-      Container(
-        padding: EdgeInsets.fromLTRB(15, 20, 20, 40),
-        child: Text(
-          I18n.of(context)!.walkthroughVideoLine,
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Expanded(
-          child: Container(
-              width: 750,
-              height: 615,
-              child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                  child: VideosList(
-                    looping: true,
-
-                    videoPlayerController: VideoPlayerController.network(
-                        'https://assets.mixkit.co/videos/preview/mixkit-daytime-city-traffic-aerial-view-56-large.mp4'),
-                    // NOTE: if you save the videos as mp4 in assets file , you can use:
-                    /*
-                      VideosList(
-                        videoPlayerController: VideoPlayerController.asset(
-                            'videos/Specialist_In_Python.MP4',
-                        ),
-                        looping: true,
-                      ),
-                      */
-                  ))))
-    ]));
+        body: VideoPlayerScreen(title: "App Walk-through", videoUrl: "assets/help/example_help.mp4"),
+        persistentFooterButtons: [
+              Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                            ElevatedButton(
+                              child: Text(I18n.of(context)!.next.toUpperCase()),
+                              onPressed: () {
+                                  settingObserver.userSettings.isFirstRun = false;
+                                  settingObserver.saveSetting();
+                                   Navigator.pushReplacement<void, void>(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                        builder: (BuildContext context) => MainNavigator(),
+                                      ));
+                                },
+                            ),
+                          ])
+              ],
+    );
   }
 }
 //https://pub.dev/packages/showcaseview/example
