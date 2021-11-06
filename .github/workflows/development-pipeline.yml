@@ -8,6 +8,7 @@ on:
     branches: [ developer ]
   pull_request:
     branches: [ developer ]
+  workflow_dispatch:
 
 jobs:
   linter:
@@ -53,7 +54,7 @@ jobs:
       - name: Restore packages
         run: flutter pub get
       - name: Build Flutter
-        run: flutter build ios --release -no-codesign
+        run: flutter build ios --release --no-codesign
 
   #build-apk:
   #  name: Build Project APK
