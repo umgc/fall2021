@@ -170,6 +170,21 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
     });
   }
 
+  final _$i18nAtom = Atom(name: '_AbstractMicObserver.i18n');
+
+  @override
+  I18n? get i18n {
+    _$i18nAtom.reportRead();
+    return super.i18n;
+  }
+
+  @override
+  set i18n(I18n? value) {
+    _$i18nAtom.reportWrite(value, super.i18n, () {
+      super.i18n = value;
+    });
+  }
+
   final _$toggleListeningModeAsyncAction =
       AsyncAction('_AbstractMicObserver.toggleListeningMode');
 
@@ -197,6 +212,17 @@ mixin _$MicObserver on _AbstractMicObserver, Store {
         name: '_AbstractMicObserver.setLocale');
     try {
       return super.setLocale(mlocale);
+    } finally {
+      _$_AbstractMicObserverActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setI18n(dynamic mi18n) {
+    final _$actionInfo = _$_AbstractMicObserverActionController.startAction(
+        name: '_AbstractMicObserver.setI18n');
+    try {
+      return super.setI18n(mi18n);
     } finally {
       _$_AbstractMicObserverActionController.endAction(_$actionInfo);
     }
@@ -303,7 +329,8 @@ mainNavObserver: ${mainNavObserver},
 noteObserver: ${noteObserver},
 locale: ${locale},
 lastNluMessage: ${lastNluMessage},
-followUpTypesForMsgSent: ${followUpTypesForMsgSent}
+followUpTypesForMsgSent: ${followUpTypesForMsgSent},
+i18n: ${i18n}
     ''';
   }
 }

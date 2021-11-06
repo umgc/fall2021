@@ -1,9 +1,0 @@
-{
-  "homeScreenName": "Home",
-  "menuScreenName": "Menu",
-  "notesScreenName": "Notes",
-  "notificationsScreenName": "Notifications",
-  "settingScreenName": "Setting",
-  "calendarScreenName": "Calendar",
-  "micButton": "Mic"
-}

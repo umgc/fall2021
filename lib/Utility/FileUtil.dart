@@ -3,6 +3,8 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'dart:convert';
 
+import 'package:untitled3/Utility/EncryptionUtil.dart';
+
 class FileUtil {
   /// The file system to use for all I/O operations. Generally LocalFileSystem()
   /// but MemoryFileSystem() is used when running unit tests.
@@ -35,7 +37,7 @@ class FileUtil {
       if (fileContent.trim().isEmpty) {
         fileContent = "{}";
       }
-      data = await json.decode(fileContent);
+      data = await json.decode(EncryptUtil.decryptNote(fileContent));
     } catch (e) {
       print("ERROR-Couldn't read file: ${e.toString()}");
     }

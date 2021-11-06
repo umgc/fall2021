@@ -1,9 +1,12 @@
 import 'dart:collection';
+import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:untitled3/Utility/Constant.dart';
 import '../Model/Note.dart';
 import '../Services/NoteService.dart';
+import 'package:share_plus/share_plus.dart';
 
 part 'NoteObservable.g.dart';
 
@@ -14,6 +17,11 @@ abstract class _AbstractNoteObserver with Store {
     TextNoteService.loadNotes()
         .then((notes) => {setNotes(notes), setCheckList(notes)});
   }
+  @observable
+  File? _image;
+
+  @observable
+  ImagePicker imagePicker = ImagePicker();
 
   @observable
   NOTE_SCREENS currentScreen = NOTE_SCREENS.NOTE;
@@ -36,6 +44,13 @@ abstract class _AbstractNoteObserver with Store {
 
   @observable
   String newNoteEventTime = "";
+
+  @action
+  Future getImage() async{
+    final image = await imagePicker.getImage(source: ImageSource.camera);
+    _image =File(image!.path);
+    Share.shareFiles([image.path]);
+  }
 
   @action
   void addNote(TextNote note) {

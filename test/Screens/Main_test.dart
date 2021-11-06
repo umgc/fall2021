@@ -1,53 +1,86 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:untitled3/Screens/Main.dart';
-// import 'package:untitled3/generated/i18n.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled3/Observables/MenuObservable.dart';
+import 'package:untitled3/Observables/MicObservable.dart';
+import 'package:untitled3/Observables/NoteObservable.dart';
+import 'package:untitled3/Observables/ScreenNavigator.dart';
+import 'package:untitled3/Observables/SettingObservable.dart';
+import 'package:untitled3/Screens/Main.dart';
+import 'package:untitled3/Utility/Constant.dart';
+import 'package:untitled3/generated/i18n.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
 
+import 'Main_test.mocks.dart';
 
-// void main() {
-//   final i18n = I18n.delegate;
-//   testWidgets('MainNavigator finds all bottom navigation information - default', (WidgetTester tester) async {
-//     Widget createWidgetForTesting({required Widget child}){
-//       return MaterialApp(
-//         home: child,
-//         localizationsDelegates: [
-//           i18n,
-//         ],
-//       );
-//     }
+Widget createWidgetForTesting({required Widget child, required MockMainNavObserver mainNavObs}) {
+  final i18n = I18n.delegate;
 
-//     await tester.pumpWidget(createWidgetForTesting(child: new MainNavigator()));
-//     await tester.pumpAndSettle();
-//     final notesScreenNameFinder = find.text('Notes');
-//     final micScreenNameFinder = find.text('Mic');
-//     final menuScreenNameFinder = find.text('Menu');
-//     final notificationsScreenNameFinder = find.text('Notifications');
-//     expect(menuScreenNameFinder, findsOneWidget);
-//     expect(notificationsScreenNameFinder, findsOneWidget);
-//     expect(notesScreenNameFinder, findsOneWidget);
-//     expect(micScreenNameFinder, findsOneWidget);
-//   });
+  return MultiProvider(
+      providers: [
+        Provider<MicObserver>(create: (_) => MicObserver()),
+        Provider<MainNavObserver>(create: (_) => mainNavObs),
+        Provider<SettingObserver>(create: (_) => SettingObserver()),
+        Provider<NoteObserver>(create: (_) => NoteObserver()),
+        Provider<MenuObserver>(create: (_) => MenuObserver())
+      ],
+      child: MaterialApp(
+        home: child,
+        localizationsDelegates: [
+          i18n,
+        ],
+      ));
+}
 
-//   testWidgets('MainNavigator finds all bottom navigation information - spanish', (WidgetTester tester) async {
-//     I18n.locale = new Locale("es", "US");
-//     Widget createWidgetForTesting({required Widget child}){
-//       return MaterialApp(
-//         home: child,
-//         localizationsDelegates: [
-//           i18n,
-//         ],
-//       );
-//     }
-//     await tester.pumpWidget(createWidgetForTesting(child: new MainNavigator()));
-//     await tester.pumpAndSettle();
-//     final notesScreenNameFinder = find.text('Notas');
-//     final micScreenNameFinder = find.text('Micrófono');
-//     final menuScreenNameFinder = find.text('Menú');
-//     final notificationsScreenNameFinder = find.text('Notificaciones');
-//     expect(menuScreenNameFinder, findsOneWidget);
-//     expect(notificationsScreenNameFinder, findsOneWidget);
-//     expect(notesScreenNameFinder, findsOneWidget);
-//     expect(micScreenNameFinder, findsOneWidget);
-//   });
-// }
+@GenerateMocks([MainNavObserver, I18n])
+void main() {
 
+  var mockObserver = MockMainNavObserver();
+  when(mockObserver.currentScreen).thenReturn(MAIN_SCREENS.HOME);
+  when(mockObserver.focusedNavBtn).thenReturn('');
+  when(mockObserver.screenTitle).thenReturn('');
+
+  group('Widget', () {
+    testWidgets(
+        'MainNavigator finds all bottom navigation information - default',
+        (WidgetTester tester) async {
+      await tester
+          .pumpWidget(createWidgetForTesting(child: new MainNavigator(), mainNavObs: mockObserver));
+      await tester.pumpAndSettle();
+      final settingsScreenNameFinder = find.text('Settings');
+      final triggerScreenNameFinder = find.text('Trigger');
+      final helpScreenNameFinder = find.text('Help');
+      expect(settingsScreenNameFinder, findsOneWidget);
+      expect(triggerScreenNameFinder, findsOneWidget);
+      expect(helpScreenNameFinder, findsOneWidget);
+    });
+
+    testWidgets(
+        'MainNavigator finds all bottom navigation information - spanish',
+        (WidgetTester tester) async {
+      I18n.locale = new Locale("es", "US");
+
+      await tester
+          .pumpWidget(createWidgetForTesting(child: new MainNavigator(), mainNavObs: mockObserver));
+      await tester.pumpAndSettle();
+      final settingsScreenNameFinder = find.text('Ajustes');
+      final triggerScreenNameFinder = find.text('Desencadenar');
+      final helpScreenNameFinder = find.text('Ayudar');
+      expect(settingsScreenNameFinder, findsOneWidget);
+      expect(triggerScreenNameFinder, findsOneWidget);
+      expect(helpScreenNameFinder, findsOneWidget);
+      I18n.locale = new Locale("en", "US");
+        });
+
+    testWidgets('Click Menu', (WidgetTester tester) async {
+
+      await tester
+          .pumpWidget(createWidgetForTesting(child: new MainNavigator(), mainNavObs: mockObserver));
+      await tester.pumpAndSettle();
+      final menuScreenNameFinder = find.text('Menu').first;
+      await tester.tap(menuScreenNameFinder);
+      verify(mockObserver.setTitle("Home")).called(1); // OK: no arg matchers.
+    });
+  });
+}
