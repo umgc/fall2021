@@ -48,13 +48,13 @@ jobs:
       - name: Setup provisioning profile
         run: ./.github/secrets/decrypt_secrets.sh
         env:
-          IOS_KEYS: ${{ secrets.TEST }}
+          IOS_KEYS: ${{ secrets.IOS_KEYS }}
 
-      - uses: subosito/flutter-action@v1
-      - name: Restore packages
-        run: flutter pub get
-      - name: Build Flutter
-        run: flutter build ios --release --no-codesign
+#      - uses: subosito/flutter-action@v1
+#      - name: Restore packages
+#        run: flutter pub get
+#      - name: Build Flutter
+#        run: flutter build ios --release --no-codesign
 
   #build-apk:
   #  name: Build Project APK
