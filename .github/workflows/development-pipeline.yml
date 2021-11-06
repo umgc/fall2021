@@ -47,7 +47,7 @@ jobs:
       - run: chmod +x ./.github/secrets/decrypt_secrets.sh
       - name: Setup provisioning profile
         env:
-          IOS_KEYS: ${{ secrets.TEST }}
+          IOS_KEYS: ${{ secrets.IOS_KEYS }}
         run: ./.github/secrets/decrypt_secrets.sh
 
 #      - uses: subosito/flutter-action@v1
