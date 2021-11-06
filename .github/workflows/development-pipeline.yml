@@ -42,8 +42,6 @@ jobs:
           
       - name: Install gpg
         run: brew install gnupg
-      - name: Install Pin Entry
-        run: brew install pinentry-mac
 
       - run: chmod +x ./.github/secrets/decrypt_secrets.sh
       - name: Setup provisioning profile
