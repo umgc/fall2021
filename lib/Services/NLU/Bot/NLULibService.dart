@@ -945,8 +945,30 @@ class NLULibService {
       String? country = placeMark.country;
       String? address = "${locality}";
 
-      print(address);
-      return address;
+      String addressSearch = "";
+      if (name != null && name != "") {
+        addressSearch += name + " ";
+      }
+      if (subLocality != null && subLocality != "") {
+        addressSearch += subLocality + " ";
+      }
+      if (administrativeArea != null && administrativeArea != "") {
+        addressSearch += administrativeArea + " ";
+      }
+      if (postalCode != null && postalCode != "") {
+        addressSearch += postalCode + " ";
+      }
+      if (name != null && name != "") {
+        addressSearch += name + " ";
+      }
+      if (country != null && country != "") {
+        addressSearch += country + " ";
+      }
+      if (address != null && address != "") {
+        addressSearch += address + " ";
+      }
+      print(addressSearch);
+      return addressSearch;
     }
     return "";
   }
