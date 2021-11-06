@@ -76,8 +76,8 @@ void main() {
       await tester.pumpWidget(
           createWidgetForTesting(child: new Settings(), mockObs: mockObs, menuObs: menuObs));
       await tester.pumpAndSettle();
-      final saveButtonFinder = find.text('Save');
-      await tester.tap(saveButtonFinder);
+      final resetButtonFinder = find.text('Reset');
+      await tester.tap(resetButtonFinder);
       verify(mockObs.saveSetting()).called(1);
     });
 
