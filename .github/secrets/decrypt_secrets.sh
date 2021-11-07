@@ -3,6 +3,7 @@
 #echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/TestGPG_output.txt ./.github/secrets/TestGPG.gpg
 #cat ./.github/secrets/TestGPG_output.txt
 
+echo RELOADAGENT | gpg-connect-agent
 echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision.gpg
 #echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12 ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12.gpg
 
