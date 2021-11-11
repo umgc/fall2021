@@ -47,15 +47,15 @@ jobs:
         run: ./.github/secrets/decrypt_secrets.sh
         env: 
           IOS_KEYS: ${{ secrets.IOS_KEYS }}
+          
+      - uses: subosito/flutter-action@v1
+      - name: Restore packages
+        run: flutter pub get
+      - name: Build Flutter
+        run: flutter build ios --release --no-codesign
 
-#      - uses: subosito/flutter-action@v1
-#      - name: Restore packages
-#        run: flutter pub get
-#     - name: Build Flutter
-#        run: flutter build ios --release --no-codesign
-
-#      - name: Locate build file
-#        run: find ./ -type f -name "*.app"
+      - name: Looking through directories
+      - run: find ./
 
 #  test:
 #    name: Run Unit Tests

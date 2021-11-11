@@ -12,7 +12,7 @@ echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secret
 
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-cp ./.github/secrets/Apple-Store-UMGC_Profile.mobilepro#vision ~/Library/MobileDevice/Provisioning\ Profiles/Apple-Store-UMGC_Profile.mobileprovision
+cp ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/Apple-Store-UMGC_Profile.mobileprovision
 
 security create-keychain -p "" build.keychain
 security import ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
