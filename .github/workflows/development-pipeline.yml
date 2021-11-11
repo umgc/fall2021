@@ -55,7 +55,7 @@ jobs:
         run: flutter build ios --release --no-codesign
 
       - name: Looking through directories
-      - run: find ./
+        run: find ./
 
 #  test:
 #    name: Run Unit Tests
