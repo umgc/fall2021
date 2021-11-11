@@ -3,11 +3,11 @@
 #echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/TestGPG_output.txt ./.github/secrets/TestGPG.gpg
 #cat ./.github/secrets/TestGPG_output.txt
 
-base64 -d ./.github/secrets/TestBase64.b64 > ./.github/secrets/TestBase64.txt
-cat ./.github/secrets/TestBase64.txt
+#base64 -d ./.github/secrets/TestBase64.b64 > ./.github/secrets/TestBase64.txt
+#cat ./.github/secrets/TestBase64.txt
 
 #echo RELOADAGENT | gpg-connect-agent
-#echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision.gpg
+echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision.gpg
 #echo "$IOS_KEYS" | gpg --batch --yes --passphrase-fd 0 --output ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12 ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12.gpg
 
 #mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
