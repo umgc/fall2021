@@ -16,7 +16,7 @@ cp ./.github/secrets/Apple-Store-UMGC_Profile.mobileprovision ~/Library/MobileDe
 
 security create-keychain -p "" build.keychain
 
-security import ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
+security import ./.github/secrets/Apple-Store-UMGC-ios_distribution.p12 -t agg -k ~/Library/Keychains/build.keychain -P "$IOS_KEYS" -A
 
 security list-keychains -s ~/Library/Keychains/build.keychain
 security default-keychain -s ~/Library/Keychains/build.keychain
