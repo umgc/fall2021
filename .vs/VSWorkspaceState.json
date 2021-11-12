@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\.github\\secrets",
+    "\\.github\\workflows"
+  ],
+  "SelectedNode": "\\.github\\secrets\\Apple-Store-UMGC-ios_distribution.p12.gpg",
+  "PreviewInSolutionExplorer": false
+}
