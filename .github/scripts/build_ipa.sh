@@ -1,5 +1,7 @@
 #!/bin/sh -x
 
+xcodebuild -list
+
 xcodebuild -workspace ./ios/Runner.xcworkspace \
            -scheme CLI \
 		   -sdk iphoneos \
